@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application
         android:label="fly_cargo"
         android:name="${applicationName}"
@@ -30,6 +34,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
+        <meta-data
+            android:name="com.yandex.mapkit.ApiKey"
+            android:value="59c25445-fa99-4ece-9e95-cb87746576c5" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
