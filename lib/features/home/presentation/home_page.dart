@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'send_package_bottom_sheet.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -33,17 +35,27 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      width: double.infinity,
-                      height: 47,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEEEEEE),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Отправить посылку?',
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => const SendPackageBottomSheet(),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 47,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEEEEEE),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Отправить посылку?',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
                     ),
