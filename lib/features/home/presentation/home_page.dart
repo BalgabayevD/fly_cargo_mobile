@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
       body: Stack(
         children: [
           const Center(child: Text("Основной контент страницы")),
-
+          // const YandexMapScreen(),
           DraggableScrollableSheet(
             initialChildSize: 0.2,
             minChildSize: 0.2,
