@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-
-import 'send_package_bottom_sheet.dart';
-
-class HomePage extends StatelessWidget {
+import 'package:fly_cargo/features/map/presentation/yandex_map_screen.dart';
+HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String a77 = '';
+  String b77 = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          const Center(child: Text("Основной контент страницы")),
-          // const YandexMapScreen(),
+          const YandexMapScreen(),
           DraggableScrollableSheet(
             initialChildSize: 0.2,
             minChildSize: 0.2,
@@ -60,6 +65,33 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // MaterialButton(
+                    //   onPressed: () {
+                    //     final ras = context.read<AuthorizationRepository>();
+                    //     final b = context.read<NetworkRepository>();
+                    //     ras.signIn(b).then((result) {
+                    //       a77 = result.$1;
+                    //       b77 = result.$2;
+                    //       setState(() {});
+                    //     });
+                    //   },
+                    //   child: Text('Login'),
+                    // ),
+                    // MaterialButton(
+                    //   onPressed: () {
+                    //     final ras = context.read<AuthorizationRepository>();
+                    //     final b = context.read<NetworkRepository>();
+                    //     ras.signCode(b, a77, b77, '451088');
+                    //   },
+                    //   child: Text('Login 2'),
+                    // ),
+                    // MaterialButton(
+                    //   onPressed: () {
+                    //     final ras = context.read<AuthorizationRepository>();
+                    //     ras.gig();
+                    //   },
+                    //   child: Text('3'),
+                    // ),
                     ListTile(
                       title: Text('Настольный светильник'),
                       subtitle: Text('Атырау, просп. Абая, 94'),

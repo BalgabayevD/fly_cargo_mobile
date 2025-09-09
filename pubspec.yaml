@@ -12,12 +12,16 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   yandex_mapkit: 3.4.0
+  supertokens_flutter: ^0.6.3
+  flutter_bloc: ^9.1.1
+  json_annotation: ^4.9.0
+  dio: ^5.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  json_serializable: ^6.11.1
 
 flutter:
   uses-material-design: true
-# TODO:59c25445-fa99-4ece-9e95-cb87746576c5
