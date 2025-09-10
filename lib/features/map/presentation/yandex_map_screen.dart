@@ -1,6 +1,7 @@
 ﻿import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class YandexMapScreen extends StatefulWidget {
@@ -58,7 +59,16 @@ class _YandexMapScreenState extends State<YandexMapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Yandex Map — Алматы')),
+      appBar: AppBar(
+        title: const Text('Cargo Map — Алматы'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.login),
+            onPressed: () => context.go('/auth/phone'),
+            tooltip: 'Войти',
+          ),
+        ],
+      ),
       body: YandexMap(
         onMapCreated: (c) async {
           _controller = c;
@@ -72,10 +82,23 @@ class _YandexMapScreenState extends State<YandexMapScreen> {
         scrollGesturesEnabled: true,
         tiltGesturesEnabled: true,
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text('К центру'),
-        icon: const Icon(Icons.center_focus_strong),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton.extended(
+            onPressed: () => context.go('/auth/phone'),
+            label: const Text('Войти'),
+            icon: const Icon(Icons.login),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+          const SizedBox(height: 16),
+          FloatingActionButton.extended(
+            onPressed: _moveToAlmaty,
+            label: const Text('К центру'),
+            icon: const Icon(Icons.center_focus_strong),
+          ),
+        ],
       ),
     );
   }

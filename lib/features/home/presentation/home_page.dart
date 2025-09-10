@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/map/presentation/yandex_map_screen.dart';
+import 'package:fly_cargo/services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +14,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String a77 = '';
   String b77 = '';
+
+  Future<void> _signOut() async {
+    final authService = AuthService();
+    await authService.signOut();
+    if (mounted) {
+      context.go('/');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +44,22 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(16),
                   controller: scrollController,
                   children: [
-                    Text(
-                      'Fly Cargo',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Fly Cargo',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.logout),
+                          onPressed: _signOut,
+                          tooltip: 'Выйти',
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
