@@ -1,4 +1,6 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class YandexMapScreen extends StatefulWidget {
@@ -71,7 +73,7 @@ class _YandexMapScreenState extends State<YandexMapScreen> {
         tiltGesturesEnabled: true,
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _moveToAlmaty,
+        onPressed: () {},
         label: const Text('К центру'),
         icon: const Icon(Icons.center_focus_strong),
       ),

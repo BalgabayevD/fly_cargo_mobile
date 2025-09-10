@@ -6,7 +6,7 @@ import com.yandex.mapkit.MapKitFactory
 class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey("59c25445-fa99-4ece-9e95-cb87746576c5")
-        MapKitFactory.initialize(this)
+        MapKitFactory.setApiKey("58894ad5-9031-4696-9c4e-4d62ebd8e3cc")
+        MapKitFactory.setLocale("ru-RU")
     }
 }

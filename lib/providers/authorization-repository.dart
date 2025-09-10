@@ -21,17 +21,17 @@ class AuthorizationRepository {
     );
   }
 
-  Future<(String, String)> signIn(NetworkRepository network) async {
+  Future<(String, String)> signIn(NetworkRepository network, String phoneNumber) async {
     final res = await network.dio.post(
       "https://user-cargo.maguya.kz/api/auth/signinup/code",
-      data: {"phoneNumber": "+77773806602"},
+      data: {"phoneNumber": phoneNumber},
     );
     final deviceId = res.data['deviceId'] as String;
     final preAuthSessionId = res.data['preAuthSessionId'] as String;
     return (deviceId, preAuthSessionId);
   }
 
-  Future<void> signCode(
+  Future<void> confirmCode(
     NetworkRepository network,
     String deviceId,
     String preAuthSessionId,
@@ -46,6 +46,21 @@ class AuthorizationRepository {
       },
     );
     print(res2);
+  }
+
+  Future<void> resendOTP(
+    NetworkRepository network,
+    String deviceId,
+    String preAuthSessionId,
+  ) async {
+    final res = await network.dio.post(
+      "https://user-cargo.maguya.kz/api/auth/signinup/code/resend",
+      data: {
+        "deviceId": deviceId,
+        "preAuthSessionId": preAuthSessionId,
+      },
+    );
+    print('OTP resent: $res');
   }
 
   Future<void> gig() async {

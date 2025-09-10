@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/home_page.dart';
+import 'package:fly_cargo/app_router.dart';
 import 'package:fly_cargo/providers/authorization-repository.dart';
 import 'package:fly_cargo/providers/network-repository.dart';
 
@@ -25,11 +25,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      title: 'Fly Cargo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: HomePage(),
+      routerConfig: appRouter,
     );
   }
 }

@@ -21,7 +21,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/yandex_mapkit/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   yandex_mapkit: dda136f4fe32dd7cde622891fb9293286f4441b2
   YandexMapsMobile: a76ddceccf2d78f9f1034d07a354810cd21ef21a
 
