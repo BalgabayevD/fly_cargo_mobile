@@ -4,7 +4,17 @@ import 'package:fly_cargo/features/destination/presentation/choose_address_page.
 import 'package:fly_cargo/features/destination/presentation/choose_city_page.dart';
 
 class SendPackageBottomSheet extends StatefulWidget {
-  const SendPackageBottomSheet({super.key});
+  final Function(AddressModel fromAddress, AddressModel toAddress)?
+  onAddressesSelected;
+  final AddressModel? initialFromAddress;
+  final AddressModel? initialToAddress;
+
+  const SendPackageBottomSheet({
+    super.key,
+    this.onAddressesSelected,
+    this.initialFromAddress,
+    this.initialToAddress,
+  });
 
   @override
   State<SendPackageBottomSheet> createState() => _SendPackageBottomSheetState();
@@ -14,12 +24,19 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
 
+  @override
+  void initState() {
+    super.initState();
+    _fromAddress = widget.initialFromAddress;
+    _toAddress = widget.initialToAddress;
+  }
+
   Future<void> _selectFromAddress() async {
     final city = await Navigator.push<dynamic>(
       context,
       MaterialPageRoute(builder: (context) => const ChooseCityPage()),
     );
-    
+
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
         context,
@@ -27,7 +44,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           builder: (context) => ChooseAddressPage(selectedCity: city),
         ),
       );
-      
+
       if (address != null) {
         setState(() {
           _fromAddress = address;
@@ -41,7 +58,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
       context,
       MaterialPageRoute(builder: (context) => const ChooseCityPage()),
     );
-    
+
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
         context,
@@ -49,7 +66,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           builder: (context) => ChooseAddressPage(selectedCity: city),
         ),
       );
-      
+
       if (address != null) {
         setState(() {
           _toAddress = address;
@@ -79,9 +96,38 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
                   'Отправить посылку',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_fromAddress != null || _toAddress != null)
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _fromAddress = null;
+                            _toAddress = null;
+                          });
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: const Text(
+                          'Сбросить',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF666666),
+                          ),
+                        ),
+                      ),
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -119,11 +165,11 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
                             _fromAddress?.city ?? 'Выберите город',
                             style: TextStyle(
                               fontSize: 16,
-                              color: _fromAddress != null 
-                                  ? const Color(0xFF333333) 
+                              color: _fromAddress != null
+                                  ? const Color(0xFF333333)
                                   : const Color(0xFF999999),
-                              fontWeight: _fromAddress != null 
-                                  ? FontWeight.w500 
+                              fontWeight: _fromAddress != null
+                                  ? FontWeight.w500
                                   : FontWeight.normal,
                             ),
                           ),
@@ -142,8 +188,8 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
                     ),
                     Icon(
                       Icons.location_city,
-                      color: _fromAddress != null 
-                          ? const Color(0xFF007AFF) 
+                      color: _fromAddress != null
+                          ? const Color(0xFF007AFF)
                           : const Color(0xFF666666),
                     ),
                   ],
@@ -184,11 +230,11 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
                             _toAddress?.city ?? 'Выберите город',
                             style: TextStyle(
                               fontSize: 16,
-                              color: _toAddress != null 
-                                  ? const Color(0xFF333333) 
+                              color: _toAddress != null
+                                  ? const Color(0xFF333333)
                                   : const Color(0xFF999999),
-                              fontWeight: _toAddress != null 
-                                  ? FontWeight.w500 
+                              fontWeight: _toAddress != null
+                                  ? FontWeight.w500
                                   : FontWeight.normal,
                             ),
                           ),
@@ -207,8 +253,8 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
                     ),
                     Icon(
                       Icons.location_city,
-                      color: _toAddress != null 
-                          ? const Color(0xFF007AFF) 
+                      color: _toAddress != null
+                          ? const Color(0xFF007AFF)
                           : const Color(0xFF666666),
                     ),
                   ],
@@ -221,11 +267,13 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                onPressed: (_fromAddress != null && _toAddress != null) 
+                onPressed: (_fromAddress != null && _toAddress != null)
                     ? () {
-                        // Здесь можно добавить логику для обработки выбранных адресов
-                        print('Откуда: ${_fromAddress!.displayText}');
-                        print('Куда: ${_toAddress!.displayText}');
+                        // Вызываем callback с выбранными адресами
+                        widget.onAddressesSelected?.call(
+                          _fromAddress!,
+                          _toAddress!,
+                        );
                         Navigator.pop(context);
                       }
                     : null,

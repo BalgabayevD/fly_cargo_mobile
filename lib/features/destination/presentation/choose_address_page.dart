@@ -5,10 +5,7 @@ import 'package:fly_cargo/features/destination/models/city_model.dart';
 class ChooseAddressPage extends StatefulWidget {
   final CityModel selectedCity;
 
-  const ChooseAddressPage({
-    super.key,
-    required this.selectedCity,
-  });
+  const ChooseAddressPage({super.key, required this.selectedCity});
 
   @override
   State<ChooseAddressPage> createState() => _ChooseAddressPageState();
@@ -164,7 +161,10 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                     ),
                     child: const Text(
                       'Подтвердить адрес',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -202,10 +202,7 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                         horizontal: 16,
                         vertical: 16,
                       ),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Color(0xFF666666),
-                      ),
+                      prefixIcon: Icon(Icons.search, color: Color(0xFF666666)),
                     ),
                     style: const TextStyle(fontSize: 16),
                   ),

@@ -31,19 +31,55 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
     _cities = [
       const CityModel(id: '1', name: 'Алматы', region: 'Алматинская область'),
       const CityModel(id: '2', name: 'Астана', region: 'Акмолинская область'),
-      const CityModel(id: '3', name: 'Шымкент', region: 'Туркестанская область'),
+      const CityModel(
+        id: '3',
+        name: 'Шымкент',
+        region: 'Туркестанская область',
+      ),
       const CityModel(id: '4', name: 'Атырау', region: 'Атырауская область'),
       const CityModel(id: '5', name: 'Актобе', region: 'Актюбинская область'),
       const CityModel(id: '6', name: 'Тараз', region: 'Жамбылская область'),
-      const CityModel(id: '7', name: 'Павлодар', region: 'Павлодарская область'),
-      const CityModel(id: '8', name: 'Семей', region: 'Восточно-Казахстанская область'),
-      const CityModel(id: '9', name: 'Усть-Каменогорск', region: 'Восточно-Казахстанская область'),
-      const CityModel(id: '10', name: 'Уральск', region: 'Западно-Казахстанская область'),
-      const CityModel(id: '11', name: 'Костанай', region: 'Костанайская область'),
-      const CityModel(id: '12', name: 'Кызылорда', region: 'Кызылординская область'),
+      const CityModel(
+        id: '7',
+        name: 'Павлодар',
+        region: 'Павлодарская область',
+      ),
+      const CityModel(
+        id: '8',
+        name: 'Семей',
+        region: 'Восточно-Казахстанская область',
+      ),
+      const CityModel(
+        id: '9',
+        name: 'Усть-Каменогорск',
+        region: 'Восточно-Казахстанская область',
+      ),
+      const CityModel(
+        id: '10',
+        name: 'Уральск',
+        region: 'Западно-Казахстанская область',
+      ),
+      const CityModel(
+        id: '11',
+        name: 'Костанай',
+        region: 'Костанайская область',
+      ),
+      const CityModel(
+        id: '12',
+        name: 'Кызылорда',
+        region: 'Кызылординская область',
+      ),
       const CityModel(id: '13', name: 'Актау', region: 'Мангистауская область'),
-      const CityModel(id: '14', name: 'Петропавловск', region: 'Северо-Казахстанская область'),
-      const CityModel(id: '15', name: 'Туркестан', region: 'Туркестанская область'),
+      const CityModel(
+        id: '14',
+        name: 'Петропавловск',
+        region: 'Северо-Казахстанская область',
+      ),
+      const CityModel(
+        id: '15',
+        name: 'Туркестан',
+        region: 'Туркестанская область',
+      ),
     ];
     _filteredCities = _cities;
   }
@@ -99,10 +135,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
                     horizontal: 16,
                     vertical: 16,
                   ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Color(0xFF666666),
-                  ),
+                  prefixIcon: Icon(Icons.search, color: Color(0xFF666666)),
                 ),
                 style: const TextStyle(fontSize: 16),
               ),

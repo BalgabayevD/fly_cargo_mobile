@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/features/destination/models/address_model.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/map/presentation/yandex_map_screen.dart';
 
@@ -12,6 +13,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String a77 = '';
   String b77 = '';
+  AddressModel? _fromAddress;
+  AddressModel? _toAddress;
+
+  void _onAddressesSelected(AddressModel fromAddress, AddressModel toAddress) {
+    setState(() {
+      _fromAddress = fromAddress;
+      _toAddress = toAddress;
+    });
+  }
+
+  void _openAddressSelection() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SendPackageBottomSheet(
+        onAddressesSelected: _onAddressesSelected,
+        initialFromAddress: _fromAddress,
+        initialToAddress: _toAddress,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +43,8 @@ class _HomePageState extends State<HomePage> {
         children: [
           const YandexMapScreen(),
           DraggableScrollableSheet(
-            initialChildSize: 0.2,
-            minChildSize: 0.2,
+            initialChildSize: 0.5,
+            minChildSize: 0.5,
             maxChildSize: 0.8,
             builder: (context, scrollController) {
               return Container(
@@ -42,30 +65,210 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) => const SendPackageBottomSheet(),
-                        );
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 47,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFEEEEEE),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Отправить посылку?',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                    if (_fromAddress == null || _toAddress == null)
+                      GestureDetector(
+                        onTap: _openAddressSelection,
+                        child: Container(
+                          width: double.infinity,
+                          height: 47,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEEEEEE),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Отправить посылку?',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
+                      )
+                    else
+                      Column(
+                        children: [
+                          // Заголовок с кнопкой изменения
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Маршрут доставки',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF333333),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: _openAddressSelection,
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 8,
+                                  ),
+                                  minimumSize: Size.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                child: const Text(
+                                  'Изменить',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF007AFF),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          // Адрес отправки
+                          GestureDetector(
+                            onTap: _openAddressSelection,
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF5F5F5),
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: const Color(0xFFE0E0E0),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF007AFF),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Icon(
+                                      Icons.location_on,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Откуда забрать',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xFF666666),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          _fromAddress!.city,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF333333),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          _fromAddress!.address,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color(0xFF666666),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.edit,
+                                    color: Color(0xFF666666),
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          // Divider
+                          Container(height: 1, color: const Color(0xFFE0E0E0)),
+                          const SizedBox(height: 12),
+                          // Адрес доставки
+                          GestureDetector(
+                            onTap: _openAddressSelection,
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF5F5F5),
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: const Color(0xFFE0E0E0),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF34C759),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Icon(
+                                      Icons.location_on,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Куда доставить',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xFF666666),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          _toAddress!.city,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF333333),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          _toAddress!.address,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color(0xFF666666),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.edit,
+                                    color: Color(0xFF666666),
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
                     const SizedBox(height: 16),
                     // MaterialButton(
                     //   onPressed: () {
