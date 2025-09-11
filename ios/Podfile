@@ -30,7 +30,7 @@ target 'Runner' do
   use_frameworks!
 
   # 🔧 Пин нужной сборки и версии, чтобы перебить "lite 4.6.1"
-  pod 'YandexMapsMobile', '4.4.0-full'
+  # pod 'YandexMapsMobile', '4.4.0-full'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 

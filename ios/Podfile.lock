@@ -1,5 +1,8 @@
 PODS:
   - Flutter (1.0.0)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - yandex_mapkit (0.0.1):
     - Flutter
     - YandexMapsMobile (= 4.4.0-full)
@@ -7,8 +10,8 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - yandex_mapkit (from `.symlinks/plugins/yandex_mapkit/ios`)
-  - YandexMapsMobile (= 4.4.0-full)
 
 SPEC REPOS:
   trunk:
@@ -17,14 +20,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   yandex_mapkit:
     :path: ".symlinks/plugins/yandex_mapkit/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   yandex_mapkit: dda136f4fe32dd7cde622891fb9293286f4441b2
   YandexMapsMobile: a76ddceccf2d78f9f1034d07a354810cd21ef21a
 
-PODFILE CHECKSUM: 9c3d30e0e8eac50238a5fd86ebdba284747a6a0d
+PODFILE CHECKSUM: 6413aeae5162a51f4fc2aeb2e53ace8525afa8cd
 
 COCOAPODS: 1.16.2

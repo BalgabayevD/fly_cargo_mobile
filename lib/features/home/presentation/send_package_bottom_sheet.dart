@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/features/destination/presentation/choose_address_page.dart';
+import 'package:fly_cargo/features/destination/presentation/choose_city_page.dart';
 
 class SendPackageBottomSheet extends StatefulWidget {
   const SendPackageBottomSheet({super.key});
@@ -8,18 +11,51 @@ class SendPackageBottomSheet extends StatefulWidget {
 }
 
 class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
-  final TextEditingController _fromCityController = TextEditingController();
-  final TextEditingController _fromAddressController = TextEditingController();
-  final TextEditingController _toCityController = TextEditingController();
-  final TextEditingController _toAddressController = TextEditingController();
+  AddressModel? _fromAddress;
+  AddressModel? _toAddress;
 
-  @override
-  void dispose() {
-    _fromCityController.dispose();
-    _fromAddressController.dispose();
-    _toCityController.dispose();
-    _toAddressController.dispose();
-    super.dispose();
+  Future<void> _selectFromAddress() async {
+    final city = await Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute(builder: (context) => const ChooseCityPage()),
+    );
+    
+    if (city != null) {
+      final address = await Navigator.push<AddressModel>(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChooseAddressPage(selectedCity: city),
+        ),
+      );
+      
+      if (address != null) {
+        setState(() {
+          _fromAddress = address;
+        });
+      }
+    }
+  }
+
+  Future<void> _selectToAddress() async {
+    final city = await Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute(builder: (context) => const ChooseCityPage()),
+    );
+    
+    if (city != null) {
+      final address = await Navigator.push<AddressModel>(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChooseAddressPage(selectedCity: city),
+        ),
+      );
+      
+      if (address != null) {
+        setState(() {
+          _toAddress = address;
+        });
+      }
+    }
   }
 
   @override
@@ -61,51 +97,57 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
             ),
             const SizedBox(height: 12),
 
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: const Color(0xFFE0E0E0)),
-              ),
-              child: TextField(
-                controller: _fromCityController,
-                decoration: const InputDecoration(
-                  hintText: 'Выберите город',
-                  hintStyle: TextStyle(color: Color(0xFF999999)),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  suffixIcon: Icon(
-                    Icons.location_city,
-                    color: Color(0xFF666666),
-                  ),
+            GestureDetector(
+              onTap: _selectFromAddress,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: const Color(0xFFE0E0E0)),
                 ),
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: const Color(0xFFE0E0E0)),
-              ),
-              child: TextField(
-                controller: _fromAddressController,
-                decoration: const InputDecoration(
-                  hintText: 'Указать адрес',
-                  hintStyle: TextStyle(color: Color(0xFF999999)),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  suffixIcon: Icon(Icons.location_on, color: Color(0xFF666666)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
                 ),
-                style: const TextStyle(fontSize: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _fromAddress?.city ?? 'Выберите город',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: _fromAddress != null 
+                                  ? const Color(0xFF333333) 
+                                  : const Color(0xFF999999),
+                              fontWeight: _fromAddress != null 
+                                  ? FontWeight.w500 
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                          if (_fromAddress != null) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              _fromAddress!.address,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF666666),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      Icons.location_city,
+                      color: _fromAddress != null 
+                          ? const Color(0xFF007AFF) 
+                          : const Color(0xFF666666),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -120,51 +162,57 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
             ),
             const SizedBox(height: 12),
 
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: const Color(0xFFE0E0E0)),
-              ),
-              child: TextField(
-                controller: _toCityController,
-                decoration: const InputDecoration(
-                  hintText: 'Выберите город',
-                  hintStyle: TextStyle(color: Color(0xFF999999)),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  suffixIcon: Icon(
-                    Icons.location_city,
-                    color: Color(0xFF666666),
-                  ),
+            GestureDetector(
+              onTap: _selectToAddress,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: const Color(0xFFE0E0E0)),
                 ),
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: const Color(0xFFE0E0E0)),
-              ),
-              child: TextField(
-                controller: _toAddressController,
-                decoration: const InputDecoration(
-                  hintText: 'Указать адрес',
-                  hintStyle: TextStyle(color: Color(0xFF999999)),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  suffixIcon: Icon(Icons.location_on, color: Color(0xFF666666)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
                 ),
-                style: const TextStyle(fontSize: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _toAddress?.city ?? 'Выберите город',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: _toAddress != null 
+                                  ? const Color(0xFF333333) 
+                                  : const Color(0xFF999999),
+                              fontWeight: _toAddress != null 
+                                  ? FontWeight.w500 
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                          if (_toAddress != null) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              _toAddress!.address,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF666666),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      Icons.location_city,
+                      color: _toAddress != null 
+                          ? const Color(0xFF007AFF) 
+                          : const Color(0xFF666666),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 32),
@@ -173,12 +221,21 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: (_fromAddress != null && _toAddress != null) 
+                    ? () {
+                        // Здесь можно добавить логику для обработки выбранных адресов
+                        print('Откуда: ${_fromAddress!.displayText}');
+                        print('Куда: ${_toAddress!.displayText}');
+                        Navigator.pop(context);
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF007AFF),
-                  foregroundColor: Colors.white,
+                  backgroundColor: (_fromAddress != null && _toAddress != null)
+                      ? const Color(0xFF007AFF)
+                      : const Color(0xFFE0E0E0),
+                  foregroundColor: (_fromAddress != null && _toAddress != null)
+                      ? Colors.white
+                      : const Color(0xFF999999),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
