@@ -34,7 +34,9 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
   Future<void> _selectFromAddress() async {
     final city = await Navigator.push<dynamic>(
       context,
-      MaterialPageRoute(builder: (context) => const ChooseCityPage()),
+      MaterialPageRoute(
+        builder: (context) => const ChooseCityPage(cityType: CityType.from),
+      ),
     );
 
     if (city != null) {
@@ -56,7 +58,9 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
   Future<void> _selectToAddress() async {
     final city = await Navigator.push<dynamic>(
       context,
-      MaterialPageRoute(builder: (context) => const ChooseCityPage()),
+      MaterialPageRoute(
+        builder: (context) => const ChooseCityPage(cityType: CityType.to),
+      ),
     );
 
     if (city != null) {

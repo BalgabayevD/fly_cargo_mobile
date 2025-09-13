@@ -1,22 +1,30 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:fly_cargo/config/api_config.dart';
+import 'package:fly_cargo/config/talker_dio_interceptor.dart';
+import 'package:fly_cargo/config/talker_service.dart';
 
 class NetworkRepository {
   late final Dio dio;
+  final TalkerService _talker = TalkerService.instance;
 
   NetworkRepository() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://user-cargo.maguya.kz',
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        baseUrl: ApiConfig.baseUrl,
+        connectTimeout: Duration(milliseconds: ApiConfig.connectTimeout),
+        receiveTimeout: Duration(milliseconds: ApiConfig.receiveTimeout),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
       ),
     );
 
-    if (kDebugMode) {
-      dio.interceptors.add(
-        LogInterceptor(requestBody: true, responseBody: true),
-      );
-    }
+    // Добавляем только Talker для логирования
+    dio.interceptors.add(TalkerDioInterceptor());
+
+    _talker.logInfo(
+      'NetworkRepository инициализирован с базовым URL: ${ApiConfig.baseUrl}',
+    );
   }
 }
