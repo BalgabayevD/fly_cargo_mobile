@@ -56,10 +56,22 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
   }
 
   Future<void> _selectToAddress() async {
+    // Проверяем, что выбран город отправки
+    if (_fromAddress == null) {
+      _showAlert(
+        'Сначала выберите город отправки',
+        'Для выбора города доставки необходимо сначала указать город отправки.',
+      );
+      return;
+    }
+
     final city = await Navigator.push<dynamic>(
       context,
       MaterialPageRoute(
-        builder: (context) => const ChooseCityPage(cityType: CityType.to),
+        builder: (context) => ChooseCityPage(
+          cityType: CityType.to,
+          fromCityId: _fromAddress!.cityId,
+        ),
       ),
     );
 
@@ -303,6 +315,34 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showAlert(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          content: Text(message, style: const TextStyle(fontSize: 16)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                'Понятно',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF007AFF),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

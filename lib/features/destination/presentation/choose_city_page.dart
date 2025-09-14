@@ -8,8 +8,9 @@ enum CityType { from, to }
 
 class ChooseCityPage extends StatefulWidget {
   final CityType cityType;
+  final String? fromCityId; // ID города отправки для загрузки городов доставки
 
-  const ChooseCityPage({super.key, required this.cityType});
+  const ChooseCityPage({super.key, required this.cityType, this.fromCityId});
 
   @override
   State<ChooseCityPage> createState() => _ChooseCityPageState();
@@ -51,7 +52,9 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
       // Загружаем только нужные города в зависимости от типа
       final cities = widget.cityType == CityType.from
           ? await _citiesApiService.getCitiesFrom()
-          : await _citiesApiService.getCitiesTo();
+          : await _citiesApiService.getCitiesTo(
+              fromCityId: widget.fromCityId ?? '1',
+            );
 
       setState(() {
         _cities = cities;

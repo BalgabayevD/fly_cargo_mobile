@@ -104,6 +104,7 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
     final fullAddress = AddressModel(
       city: widget.selectedCity.name,
       address: addressSuggestion.title,
+      cityId: widget.selectedCity.id,
       fullAddress: '${widget.selectedCity.name}, ${addressSuggestion.title}',
     );
     Navigator.pop(context, fullAddress);

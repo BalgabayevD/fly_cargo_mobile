@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fly_cargo/config/api_config.dart';
 import 'package:fly_cargo/config/talker_service.dart';
 import 'package:fly_cargo/features/destination/models/cities_response_model.dart';
+import 'package:fly_cargo/features/destination/models/cities_to_response_model.dart';
 import 'package:fly_cargo/features/destination/models/city_model.dart';
 
 class CitiesApiService {
@@ -110,16 +111,31 @@ class CitiesApiService {
   }
 
   /// Загружает города для доставки
-  Future<List<CityModel>> getCitiesTo() async {
-    _talker.logInfo('Запрос городов для доставки: ${ApiConfig.citiesToUrl}');
+  Future<List<CityModel>> getCitiesTo({required String fromCityId}) async {
+    _talker.logInfo(
+      'Запрос городов для доставки: ${ApiConfig.citiesToUrl}?id=$fromCityId',
+    );
 
     try {
-      final response = await _dio.get(ApiConfig.citiesToUrl);
+      final response = await _dio.get(
+        ApiConfig.citiesToUrl,
+        queryParameters: {'fromCityId': fromCityId},
+      );
 
       if (response.statusCode == 200) {
-        final cities = _processApiResponse(response.data);
+        // Извлекаем данные из поля "data"
+        final responseData = response.data as Map<String, dynamic>;
+        final data = responseData['data'] as Map<String, dynamic>;
+
+        final citiesToResponse = CitiesToResponseModel.fromJson(data);
         _talker.logInfo(
-          'Успешно загружено ${cities.length} городов для доставки',
+          'Извлечены города из поля cities: ${citiesToResponse.cities.length} городов',
+        );
+        final cities = citiesToResponse.cities
+            .map((city) => city.toCityModel())
+            .toList();
+        _talker.logInfo(
+          'Успешно загружено ${cities.length} городов для доставки: ${cities.map((c) => c.name).join(", ")}',
         );
         return cities;
       } else {
@@ -153,12 +169,14 @@ class CitiesApiService {
   }
 
   /// Загружает все доступные города (объединяет from и to)
-  Future<List<CityModel>> getAllCities() async {
+  Future<List<CityModel>> getAllCities({String? fromCityId}) async {
     _talker.logInfo('Запрос всех доступных городов (объединение from и to)');
 
     try {
       final fromCities = await getCitiesFrom();
-      final toCities = await getCitiesTo();
+      final toCities = fromCityId != null
+          ? await getCitiesTo(fromCityId: fromCityId)
+          : <CityModel>[];
 
       _talker.logDebug(
         'Загружено ${fromCities.length} городов для отправки и ${toCities.length} городов для доставки',
