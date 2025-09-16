@@ -188,14 +188,40 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
               ),
             ),
           ),
-          Expanded(child: _buildCitiesList()),
+          Expanded(
+            child: CitiesListWidget(
+              isLoading: _isLoading,
+              errorMessage: _errorMessage,
+              filteredCities: _filteredCities,
+              onRetry: _loadCities,
+              onCitySelected: (city) => Navigator.pop(context, city),
+            ),
+          ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildCitiesList() {
-    if (_isLoading) {
+class CitiesListWidget extends StatelessWidget {
+  final bool isLoading;
+  final String? errorMessage;
+  final List<dynamic> filteredCities;
+  final VoidCallback onRetry;
+  final Function(dynamic) onCitySelected;
+
+  const CitiesListWidget({
+    super.key,
+    required this.isLoading,
+    required this.errorMessage,
+    required this.filteredCities,
+    required this.onRetry,
+    required this.onCitySelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
       return const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -213,7 +239,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
       );
     }
 
-    if (_errorMessage != null) {
+    if (errorMessage != null) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
@@ -236,13 +262,13 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                _errorMessage!,
+                errorMessage!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _loadCities,
+                onPressed: onRetry,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF007AFF),
                   foregroundColor: Colors.white,
@@ -258,7 +284,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
       );
     }
 
-    if (_filteredCities.isEmpty) {
+    if (filteredCities.isEmpty) {
       return const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -285,9 +311,9 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      itemCount: _filteredCities.length,
+      itemCount: filteredCities.length,
       itemBuilder: (context, index) {
-        final city = _filteredCities[index];
+        final city = filteredCities[index];
         return ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 8),
           leading: Container(
@@ -312,9 +338,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
                   ),
                 )
               : null,
-          onTap: () {
-            Navigator.pop(context, city);
-          },
+          onTap: () => onCitySelected(city),
         );
       },
     );

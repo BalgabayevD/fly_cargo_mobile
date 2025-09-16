@@ -1,75 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/entities/box_entity.dart';
+import 'package:fly_cargo/features/home/presentation/bloc/box_selection_bloc.dart';
 
-class BoxSelectionWidget extends StatefulWidget {
-  final String? selectedBoxType;
-  final Function(String) onBoxSelected;
+class BoxSelectionWidget extends StatelessWidget {
+  const BoxSelectionWidget({super.key});
 
-  const BoxSelectionWidget({
-    super.key,
-    required this.selectedBoxType,
-    required this.onBoxSelected,
-  });
-
-  @override
-  State<BoxSelectionWidget> createState() => _BoxSelectionWidgetState();
-}
-
-class _BoxSelectionWidgetState extends State<BoxSelectionWidget> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: BoxOptionWidget(
-            type: 'small',
-            title: 'Маленькая',
-            subtitle: '15 × 10 × 20',
-            imagePath: 'assets/images/small.png',
-            isSelected: widget.selectedBoxType == 'small',
-            onTap: () => widget.onBoxSelected('small'),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: BoxOptionWidget(
-            type: 'medium',
-            title: 'Средняя',
-            subtitle: '20 × 20 × 30',
-            imagePath: 'assets/images/medium.png',
-            isSelected: widget.selectedBoxType == 'medium',
-            onTap: () => widget.onBoxSelected('medium'),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: BoxOptionWidget(
-            type: 'big',
-            title: 'Большая',
-            subtitle: '30 × 30 × 40',
-            imagePath: 'assets/images/big.png',
-            isSelected: widget.selectedBoxType == 'big',
-            onTap: () => widget.onBoxSelected('big'),
-          ),
-        ),
-      ],
+    return BlocBuilder<BoxSelectionBloc, BoxSelectionState>(
+      builder: (context, state) {
+        if (state is BoxSelectionLoaded) {
+          return Row(
+            children: state.boxes.map((box) {
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: BoxOptionWidget(
+                    box: box,
+                    isSelected: state.selectedBoxType == box.id,
+                    onTap: () => context.read<BoxSelectionBloc>().add(
+                      SelectBoxEvent(box.id),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        }
+
+        if (state is BoxSelectionError) {
+          return Center(child: Text(state.message, style: AppTypography.error));
+        }
+
+        return const Center(child: CircularProgressIndicator());
+      },
     );
   }
 }
 
 class BoxOptionWidget extends StatelessWidget {
-  final String type;
-  final String title;
-  final String subtitle;
-  final String imagePath;
+  final BoxEntity box;
   final bool isSelected;
   final VoidCallback onTap;
 
   const BoxOptionWidget({
     super.key,
-    required this.type,
-    required this.title,
-    required this.subtitle,
-    required this.imagePath,
+    required this.box,
     required this.isSelected,
     required this.onTap,
   });
@@ -82,13 +60,11 @@ class BoxOptionWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF007AFF).withOpacity(0.1)
-              : Colors.white,
+              ? AppColors.primaryWithOpacity(0.1)
+              : AppColors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected
-                ? const Color(0xFF007AFF)
-                : const Color(0xFFE0E0E0),
+            color: isSelected ? AppColors.primary : AppColors.border,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -98,13 +74,13 @@ class BoxOptionWidget extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  imagePath,
+                  box.imagePath,
                   fit: BoxFit.contain,
                   width: 80,
                   height: 80,
@@ -113,28 +89,31 @@ class BoxOptionWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              title,
+              _getShortName(box.name),
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: isSelected
-                    ? const Color(0xFF007AFF)
-                    : const Color(0xFF333333),
+                color: isSelected ? AppColors.primary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 2),
             Text(
-              subtitle,
+              box.dimensions,
               style: TextStyle(
                 fontSize: 12,
-                color: isSelected
-                    ? const Color(0xFF007AFF)
-                    : const Color(0xFF666666),
+                color: isSelected ? AppColors.primary : AppColors.textSecondary,
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  String _getShortName(String fullName) {
+    if (fullName.contains('Маленькая')) return 'Маленькая';
+    if (fullName.contains('Средняя')) return 'Средняя';
+    if (fullName.contains('Большая')) return 'Большая';
+    return fullName;
   }
 }

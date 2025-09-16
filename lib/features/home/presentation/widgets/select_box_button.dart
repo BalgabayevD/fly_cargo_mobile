@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
 
 class SelectBoxButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -13,17 +14,14 @@ class SelectBoxButton extends StatelessWidget {
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          color: const Color(0xFF007AFF),
+          color: AppColors.primary,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: const Center(
-          child: Text(
-            'Выбрать',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text('Выбрать', style: AppTypography.buttonLarge),
           ),
         ),
       ),
