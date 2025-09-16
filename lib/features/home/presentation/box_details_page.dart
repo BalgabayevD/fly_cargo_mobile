@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/options_list_widget.dart';
 
 class BoxDetailsPage extends StatelessWidget {
   final String boxType;
@@ -151,6 +152,11 @@ class BoxDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 30),
+
+            // Дополнительные опции
+            const OptionsListWidget(),
+
             const SizedBox(height: 30),
 
             // Кнопка подтверждения
