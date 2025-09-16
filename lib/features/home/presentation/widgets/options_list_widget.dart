@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/features/home/presentation/recipient_page.dart';
 
 class OptionsListWidget extends StatelessWidget {
   const OptionsListWidget({super.key});
@@ -80,22 +81,22 @@ class OptionsListWidget extends StatelessWidget {
     );
   }
 
-  void _showRecipientDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Получатель'),
-        content: const Text(
-          'Функция указания получателя будет реализована в следующих версиях приложения.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Понятно'),
-          ),
-        ],
+  void _showRecipientDialog(BuildContext context) async {
+    final result = await Navigator.push<Map<String, String>>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RecipientPage(),
       ),
     );
+
+    if (result != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Данные получателя сохранены: ${result['name']}'),
+          backgroundColor: AppColors.success,
+        ),
+      );
+    }
   }
 
   void _showCargoDescriptionDialog(BuildContext context) {

@@ -376,7 +376,13 @@ class _HomePageState extends State<HomePage> {
   void _openBoxDetailsPage(BuildContext context, String boxType) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BoxDetailsPage(boxType: boxType)),
+      MaterialPageRoute(
+        builder: (context) => BoxDetailsPage(
+          boxType: boxType,
+          fromAddress: _fromAddress,
+          toAddress: _toAddress,
+        ),
+      ),
     );
   }
 }

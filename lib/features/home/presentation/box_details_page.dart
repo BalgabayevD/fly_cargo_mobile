@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
+import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/features/home/presentation/order_confirmation_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/options_list_widget.dart';
 
 class BoxDetailsPage extends StatelessWidget {
   final String boxType;
+  final AddressModel? fromAddress;
+  final AddressModel? toAddress;
 
-  const BoxDetailsPage({super.key, required this.boxType});
+  const BoxDetailsPage({
+    super.key,
+    required this.boxType,
+    this.fromAddress,
+    this.toAddress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +48,11 @@ class BoxDetailsPage extends StatelessWidget {
         }
 
         final box = snapshot.data!;
-        return BoxDetailsContent(box: box);
+        return BoxDetailsContent(
+          box: box,
+          fromAddress: fromAddress,
+          toAddress: toAddress,
+        );
       },
     );
   }
@@ -47,8 +60,15 @@ class BoxDetailsPage extends StatelessWidget {
 
 class BoxDetailsContent extends StatelessWidget {
   final dynamic box;
+  final AddressModel? fromAddress;
+  final AddressModel? toAddress;
 
-  const BoxDetailsContent({super.key, required this.box});
+  const BoxDetailsContent({
+    super.key,
+    required this.box,
+    this.fromAddress,
+    this.toAddress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -139,14 +159,27 @@ class BoxDetailsContent extends StatelessWidget {
             AppButton(
               text: 'Подтвердить выбор',
               onPressed: () {
-                // Здесь можно добавить логику подтверждения выбора
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Выбрана ${box.name}'),
-                    backgroundColor: AppColors.success,
-                  ),
-                );
+                if (fromAddress != null && toAddress != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderConfirmationPage(
+                        box: box,
+                        fromAddress: fromAddress!,
+                        toAddress: toAddress!,
+                      ),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Сначала укажите адреса отправки и доставки',
+                      ),
+                      backgroundColor: Color(0xFFFF3B30),
+                    ),
+                  );
+                }
               },
               size: AppButtonSize.extraLarge,
               variant: AppButtonVariant.primary,
