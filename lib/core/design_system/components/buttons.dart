@@ -34,7 +34,6 @@ class AppButton extends StatelessWidget {
     final buttonStyle = _getButtonStyle();
     final textStyle = _getTextStyle();
     final height = _getHeight();
-    final padding = _getPadding();
 
     Widget buttonChild = _buildButtonChild(textStyle);
 
@@ -79,7 +78,13 @@ class AppButton extends StatelessWidget {
           children: [
             Icon(icon, size: _getIconSize(), color: _getTextColor()),
             SizedBox(width: AppSpacing.sm),
-            Text(text, style: textStyle),
+            Flexible(
+              child: Text(
+                text,
+                style: textStyle,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
       );
@@ -127,31 +132,6 @@ class AppButton extends StatelessWidget {
         return AppSpacing.buttonHeightLG;
       case AppButtonSize.extraLarge:
         return AppSpacing.buttonHeightXL;
-    }
-  }
-
-  EdgeInsets _getPadding() {
-    switch (size) {
-      case AppButtonSize.small:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.paddingMD,
-          vertical: AppSpacing.paddingXS,
-        );
-      case AppButtonSize.medium:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.paddingLG,
-          vertical: AppSpacing.paddingSM,
-        );
-      case AppButtonSize.large:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.paddingXL,
-          vertical: AppSpacing.paddingMD,
-        );
-      case AppButtonSize.extraLarge:
-        return EdgeInsets.symmetric(
-          horizontal: AppSpacing.paddingXXL,
-          vertical: AppSpacing.paddingLG,
-        );
     }
   }
 
