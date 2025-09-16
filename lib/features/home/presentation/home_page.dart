@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/features/home/presentation/box_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/map/presentation/yandex_map_screen.dart';
 
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   String b77 = '';
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
+  String? _selectedBoxType;
 
   void _onAddressesSelected(AddressModel fromAddress, AddressModel toAddress) {
     setState(() {
@@ -267,6 +269,25 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
+                          // Выбор коробки
+                          if (_fromAddress != null && _toAddress != null) ...[
+                            const SizedBox(height: 24),
+                            const Text(
+                              'Выберите коробку для упаковки',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF333333),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildBoxSelection(),
+                            // Кнопка выбора коробки
+                            if (_selectedBoxType != null) ...[
+                              const SizedBox(height: 20),
+                              _buildSelectBoxButton(),
+                            ],
+                          ],
                         ],
                       ),
                     const SizedBox(height: 16),
@@ -316,6 +337,150 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildBoxSelection() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildBoxOption(
+            'small',
+            'Маленькая',
+            '15 × 10 × 20',
+            'assets/images/small.png',
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildBoxOption(
+            'medium',
+            'Средняя',
+            '20 × 20 × 30',
+            'assets/images/medium.png',
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildBoxOption(
+            'big',
+            'Большая',
+            '30 × 30 × 40',
+            'assets/images/big.png',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBoxOption(
+    String type,
+    String title,
+    String subtitle,
+    String imagePath,
+  ) {
+    final isSelected = _selectedBoxType == type;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedBoxType = type;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? const Color(0xFF007AFF).withOpacity(0.1)
+              : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected
+                ? const Color(0xFF007AFF)
+                : const Color(0xFFE0E0E0),
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                  width: 80,
+                  height: 80,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: isSelected
+                    ? const Color(0xFF007AFF)
+                    : const Color(0xFF333333),
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontSize: 12,
+                color: isSelected
+                    ? const Color(0xFF007AFF)
+                    : const Color(0xFF666666),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSelectBoxButton() {
+    return GestureDetector(
+      onTap: () {
+        _openBoxDetailsPage();
+      },
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          color: const Color(0xFF007AFF),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: const Center(
+          child: Text(
+            'Выбрать',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _openBoxDetailsPage() {
+    if (_selectedBoxType == null) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BoxDetailsPage(boxType: _selectedBoxType!),
       ),
     );
   }

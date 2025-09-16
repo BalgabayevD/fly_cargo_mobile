@@ -1,32 +1,20 @@
 import 'package:fly_cargo/features/destination/models/api_city_model.dart';
 
 class CitiesToResponseModel {
-  final FromCityData fromCity;
-  final List<ApiCityModel> cities;
-  final int total;
+  final List<ApiCityModel> data;
 
-  const CitiesToResponseModel({
-    required this.fromCity,
-    required this.cities,
-    required this.total,
-  });
+  const CitiesToResponseModel({required this.data});
 
   factory CitiesToResponseModel.fromJson(Map<String, dynamic> json) {
     return CitiesToResponseModel(
-      fromCity: FromCityData.fromJson(json['fromCity'] as Map<String, dynamic>),
-      cities: (json['cities'] as List<dynamic>)
+      data: (json['data'] as List<dynamic>)
           .map((city) => ApiCityModel.fromJson(city as Map<String, dynamic>))
           .toList(),
-      total: json['total'] as int,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'fromCity': fromCity.toJson(),
-      'cities': cities.map((city) => city.toJson()).toList(),
-      'total': total,
-    };
+    return {'data': data.map((city) => city.toJson()).toList()};
   }
 }
 

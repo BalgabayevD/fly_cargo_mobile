@@ -9,6 +9,7 @@ class ApiCityModel {
   final List<CityRouteModel>? routesFrom;
   final List<CityRouteModel>? routesTo;
   final String updatedAt;
+  final String? deletedAt;
 
   const ApiCityModel({
     required this.country,
@@ -18,6 +19,7 @@ class ApiCityModel {
     this.routesFrom,
     this.routesTo,
     required this.updatedAt,
+    this.deletedAt,
   });
 
   factory ApiCityModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +45,7 @@ class ApiCityModel {
                 .toList()
           : null,
       updatedAt: json['updatedAt'] as String,
+      deletedAt: json['deletedAt'] as String?,
     );
   }
 
@@ -55,6 +58,7 @@ class ApiCityModel {
       'RoutesFrom': routesFrom?.map((route) => route.toJson()).toList(),
       'RoutesTo': routesTo?.map((route) => route.toJson()).toList(),
       'updatedAt': updatedAt,
+      'deletedAt': deletedAt,
     };
   }
 

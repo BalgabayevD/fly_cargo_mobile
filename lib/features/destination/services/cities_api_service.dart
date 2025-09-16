@@ -123,15 +123,14 @@ class CitiesApiService {
       );
 
       if (response.statusCode == 200) {
-        // Извлекаем данные из поля "data"
+        // Обрабатываем новый формат ответа
         final responseData = response.data as Map<String, dynamic>;
-        final data = responseData['data'] as Map<String, dynamic>;
 
-        final citiesToResponse = CitiesToResponseModel.fromJson(data);
+        final citiesToResponse = CitiesToResponseModel.fromJson(responseData);
         _talker.logInfo(
-          'Извлечены города из поля cities: ${citiesToResponse.cities.length} городов',
+          'Извлечены города из поля data: ${citiesToResponse.data.length} городов',
         );
-        final cities = citiesToResponse.cities
+        final cities = citiesToResponse.data
             .map((city) => city.toCityModel())
             .toList();
         _talker.logInfo(
