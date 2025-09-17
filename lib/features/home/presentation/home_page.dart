@@ -8,6 +8,7 @@ import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.d
 import 'package:fly_cargo/features/home/presentation/widgets/box_selection_widget.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/select_box_button.dart';
 import 'package:fly_cargo/features/map/presentation/yandex_map_screen.dart';
+import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -50,6 +51,26 @@ class _HomePageState extends State<HomePage> {
         getBoxByTypeUseCase: ServiceLocator().getBoxByTypeUseCase,
       )..add(LoadBoxesEvent()),
       child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: const Text(
+            'Fly Cargo',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF333333),
+            ),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person, color: Color(0xFF333333)),
+              onPressed: () => _openUserProfile(context),
+            ),
+          ],
+        ),
         body: Stack(
           children: [
             const YandexMapScreen(),
@@ -72,28 +93,60 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(16),
                     controller: scrollController,
                     children: [
-                      Text(
-                        'Fly Cargo',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
+                      // Индикатор для DraggableScrollableSheet
+                      Center(
+                        child: Container(
+                          width: 40,
+                          height: 4,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE0E0E0),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 16),
                       if (_fromAddress == null || _toAddress == null)
                         GestureDetector(
                           onTap: _openAddressSelection,
                           child: Container(
                             width: double.infinity,
-                            height: 47,
+                            height: 56,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEEEEEE),
-                              borderRadius: BorderRadius.circular(15),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF007AFF), Color(0xFF0056CC)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF007AFF,
+                                  ).withOpacity(0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
                             ),
                             child: const Center(
-                              child: Text(
-                                'Отправить посылку?',
-                                style: TextStyle(fontWeight: FontWeight.w600),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.local_shipping,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                  SizedBox(width: 12),
+                                  Text(
+                                    'Отправить посылку',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -102,38 +155,87 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           children: [
                             // Заголовок с кнопкой изменения
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Маршрут доставки',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF333333),
-                                  ),
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFFF8F9FA),
+                                    Color(0xFFE9ECEF),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                TextButton(
-                                  onPressed: _openAddressSelection,
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 8,
-                                    ),
-                                    minimumSize: Size.zero,
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                  ),
-                                  child: const Text(
-                                    'Изменить',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF007AFF),
-                                    ),
-                                  ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: const Color(0xFFE0E0E0),
+                                  width: 1,
                                 ),
-                              ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 32,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFF007AFF),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                          ),
+                                          child: const Icon(
+                                            Icons.route,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        const Expanded(
+                                          child: Text(
+                                            'Маршрут доставки',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFF333333),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: _openAddressSelection,
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      minimumSize: Size.zero,
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      backgroundColor: const Color(
+                                        0xFF007AFF,
+                                      ).withOpacity(0.1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Изменить',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFF007AFF),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 16),
                             // Адрес отправки
@@ -143,28 +245,43 @@ class _HomePageState extends State<HomePage> {
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFF5F5F5),
-                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
                                     color: const Color(0xFFE0E0E0),
+                                    width: 1,
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.05),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 40,
-                                      height: 40,
+                                      width: 48,
+                                      height: 48,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF007AFF),
-                                        borderRadius: BorderRadius.circular(10),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color(0xFF007AFF),
+                                            Color(0xFF0056CC),
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: const Icon(
                                         Icons.location_on,
                                         color: Colors.white,
-                                        size: 20,
+                                        size: 24,
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
+                                    const SizedBox(width: 16),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -198,10 +315,18 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    const Icon(
-                                      Icons.edit,
-                                      color: Color(0xFF666666),
-                                      size: 16,
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF5F5F5),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Color(0xFF666666),
+                                        size: 16,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -221,28 +346,43 @@ class _HomePageState extends State<HomePage> {
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFF5F5F5),
-                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
                                     color: const Color(0xFFE0E0E0),
+                                    width: 1,
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.05),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 40,
-                                      height: 40,
+                                      width: 48,
+                                      height: 48,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF34C759),
-                                        borderRadius: BorderRadius.circular(10),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color(0xFF34C759),
+                                            Color(0xFF2AA54A),
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: const Icon(
                                         Icons.location_on,
                                         color: Colors.white,
-                                        size: 20,
+                                        size: 24,
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
+                                    const SizedBox(width: 16),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -276,10 +416,18 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    const Icon(
-                                      Icons.edit,
-                                      color: Color(0xFF666666),
-                                      size: 16,
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF5F5F5),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Color(0xFF666666),
+                                        size: 16,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -288,12 +436,50 @@ class _HomePageState extends State<HomePage> {
                             // Выбор коробки
                             if (_fromAddress != null && _toAddress != null) ...[
                               const SizedBox(height: 24),
-                              const Text(
-                                'Выберите коробку для упаковки',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF333333),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFFF8F9FA),
+                                      Color(0xFFE9ECEF),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: const Color(0xFFE0E0E0),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFF9500),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Icon(
+                                        Icons.inventory_2,
+                                        color: Colors.white,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    const Expanded(
+                                      child: Text(
+                                        'Выберите коробку для упаковки',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF333333),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -383,6 +569,13 @@ class _HomePageState extends State<HomePage> {
           toAddress: _toAddress,
         ),
       ),
+    );
+  }
+
+  void _openUserProfile(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const UserProfilePage()),
     );
   }
 }

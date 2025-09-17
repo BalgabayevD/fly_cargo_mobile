@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_home_page.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
+import 'package:fly_cargo/features/user/presentation/user_demo_page.dart';
 
 class AppModeSelectionPage extends StatelessWidget {
   const AppModeSelectionPage({super.key});
@@ -58,6 +59,20 @@ class AppModeSelectionPage extends StatelessWidget {
                 onTap: () => _navigateToCourierMode(context),
               ),
               const SizedBox(height: 40),
+
+              // Кнопка для тестирования профиля
+              TextButton(
+                onPressed: () => _navigateToUserProfile(context),
+                child: const Text(
+                  'Тестировать профиль пользователя',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF007AFF),
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
 
               // Информация
               const Text(
@@ -148,6 +163,13 @@ class AppModeSelectionPage extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const CourierHomePage()),
+    );
+  }
+
+  void _navigateToUserProfile(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const UserDemoPage()),
     );
   }
 }
