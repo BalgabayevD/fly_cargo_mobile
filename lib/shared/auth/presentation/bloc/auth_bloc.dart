@@ -7,6 +7,7 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:injectable/injectable.dart';
 
+/// Блок для управления состоянием аутентификации
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
@@ -24,30 +25,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthReset>(_onReset);
   }
 
-  /// Инициализация аутентификации
+  /// Инициализация аутентификации при запуске приложения
   Future<void> _onInitialized(
     AuthInitialized event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthLoading());
-
-    try {
-      final isAuthenticated = await _authStatusUseCase.isAuthenticated();
-
-      if (isAuthenticated) {
-        final token = await _authStatusUseCase.getCurrentToken();
-        // Здесь можно определить тип пользователя по токену или API
-        // Пока что используем client как дефолт
-        emit(AuthAuthenticated(userType: UserType.client, accessToken: token));
-      } else {
-        emit(const AuthUnauthenticated());
-      }
-    } catch (e) {
-      emit(AuthError(message: 'Ошибка инициализации: $e'));
-    }
+    await _performAuthCheck(emit, 'инициализации');
   }
 
-  /// Отправка номера телефона для получения кода
+  /// Отправка номера телефона для получения кода подтверждения
   Future<void> _onSignInRequested(
     AuthSignInRequested event,
     Emitter<AuthState> emit,
@@ -65,11 +51,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     } catch (e) {
-      emit(AuthError(message: 'Ошибка отправки кода: $e'));
+      emit(
+        AuthError(
+          message: 'Не удалось отправить код: ${_extractErrorMessage(e)}',
+        ),
+      );
     }
   }
 
-  /// Подтверждение кода
+  /// Подтверждение кода и вход в систему
   Future<void> _onSignCodeRequested(
     AuthSignCodeRequested event,
     Emitter<AuthState> emit,
@@ -84,9 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.success) {
-        // Определяем тип пользователя (можно добавить логику определения)
         final userType = _determineUserType(response.userId);
-
         emit(
           AuthAuthenticated(
             userType: userType,
@@ -98,43 +86,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthError(message: 'Неверный код подтверждения'));
       }
     } catch (e) {
-      emit(AuthError(message: 'Ошибка подтверждения кода: $e'));
+      emit(
+        AuthError(
+          message: 'Ошибка подтверждения кода: ${_extractErrorMessage(e)}',
+        ),
+      );
     }
   }
 
-  /// Проверка статуса аутентификации
+  /// Проверка текущего статуса аутентификации
   Future<void> _onStatusChecked(
     AuthStatusChecked event,
     Emitter<AuthState> emit,
   ) async {
-    try {
-      final isAuthenticated = await _authStatusUseCase.isAuthenticated();
-
-      if (isAuthenticated) {
-        final token = await _authStatusUseCase.getCurrentToken();
-        // Определяем тип пользователя
-        final userType = _determineUserType(null);
-
-        emit(AuthAuthenticated(userType: userType, accessToken: token));
-      } else {
-        emit(const AuthUnauthenticated());
-      }
-    } catch (e) {
-      emit(AuthError(message: 'Ошибка проверки статуса: $e'));
-    }
+    await _performAuthCheck(emit, 'проверки статуса');
   }
 
-  /// Обновление токена
+  /// Обновление токена доступа
   Future<void> _onTokenRefreshed(
     AuthTokenRefreshed event,
     Emitter<AuthState> emit,
   ) async {
     try {
-      // Здесь можно добавить логику обновления токена
-      // Пока что просто проверяем статус
+      // TODO: Реализовать обновление токена через API
+      // Пока что просто проверяем текущий статус
       add(const AuthStatusChecked());
     } catch (e) {
-      emit(AuthError(message: 'Ошибка обновления токена: $e'));
+      emit(
+        AuthError(
+          message: 'Ошибка обновления токена: ${_extractErrorMessage(e)}',
+        ),
+      );
     }
   }
 
@@ -146,31 +128,68 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthLoading());
 
     try {
-      // Здесь можно добавить вызов API для выхода
+      // TODO: Реализовать вызов API для выхода
       // Пока что просто сбрасываем состояние
       emit(const AuthUnauthenticated(message: 'Вы вышли из системы'));
     } catch (e) {
-      emit(AuthError(message: 'Ошибка выхода: $e'));
+      emit(AuthError(message: 'Ошибка выхода: ${_extractErrorMessage(e)}'));
     }
   }
 
-  /// Сброс состояния
+  /// Сброс состояния аутентификации
   Future<void> _onReset(AuthReset event, Emitter<AuthState> emit) async {
     emit(const AuthInitial());
   }
 
-  /// Определение типа пользователя
-  /// В реальном приложении это может быть API вызов или анализ токена
+  /// Выполняет проверку статуса аутентификации
+  Future<void> _performAuthCheck(
+    Emitter<AuthState> emit,
+    String context,
+  ) async {
+    emit(const AuthLoading());
+
+    try {
+      final sessionStatus = await _authStatusUseCase.getSessionStatus();
+      final isAuthenticated =
+          sessionStatus['isAuthenticated'] as bool? ?? false;
+
+      if (isAuthenticated) {
+        final token = await _authStatusUseCase.getCurrentToken();
+        final userType = _determineUserType(sessionStatus['userId'] as String?);
+
+        emit(
+          AuthAuthenticated(
+            userType: userType,
+            userId: sessionStatus['userId'] as String?,
+            accessToken: token,
+          ),
+        );
+      } else {
+        emit(const AuthUnauthenticated());
+      }
+    } catch (e) {
+      emit(AuthError(message: 'Ошибка $context: ${_extractErrorMessage(e)}'));
+    }
+  }
+
+  /// Определяет тип пользователя на основе доступной информации
   UserType _determineUserType(String? userId) {
-    // Здесь можно добавить логику определения типа пользователя
-    // Например, по userId, по данным в токене, или по API вызову
+    // TODO: Реализовать логику определения типа пользователя
+    // Варианты:
+    // 1. Анализ JWT токена
+    // 2. API вызов для получения роли пользователя
+    // 3. Локальное хранение типа пользователя
+    // 4. Анализ userId
 
     // Пока что возвращаем client как дефолт
-    // В будущем можно добавить:
-    // - Анализ JWT токена
-    // - API вызов для получения роли пользователя
-    // - Локальное хранение типа пользователя
-
     return UserType.client;
+  }
+
+  /// Извлекает читаемое сообщение об ошибке из исключения
+  String _extractErrorMessage(dynamic error) {
+    if (error is Exception) {
+      return error.toString().replaceFirst('Exception: ', '');
+    }
+    return error.toString();
   }
 }

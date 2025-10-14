@@ -17,15 +17,32 @@ class AuthStatusUseCase {
     return await _authRepository.getCurrentToken();
   }
 
-  /// Получает статус сессии
+  /// Получает статус сессии через API
   Future<Map<String, dynamic>> getSessionStatus() async {
-    final isAuth = await isAuthenticated();
-    final token = await getCurrentToken();
+    try {
+      // Используем реальный API вызов для проверки статуса сессии
+      final sessionResponse = await _authRepository.getSessionStatus();
 
-    return {
-      'isAuthenticated': isAuth,
-      'hasToken': token != null,
-      'tokenLength': token?.length ?? 0,
-    };
+      return {
+        'isAuthenticated': sessionResponse.exists,
+        'hasToken': sessionResponse.exists,
+        'tokenLength': sessionResponse.exists
+            ? 100
+            : 0, // Примерная длина токена
+        'userId': sessionResponse.userId,
+        'expiresAt': sessionResponse.expiresAt?.toIso8601String(),
+      };
+    } catch (e) {
+      // Если API вызов не удался, возвращаем локальное состояние
+      final isAuth = await isAuthenticated();
+      final token = await getCurrentToken();
+
+      return {
+        'isAuthenticated': isAuth,
+        'hasToken': token != null,
+        'tokenLength': token?.length ?? 0,
+        'error': e.toString(),
+      };
+    }
   }
 }
