@@ -56,7 +56,6 @@ class _YandexMapScreenState extends State<YandexMapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Yandex Map — Алматы')),
       body: YandexMap(
         onMapCreated: (c) async {
           _controller = c;

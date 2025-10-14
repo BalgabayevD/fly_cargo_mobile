@@ -3,8 +3,8 @@ class ApiConfig {
   static const String baseUrl = 'https://user-cargo.maguya.kz';
 
   // Endpoints для городов (только пути, без baseUrl)
-  static const String citiesFromEndpoint = '/api/v1/delivery/cities/from';
-  static const String citiesToEndpoint = '/api/v1/delivery/cities/to';
+  static const String citiesFromEndpoint = '/api/v1/directions/cities/from';
+  static const String citiesToEndpoint = '/api/v1/directions/cities/to';
 
   // Endpoint для поиска адресов
   static const String addressesEndpoint = '/api/v1/maps/cities/list';

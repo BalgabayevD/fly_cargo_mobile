@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/config/talker_service.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/features/app_mode_selection_page.dart';
+import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/providers/authorization-repository.dart';
 import 'package:fly_cargo/providers/network-repository.dart';
 
@@ -22,14 +22,14 @@ void main() {
           auth.provideNetwork(context.read<NetworkRepository>());
           return auth;
         },
-        child: const MyApp(),
+        child: const App(),
       ),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const AppModeSelectionPage(),
+      home: HomePage(),
+      //  const AppModeSelectionPage(),
     );
   }
 }
