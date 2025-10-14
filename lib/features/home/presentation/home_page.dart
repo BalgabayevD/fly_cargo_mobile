@@ -7,8 +7,10 @@ import 'package:fly_cargo/features/home/presentation/box_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/box_selection_widget.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/select_box_button.dart';
-import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
+import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -41,6 +43,12 @@ class _HomePageState extends State<HomePage> {
         initialToAddress: _toAddress,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    context.read<AuthBloc>().add(AuthInitialized());
+    super.initState();
   }
 
   @override

@@ -1,3 +1,6 @@
+import 'package:injectable/injectable.dart';
+
+@singleton
 class ApiConfig {
   // Базовый URL для API
   static const String baseUrl = 'https://user-cargo.maguya.kz';
