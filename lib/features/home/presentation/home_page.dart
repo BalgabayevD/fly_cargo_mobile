@@ -7,7 +7,7 @@ import 'package:fly_cargo/features/home/presentation/box_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/box_selection_widget.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/select_box_button.dart';
-import 'package:fly_cargo/features/map/presentation/yandex_map_screen.dart';
+import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 
 class HomePage extends StatefulWidget {

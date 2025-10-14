@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:fly_cargo/config/talker_service.dart';
+import 'package:fly_cargo/core/network/talker_service.dart';
 
 class TalkerDioInterceptor extends Interceptor {
   final TalkerService _talker = TalkerService.instance;

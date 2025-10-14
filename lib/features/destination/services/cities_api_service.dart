@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:fly_cargo/config/api_config.dart';
-import 'package:fly_cargo/config/talker_service.dart';
+import 'package:fly_cargo/core/network/api_config.dart';
+import 'package:fly_cargo/core/network/talker_service.dart';
 import 'package:fly_cargo/features/destination/models/cities_response_model.dart';
 import 'package:fly_cargo/features/destination/models/cities_to_response_model.dart';
 import 'package:fly_cargo/features/destination/models/city_model.dart';

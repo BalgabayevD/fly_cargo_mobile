@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:fly_cargo/config/api_config.dart';
-import 'package:fly_cargo/config/talker_dio_interceptor.dart';
-import 'package:fly_cargo/config/talker_service.dart';
+import 'package:fly_cargo/core/network/api_config.dart';
+import 'package:fly_cargo/core/network/talker_dio_interceptor.dart';
+import 'package:fly_cargo/core/network/talker_service.dart';
 
 class NetworkRepository {
   late final Dio dio;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:fly_cargo/config/api_config.dart';
+import 'package:fly_cargo/core/network/api_config.dart';
 import 'package:fly_cargo/features/destination/models/address_suggestion_model.dart';
 
 class AddressesApiService {
