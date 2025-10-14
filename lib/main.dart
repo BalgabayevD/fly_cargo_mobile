@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/core/extensions/build_context_x.dart';
 import 'package:fly_cargo/core/network/talker_service.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/providers/authorization-repository.dart';
 import 'package:fly_cargo/providers/network-repository.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,10 @@ Future<void> main() async {
           auth.provideNetwork(context.read<NetworkRepository>());
           return auth;
         },
-        child: const App(),
+        child: BlocProvider<AuthBloc>(
+          create: (_) => getIt<AuthBloc>(),
+          child: const App(),
+        ),
       ),
     ),
   );
@@ -42,13 +45,12 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Fly Cargo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: BlocProvider<AuthBloc>(
-        create: (_) => context.di<AuthBloc>(),
-        child: const HomePage(),
-      ),
+      home: const HomePage(),
+      onGenerateRoute: AuthRouter.generateRoute,
       //  const AppModeSelectionPage(),
     );
   }

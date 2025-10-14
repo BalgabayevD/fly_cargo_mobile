@@ -10,6 +10,8 @@ import 'package:fly_cargo/features/home/presentation/widgets/select_box_button.d
 import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,6 +45,19 @@ class _HomePageState extends State<HomePage> {
         initialToAddress: _toAddress,
       ),
     );
+  }
+
+  void _onSendPackagePressed() {
+    // Проверяем статус аутентификации
+    final authState = context.read<AuthBloc>().state;
+
+    if (authState is AuthUnauthenticated || authState is AuthInitial) {
+      // Пользователь не авторизован - показываем экран ввода номера телефона
+      AuthRouter.navigateToPhoneInput(context);
+    } else {
+      // Пользователь авторизован - открываем выбор адресов
+      _openAddressSelection();
+    }
   }
 
   @override
@@ -115,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       if (_fromAddress == null || _toAddress == null)
                         GestureDetector(
-                          onTap: _openAddressSelection,
+                          onTap: _onSendPackagePressed,
                           child: Container(
                             width: double.infinity,
                             height: 56,
