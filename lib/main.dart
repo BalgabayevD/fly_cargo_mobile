@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/core/network/talker_service.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/providers/authorization-repository.dart';
-import 'package:fly_cargo/providers/network-repository.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Инициализируем Talker при запуске приложения
-  TalkerService.instance.initialize();
 
   // Инициализируем старый ServiceLocator (для совместимости)
   ServiceLocator().init();
@@ -22,18 +17,11 @@ Future<void> main() async {
   await configureDependencies();
 
   runApp(
-    RepositoryProvider<NetworkRepository>(
-      create: (BuildContext context) => NetworkRepository(),
-      child: RepositoryProvider<AuthorizationRepository>(
-        create: (BuildContext context) {
-          final auth = AuthorizationRepository();
-          auth.provideNetwork(context.read<NetworkRepository>());
-          return auth;
-        },
-        child: BlocProvider<AuthBloc>(
-          create: (_) => getIt<AuthBloc>(),
-          child: const App(),
-        ),
+    RepositoryProvider<AuthorizationRepository>(
+      create: (BuildContext context) => AuthorizationRepository(),
+      child: BlocProvider<AuthBloc>(
+        create: (_) => getIt<AuthBloc>(),
+        child: const App(),
       ),
     ),
   );

@@ -1,12 +1,12 @@
 ﻿import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/destination/models/address_model.dart';
 import 'package:fly_cargo/features/destination/models/address_suggestion_model.dart';
 import 'package:fly_cargo/features/destination/models/city_model.dart';
 import 'package:fly_cargo/features/destination/services/addresses_api_service.dart';
-import 'package:fly_cargo/providers/network-repository.dart';
 
 class ChooseAddressPage extends StatefulWidget {
   final CityModel selectedCity;
@@ -30,9 +30,9 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
   @override
   void initState() {
     super.initState();
-    // Получаем Dio из NetworkRepository с настроенными interceptor'ами
-    final networkRepo = context.read<NetworkRepository>();
-    _addressesApiService = AddressesApiService(networkRepo.dio);
+    // Получаем Dio из DI контейнера с настроенными interceptor'ами
+    final dio = getIt<Dio>(instanceName: 'public-dio');
+    _addressesApiService = AddressesApiService(dio);
 
     _loadSuggestedAddresses();
     _addressController.addListener(_onAddressChanged);

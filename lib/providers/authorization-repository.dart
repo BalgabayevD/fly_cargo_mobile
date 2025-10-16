@@ -1,4 +1,5 @@
-import 'package:fly_cargo/providers/network-repository.dart';
+import 'package:dio/dio.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:supertokens_flutter/dio.dart';
 import 'package:supertokens_flutter/supertokens.dart';
 
@@ -15,14 +16,14 @@ class AuthorizationRepository {
     print('AuthorizationRepository success');
   }
 
-  void provideNetwork(NetworkRepository network) {
-    network.dio.interceptors.add(
-      SuperTokensInterceptorWrapper(client: network.dio),
-    );
+  void provideNetwork() {
+    final dio = getIt<Dio>(instanceName: 'private-dio');
+    dio.interceptors.add(SuperTokensInterceptorWrapper(client: dio));
   }
 
-  Future<(String, String)> signIn(NetworkRepository network) async {
-    final res = await network.dio.post(
+  Future<(String, String)> signIn() async {
+    final dio = getIt<Dio>(instanceName: 'private-dio');
+    final res = await dio.post(
       "https://user-cargo.maguya.kz/api/auth/signinup/code",
       data: {"phoneNumber": "+77773806602"},
     );
@@ -32,12 +33,12 @@ class AuthorizationRepository {
   }
 
   Future<void> signCode(
-    NetworkRepository network,
     String deviceId,
     String preAuthSessionId,
     String code,
   ) async {
-    final res2 = await network.dio.post(
+    final dio = getIt<Dio>(instanceName: 'private-dio');
+    final res2 = await dio.post(
       "https://user-cargo.maguya.kz/api/auth/signinup/code/consume",
       data: {
         "deviceId": deviceId,

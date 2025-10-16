@@ -1,8 +1,8 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+﻿import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/destination/models/city_model.dart';
 import 'package:fly_cargo/features/destination/services/cities_api_service.dart';
-import 'package:fly_cargo/providers/network-repository.dart';
 
 enum CityType { from, to }
 
@@ -28,9 +28,9 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
   @override
   void initState() {
     super.initState();
-    // Получаем Dio из NetworkRepository с настроенными interceptor'ами
-    final networkRepo = context.read<NetworkRepository>();
-    _citiesApiService = CitiesApiService(networkRepo.dio);
+    // Получаем Dio из DI контейнера с настроенными interceptor'ами
+    final dio = getIt<Dio>(instanceName: 'public-dio');
+    _citiesApiService = CitiesApiService(dio);
 
     _loadCities();
     _searchController.addListener(_filterCities);
