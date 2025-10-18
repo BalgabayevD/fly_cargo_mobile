@@ -1,9 +1,12 @@
 import 'package:fly_cargo/features/courier/models/order_model.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 abstract class DeliveriesService {
   Future<List<CourierOrder>> getDeliveries();
-  List<CourierOrder> filterDeliveries(List<CourierOrder> deliveries, String filter);
+  List<CourierOrder> filterDeliveries(
+    List<CourierOrder> deliveries,
+    String filter,
+  );
   Map<String, dynamic> getStatistics(List<CourierOrder> deliveries);
 }
 
@@ -16,7 +19,10 @@ class MockDeliveriesService implements DeliveriesService {
   }
 
   @override
-  List<CourierOrder> filterDeliveries(List<CourierOrder> deliveries, String filter) {
+  List<CourierOrder> filterDeliveries(
+    List<CourierOrder> deliveries,
+    String filter,
+  ) {
     switch (filter) {
       case 'delivered':
         return deliveries
@@ -58,7 +64,9 @@ class MockDeliveriesService implements DeliveriesService {
       'deliveredCount': deliveredCount,
       'cancelledCount': cancelledCount,
       'totalEarnings': totalEarnings,
-      'averageEarnings': deliveredCount > 0 ? totalEarnings / deliveredCount : 0.0,
+      'averageEarnings': deliveredCount > 0
+          ? totalEarnings / deliveredCount
+          : 0.0,
     };
   }
 

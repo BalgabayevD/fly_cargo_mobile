@@ -3,7 +3,16 @@ import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 
 enum AppIconSize { xs, sm, md, lg, xl }
-enum AppIconVariant { primary, secondary, tertiary, disabled, success, warning, error }
+
+enum AppIconVariant {
+  primary,
+  secondary,
+  tertiary,
+  disabled,
+  success,
+  warning,
+  error,
+}
 
 class AppIcon extends StatelessWidget {
   final IconData icon;
@@ -26,17 +35,10 @@ class AppIcon extends StatelessWidget {
     final iconSize = _getSize();
     final iconColor = color ?? _getColor();
 
-    Widget iconWidget = Icon(
-      icon,
-      size: iconSize,
-      color: iconColor,
-    );
+    Widget iconWidget = Icon(icon, size: iconSize, color: iconColor);
 
     if (onTap != null) {
-      iconWidget = GestureDetector(
-        onTap: onTap,
-        child: iconWidget,
-      );
+      iconWidget = GestureDetector(onTap: onTap, child: iconWidget);
     }
 
     return iconWidget;
@@ -113,18 +115,11 @@ class AppIconContainer extends StatelessWidget {
         color: bgColor,
         borderRadius: BorderRadius.circular(radius),
       ),
-      child: Icon(
-        icon,
-        size: iconSize,
-        color: icColor,
-      ),
+      child: Icon(icon, size: iconSize, color: icColor),
     );
 
     if (onTap != null) {
-      container = GestureDetector(
-        onTap: onTap,
-        child: container,
-      );
+      container = GestureDetector(onTap: onTap, child: container);
     }
 
     return container;
@@ -171,11 +166,11 @@ class AppIconContainer extends StatelessWidget {
       case AppIconVariant.disabled:
         return AppColors.gray200;
       case AppIconVariant.success:
-        return AppColors.success.withOpacity(0.1);
+        return AppColors.success.withValues(alpha: 0.1);
       case AppIconVariant.warning:
-        return AppColors.warning.withOpacity(0.1);
+        return AppColors.warning.withValues(alpha: 0.1);
       case AppIconVariant.error:
-        return AppColors.error.withOpacity(0.1);
+        return AppColors.error.withValues(alpha: 0.1);
     }
   }
 
@@ -226,12 +221,7 @@ class AppIconWithBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AppIcon(
-          icon: icon,
-          size: size,
-          variant: variant,
-          onTap: onTap,
-        ),
+        AppIcon(icon: icon, size: size, variant: variant, onTap: onTap),
         if (badgeText != null || badgeCount != null)
           Positioned(
             right: 0,
@@ -294,17 +284,11 @@ class _AppAnimatedIconState extends State<AppAnimatedIcon>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
+    _controller = AnimationController(duration: widget.duration, vsync: this);
     _scaleAnimation = Tween<double>(
       begin: 1.0,
       end: 0.8,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

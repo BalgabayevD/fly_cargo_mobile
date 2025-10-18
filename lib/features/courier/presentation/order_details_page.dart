@@ -102,7 +102,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   Widget _buildStatusCard() {
     return AppCard(
       variant: AppCardVariant.filled,
-      backgroundColor: _order.statusColor.withOpacity(0.1),
+      backgroundColor: _order.statusColor.withValues(alpha: 0.1),
       child: Column(
         children: [
           Row(
@@ -133,7 +133,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: _order.priorityColor.withOpacity(0.2),
+                    color: _order.priorityColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -410,7 +410,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
+            color: iconColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, color: iconColor, size: 20),

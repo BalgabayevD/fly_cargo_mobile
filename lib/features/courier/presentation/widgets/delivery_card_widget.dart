@@ -22,7 +22,7 @@ class DeliveryCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -51,7 +51,7 @@ class DeliveryCardWidget extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: delivery.statusColor.withOpacity(0.1),
+                      color: delivery.statusColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -146,10 +146,7 @@ class DeliveryCardWidget extends StatelessWidget {
         Expanded(
           child: Text(
             address,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Color(0xFF666666),
-            ),
+            style: const TextStyle(fontSize: 13, color: Color(0xFF666666)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

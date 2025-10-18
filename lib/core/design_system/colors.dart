@@ -90,14 +90,14 @@ class AppColors {
 
   // Методы для получения цветов с прозрачностью
   static Color withOpacity(Color color, double opacity) {
-    return color.withOpacity(opacity);
+    return color.withValues(alpha: opacity);
   }
 
   static Color primaryWithOpacity(double opacity) {
-    return primary.withOpacity(opacity);
+    return primary.withValues(alpha: opacity);
   }
 
   static Color secondaryWithOpacity(double opacity) {
-    return secondary.withOpacity(opacity);
+    return secondary.withValues(alpha: opacity);
   }
 }

@@ -1,5 +1,5 @@
-import 'package:fly_cargo/features/destination/models/city_model.dart';
 import 'package:fly_cargo/features/destination/models/city_route_model.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 class ApiCityModel {
   final String country;

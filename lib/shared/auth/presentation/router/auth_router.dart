@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/code_input_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
 
-/// Роутер для экранов аутентификации
 class AuthRouter {
   static const String phoneInput = '/auth/phone-input';
   static const String codeInput = '/auth/code-input';
 
-  /// Генерирует маршруты для аутентификации
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case phoneInput:
@@ -36,12 +34,10 @@ class AuthRouter {
     }
   }
 
-  /// Навигация к экрану ввода номера телефона
   static Future<void> navigateToPhoneInput(BuildContext context) {
     return Navigator.of(context).pushNamed(phoneInput);
   }
 
-  /// Навигация к экрану ввода кода
   static Future<void> navigateToCodeInput(
     BuildContext context, {
     required String phoneNumber,
@@ -58,7 +54,6 @@ class AuthRouter {
     );
   }
 
-  /// Замена текущего экрана на экран ввода кода
   static Future<void> replaceWithCodeInput(
     BuildContext context, {
     required String phoneNumber,

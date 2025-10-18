@@ -149,7 +149,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
           _selectedFilter = value;
         });
       },
-      selectedColor: const Color(0xFF007AFF).withOpacity(0.2),
+      selectedColor: const Color(0xFF007AFF).withValues(alpha: 0.2),
       checkmarkColor: const Color(0xFF007AFF),
       labelStyle: TextStyle(
         color: isSelected ? const Color(0xFF007AFF) : const Color(0xFF666666),
@@ -222,7 +222,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: order.statusColor.withOpacity(0.1),
+                    color: order.statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(

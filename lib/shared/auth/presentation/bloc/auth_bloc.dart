@@ -7,7 +7,6 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:injectable/injectable.dart';
 
-/// Блок для управления состоянием аутентификации
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
@@ -25,7 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthReset>(_onReset);
   }
 
-  /// Инициализация аутентификации при запуске приложения
   Future<void> _onInitialized(
     AuthInitialized event,
     Emitter<AuthState> emit,
@@ -33,7 +31,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await _performAuthCheck(emit, 'инициализации');
   }
 
-  /// Отправка номера телефона для получения кода подтверждения
   Future<void> _onSignInRequested(
     AuthSignInRequested event,
     Emitter<AuthState> emit,
@@ -59,7 +56,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  /// Подтверждение кода и вход в систему
   Future<void> _onSignCodeRequested(
     AuthSignCodeRequested event,
     Emitter<AuthState> emit,
@@ -94,7 +90,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  /// Проверка текущего статуса аутентификации
   Future<void> _onStatusChecked(
     AuthStatusChecked event,
     Emitter<AuthState> emit,
@@ -102,14 +97,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await _performAuthCheck(emit, 'проверки статуса');
   }
 
-  /// Обновление токена доступа
   Future<void> _onTokenRefreshed(
     AuthTokenRefreshed event,
     Emitter<AuthState> emit,
   ) async {
     try {
-      // TODO: Реализовать обновление токена через API
-      // Пока что просто проверяем текущий статус
       add(const AuthStatusChecked());
     } catch (e) {
       emit(
@@ -120,7 +112,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  /// Выход из системы
   Future<void> _onSignOutRequested(
     AuthSignOutRequested event,
     Emitter<AuthState> emit,
@@ -128,20 +119,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthLoading());
 
     try {
-      // TODO: Реализовать вызов API для выхода
-      // Пока что просто сбрасываем состояние
       emit(const AuthUnauthenticated(message: 'Вы вышли из системы'));
     } catch (e) {
       emit(AuthError(message: 'Ошибка выхода: ${_extractErrorMessage(e)}'));
     }
   }
 
-  /// Сброс состояния аутентификации
   Future<void> _onReset(AuthReset event, Emitter<AuthState> emit) async {
     emit(const AuthInitial());
   }
 
-  /// Выполняет проверку статуса аутентификации
   Future<void> _performAuthCheck(
     Emitter<AuthState> emit,
     String context,
@@ -172,20 +159,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  /// Определяет тип пользователя на основе доступной информации
   UserType _determineUserType(String? userId) {
-    // TODO: Реализовать логику определения типа пользователя
-    // Варианты:
-    // 1. Анализ JWT токена
-    // 2. API вызов для получения роли пользователя
-    // 3. Локальное хранение типа пользователя
-    // 4. Анализ userId
-
-    // Пока что возвращаем client как дефолт
     return UserType.client;
   }
 
-  /// Извлекает читаемое сообщение об ошибке из исключения
   String _extractErrorMessage(dynamic error) {
     if (error is Exception) {
       return error.toString().replaceFirst('Exception: ', '');

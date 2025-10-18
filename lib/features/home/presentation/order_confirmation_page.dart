@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 class OrderConfirmationPage extends StatelessWidget {
   final dynamic box;
@@ -58,10 +58,7 @@ class OrderConfirmationPage extends StatelessWidget {
             const SizedBox(height: 8),
             const Text(
               'Убедитесь, что все данные указаны корректно',
-              style: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF666666),
-              ),
+              style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
             ),
             const SizedBox(height: 30),
 
@@ -81,7 +78,7 @@ class OrderConfirmationPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
                             ),
@@ -233,7 +230,8 @@ class OrderConfirmationPage extends StatelessWidget {
             AppPriceCard(
               title: 'Итого к оплате',
               price: 'от ${box.basePrice.toInt()} ${box.currency}',
-              subtitle: 'Окончательная стоимость будет рассчитана после оценки груза',
+              subtitle:
+                  'Окончательная стоимость будет рассчитана после оценки груза',
               isFullWidth: true,
             ),
             const SizedBox(height: 30),
@@ -280,14 +278,10 @@ class OrderConfirmationPage extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
+            color: iconColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(
-            icon,
-            color: iconColor,
-            size: 20,
-          ),
+          child: Icon(icon, color: iconColor, size: 20),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -314,10 +308,7 @@ class OrderConfirmationPage extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 address,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF666666),
-                ),
+                style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
               ),
             ],
           ),
@@ -333,18 +324,11 @@ class OrderConfirmationPage extends StatelessWidget {
   }) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: const Color(0xFF666666),
-        ),
+        Icon(icon, size: 20, color: const Color(0xFF666666)),
         const SizedBox(width: 12),
         Text(
           '$label: ',
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF666666),
-          ),
+          style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
         ),
         Expanded(
           child: Text(

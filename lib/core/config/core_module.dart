@@ -25,6 +25,9 @@ abstract class CoreModule {
         printResponseData: true,
         printResponseHeaders: true,
         printResponseMessage: true,
+        requestPen: AnsiPen()..xterm(10),
+        responsePen: AnsiPen()..xterm(10),
+        errorPen: AnsiPen()..xterm(10),
       ),
     );
   }

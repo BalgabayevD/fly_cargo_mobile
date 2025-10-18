@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_profile_page.dart';
 import 'package:fly_cargo/features/courier/presentation/order_details_page.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 class CourierHomePage extends StatefulWidget {
   const CourierHomePage({super.key});
@@ -303,7 +303,7 @@ class OrderCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -332,7 +332,7 @@ class OrderCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: order.statusColor.withOpacity(0.1),
+                      color: order.statusColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -357,7 +357,7 @@ class OrderCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: order.priorityColor.withOpacity(0.1),
+                    color: order.priorityColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

@@ -5,7 +5,8 @@ class CourierNotificationsPage extends StatefulWidget {
   const CourierNotificationsPage({super.key});
 
   @override
-  State<CourierNotificationsPage> createState() => _CourierNotificationsPageState();
+  State<CourierNotificationsPage> createState() =>
+      _CourierNotificationsPageState();
 }
 
 class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
@@ -34,7 +35,8 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       CourierNotification(
         id: '1',
         title: 'Новый заказ назначен',
-        message: 'Вам назначен заказ FC-2024-004. Адрес: ул. Абая, 150 → пр. Достык, 85',
+        message:
+            'Вам назначен заказ FC-2024-004. Адрес: ул. Абая, 150 → пр. Достык, 85',
         date: DateTime(2024, 1, 20, 10, 30),
         isRead: false,
         type: 'order',
@@ -50,7 +52,8 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       CourierNotification(
         id: '3',
         title: 'Бонус начислен',
-        message: 'Вам начислен бонус 500 ₸ за быструю доставку заказа FC-2024-002',
+        message:
+            'Вам начислен бонус 500 ₸ за быструю доставку заказа FC-2024-002',
         date: DateTime(2024, 1, 20, 8, 45),
         isRead: true,
         type: 'payment',
@@ -58,7 +61,8 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       CourierNotification(
         id: '4',
         title: 'Обновление приложения',
-        message: 'Доступна новая версия приложения. Обновите для улучшенной работы.',
+        message:
+            'Доступна новая версия приложения. Обновите для улучшенной работы.',
         date: DateTime(2024, 1, 19, 16, 20),
         isRead: true,
         type: 'system',
@@ -74,7 +78,8 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       CourierNotification(
         id: '6',
         title: 'Новый заказ в вашем районе',
-        message: 'В районе Алматы появился новый заказ. Проверьте список заказов.',
+        message:
+            'В районе Алматы появился новый заказ. Проверьте список заказов.',
         date: DateTime(2024, 1, 18, 14, 0),
         isRead: true,
         type: 'order',
@@ -85,13 +90,21 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
   List<CourierNotification> get _filteredNotifications {
     switch (_selectedFilter) {
       case 'unread':
-        return _notifications.where((notification) => !notification.isRead).toList();
+        return _notifications
+            .where((notification) => !notification.isRead)
+            .toList();
       case 'orders':
-        return _notifications.where((notification) => notification.type == 'order').toList();
+        return _notifications
+            .where((notification) => notification.type == 'order')
+            .toList();
       case 'payments':
-        return _notifications.where((notification) => notification.type == 'payment').toList();
+        return _notifications
+            .where((notification) => notification.type == 'payment')
+            .toList();
       case 'system':
-        return _notifications.where((notification) => notification.type == 'system').toList();
+        return _notifications
+            .where((notification) => notification.type == 'system')
+            .toList();
       default:
         return _notifications;
     }
@@ -152,23 +165,23 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _filteredNotifications.isEmpty
-                    ? _buildEmptyState()
-                    : RefreshIndicator(
-                        onRefresh: () async {
-                          _loadNotifications();
-                        },
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: _filteredNotifications.length,
-                          itemBuilder: (context, index) {
-                            final notification = _filteredNotifications[index];
-                            return NotificationCard(
-                              notification: notification,
-                              onTap: () => _markAsRead(notification),
-                            );
-                          },
-                        ),
-                      ),
+                ? _buildEmptyState()
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      _loadNotifications();
+                    },
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: _filteredNotifications.length,
+                      itemBuilder: (context, index) {
+                        final notification = _filteredNotifications[index];
+                        return NotificationCard(
+                          notification: notification,
+                          onTap: () => _markAsRead(notification),
+                        );
+                      },
+                    ),
+                  ),
           ),
         ],
       ),
@@ -222,13 +235,10 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            _selectedFilter == 'all' 
+            _selectedFilter == 'all'
                 ? 'У вас пока нет уведомлений'
                 : 'Нет уведомлений с выбранным фильтром',
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF999999),
-            ),
+            style: const TextStyle(fontSize: 14, color: Color(0xFF999999)),
           ),
         ],
       ),
@@ -253,14 +263,18 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
 
   void _markAllAsRead() {
     setState(() {
-      _notifications = _notifications.map((notification) => CourierNotification(
-        id: notification.id,
-        title: notification.title,
-        message: notification.message,
-        date: notification.date,
-        isRead: true,
-        type: notification.type,
-      )).toList();
+      _notifications = _notifications
+          .map(
+            (notification) => CourierNotification(
+              id: notification.id,
+              title: notification.title,
+              message: notification.message,
+              date: notification.date,
+              isRead: true,
+              type: notification.type,
+            ),
+          )
+          .toList();
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -292,7 +306,9 @@ class NotificationCard extends StatelessWidget {
           color: notification.isRead ? Colors.white : const Color(0xFFF8F9FF),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: notification.isRead ? const Color(0xFFE0E0E0) : const Color(0xFF007AFF).withOpacity(0.3),
+            color: notification.isRead
+                ? const Color(0xFFE0E0E0)
+                : const Color(0xFF007AFF).withValues(alpha: 0.3),
             width: notification.isRead ? 1 : 2,
           ),
         ),
@@ -306,7 +322,7 @@ class NotificationCard extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: notification.typeColor.withOpacity(0.1),
+                  color: notification.typeColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -329,7 +345,9 @@ class NotificationCard extends StatelessWidget {
                             notification.title,
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: notification.isRead ? FontWeight.w500 : FontWeight.w600,
+                              fontWeight: notification.isRead
+                                  ? FontWeight.w500
+                                  : FontWeight.w600,
                               color: const Color(0xFF333333),
                             ),
                           ),
@@ -358,9 +376,14 @@ class NotificationCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
-                            color: notification.typeColor.withOpacity(0.1),
+                            color: notification.typeColor.withValues(
+                              alpha: 0.1,
+                            ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(

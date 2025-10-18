@@ -33,10 +33,28 @@ import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart'
     as _i919;
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart'
     as _i138;
+import 'package:fly_cargo/shared/destination/config/destination_module.dart'
+    as _i993;
+import 'package:fly_cargo/shared/destination/data/destination_remote_source.dart'
+    as _i472;
+import 'package:fly_cargo/shared/destination/data/repositories/destination_repository_impl.dart'
+    as _i67;
+import 'package:fly_cargo/shared/destination/domain/repositories/destination_repository.dart'
+    as _i405;
+import 'package:fly_cargo/shared/destination/domain/usecases/get_all_cities_usecase.dart'
+    as _i583;
+import 'package:fly_cargo/shared/destination/domain/usecases/get_cities_from_usecase.dart'
+    as _i281;
+import 'package:fly_cargo/shared/destination/domain/usecases/get_cities_to_usecase.dart'
+    as _i292;
+import 'package:fly_cargo/shared/destination/domain/usecases/search_addresses_usecase.dart'
+    as _i576;
+import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart'
+    as _i436;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
-import 'package:talker_flutter/talker_flutter.dart' as _i207;
+import 'package:talker/talker.dart' as _i993;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -48,18 +66,19 @@ extension GetItInjectableX on _i174.GetIt {
     final coreModule = _$CoreModule();
     final dioModule = _$DioModule();
     final authModule = _$AuthModule();
+    final destinationModule = _$DestinationModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
     );
-    gh.singleton<_i207.Talker>(() => coreModule.talker);
+    gh.singleton<_i993.Talker>(() => coreModule.talker);
     gh.singleton<_i469.ApiConfig>(() => _i469.ApiConfig());
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
       () => _i346.SuperTokensSessionBehavior(),
       instanceName: 'super-tokens-session-behavior',
     );
     gh.lazySingleton<_i361.Interceptor>(
-      () => coreModule.logInterceptor(gh<_i207.Talker>()),
+      () => coreModule.logInterceptor(gh<_i993.Talker>()),
       instanceName: 'log-interceptor',
     );
     gh.lazySingleton<_i361.Interceptor>(
@@ -82,12 +101,41 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i469.ApiConfig>(),
       ),
     );
+    gh.factory<_i472.DestinationRemoteSource>(
+      () => destinationModule.provideDestinationRemoteSource(
+        gh<_i361.Dio>(instanceName: 'public-dio'),
+        gh<_i469.ApiConfig>(),
+      ),
+    );
     gh.factory<_i361.Dio>(
       () => dioModule.getPrivateDio(
         gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
         gh<_i361.Interceptor>(instanceName: 'auth-interceptor'),
       ),
       instanceName: 'private-dio',
+    );
+    gh.lazySingleton<_i405.DestinationRepository>(
+      () => _i67.DestinationRepositoryImpl(gh<_i472.DestinationRemoteSource>()),
+    );
+    gh.factory<_i292.GetCitiesToUseCase>(
+      () => _i292.GetCitiesToUseCase(gh<_i405.DestinationRepository>()),
+    );
+    gh.factory<_i576.SearchAddressesUseCase>(
+      () => _i576.SearchAddressesUseCase(gh<_i405.DestinationRepository>()),
+    );
+    gh.factory<_i583.GetAllCitiesUseCase>(
+      () => _i583.GetAllCitiesUseCase(gh<_i405.DestinationRepository>()),
+    );
+    gh.factory<_i281.GetCitiesFromUseCase>(
+      () => _i281.GetCitiesFromUseCase(gh<_i405.DestinationRepository>()),
+    );
+    gh.factory<_i436.DestinationBloc>(
+      () => _i436.DestinationBloc(
+        gh<_i281.GetCitiesFromUseCase>(),
+        gh<_i292.GetCitiesToUseCase>(),
+        gh<_i576.SearchAddressesUseCase>(),
+        gh<_i583.GetAllCitiesUseCase>(),
+      ),
     );
     gh.lazySingleton<_i214.AuthRepository>(
       () => _i505.AuthRepositoryImpl(
@@ -122,3 +170,5 @@ class _$CoreModule extends _i624.CoreModule {}
 class _$DioModule extends _i794.DioModule {}
 
 class _$AuthModule extends _i522.AuthModule {}
+
+class _$DestinationModule extends _i993.DestinationModule {}

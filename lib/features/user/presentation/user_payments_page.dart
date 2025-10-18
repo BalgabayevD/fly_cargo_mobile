@@ -219,7 +219,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
           _selectedPeriod = value;
         });
       },
-      selectedColor: const Color(0xFF007AFF).withOpacity(0.2),
+      selectedColor: const Color(0xFF007AFF).withValues(alpha: 0.2),
       checkmarkColor: const Color(0xFF007AFF),
       labelStyle: TextStyle(
         color: isSelected ? const Color(0xFF007AFF) : const Color(0xFF666666),
@@ -278,7 +278,9 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: _getTransactionColor(transaction.type).withOpacity(0.1),
+                color: _getTransactionColor(
+                  transaction.type,
+                ).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
@@ -329,7 +331,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
                         decoration: BoxDecoration(
                           color: _getStatusColor(
                             transaction.status,
-                          ).withOpacity(0.1),
+                          ).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(

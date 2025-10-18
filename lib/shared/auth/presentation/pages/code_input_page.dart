@@ -174,13 +174,12 @@ class _CodeInputPageState extends State<CodeInputPage> {
               children: [
                 const Spacer(flex: 2),
 
-                // Иконка SMS
                 Center(
                   child: Container(
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: AppColors.secondary.withOpacity(0.1),
+                      color: AppColors.secondary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(
                         AppSpacing.radiusRound,
                       ),
@@ -195,7 +194,6 @@ class _CodeInputPageState extends State<CodeInputPage> {
 
                 SizedBox(height: AppSpacing.xxl),
 
-                // Заголовок
                 Text(
                   'Введите код из SMS',
                   style: AppTypography.h3,

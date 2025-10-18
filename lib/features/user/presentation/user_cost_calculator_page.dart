@@ -237,7 +237,7 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF007AFF).withOpacity(0.1)
+              ? const Color(0xFF007AFF).withValues(alpha: 0.1)
               : const Color(0xFFF8F9FA),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
@@ -327,7 +327,7 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF007AFF).withOpacity(0.1)
+              ? const Color(0xFF007AFF).withValues(alpha: 0.1)
               : const Color(0xFFF8F9FA),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
@@ -397,7 +397,7 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF34C759).withOpacity(0.1),
+              color: const Color(0xFF34C759).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(

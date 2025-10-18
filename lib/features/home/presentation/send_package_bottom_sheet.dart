@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
-import 'package:fly_cargo/features/destination/presentation/choose_address_page.dart';
-import 'package:fly_cargo/features/destination/presentation/choose_city_page.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/shared/destination/presentation/pages/choose_address_page.dart';
+import 'package:fly_cargo/shared/destination/presentation/pages/choose_city_page.dart';
 
 class SendPackageBottomSheet extends StatefulWidget {
   final Function(AddressModel fromAddress, AddressModel toAddress)?
@@ -41,15 +41,21 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
 
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(
-          builder: (context) => ChooseAddressPage(selectedCity: city),
+          builder: (context) => ChooseAddressPage(city: city.name),
         ),
       );
 
       if (address != null) {
         setState(() {
-          _fromAddress = address;
+          _fromAddress = AddressModel(
+            city: address.city,
+            address: address.address,
+            cityId: city.id, // Используем ID выбранного города
+            fullAddress: address.fullAddress,
+          );
         });
       }
     }
@@ -77,15 +83,21 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
 
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(
-          builder: (context) => ChooseAddressPage(selectedCity: city),
+          builder: (context) => ChooseAddressPage(city: city.name),
         ),
       );
 
       if (address != null) {
         setState(() {
-          _toAddress = address;
+          _toAddress = AddressModel(
+            city: address.city,
+            address: address.address,
+            cityId: city.id, // Используем ID выбранного города
+            fullAddress: address.fullAddress,
+          );
         });
       }
     }

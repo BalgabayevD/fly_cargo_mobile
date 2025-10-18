@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
 import 'package:fly_cargo/features/home/presentation/order_confirmation_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/options_list_widget.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 class BoxDetailsPage extends StatelessWidget {
   final String boxType;
@@ -99,7 +99,7 @@ class BoxDetailsContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),

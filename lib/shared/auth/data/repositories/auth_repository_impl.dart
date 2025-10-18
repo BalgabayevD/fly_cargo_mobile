@@ -75,7 +75,6 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     try {
       await _remoteSource.signOut();
-      // SuperTokens автоматически очистит сессию
     } catch (e) {
       throw AuthException('Ошибка при выходе из системы: $e');
     }
@@ -100,7 +99,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 }
 
-/// Исключение для ошибок аутентификации
 class AuthException implements Exception {
   final String message;
 

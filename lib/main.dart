@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
-import 'package:fly_cargo/providers/authorization-repository.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 
@@ -13,16 +12,12 @@ Future<void> main() async {
   // Инициализируем старый ServiceLocator (для совместимости)
   ServiceLocator().init();
 
-  // Инициализируем новый DI контейнер
   await configureDependencies();
 
   runApp(
-    RepositoryProvider<AuthorizationRepository>(
-      create: (BuildContext context) => AuthorizationRepository(),
-      child: BlocProvider<AuthBloc>(
-        create: (_) => getIt<AuthBloc>(),
-        child: const App(),
-      ),
+    BlocProvider<AuthBloc>(
+      create: (_) => getIt<AuthBloc>(),
+      child: const App(),
     ),
   );
 }

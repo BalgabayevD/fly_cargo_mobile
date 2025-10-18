@@ -15,7 +15,7 @@ class IncomeStatsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppCard(
       variant: AppCardVariant.filled,
-      backgroundColor: const Color(0xFF007AFF).withOpacity(0.1),
+      backgroundColor: const Color(0xFF007AFF).withValues(alpha: 0.1),
       child: Column(
         children: [
           const Text(

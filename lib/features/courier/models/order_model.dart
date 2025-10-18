@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 enum OrderStatus {
   pending, // Ожидает курьера

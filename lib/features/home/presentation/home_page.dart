@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/features/destination/models/address_model.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/box_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/box_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
@@ -11,7 +10,7 @@ import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
+import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,10 +51,9 @@ class _HomePageState extends State<HomePage> {
     final authState = context.read<AuthBloc>().state;
 
     if (authState is AuthUnauthenticated || authState is AuthInitial) {
-      // Пользователь не авторизован - показываем экран ввода номера телефона
-      AuthRouter.navigateToPhoneInput(context);
+      _openAddressSelection();
+      // AuthRouter.navigateToPhoneInput(context);
     } else {
-      // Пользователь авторизован - открываем выбор адресов
       _openAddressSelection();
     }
   }
@@ -145,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                 BoxShadow(
                                   color: const Color(
                                     0xFF007AFF,
-                                  ).withOpacity(0.3),
+                                  ).withValues(alpha: 0.3),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
@@ -243,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                                           MaterialTapTargetSize.shrinkWrap,
                                       backgroundColor: const Color(
                                         0xFF007AFF,
-                                      ).withOpacity(0.1),
+                                      ).withValues(alpha: 0.1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
@@ -276,7 +274,9 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.05),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.05,
+                                      ),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
@@ -377,7 +377,9 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.05),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.05,
+                                      ),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
