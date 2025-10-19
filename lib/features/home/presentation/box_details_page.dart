@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/order_details_form.dart';
+import 'package:fly_cargo/core/entities/box_entity.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
+import 'package:fly_cargo/shared/orders/presentation/widgets/order_details_form.dart';
+import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
 
 class BoxDetailsPage extends StatelessWidget {
   final String boxType;
@@ -95,6 +97,79 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
     });
   }
 
+  // Методы для получения размеров коробки на основе типа
+  double _getBoxHeight(BoxEntity box) {
+    switch (box.id) {
+      case 'small':
+        return 20.0; // см
+      case 'medium':
+        return 30.0; // см
+      case 'big':
+        return 40.0; // см
+      default:
+        return 30.0; // см по умолчанию
+    }
+  }
+
+  double _getBoxLength(BoxEntity box) {
+    switch (box.id) {
+      case 'small':
+        return 15.0; // см
+      case 'medium':
+        return 20.0; // см
+      case 'big':
+        return 30.0; // см
+      default:
+        return 20.0; // см по умолчанию
+    }
+  }
+
+  double _getBoxWidth(BoxEntity box) {
+    switch (box.id) {
+      case 'small':
+        return 10.0; // см
+      case 'medium':
+        return 20.0; // см
+      case 'big':
+        return 30.0; // см
+      default:
+        return 20.0; // см по умолчанию
+    }
+  }
+
+  double _getBoxWeight(BoxEntity box) {
+    switch (box.id) {
+      case 'small':
+        return 0.5; // кг
+      case 'medium':
+        return 1.0; // кг
+      case 'big':
+        return 2.0; // кг
+      default:
+        return 1.0; // кг по умолчанию
+    }
+  }
+
+  double _getBoxVolumetricWeight(BoxEntity box) {
+    return _getBoxLength(box) *
+        _getBoxWidth(box) *
+        _getBoxHeight(box) /
+        5000; // формула объемного веса
+  }
+
+  int _getBoxTariffId(BoxEntity box) {
+    switch (box.id) {
+      case 'small':
+        return 1;
+      case 'medium':
+        return 2;
+      case 'big':
+        return 3;
+      default:
+        return 2; // средний тариф по умолчанию
+    }
+  }
+
   void _createOrder() {
     if (widget.fromAddress == null || widget.toAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -130,10 +205,10 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       fromFloor: _formData!.fromFloor,
       fromLatitude: 0.0, // TODO: Получить координаты
       fromLongitude: 0.0, // TODO: Получить координаты
-      height: widget.box.height,
-      length: widget.box.length,
+      height: _getBoxHeight(widget.box),
+      length: _getBoxLength(widget.box),
       photos: [], // TODO: Добавить загрузку фото
-      tariffId: widget.box.tariffId,
+      tariffId: _getBoxTariffId(widget.box),
       toAddress: widget.toAddress!.address,
       toApartment: _formData!.toApartment,
       toCityId: int.parse(widget.toAddress!.cityId),
@@ -141,9 +216,9 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       toFloor: _formData!.toFloor,
       toLatitude: 0.0, // TODO: Получить координаты
       toLongitude: 0.0, // TODO: Получить координаты
-      volumetricWeight: widget.box.volumetricWeight,
-      weight: widget.box.weight,
-      width: widget.box.width,
+      volumetricWeight: _getBoxVolumetricWeight(widget.box),
+      weight: _getBoxWeight(widget.box),
+      width: _getBoxWidth(widget.box),
     );
 
     _ordersBloc.add(CreateOrderEvent(orderData: orderData));
