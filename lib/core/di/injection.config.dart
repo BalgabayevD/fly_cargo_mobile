@@ -51,6 +51,17 @@ import 'package:fly_cargo/shared/destination/domain/usecases/search_addresses_us
     as _i576;
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart'
     as _i436;
+import 'package:fly_cargo/shared/orders/config/orders_module.dart' as _i561;
+import 'package:fly_cargo/shared/orders/data/orders_remote_source.dart'
+    as _i642;
+import 'package:fly_cargo/shared/orders/data/repositories/orders_repository_impl.dart'
+    as _i157;
+import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart'
+    as _i919;
+import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart'
+    as _i49;
+import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
+    as _i837;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -67,6 +78,7 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     final authModule = _$AuthModule();
     final destinationModule = _$DestinationModule();
+    final ordersModule = _$OrdersModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
@@ -107,12 +119,24 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i469.ApiConfig>(),
       ),
     );
+    gh.factory<_i642.OrdersRemoteSource>(
+      () => ordersModule.provideOrdersRemoteSource(
+        gh<_i361.Dio>(instanceName: 'public-dio'),
+        gh<_i469.ApiConfig>(),
+      ),
+    );
+    gh.lazySingleton<_i919.OrdersRepository>(
+      () => _i157.OrdersRepositoryImpl(gh<_i642.OrdersRemoteSource>()),
+    );
     gh.factory<_i361.Dio>(
       () => dioModule.getPrivateDio(
         gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
         gh<_i361.Interceptor>(instanceName: 'auth-interceptor'),
       ),
       instanceName: 'private-dio',
+    );
+    gh.factory<_i49.CreateOrderUseCase>(
+      () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.lazySingleton<_i405.DestinationRepository>(
       () => _i67.DestinationRepositoryImpl(gh<_i472.DestinationRemoteSource>()),
@@ -145,6 +169,9 @@ extension GetItInjectableX on _i174.GetIt {
         ),
       ),
     );
+    gh.factory<_i837.OrdersBloc>(
+      () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
+    );
     gh.factory<_i166.SignCodeUseCase>(
       () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
     );
@@ -172,3 +199,5 @@ class _$DioModule extends _i794.DioModule {}
 class _$AuthModule extends _i522.AuthModule {}
 
 class _$DestinationModule extends _i993.DestinationModule {}
+
+class _$OrdersModule extends _i561.OrdersModule {}
