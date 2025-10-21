@@ -62,6 +62,16 @@ import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dar
     as _i49;
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
     as _i837;
+import 'package:fly_cargo/shared/tariffs/data/repositories/tariffs_repository_impl.dart'
+    as _i711;
+import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source_impl.dart'
+    as _i618;
+import 'package:fly_cargo/shared/tariffs/domain/repositories/tariffs_repository.dart'
+    as _i528;
+import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart'
+    as _i133;
+import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart'
+    as _i545;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -135,6 +145,11 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       instanceName: 'private-dio',
     );
+    gh.factory<_i618.TariffsRemoteSourceImpl>(
+      () => _i618.TariffsRemoteSourceImpl(
+        gh<_i361.Dio>(instanceName: 'public-dio'),
+      ),
+    );
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
@@ -172,6 +187,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i837.OrdersBloc>(
       () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
     );
+    gh.factory<_i528.TariffsRepository>(
+      () => _i711.TariffsRepositoryImpl(gh<_i618.TariffsRemoteSourceImpl>()),
+    );
     gh.factory<_i166.SignCodeUseCase>(
       () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
     );
@@ -187,6 +205,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i166.SignCodeUseCase>(),
         gh<_i215.AuthStatusUseCase>(),
       ),
+    );
+    gh.factory<_i133.GetTariffCategoriesUseCase>(
+      () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
+    );
+    gh.factory<_i545.TariffsBloc>(
+      () => _i545.TariffsBloc(gh<_i133.GetTariffCategoriesUseCase>()),
     );
     return this;
   }
