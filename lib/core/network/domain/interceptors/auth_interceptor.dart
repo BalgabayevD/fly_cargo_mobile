@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_better_auth/flutter_better_auth.dart';
-import 'package:flutter_better_auth/plugins/jwt/jwt_extension.dart';
 import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,7 +8,7 @@ class AuthInterceptor extends Interceptor {
   final GetSessionIdBehavior _accessTokenBehavior;
 
   AuthInterceptor(
-    @Named('super-tokens-session-behavior') this._accessTokenBehavior,
+    @Named('flutter-better-auth-session-behavior') this._accessTokenBehavior,
   );
 
   @override
@@ -18,9 +16,9 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = await FlutterBetterAuth.client.jwt.token();
+    final token = await _accessTokenBehavior.getSessionId();
 
-    if (token.data?.token.isNotEmpty ?? false) {
+    if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     super.onRequest(options, handler);

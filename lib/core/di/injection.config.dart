@@ -86,9 +86,9 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final coreModule = _$CoreModule();
     final dioModule = _$DioModule();
+    final destinationModule = _$DestinationModule();
     final authModule = _$AuthModule();
     final ordersModule = _$OrdersModule();
-    final destinationModule = _$DestinationModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
@@ -99,6 +99,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
       () => _i5.FlutterBetterAuthSessionBehavior(),
       instanceName: 'flutter-better-auth-session-behavior',
+    );
+    gh.lazySingleton<_i361.Interceptor>(
+      () => _i411.AuthInterceptor(
+        gh<_i856.GetSessionIdBehavior>(
+          instanceName: 'flutter-better-auth-session-behavior',
+        ),
+      ),
+      instanceName: 'auth-interceptor',
     );
     gh.lazySingleton<_i361.Interceptor>(
       () => coreModule.logInterceptor(gh<_i993.Talker>()),
@@ -113,42 +121,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i215.AuthStatusUseCase>(
       () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
     );
-    gh.lazySingleton<_i361.Interceptor>(
-      () => _i411.AuthInterceptor(
-        gh<_i856.GetSessionIdBehavior>(
-          instanceName: 'super-tokens-session-behavior',
-        ),
-      ),
-      instanceName: 'auth-interceptor',
-    );
-    gh.factory<_i138.AuthBloc>(
-      () => _i138.AuthBloc(
-        gh<_i919.SignInUseCase>(),
-        gh<_i166.SignCodeUseCase>(),
-        gh<_i215.AuthStatusUseCase>(),
-      ),
-    );
-    gh.factory<_i361.Dio>(
-      () => dioModule.getPublicDio(
-        gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
-      ),
-      instanceName: 'public-dio',
-    );
-    gh.factory<_i764.AuthRemoteSource>(
-      () => authModule.provideAuthRemoteSource(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-        gh<_i469.ApiConfig>(),
-      ),
-    );
-    gh.factory<_i642.OrdersRemoteSource>(
-      () => ordersModule.provideOrdersRemoteSource(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-        gh<_i469.ApiConfig>(),
-      ),
-    );
-    gh.lazySingleton<_i919.OrdersRepository>(
-      () => _i157.OrdersRepositoryImpl(gh<_i642.OrdersRemoteSource>()),
-    );
     gh.factory<_i361.Dio>(
       () => dioModule.getPrivateDio(
         gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
@@ -156,19 +128,18 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       instanceName: 'private-dio',
     );
-    gh.factory<_i618.TariffsRemoteSourceImpl>(
-      () => _i618.TariffsRemoteSourceImpl(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-      ),
-    );
     gh.factory<_i472.DestinationRemoteSource>(
       () => destinationModule.provideDestinationRemoteSource(
         gh<_i361.Dio>(instanceName: 'private-dio'),
         gh<_i469.ApiConfig>(),
       ),
     );
-    gh.factory<_i49.CreateOrderUseCase>(
-      () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i138.AuthBloc>(
+      () => _i138.AuthBloc(
+        gh<_i919.SignInUseCase>(),
+        gh<_i166.SignCodeUseCase>(),
+        gh<_i215.AuthStatusUseCase>(),
+      ),
     );
     gh.lazySingleton<_i405.DestinationRepository>(
       () => _i67.DestinationRepositoryImpl(gh<_i472.DestinationRemoteSource>()),
@@ -185,6 +156,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i281.GetCitiesFromUseCase>(
       () => _i281.GetCitiesFromUseCase(gh<_i405.DestinationRepository>()),
     );
+    gh.factory<_i361.Dio>(
+      () => dioModule.getPublicDio(
+        gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
+      ),
+      instanceName: 'public-dio',
+    );
     gh.factory<_i436.DestinationBloc>(
       () => _i436.DestinationBloc(
         gh<_i281.GetCitiesFromUseCase>(),
@@ -192,6 +169,29 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i576.SearchAddressesUseCase>(),
         gh<_i583.GetAllCitiesUseCase>(),
       ),
+    );
+    gh.factory<_i764.AuthRemoteSource>(
+      () => authModule.provideAuthRemoteSource(
+        gh<_i361.Dio>(instanceName: 'public-dio'),
+        gh<_i469.ApiConfig>(),
+      ),
+    );
+    gh.factory<_i642.OrdersRemoteSource>(
+      () => ordersModule.provideOrdersRemoteSource(
+        gh<_i361.Dio>(instanceName: 'public-dio'),
+        gh<_i469.ApiConfig>(),
+      ),
+    );
+    gh.lazySingleton<_i919.OrdersRepository>(
+      () => _i157.OrdersRepositoryImpl(gh<_i642.OrdersRemoteSource>()),
+    );
+    gh.factory<_i618.TariffsRemoteSourceImpl>(
+      () => _i618.TariffsRemoteSourceImpl(
+        gh<_i361.Dio>(instanceName: 'public-dio'),
+      ),
+    );
+    gh.factory<_i49.CreateOrderUseCase>(
+      () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.factory<_i837.OrdersBloc>(
       () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
@@ -213,8 +213,8 @@ class _$CoreModule extends _i624.CoreModule {}
 
 class _$DioModule extends _i794.DioModule {}
 
+class _$DestinationModule extends _i993.DestinationModule {}
+
 class _$AuthModule extends _i522.AuthModule {}
 
 class _$OrdersModule extends _i561.OrdersModule {}
-
-class _$DestinationModule extends _i993.DestinationModule {}
