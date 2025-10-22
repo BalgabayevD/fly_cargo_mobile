@@ -109,11 +109,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
       final code = _controllers.map((c) => c.text).join();
 
       context.read<AuthBloc>().add(
-        AuthSignCodeRequested(
-          deviceId: widget.deviceId,
-          preAuthSessionId: widget.preAuthSessionId,
-          code: code,
-        ),
+        AuthVerifyCodeRequested(phoneNumber: widget.phoneNumber, code: code),
       );
     }
   }
@@ -121,7 +117,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
   void _onResendCode() {
     if (_canResend) {
       context.read<AuthBloc>().add(
-        AuthSignInRequested(phoneNumber: widget.phoneNumber),
+        AuthRequestOTPRequested(phoneNumber: widget.phoneNumber),
       );
       _startResendTimer();
     }

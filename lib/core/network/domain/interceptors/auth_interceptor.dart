@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_better_auth/flutter_better_auth.dart';
+import 'package:flutter_better_auth/plugins/jwt/jwt_extension.dart';
 import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart';
 import 'package:injectable/injectable.dart';
 
@@ -16,9 +18,9 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = await _accessTokenBehavior.getSessionId();
+    final token = await FlutterBetterAuth.client.jwt.token();
 
-    if (token?.isNotEmpty ?? false) {
+    if (token.data?.token.isNotEmpty ?? false) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     super.onRequest(options, handler);

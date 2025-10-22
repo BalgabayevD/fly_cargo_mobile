@@ -106,7 +106,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
           : '+7$phone';
 
       context.read<AuthBloc>().add(
-        AuthSignInRequested(phoneNumber: formattedPhone),
+        AuthRequestOTPRequested(phoneNumber: formattedPhone),
       );
     }
   }

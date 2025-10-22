@@ -1,3 +1,4 @@
+import 'package:flutter_better_auth/core/api/models/session/session_response.dart';
 import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,31 +19,7 @@ class AuthStatusUseCase {
   }
 
   /// Получает статус сессии через API
-  Future<Map<String, dynamic>> getSessionStatus() async {
-    try {
-      // Используем реальный API вызов для проверки статуса сессии
-      final sessionResponse = await _authRepository.getSessionStatus();
-
-      return {
-        'isAuthenticated': sessionResponse.exists,
-        'hasToken': sessionResponse.exists,
-        'tokenLength': sessionResponse.exists
-            ? 100
-            : 0, // Примерная длина токена
-        'userId': sessionResponse.userId,
-        'expiresAt': sessionResponse.expiresAt?.toIso8601String(),
-      };
-    } catch (e) {
-      // Если API вызов не удался, возвращаем локальное состояние
-      final isAuth = await isAuthenticated();
-      final token = await getCurrentToken();
-
-      return {
-        'isAuthenticated': isAuth,
-        'hasToken': token != null,
-        'tokenLength': token?.length ?? 0,
-        'error': e.toString(),
-      };
-    }
+  Future<SessionResponse?> getSessionStatus() async {
+    return await _authRepository.getSessionStatus();
   }
 }

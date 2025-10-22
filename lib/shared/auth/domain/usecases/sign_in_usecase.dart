@@ -1,4 +1,4 @@
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
+import 'package:flutter_better_auth/plugins/phone/models/send_otp/send_otp_response.dart';
 import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,12 +9,11 @@ class SignInUseCase {
   SignInUseCase(this._authRepository);
 
   /// Выполняет вход в систему по номеру телефона
-  Future<SignInResponse> call(String phoneNumber) async {
+  Future<SendOTPResponse?> call(String phoneNumber) async {
     if (phoneNumber.isEmpty) {
       throw ArgumentError('Номер телефона не может быть пустым');
     }
 
-    // Валидация номера телефона (можно добавить более сложную логику)
     if (!_isValidPhoneNumber(phoneNumber)) {
       throw ArgumentError('Неверный формат номера телефона');
     }

@@ -10,6 +10,7 @@ import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 
@@ -50,10 +51,16 @@ class _HomePageState extends State<HomePage> {
     // Проверяем статус аутентификации
     final authState = context.read<AuthBloc>().state;
 
+    // Отладочная информация
+    print('AuthState: ${authState.runtimeType}');
+    print('Is AuthUnauthenticated: ${authState is AuthUnauthenticated}');
+    print('Is AuthInitial: ${authState is AuthInitial}');
+
     if (authState is AuthUnauthenticated || authState is AuthInitial) {
-      _openAddressSelection();
-      // AuthRouter.navigateToPhoneInput(context);
+      print('Navigating to phone input');
+      AuthRouter.navigateToPhoneInput(context);
     } else {
+      print('Opening address selection');
       _openAddressSelection();
     }
   }

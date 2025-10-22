@@ -10,16 +10,11 @@ class SignCodeUseCase {
 
   /// Подтверждает код и выполняет вход в систему
   Future<SignCodeResponse> call({
-    required String deviceId,
-    required String preAuthSessionId,
+    required String phoneNumber,
     required String code,
   }) async {
-    if (deviceId.isEmpty) {
-      throw ArgumentError('Device ID не может быть пустым');
-    }
-
-    if (preAuthSessionId.isEmpty) {
-      throw ArgumentError('PreAuth Session ID не может быть пустым');
+    if (phoneNumber.isEmpty) {
+      throw ArgumentError('Номер телефона не может быть пустым');
     }
 
     if (code.isEmpty) {
@@ -31,10 +26,21 @@ class SignCodeUseCase {
       throw ArgumentError('Неверный формат кода подтверждения');
     }
 
-    return await _authRepository.signCode(
-      deviceId: deviceId,
-      preAuthSessionId: preAuthSessionId,
+    final response = await _authRepository.signCode(
+      phoneNumber: phoneNumber,
       code: code,
+    );
+
+    if (response == null) {
+      throw Exception('Ошибка подтверждения кода');
+    }
+
+    // Преобразуем SignUpResponse в SignCodeResponse
+    return SignCodeResponse(
+      accessToken: response.user.id, // или другое поле из response
+      refreshToken: null,
+      userId: response.user.id,
+      success: true,
     );
   }
 

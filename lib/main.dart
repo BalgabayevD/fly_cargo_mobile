@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_better_auth/core/flutter_better_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
@@ -13,6 +14,11 @@ Future<void> main() async {
   ServiceLocator().init();
 
   await configureDependencies();
+
+  await FlutterBetterAuth.initialize(
+    url: 'https://authfc.maguya.kz/api/auth',
+    // dio: getIt<Dio>(instanceName: 'private-dio'),
+  );
 
   runApp(
     BlocProvider<AuthBloc>(

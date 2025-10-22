@@ -13,10 +13,10 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:fly_cargo/core/config/core_module.dart' as _i624;
 import 'package:fly_cargo/core/network/api_config.dart' as _i469;
 import 'package:fly_cargo/core/network/dio_module.dart' as _i794;
+import 'package:fly_cargo/core/network/domain/behaviors/flutter_better_auth_session_behavior.dart'
+    as _i5;
 import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart'
     as _i856;
-import 'package:fly_cargo/core/network/domain/behaviors/super_tokens_session_behavior.dart'
-    as _i346;
 import 'package:fly_cargo/core/network/domain/interceptors/auth_interceptor.dart'
     as _i411;
 import 'package:fly_cargo/shared/auth/config/auth_module.dart' as _i522;
@@ -87,21 +87,31 @@ extension GetItInjectableX on _i174.GetIt {
     final coreModule = _$CoreModule();
     final dioModule = _$DioModule();
     final authModule = _$AuthModule();
-    final destinationModule = _$DestinationModule();
     final ordersModule = _$OrdersModule();
+    final destinationModule = _$DestinationModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
     );
     gh.singleton<_i993.Talker>(() => coreModule.talker);
     gh.singleton<_i469.ApiConfig>(() => _i469.ApiConfig());
+    gh.lazySingleton<_i214.AuthRepository>(() => _i505.AuthRepositoryImpl());
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
-      () => _i346.SuperTokensSessionBehavior(),
-      instanceName: 'super-tokens-session-behavior',
+      () => _i5.FlutterBetterAuthSessionBehavior(),
+      instanceName: 'flutter-better-auth-session-behavior',
     );
     gh.lazySingleton<_i361.Interceptor>(
       () => coreModule.logInterceptor(gh<_i993.Talker>()),
       instanceName: 'log-interceptor',
+    );
+    gh.factory<_i166.SignCodeUseCase>(
+      () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
+    );
+    gh.factory<_i919.SignInUseCase>(
+      () => _i919.SignInUseCase(gh<_i214.AuthRepository>()),
+    );
+    gh.factory<_i215.AuthStatusUseCase>(
+      () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
     );
     gh.lazySingleton<_i361.Interceptor>(
       () => _i411.AuthInterceptor(
@@ -111,6 +121,13 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       instanceName: 'auth-interceptor',
     );
+    gh.factory<_i138.AuthBloc>(
+      () => _i138.AuthBloc(
+        gh<_i919.SignInUseCase>(),
+        gh<_i166.SignCodeUseCase>(),
+        gh<_i215.AuthStatusUseCase>(),
+      ),
+    );
     gh.factory<_i361.Dio>(
       () => dioModule.getPublicDio(
         gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
@@ -119,12 +136,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i764.AuthRemoteSource>(
       () => authModule.provideAuthRemoteSource(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-        gh<_i469.ApiConfig>(),
-      ),
-    );
-    gh.factory<_i472.DestinationRemoteSource>(
-      () => destinationModule.provideDestinationRemoteSource(
         gh<_i361.Dio>(instanceName: 'public-dio'),
         gh<_i469.ApiConfig>(),
       ),
@@ -148,6 +159,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i618.TariffsRemoteSourceImpl>(
       () => _i618.TariffsRemoteSourceImpl(
         gh<_i361.Dio>(instanceName: 'public-dio'),
+      ),
+    );
+    gh.factory<_i472.DestinationRemoteSource>(
+      () => destinationModule.provideDestinationRemoteSource(
+        gh<_i361.Dio>(instanceName: 'private-dio'),
+        gh<_i469.ApiConfig>(),
       ),
     );
     gh.factory<_i49.CreateOrderUseCase>(
@@ -176,35 +193,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i583.GetAllCitiesUseCase>(),
       ),
     );
-    gh.lazySingleton<_i214.AuthRepository>(
-      () => _i505.AuthRepositoryImpl(
-        gh<_i764.AuthRemoteSource>(),
-        gh<_i856.GetSessionIdBehavior>(
-          instanceName: 'super-tokens-session-behavior',
-        ),
-      ),
-    );
     gh.factory<_i837.OrdersBloc>(
       () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
     );
     gh.factory<_i528.TariffsRepository>(
       () => _i711.TariffsRepositoryImpl(gh<_i618.TariffsRemoteSourceImpl>()),
-    );
-    gh.factory<_i166.SignCodeUseCase>(
-      () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i919.SignInUseCase>(
-      () => _i919.SignInUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i215.AuthStatusUseCase>(
-      () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i138.AuthBloc>(
-      () => _i138.AuthBloc(
-        gh<_i919.SignInUseCase>(),
-        gh<_i166.SignCodeUseCase>(),
-        gh<_i215.AuthStatusUseCase>(),
-      ),
     );
     gh.factory<_i133.GetTariffCategoriesUseCase>(
       () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
@@ -222,6 +215,6 @@ class _$DioModule extends _i794.DioModule {}
 
 class _$AuthModule extends _i522.AuthModule {}
 
-class _$DestinationModule extends _i993.DestinationModule {}
-
 class _$OrdersModule extends _i561.OrdersModule {}
+
+class _$DestinationModule extends _i993.DestinationModule {}
