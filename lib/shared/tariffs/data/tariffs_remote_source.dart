@@ -9,5 +9,10 @@ abstract class TariffsRemoteSource {
   factory TariffsRemoteSource(Dio dio, {String baseUrl}) = _TariffsRemoteSource;
 
   @GET('/api/v1/tariffs/categories')
-  Future<List<TariffCategoryModel>> getTariffCategories();
+  Future<TariffCategoriesApiResponse> getTariffCategories();
+
+  @POST('/api/v1/tariffs')
+  Future<CreateTariffResponse> createTariff(
+    @Body() CreateTariffRequest request,
+  );
 }

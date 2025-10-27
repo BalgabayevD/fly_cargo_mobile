@@ -19,6 +19,8 @@ import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart'
     as _i856;
 import 'package:fly_cargo/core/network/domain/interceptors/auth_interceptor.dart'
     as _i411;
+import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart'
+    as _i1019;
 import 'package:fly_cargo/shared/auth/config/auth_module.dart' as _i522;
 import 'package:fly_cargo/shared/auth/data/auth_remote_source.dart' as _i764;
 import 'package:fly_cargo/shared/auth/data/repositories/auth_repository_impl.dart'
@@ -71,6 +73,8 @@ import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source_impl.dart'
     as _i618;
 import 'package:fly_cargo/shared/tariffs/domain/repositories/tariffs_repository.dart'
     as _i528;
+import 'package:fly_cargo/shared/tariffs/domain/usecases/create_tariff_usecase.dart'
+    as _i369;
 import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart'
     as _i133;
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart'
@@ -203,11 +207,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
+    gh.factory<_i369.CreateTariffUseCase>(
+      () => _i369.CreateTariffUseCase(gh<_i528.TariffsRepository>()),
+    );
     gh.factory<_i133.GetTariffCategoriesUseCase>(
       () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
     );
     gh.factory<_i837.OrdersBloc>(
       () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
+    );
+    gh.factory<_i1019.TariffSelectionBloc>(
+      () => _i1019.TariffSelectionBloc(
+        getTariffCategoriesUseCase: gh<_i133.GetTariffCategoriesUseCase>(),
+      ),
     );
     gh.factory<_i545.TariffsBloc>(
       () => _i545.TariffsBloc(gh<_i133.GetTariffCategoriesUseCase>()),

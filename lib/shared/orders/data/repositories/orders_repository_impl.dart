@@ -15,11 +15,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
       final request = orderData.toCreateOrderRequest();
       final response = await _remoteSource.createOrder(request);
 
-      return OrderResult(
-        orderId: response.orderId,
-        status: response.status,
-        message: response.message,
-      );
+      return OrderResult.fromOrderModel(response.data);
     } catch (e) {
       throw OrdersException('Ошибка при создании заказа: $e');
     }
