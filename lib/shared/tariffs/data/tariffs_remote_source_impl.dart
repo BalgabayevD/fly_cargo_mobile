@@ -1,12 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class TariffsRemoteSourceImpl {
-  final Dio _dio;
+  final TariffsRemoteSource _remoteSource;
 
-  TariffsRemoteSourceImpl(@Named('public-dio') this._dio);
+  TariffsRemoteSourceImpl(this._remoteSource);
 
-  TariffsRemoteSource get instance => TariffsRemoteSource(_dio);
+  TariffsRemoteSource get instance => _remoteSource;
 }

@@ -23,7 +23,6 @@ class SignInUseCase {
 
   /// Проверяет валидность номера телефона
   bool _isValidPhoneNumber(String phoneNumber) {
-    // Простая проверка - начинается с + и содержит только цифры
     final phoneRegex = RegExp(r'^\+\d{10,15}$');
     return phoneRegex.hasMatch(phoneNumber);
   }

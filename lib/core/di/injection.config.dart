@@ -62,8 +62,11 @@ import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dar
     as _i49;
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
     as _i837;
+import 'package:fly_cargo/shared/tariffs/config/tariffs_module.dart' as _i584;
 import 'package:fly_cargo/shared/tariffs/data/repositories/tariffs_repository_impl.dart'
     as _i711;
+import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source.dart'
+    as _i1059;
 import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source_impl.dart'
     as _i618;
 import 'package:fly_cargo/shared/tariffs/domain/repositories/tariffs_repository.dart'
@@ -86,6 +89,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final coreModule = _$CoreModule();
     final dioModule = _$DioModule();
+    final tariffsModule = _$TariffsModule();
     final destinationModule = _$DestinationModule();
     final authModule = _$AuthModule();
     final ordersModule = _$OrdersModule();
@@ -128,6 +132,12 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       instanceName: 'private-dio',
     );
+    gh.factory<_i1059.TariffsRemoteSource>(
+      () => tariffsModule.provideTariffsRemoteSource(
+        gh<_i361.Dio>(instanceName: 'private-dio'),
+        gh<_i469.ApiConfig>(),
+      ),
+    );
     gh.factory<_i472.DestinationRemoteSource>(
       () => destinationModule.provideDestinationRemoteSource(
         gh<_i361.Dio>(instanceName: 'private-dio'),
@@ -137,7 +147,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i138.AuthBloc>(
       () => _i138.AuthBloc(
         gh<_i919.SignInUseCase>(),
-        gh<_i166.SignCodeUseCase>(),
         gh<_i215.AuthStatusUseCase>(),
       ),
     );
@@ -170,6 +179,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i583.GetAllCitiesUseCase>(),
       ),
     );
+    gh.factory<_i618.TariffsRemoteSourceImpl>(
+      () => _i618.TariffsRemoteSourceImpl(gh<_i1059.TariffsRemoteSource>()),
+    );
+    gh.factory<_i528.TariffsRepository>(
+      () => _i711.TariffsRepositoryImpl(gh<_i618.TariffsRemoteSourceImpl>()),
+    );
     gh.factory<_i764.AuthRemoteSource>(
       () => authModule.provideAuthRemoteSource(
         gh<_i361.Dio>(instanceName: 'public-dio'),
@@ -185,22 +200,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i919.OrdersRepository>(
       () => _i157.OrdersRepositoryImpl(gh<_i642.OrdersRemoteSource>()),
     );
-    gh.factory<_i618.TariffsRemoteSourceImpl>(
-      () => _i618.TariffsRemoteSourceImpl(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-      ),
-    );
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
-    gh.factory<_i837.OrdersBloc>(
-      () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
-    );
-    gh.factory<_i528.TariffsRepository>(
-      () => _i711.TariffsRepositoryImpl(gh<_i618.TariffsRemoteSourceImpl>()),
-    );
     gh.factory<_i133.GetTariffCategoriesUseCase>(
       () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
+    );
+    gh.factory<_i837.OrdersBloc>(
+      () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
     );
     gh.factory<_i545.TariffsBloc>(
       () => _i545.TariffsBloc(gh<_i133.GetTariffCategoriesUseCase>()),
@@ -212,6 +219,8 @@ extension GetItInjectableX on _i174.GetIt {
 class _$CoreModule extends _i624.CoreModule {}
 
 class _$DioModule extends _i794.DioModule {}
+
+class _$TariffsModule extends _i584.TariffsModule {}
 
 class _$DestinationModule extends _i993.DestinationModule {}
 

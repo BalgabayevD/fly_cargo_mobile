@@ -23,7 +23,6 @@ class _TariffCategoryDropdownState extends State<TariffCategoryDropdown> {
   @override
   void initState() {
     super.initState();
-    // Загружаем категории при инициализации
     context.read<TariffsBloc>().add(const LoadTariffCategoriesEvent());
   }
 

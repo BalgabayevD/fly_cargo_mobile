@@ -48,19 +48,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSendPackagePressed() {
-    // Проверяем статус аутентификации
     final authState = context.read<AuthBloc>().state;
 
-    // Отладочная информация
-    print('AuthState: ${authState.runtimeType}');
-    print('Is AuthUnauthenticated: ${authState is AuthUnauthenticated}');
-    print('Is AuthInitial: ${authState is AuthInitial}');
-
     if (authState is AuthUnauthenticated || authState is AuthInitial) {
-      print('Navigating to phone input');
       AuthRouter.navigateToPhoneInput(context);
     } else {
-      print('Opening address selection');
       _openAddressSelection();
     }
   }

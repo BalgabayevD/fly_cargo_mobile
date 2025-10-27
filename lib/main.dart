@@ -6,6 +6,7 @@ import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
+import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,14 +16,14 @@ Future<void> main() async {
 
   await configureDependencies();
 
-  await FlutterBetterAuth.initialize(
-    url: 'https://authfc.maguya.kz/api/auth',
-    // dio: getIt<Dio>(instanceName: 'private-dio'),
-  );
+  await FlutterBetterAuth.initialize(url: 'https://authfc.maguya.kz/api/auth');
 
   runApp(
-    BlocProvider<AuthBloc>(
-      create: (_) => getIt<AuthBloc>(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
+        BlocProvider<TariffsBloc>(create: (_) => getIt<TariffsBloc>()),
+      ],
       child: const App(),
     ),
   );

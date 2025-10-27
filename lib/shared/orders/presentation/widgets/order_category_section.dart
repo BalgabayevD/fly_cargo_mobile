@@ -17,26 +17,23 @@ class OrderCategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => context.read<TariffsBloc>(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const OrderSectionHeader(
-            icon: Icons.category_outlined,
-            title: 'Категория груза',
-            subtitle: 'Выберите тип отправляемого груза',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const OrderSectionHeader(
+          icon: Icons.category_outlined,
+          title: 'Категория груза',
+          subtitle: 'Выберите тип отправляемого груза',
+        ),
+        const SizedBox(height: 16),
+        OrderCard(
+          child: TariffCategoryDropdown(
+            selectedCategory: category,
+            onCategoryChanged: (value) =>
+                onCategoryChanged(value ?? 'documents'),
           ),
-          const SizedBox(height: 16),
-          OrderCard(
-            child: TariffCategoryDropdown(
-              selectedCategory: category,
-              onCategoryChanged: (value) =>
-                  onCategoryChanged(value ?? 'documents'),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

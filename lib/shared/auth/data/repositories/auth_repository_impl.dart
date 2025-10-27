@@ -82,7 +82,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<SignCodeResponse> refreshToken() {
-    // TODO: implement refreshToken
     throw UnimplementedError();
   }
 }
