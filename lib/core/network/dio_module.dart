@@ -19,6 +19,7 @@ abstract class DioModule {
         connectTimeout: const Duration(
           milliseconds: HttpConfig.connectionTimeout,
         ),
+        // headers: {'Content-Type': 'application/json'},
       ),
     )..interceptors.addAll([authInterceptor, logInterceptor]);
 

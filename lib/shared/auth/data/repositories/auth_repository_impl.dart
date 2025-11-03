@@ -4,13 +4,16 @@ import 'package:flutter_better_auth/plugins/phone/models/phone_body.dart';
 import 'package:flutter_better_auth/plugins/phone/models/send_otp/send_otp_response.dart';
 import 'package:flutter_better_auth/plugins/phone/models/verify/verify_phone_body.dart';
 import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
+import 'package:fly_cargo/shared/auth/data/auth_remote_source.dart';
 import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
 import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl();
+  final AuthRemoteSource _remoteSource;
+
+  AuthRepositoryImpl(this._remoteSource);
 
   @override
   Future<SendOTPResponse?> signIn(String phoneNumber) async {
@@ -83,6 +86,16 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<SignCodeResponse> refreshToken() {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<UserProfile> getUserProfile() async {
+    try {
+      final response = await _remoteSource.getUserProfile();
+      return response.data;
+    } catch (e) {
+      throw AuthException('Ошибка при получении профиля: $e');
+    }
   }
 }
 

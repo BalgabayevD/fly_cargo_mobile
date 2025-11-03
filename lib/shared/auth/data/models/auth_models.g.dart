@@ -71,3 +71,55 @@ Map<String, dynamic> _$SessionStatusResponseToJson(
   'userId': instance.userId,
   'expiresAt': instance.expiresAt?.toIso8601String(),
 };
+
+UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
+  id: (json['id'] as num?)?.toInt(),
+  createdAt: json['createdAt'] as String,
+  updatedAt: json['updatedAt'] as String,
+  deletedAt: json['deletedAt'] as String?,
+  uuid: json['uuid'] as String,
+  email: json['email'] as String,
+  phone: json['phone'] as String,
+  firstName: json['firstName'] as String,
+  lastName: json['lastName'] as String,
+  middleName: json['middleName'] as String,
+  birthDay: json['birthDay'] as String,
+  photo: json['photo'] as String,
+  city: json['city'] as String,
+  type: json['type'] as String,
+  iin: json['iin'] as String,
+  bin: json['bin'] as String,
+  access: json['access'],
+  role: json['role'] as String,
+);
+
+Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+      'deletedAt': instance.deletedAt,
+      'uuid': instance.uuid,
+      'email': instance.email,
+      'phone': instance.phone,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'middleName': instance.middleName,
+      'birthDay': instance.birthDay,
+      'photo': instance.photo,
+      'city': instance.city,
+      'type': instance.type,
+      'iin': instance.iin,
+      'bin': instance.bin,
+      'access': instance.access,
+      'role': instance.role,
+    };
+
+UserProfileResponse _$UserProfileResponseFromJson(Map<String, dynamic> json) =>
+    UserProfileResponse(
+      data: UserProfile.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UserProfileResponseToJson(
+  UserProfileResponse instance,
+) => <String, dynamic>{'data': instance.data};

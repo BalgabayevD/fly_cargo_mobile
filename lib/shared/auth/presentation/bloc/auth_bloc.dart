@@ -4,6 +4,7 @@ import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart';
+import 'package:fly_cargo/shared/auth/domain/usecases/get_user_profile_usecase.dart';
 import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
@@ -13,9 +14,13 @@ import 'package:injectable/injectable.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
   final AuthStatusUseCase _authStatusUseCase;
+  final GetUserProfileUseCase _getUserProfileUseCase;
 
-  AuthBloc(this._signInUseCase, this._authStatusUseCase)
-    : super(const AuthInitial()) {
+  AuthBloc(
+    this._signInUseCase,
+    this._authStatusUseCase,
+    this._getUserProfileUseCase,
+  ) : super(const AuthInitial()) {
     on<AuthInitialized>(_onInitialized);
     on<AuthRequestOTPRequested>(_onRequestOTP);
     on<AuthVerifyCodeRequested>(_verifyCode);
@@ -29,13 +34,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // await FlutterBetterAuth.client.signOut();
     final session = await FlutterBetterAuth.client.getSession();
     if (session.data?.session != null) {
-      emit(
-        AuthAuthenticated(
-          userType: UserType.client,
-          userId: session.data?.session.userId,
-          accessToken: session.data?.session.token,
-        ),
-      );
+      try {
+        // Загружаем профиль пользователя после авторизации
+        final userProfile = await _getUserProfileUseCase();
+        emit(
+          AuthAuthenticated(
+            userType: UserType.client,
+            userId: session.data?.session.userId,
+            accessToken: session.data?.session.token,
+            userProfile: userProfile,
+          ),
+        );
+      } catch (e) {
+        // Если не удалось загрузить профиль, все равно считаем пользователя авторизованным
+        emit(
+          AuthAuthenticated(
+            userType: UserType.client,
+            userId: session.data?.session.userId,
+            accessToken: session.data?.session.token,
+          ),
+        );
+      }
     }
   }
 
@@ -80,13 +99,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (isAuthenticated) {
         final token = await _authStatusUseCase.getCurrentToken();
 
-        emit(
-          AuthAuthenticated(
-            userType: UserType.client,
-            userId: sessionStatus?.session.userId,
-            accessToken: token,
-          ),
-        );
+        try {
+          // Загружаем профиль пользователя после успешной авторизации
+          final userProfile = await _getUserProfileUseCase();
+          emit(
+            AuthAuthenticated(
+              userType: UserType.client,
+              userId: sessionStatus?.session.userId,
+              accessToken: token,
+              userProfile: userProfile,
+            ),
+          );
+        } catch (e) {
+          // Если не удалось загрузить профиль, все равно считаем пользователя авторизованным
+          emit(
+            AuthAuthenticated(
+              userType: UserType.client,
+              userId: sessionStatus?.session.userId,
+              accessToken: token,
+            ),
+          );
+        }
       } else {
         emit(const AuthUnauthenticated());
       }

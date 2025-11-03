@@ -6,6 +6,7 @@ import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.
 import 'package:fly_cargo/features/home/presentation/create_tariff_page.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
@@ -109,11 +110,13 @@ class TariffDetailsContent extends StatefulWidget {
 class _TariffDetailsContentState extends State<TariffDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
+  late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
 
   @override
   void initState() {
     super.initState();
     _ordersBloc = getIt<OrdersBloc>();
+    _uploadOrderPhotoUseCase = getIt<UploadOrderPhotoUseCase>();
 
     // Слушаем изменения состояния OrdersBloc
     _ordersBloc.stream.listen((state) {
@@ -369,44 +372,62 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
     );
   }
 
-  void _createOrder(BuildContext context) {
+  Future<void> _createOrder(BuildContext context) async {
     if (_formData == null) return;
 
-    // Создаем OrderData из OrderFormData
-    final orderData = OrderData(
-      isDefect: _formData!.isDefect,
-      isFragile: _formData!.isFragile,
-      category: _formData!.category,
-      comment: _formData!.comment,
-      contentPhotos: const [], // TODO: Добавить загрузку фото
-      description: _formData!.description,
-      fromAddress: widget.fromAddress?.fullAddress ?? '',
-      fromApartment: _formData!.fromApartment,
-      fromCityId: widget.fromAddress?.cityId != null
-          ? int.tryParse(widget.fromAddress!.cityId) ?? 0
-          : 0,
-      fromEntrance: _formData!.fromEntrance,
-      fromFloor: _formData!.fromFloor,
-      fromLatitude: 0.0, // TODO: Получить из адреса
-      fromLongitude: 0.0, // TODO: Получить из адреса
-      height: widget.tariff.height ?? 0.0,
-      length: widget.tariff.length ?? 0.0,
-      photos: const [], // TODO: Добавить загрузку фото
-      tariffId: widget.tariff.id,
-      toAddress: widget.toAddress?.fullAddress ?? '',
-      toApartment: _formData!.toApartment,
-      toCityId: widget.toAddress?.cityId != null
-          ? int.tryParse(widget.toAddress!.cityId) ?? 0
-          : 0,
-      toEntrance: _formData!.toEntrance,
-      toFloor: _formData!.toFloor,
-      toLatitude: 0.0, // TODO: Получить из адреса
-      toLongitude: 0.0, // TODO: Получить из адреса
-      volumetricWeight: widget.tariff.volumetricWeight ?? 0.0,
-      weight: widget.tariff.weight ?? 0.0,
-      width: widget.tariff.width ?? 0.0,
-    );
+    try {
+      // Загружаем фотографии если есть
+      List<String> contentPhotoIds = [];
+      if (_formData!.contentPhotos.isNotEmpty) {
+        for (final photoFile in _formData!.contentPhotos) {
+          final photoId = await _uploadOrderPhotoUseCase(photoFile);
+          contentPhotoIds.add(photoId);
+        }
+      }
 
-    _ordersBloc.add(CreateOrderEvent(orderData: orderData));
+      // Создаем OrderData из OrderFormData
+      final orderData = OrderData(
+        isDefect: _formData!.isDefect,
+        isFragile: _formData!.isFragile,
+        category: _formData!.category,
+        comment: _formData!.comment,
+        contentPhotos: contentPhotoIds,
+        description: _formData!.description,
+        fromAddress: widget.fromAddress?.fullAddress ?? '',
+        fromApartment: _formData!.fromApartment,
+        fromCityId: widget.fromAddress?.cityId != null
+            ? int.tryParse(widget.fromAddress!.cityId) ?? 0
+            : 0,
+        fromEntrance: _formData!.fromEntrance,
+        fromFloor: _formData!.fromFloor,
+        fromLatitude: 0.0, // TODO: Получить из адреса
+        fromLongitude: 0.0, // TODO: Получить из адреса
+        height: widget.tariff.height ?? 0.0,
+        length: widget.tariff.length ?? 0.0,
+        photos: const [], // TODO: Добавить загрузку фото
+        tariffId: widget.tariff.id,
+        toAddress: widget.toAddress?.fullAddress ?? '',
+        toApartment: _formData!.toApartment,
+        toCityId: widget.toAddress?.cityId != null
+            ? int.tryParse(widget.toAddress!.cityId) ?? 0
+            : 0,
+        toEntrance: _formData!.toEntrance,
+        toFloor: _formData!.toFloor,
+        toLatitude: 0.0, // TODO: Получить из адреса
+        toLongitude: 0.0, // TODO: Получить из адреса
+        volumetricWeight: widget.tariff.volumetricWeight ?? 0.0,
+        weight: widget.tariff.weight ?? 0.0,
+        width: widget.tariff.width ?? 0.0,
+      );
+
+      _ordersBloc.add(CreateOrderEvent(orderData: orderData));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Ошибка загрузки фотографий: $e'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
   }
 }

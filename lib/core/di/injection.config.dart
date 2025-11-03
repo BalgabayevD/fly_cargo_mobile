@@ -29,6 +29,8 @@ import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart'
     as _i214;
 import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart'
     as _i215;
+import 'package:fly_cargo/shared/auth/domain/usecases/get_user_profile_usecase.dart'
+    as _i439;
 import 'package:fly_cargo/shared/auth/domain/usecases/sign_code_usecase.dart'
     as _i166;
 import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart'
@@ -62,6 +64,8 @@ import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.da
     as _i919;
 import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart'
     as _i49;
+import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart'
+    as _i910;
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
     as _i837;
 import 'package:fly_cargo/shared/tariffs/config/tariffs_module.dart' as _i584;
@@ -95,15 +99,14 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     final tariffsModule = _$TariffsModule();
     final destinationModule = _$DestinationModule();
-    final authModule = _$AuthModule();
     final ordersModule = _$OrdersModule();
+    final authModule = _$AuthModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
     );
     gh.singleton<_i993.Talker>(() => coreModule.talker);
     gh.singleton<_i469.ApiConfig>(() => _i469.ApiConfig());
-    gh.lazySingleton<_i214.AuthRepository>(() => _i505.AuthRepositoryImpl());
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
       () => _i5.FlutterBetterAuthSessionBehavior(),
       instanceName: 'flutter-better-auth-session-behavior',
@@ -119,15 +122,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Interceptor>(
       () => coreModule.logInterceptor(gh<_i993.Talker>()),
       instanceName: 'log-interceptor',
-    );
-    gh.factory<_i166.SignCodeUseCase>(
-      () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i919.SignInUseCase>(
-      () => _i919.SignInUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i215.AuthStatusUseCase>(
-      () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
     );
     gh.factory<_i361.Dio>(
       () => dioModule.getPrivateDio(
@@ -148,10 +142,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i469.ApiConfig>(),
       ),
     );
-    gh.factory<_i138.AuthBloc>(
-      () => _i138.AuthBloc(
-        gh<_i919.SignInUseCase>(),
-        gh<_i215.AuthStatusUseCase>(),
+    gh.factory<_i642.OrdersRemoteSource>(
+      () => ordersModule.provideOrdersRemoteSource(
+        gh<_i361.Dio>(instanceName: 'private-dio'),
+        gh<_i469.ApiConfig>(),
       ),
     );
     gh.lazySingleton<_i405.DestinationRepository>(
@@ -195,14 +189,33 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i469.ApiConfig>(),
       ),
     );
-    gh.factory<_i642.OrdersRemoteSource>(
-      () => ordersModule.provideOrdersRemoteSource(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-        gh<_i469.ApiConfig>(),
-      ),
+    gh.lazySingleton<_i214.AuthRepository>(
+      () => _i505.AuthRepositoryImpl(gh<_i764.AuthRemoteSource>()),
     );
     gh.lazySingleton<_i919.OrdersRepository>(
       () => _i157.OrdersRepositoryImpl(gh<_i642.OrdersRemoteSource>()),
+    );
+    gh.factory<_i439.GetUserProfileUseCase>(
+      () => _i439.GetUserProfileUseCase(gh<_i214.AuthRepository>()),
+    );
+    gh.factory<_i166.SignCodeUseCase>(
+      () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
+    );
+    gh.factory<_i919.SignInUseCase>(
+      () => _i919.SignInUseCase(gh<_i214.AuthRepository>()),
+    );
+    gh.factory<_i215.AuthStatusUseCase>(
+      () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
+    );
+    gh.factory<_i138.AuthBloc>(
+      () => _i138.AuthBloc(
+        gh<_i919.SignInUseCase>(),
+        gh<_i215.AuthStatusUseCase>(),
+        gh<_i439.GetUserProfileUseCase>(),
+      ),
+    );
+    gh.factory<_i910.UploadOrderPhotoUseCase>(
+      () => _i910.UploadOrderPhotoUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
@@ -236,6 +249,6 @@ class _$TariffsModule extends _i584.TariffsModule {}
 
 class _$DestinationModule extends _i993.DestinationModule {}
 
-class _$AuthModule extends _i522.AuthModule {}
-
 class _$OrdersModule extends _i561.OrdersModule {}
+
+class _$AuthModule extends _i522.AuthModule {}

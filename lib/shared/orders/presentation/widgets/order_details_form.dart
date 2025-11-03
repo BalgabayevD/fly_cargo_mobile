@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_address_details_section.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_category_section.dart';
@@ -5,6 +7,7 @@ import 'package:fly_cargo/shared/orders/presentation/widgets/order_comment_secti
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_description_section.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_options_section.dart';
+import 'package:fly_cargo/shared/orders/presentation/widgets/photo_upload_widget.dart';
 
 class OrderDetailsForm extends StatefulWidget {
   final Function(OrderFormData) onDataChanged;
@@ -29,6 +32,7 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
   bool _isDefect = false;
   bool _isFragile = false;
   String _category = 'Обычный';
+  List<File> _contentPhotos = [];
 
   @override
   void dispose() {
@@ -56,6 +60,7 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
       toApartment: _toApartmentController.text,
       toEntrance: _toEntranceController.text,
       toFloor: _toFloorController.text,
+      contentPhotos: _contentPhotos,
     );
     widget.onDataChanged(data);
   }
@@ -125,6 +130,17 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
           OrderDescriptionSection(
             controller: _descriptionController,
             onDataChanged: _notifyDataChanged,
+          ),
+          const SizedBox(height: 24),
+
+          PhotoUploadWidget(
+            photos: _contentPhotos,
+            onPhotosChanged: (photos) {
+              setState(() {
+                _contentPhotos = photos;
+              });
+              _notifyDataChanged();
+            },
           ),
         ],
       ),

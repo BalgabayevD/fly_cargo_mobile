@@ -12,15 +12,15 @@ class AuthInterceptor extends Interceptor {
   );
 
   @override
-  void onRequest(
+  Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
     final token = await _accessTokenBehavior.getSessionId();
 
     if (token != null && token.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $token';
+      options.headers['Cookie'] = token;
     }
-    super.onRequest(options, handler);
+    handler.next(options);
   }
 }
