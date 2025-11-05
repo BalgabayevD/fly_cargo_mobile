@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  yandex_mapkit: 3.4.0
+  yandex_maps_mapkit_lite: ^4.19.0-beta
   flutter_bloc: ^9.1.1
   json_annotation: ^4.9.0
   dio: ^5.9.0
