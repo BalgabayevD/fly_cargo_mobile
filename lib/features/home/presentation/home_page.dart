@@ -24,8 +24,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String a77 = '';
-  String b77 = '';
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
 
@@ -99,8 +97,9 @@ class _HomePageState extends State<HomePage> {
             const YandexMapScreen(),
             DraggableScrollableSheet(
               initialChildSize: 0.5,
+              snap: true,
               minChildSize: 0.5,
-              maxChildSize: 0.8,
+              maxChildSize: 0.5,
               builder: (context, scrollController) {
                 return Container(
                   decoration: const BoxDecoration(
@@ -116,7 +115,6 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(16),
                     controller: scrollController,
                     children: [
-                      // Индикатор для DraggableScrollableSheet
                       Center(
                         child: Container(
                           width: 40,
@@ -177,7 +175,6 @@ class _HomePageState extends State<HomePage> {
                       else
                         Column(
                           children: [
-                            // Заголовок с кнопкой изменения
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
@@ -261,7 +258,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            // Адрес отправки
                             GestureDetector(
                               onTap: _openAddressSelection,
                               child: Container(
@@ -358,13 +354,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            // Divider
                             Container(
                               height: 1,
                               color: const Color(0xFFE0E0E0),
                             ),
                             const SizedBox(height: 12),
-                            // Адрес доставки
                             GestureDetector(
                               onTap: _openAddressSelection,
                               child: Container(
@@ -460,7 +454,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            // Выбор коробки
                             if (_fromAddress != null && _toAddress != null) ...[
                               const SizedBox(height: 24),
                               Container(
@@ -511,7 +504,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                               const SizedBox(height: 16),
                               const TariffSelectionWidget(),
-                              // Кнопка выбора тарифа
                               BlocBuilder<
                                 TariffSelectionBloc,
                                 TariffSelectionState
@@ -565,11 +557,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openBoxDetailsPage(BuildContext context, String boxType) {
-    // Проверяем, является ли boxType числом (ID тарифа)
     final tariffId = int.tryParse(boxType);
 
     if (tariffId != null) {
-      // Если это ID тарифа, открываем TariffDetailsPage
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -581,7 +571,6 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else {
-      // Если это строка, открываем BoxDetailsPage
       Navigator.push(
         context,
         MaterialPageRoute(

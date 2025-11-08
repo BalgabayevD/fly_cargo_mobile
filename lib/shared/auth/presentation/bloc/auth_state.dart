@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 
-/// Базовый класс для состояний аутентификации
 abstract class AuthState extends Equatable {
   const AuthState();
 
@@ -10,17 +9,14 @@ abstract class AuthState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Начальное состояние
 class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-/// Состояние загрузки
 class AuthLoading extends AuthState {
   const AuthLoading();
 }
 
-/// Состояние успешной аутентификации
 class AuthAuthenticated extends AuthState {
   final UserType userType;
   final String? userId;
@@ -37,7 +33,6 @@ class AuthAuthenticated extends AuthState {
   @override
   List<Object?> get props => [userType, userId, accessToken, userProfile];
 
-  /// Создать копию состояния с обновленными полями
   AuthAuthenticated copyWith({
     UserType? userType,
     String? userId,
@@ -53,7 +48,6 @@ class AuthAuthenticated extends AuthState {
   }
 }
 
-/// Состояние неавторизованного пользователя
 class AuthUnauthenticated extends AuthState {
   final String? message;
 
@@ -63,7 +57,6 @@ class AuthUnauthenticated extends AuthState {
   List<Object?> get props => [message];
 }
 
-/// Состояние ошибки
 class AuthError extends AuthState {
   final String message;
   final String? errorCode;
@@ -74,7 +67,6 @@ class AuthError extends AuthState {
   List<Object?> get props => [message, errorCode];
 }
 
-/// Состояние успешной отправки кода
 class AuthCodeSent extends AuthState {
   final String deviceId;
   final String preAuthSessionId;

@@ -41,7 +41,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
 
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(
           builder: (context) => ChooseAddressPage(city: city.name),
@@ -53,7 +52,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           _fromAddress = AddressModel(
             city: address.city,
             address: address.address,
-            cityId: city.id, // Используем ID выбранного города
+            cityId: city.id,
             fullAddress: address.fullAddress,
           );
         });
@@ -62,7 +61,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
   }
 
   Future<void> _selectToAddress() async {
-    // Проверяем, что выбран город отправки
     if (_fromAddress == null) {
       _showAlert(
         'Сначала выберите город отправки',
@@ -82,8 +80,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
     );
 
     if (city != null) {
-      final address = await Navigator.push<AddressModel>(
-        // ignore: use_build_context_synchronously
+      final address = await Navigator.push<AddressModel>( 
         context,
         MaterialPageRoute(
           builder: (context) => ChooseAddressPage(city: city.name),
@@ -95,7 +92,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           _toAddress = AddressModel(
             city: address.city,
             address: address.address,
-            cityId: city.id, // Используем ID выбранного города
+            cityId: city.id,
             fullAddress: address.fullAddress,
           );
         });
@@ -297,7 +294,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               child: ElevatedButton(
                 onPressed: (_fromAddress != null && _toAddress != null)
                     ? () {
-                        // Вызываем callback с выбранными адресами
                         widget.onAddressesSelected?.call(
                           _fromAddress!,
                           _toAddress!,
