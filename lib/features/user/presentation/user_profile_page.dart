@@ -1,75 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/user/models/user_profile_model.dart';
 import 'package:fly_cargo/features/user/presentation/user_cost_calculator_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_edit_profile_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_notifications_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_order_history_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_payment_cards_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_payments_page.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 
-class UserProfilePage extends StatefulWidget {
+class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
-
-  @override
-  State<UserProfilePage> createState() => _UserProfilePageState();
-}
-
-class _UserProfilePageState extends State<UserProfilePage> {
-  late UserProfile _profile;
-
-  @override
-  void initState() {
-    super.initState();
-    _profile = _getMockProfile();
-  }
-
-  UserProfile _getMockProfile() {
-    return UserProfile(
-      id: 'user_1',
-      name: 'Дамир',
-      phone: '+7 777 380 6602',
-      email: 'damir@example.com',
-      joinDate: DateTime(2024, 1, 15),
-      status: 'active',
-      paymentCards: [
-        PaymentCard(
-          id: 'card_1',
-          type: 'Visa',
-          lastFourDigits: '2395',
-          holderName: 'Дамир Токмашов',
-          isPrimary: true,
-          expiryDate: DateTime(2025, 12, 31),
-        ),
-      ],
-      orderHistory: [
-        Order(
-          id: 'order_1',
-          fromAddress: 'Алматы, ул. Абая 1',
-          toAddress: 'Астана, ул. Республики 10',
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-          status: OrderStatus.completed,
-          cost: 2500.0,
-          description: 'Документы',
-        ),
-        Order(
-          id: 'order_2',
-          fromAddress: 'Алматы, ул. Достык 15',
-          toAddress: 'Алматы, ул. Сатпаева 25',
-          createdAt: DateTime.now().subtract(const Duration(days: 5)),
-          status: OrderStatus.completed,
-          cost: 1200.0,
-          description: 'Пакет',
-        ),
-      ],
-      notificationSettings: const NotificationSettings(
-        orderUpdates: true,
-        promotions: true,
-        paymentNotifications: true,
-        systemNotifications: false,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,36 +37,75 @@ class _UserProfilePageState extends State<UserProfilePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit, color: Color(0xFF333333)),
-            onPressed: () => _editProfile(),
+            onPressed: () => _editProfile(context),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            // Аватар и основная информация
-            _buildProfileHeader(),
-            const SizedBox(height: 30),
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            loaded: (profile, daysSinceCreated) => SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  // Аватар и основная информация
+                  _buildProfileHeader(profile),
+                  const SizedBox(height: 30),
 
-            // Статистика пользователя
-            _buildStatsSection(),
-            const SizedBox(height: 30),
+                  // Статистика пользователя
+                  _buildStatsSection(daysSinceCreated),
+                  const SizedBox(height: 30),
 
-            // Первый блок меню (пользовательские настройки)
-            _buildUserMenuSection(),
-            const SizedBox(height: 20),
+                  // Первый блок меню (пользовательские настройки)
+                  _buildUserMenuSection(context, profile),
+                  const SizedBox(height: 20),
 
-            // Второй блок меню (сервисы)
-            _buildServicesMenuSection(),
-            const SizedBox(height: 20),
-          ],
-        ),
+                  // Второй блок меню (сервисы)
+                  _buildServicesMenuSection(context, profile),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+            error: (message) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 64,
+                    color: Color(0xFF999999),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    message,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF666666),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<ProfileBloc>().add(
+                        const ProfileEvent.loadProfile(),
+                      );
+                    },
+                    child: const Text('Повторить'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(dynamic profile) {
+    final fullName = '${profile.firstName} ${profile.lastName}'.trim();
     return Column(
       children: [
         // Аватар
@@ -135,10 +117,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
             shape: BoxShape.circle,
             border: Border.all(color: const Color(0xFFE0E0E0), width: 2),
           ),
-          child: _profile.avatarUrl != null
+          child: profile.photo.isNotEmpty
               ? ClipOval(
                   child: Image.network(
-                    _profile.avatarUrl!,
+                    profile.photo,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         _buildDefaultAvatar(),
@@ -150,7 +132,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
         // Имя
         Text(
-          _profile.name,
+          fullName.isNotEmpty ? fullName : 'Пользователь',
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
@@ -161,36 +143,30 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
         // Телефон
         Text(
-          _profile.phone,
+          profile.phone,
           style: const TextStyle(fontSize: 16, color: Color(0xFF666666)),
-        ),
-        const SizedBox(height: 8),
-
-        // Статус
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: _profile.statusColor.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Text(
-            _profile.statusText,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: _profile.statusColor,
-            ),
-          ),
         ),
       ],
     );
+  }
+
+  String _getDaysText(int days) {
+    if (days % 10 == 1 && days % 100 != 11) {
+      return 'день';
+    } else if (days % 10 >= 2 &&
+        days % 10 <= 4 &&
+        (days % 100 < 10 || days % 100 >= 20)) {
+      return 'дня';
+    } else {
+      return 'дней';
+    }
   }
 
   Widget _buildDefaultAvatar() {
     return const Icon(Icons.person, size: 50, color: Color(0xFF999999));
   }
 
-  Widget _buildStatsSection() {
+  Widget _buildStatsSection(int daysSinceCreated) {
     return AppCard(
       variant: AppCardVariant.filled,
       child: Column(
@@ -209,7 +185,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Expanded(
                 child: _buildStatItem(
                   'Заказы',
-                  '${_profile.orderHistory.length}',
+                  '0',
                   Icons.shopping_bag,
                   const Color(0xFF007AFF),
                 ),
@@ -217,7 +193,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Expanded(
                 child: _buildStatItem(
                   'Карты',
-                  '${_profile.paymentCards.length}',
+                  '0',
                   Icons.credit_card,
                   const Color(0xFF34C759),
                 ),
@@ -225,7 +201,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Expanded(
                 child: _buildStatItem(
                   'С нами',
-                  '${DateTime.now().difference(_profile.joinDate).inDays} дн',
+                  '$daysSinceCreated ${_getDaysText(daysSinceCreated)}',
                   Icons.calendar_today,
                   const Color(0xFFFF9500),
                 ),
@@ -272,7 +248,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget _buildUserMenuSection() {
+  Widget _buildUserMenuSection(BuildContext context, dynamic profile) {
     return AppCard(
       variant: AppCardVariant.outlined,
       padding: EdgeInsets.zero,
@@ -282,35 +258,35 @@ class _UserProfilePageState extends State<UserProfilePage> {
             icon: Icons.person,
             title: 'Мой профиль',
             subtitle: 'Личная информация',
-            onTap: () => _editProfile(),
+            onTap: () => _editProfile(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           _buildMenuItem(
             icon: Icons.credit_card,
             title: 'Платежные карты',
-            subtitle: _profile.primaryCard?.displayName ?? 'Добавить карту',
-            onTap: () => _openPaymentCardsPage(),
+            subtitle: 'Добавить карту',
+            onTap: () => _openPaymentCardsPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           _buildMenuItem(
             icon: Icons.notifications,
             title: 'Уведомления',
             subtitle: 'Настройки уведомлений',
-            onTap: () => _openNotificationsPage(),
+            onTap: () => _openNotificationsPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           _buildMenuItem(
             icon: Icons.history,
             title: 'История заказов',
-            subtitle: '${_profile.orderHistory.length} заказов',
-            onTap: () => _openOrderHistoryPage(),
+            subtitle: '0 заказов',
+            onTap: () => _openOrderHistoryPage(context),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildServicesMenuSection() {
+  Widget _buildServicesMenuSection(BuildContext context, dynamic profile) {
     return AppCard(
       variant: AppCardVariant.outlined,
       padding: EdgeInsets.zero,
@@ -320,21 +296,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
             icon: Icons.payment,
             title: 'Платежи',
             subtitle: 'История транзакций',
-            onTap: () => _openPaymentsPage(),
+            onTap: () => _openPaymentsPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           _buildMenuItem(
             icon: Icons.calculate,
             title: 'Калькулятор стоимости',
             subtitle: 'Расчет доставки',
-            onTap: () => _openCostCalculatorPage(),
+            onTap: () => _openCostCalculatorPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           _buildMenuItem(
             icon: Icons.contact_phone,
             title: 'Поддержка',
-            subtitle: _profile.phone,
-            onTap: () => _openContactPage(),
+            subtitle: profile.phone,
+            onTap: () => _openContactPage(context),
           ),
         ],
       ),
@@ -378,49 +354,49 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  void _editProfile() {
+  void _editProfile(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserEditProfilePage()),
     );
   }
 
-  void _openPaymentCardsPage() {
+  void _openPaymentCardsPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserPaymentCardsPage()),
     );
   }
 
-  void _openNotificationsPage() {
+  void _openNotificationsPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserNotificationsPage()),
     );
   }
 
-  void _openOrderHistoryPage() {
+  void _openOrderHistoryPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserOrderHistoryPage()),
     );
   }
 
-  void _openPaymentsPage() {
+  void _openPaymentsPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserPaymentsPage()),
     );
   }
 
-  void _openCostCalculatorPage() {
+  void _openCostCalculatorPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserCostCalculatorPage()),
     );
   }
 
-  void _openContactPage() {
+  void _openContactPage(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Контактная информация'),

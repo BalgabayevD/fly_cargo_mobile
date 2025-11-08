@@ -15,6 +15,8 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,6 +63,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     context.read<AuthBloc>().add(AuthInitialized());
     context.read<TariffSelectionBloc>().add(LoadTariffCategoriesEvent());
+    context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
     super.initState();
   }
 
