@@ -13,6 +13,7 @@ class OrderFormData {
   final String toEntrance;
   final String toFloor;
   final List<File> contentPhotos;
+  final List<String> contentPhotoIds;
 
   const OrderFormData({
     required this.isDefect,
@@ -27,6 +28,7 @@ class OrderFormData {
     required this.toEntrance,
     required this.toFloor,
     this.contentPhotos = const [],
+    this.contentPhotoIds = const [],
   });
 
   OrderFormData copyWith({
@@ -42,6 +44,7 @@ class OrderFormData {
     String? toEntrance,
     String? toFloor,
     List<File>? contentPhotos,
+    List<String>? contentPhotoIds,
   }) {
     return OrderFormData(
       isDefect: isDefect ?? this.isDefect,
@@ -56,6 +59,7 @@ class OrderFormData {
       toEntrance: toEntrance ?? this.toEntrance,
       toFloor: toFloor ?? this.toFloor,
       contentPhotos: contentPhotos ?? this.contentPhotos,
+      contentPhotoIds: contentPhotoIds ?? this.contentPhotoIds,
     );
   }
 }

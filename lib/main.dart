@@ -25,11 +25,11 @@ Future<void> main() async {
   FlutterBetterAuth.dioClient.interceptors.add(
     InterceptorsWrapper(
       onResponse: (res, handler) async {
-        final auth_token = res.headers.map['set-auth-token'];
+        final authToken = res.headers.map['set-auth-token'];
 
         await SharedPreferences.getInstance().then((store) {
-          if (auth_token != null && auth_token.isNotEmpty) {
-            store.setString('auth-token', auth_token.first);
+          if (authToken != null && authToken.isNotEmpty) {
+            store.setString('auth-token', authToken.first);
           }
         });
         handler.next(res);

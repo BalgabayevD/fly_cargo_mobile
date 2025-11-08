@@ -537,20 +537,22 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ],
                         ),
-                      const SizedBox(height: 16),
-                      ListTile(
-                        title: Text('Настольный светильник'),
-                        subtitle: Text('Атырау, просп. Абая, 94'),
-                        leading: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                            borderRadius: BorderRadius.circular(10),
+                      if (_fromAddress == null || _toAddress == null) ...[
+                        const SizedBox(height: 16),
+                        ListTile(
+                          title: Text('Настольный светильник'),
+                          subtitle: Text('Атырау, просп. Абая, 94'),
+                          leading: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
-                      ),
-                      Divider(color: Color(0xFFD0CFCE), height: 1),
+                        Divider(color: Color(0xFFD0CFCE), height: 1),
+                      ],
                     ],
                   ),
                 );

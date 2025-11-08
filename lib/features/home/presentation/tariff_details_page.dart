@@ -6,7 +6,6 @@ import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.
 import 'package:fly_cargo/features/home/presentation/create_tariff_page.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
-import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
@@ -110,13 +109,11 @@ class TariffDetailsContent extends StatefulWidget {
 class _TariffDetailsContentState extends State<TariffDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
-  late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
 
   @override
   void initState() {
     super.initState();
     _ordersBloc = getIt<OrdersBloc>();
-    _uploadOrderPhotoUseCase = getIt<UploadOrderPhotoUseCase>();
 
     // Слушаем изменения состояния OrdersBloc
     _ordersBloc.stream.listen((state) {
@@ -376,22 +373,12 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
     if (_formData == null) return;
 
     try {
-      // Загружаем фотографии если есть
-      List<String> contentPhotoIds = [];
-      if (_formData!.contentPhotos.isNotEmpty) {
-        for (final photoFile in _formData!.contentPhotos) {
-          final photoId = await _uploadOrderPhotoUseCase(photoFile);
-          contentPhotoIds.add(photoId);
-        }
-      }
-
-      // Создаем OrderData из OrderFormData
       final orderData = OrderData(
         isDefect: _formData!.isDefect,
         isFragile: _formData!.isFragile,
         category: _formData!.category,
         comment: _formData!.comment,
-        contentPhotos: contentPhotoIds,
+        contentPhotos: _formData!.contentPhotoIds,
         description: _formData!.description,
         fromAddress: widget.fromAddress?.fullAddress ?? '',
         fromApartment: _formData!.fromApartment,

@@ -100,7 +100,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
   toEntrance: json['toEntrance'] as String,
   toFloor: json['toFloor'] as String,
   toAddress: json['toAddress'] as String,
-  price: (json['price'] as num).toDouble(),
+  price: (json['price'] as num?)?.toDouble(),
   tariffId: (json['tariffId'] as num).toInt(),
   tariff: json['tariff'] == null
       ? null

@@ -18,9 +18,9 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     await SharedPreferences.getInstance().then((store) {
-      final auth_token = store.getString('auth-token');
-      if (auth_token != null) {
-        options.headers['Authorization'] = "Bearer $auth_token";
+      final authToken = store.getString('auth-token');
+      if (authToken != null) {
+        options.headers['Authorization'] = "Bearer $authToken";
       }
       handler.next(options);
     });

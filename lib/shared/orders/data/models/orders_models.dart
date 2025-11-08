@@ -104,7 +104,7 @@ class OrderModel {
   final String toEntrance;
   final String toFloor;
   final String toAddress;
-  final double price;
+  final double? price;
   final int tariffId;
   final TariffModel? tariff;
   final String comment;
@@ -147,7 +147,7 @@ class OrderModel {
     required this.toEntrance,
     required this.toFloor,
     required this.toAddress,
-    required this.price,
+    this.price,
     required this.tariffId,
     this.tariff,
     required this.comment,
