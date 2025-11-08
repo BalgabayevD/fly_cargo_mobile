@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/box_selection_bloc.dart';
+import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/box_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/box_selection_widget.dart';
+import 'package:fly_cargo/features/home/presentation/tariff_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/select_box_button.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/tariff_selection_widget.dart';
 import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
@@ -60,6 +62,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     context.read<AuthBloc>().add(AuthInitialized());
+    context.read<TariffSelectionBloc>().add(LoadTariffCategoriesEvent());
     super.initState();
   }
 
@@ -507,19 +510,22 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              const BoxSelectionWidget(),
-                              // Кнопка выбора коробки
-                              BlocBuilder<BoxSelectionBloc, BoxSelectionState>(
+                              const TariffSelectionWidget(),
+                              // Кнопка выбора тарифа
+                              BlocBuilder<
+                                TariffSelectionBloc,
+                                TariffSelectionState
+                              >(
                                 builder: (context, state) {
-                                  if (state is BoxSelectionLoaded &&
-                                      state.selectedBoxType != null) {
+                                  if (state is TariffSelectionLoaded &&
+                                      state.selectedTariffId != null) {
                                     return Column(
                                       children: [
                                         const SizedBox(height: 20),
                                         SelectBoxButton(
                                           onTap: () => _openBoxDetailsPage(
                                             context,
-                                            state.selectedBoxType!,
+                                            state.selectedTariffId.toString(),
                                           ),
                                         ),
                                       ],
@@ -531,20 +537,22 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ],
                         ),
-                      const SizedBox(height: 16),
-                      ListTile(
-                        title: Text('Настольный светильник'),
-                        subtitle: Text('Атырау, просп. Абая, 94'),
-                        leading: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                            borderRadius: BorderRadius.circular(10),
+                      if (_fromAddress == null || _toAddress == null) ...[
+                        const SizedBox(height: 16),
+                        ListTile(
+                          title: Text('Настольный светильник'),
+                          subtitle: Text('Атырау, просп. Абая, 94'),
+                          leading: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
-                      ),
-                      Divider(color: Color(0xFFD0CFCE), height: 1),
+                        Divider(color: Color(0xFFD0CFCE), height: 1),
+                      ],
                     ],
                   ),
                 );
@@ -557,16 +565,34 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openBoxDetailsPage(BuildContext context, String boxType) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BoxDetailsPage(
-          boxType: boxType,
-          fromAddress: _fromAddress,
-          toAddress: _toAddress,
+    // Проверяем, является ли boxType числом (ID тарифа)
+    final tariffId = int.tryParse(boxType);
+
+    if (tariffId != null) {
+      // Если это ID тарифа, открываем TariffDetailsPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TariffDetailsPage(
+            tariffId: tariffId,
+            fromAddress: _fromAddress,
+            toAddress: _toAddress,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      // Если это строка, открываем BoxDetailsPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BoxDetailsPage(
+            boxType: boxType,
+            fromAddress: _fromAddress,
+            toAddress: _toAddress,
+          ),
+        ),
+      );
+    }
   }
 
   void _openUserProfile(BuildContext context) {

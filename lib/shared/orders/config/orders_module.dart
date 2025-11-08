@@ -7,9 +7,9 @@ import 'package:injectable/injectable.dart';
 abstract class OrdersModule {
   @factoryMethod
   OrdersRemoteSource provideOrdersRemoteSource(
-    @Named('public-dio') Dio publicDio,
+    @Named('private-dio') Dio privateDio,
     ApiConfig dataSourceConfig,
   ) {
-    return OrdersRemoteSource(publicDio, baseUrl: ApiConfig.baseUrl);
+    return OrdersRemoteSource(privateDio, baseUrl: ApiConfig.baseUrl);
   }
 }

@@ -27,4 +27,8 @@ abstract class AuthRemoteSource {
   /// Выход из системы
   @POST('/api/auth/signout')
   Future<void> signOut();
+
+  /// Получение профиля пользователя
+  @GET('/api/v1/user/profile')
+  Future<UserProfileResponse> getUserProfile();
 }

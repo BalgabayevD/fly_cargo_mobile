@@ -42,8 +42,26 @@ class _TariffCategoryDropdownState extends State<TariffCategoryDropdown> {
         }
 
         if (state is TariffsLoaded) {
+          final categories = state.categories
+              .where((category) => category.active)
+              .map(
+                (category) => DropdownMenuItem<String>(
+                  value: category.id?.toString() ?? category.key,
+                  child: Text(category.name),
+                ),
+              )
+              .toSet()
+              .toList();
+
+          final validValues = categories.map((item) => item.value).toSet();
+          final selectedValue =
+              widget.selectedCategory != null &&
+                  validValues.contains(widget.selectedCategory)
+              ? widget.selectedCategory
+              : null;
+
           return DropdownButtonFormField<String>(
-            value: widget.selectedCategory,
+            value: selectedValue,
             decoration: InputDecoration(
               labelText: 'Выберите категорию',
               border: OutlineInputBorder(
@@ -61,15 +79,7 @@ class _TariffCategoryDropdownState extends State<TariffCategoryDropdown> {
               filled: true,
               fillColor: AppColors.surfaceVariant,
             ),
-            items: state.categories
-                .where((category) => category.active)
-                .map(
-                  (category) => DropdownMenuItem<String>(
-                    value: category.key,
-                    child: Text(category.name),
-                  ),
-                )
-                .toList(),
+            items: categories,
             onChanged: widget.onCategoryChanged,
           );
         }

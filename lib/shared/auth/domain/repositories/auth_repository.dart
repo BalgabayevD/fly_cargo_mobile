@@ -28,4 +28,7 @@ abstract class AuthRepository {
 
   /// Получение текущего токена
   Future<String?> getCurrentToken();
+
+  /// Получение профиля пользователя
+  Future<UserProfile> getUserProfile();
 }

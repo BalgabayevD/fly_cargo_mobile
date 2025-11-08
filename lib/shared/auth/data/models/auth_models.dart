@@ -85,3 +85,63 @@ class SessionStatusResponse {
 
   Map<String, dynamic> toJson() => _$SessionStatusResponseToJson(this);
 }
+
+@JsonSerializable()
+class UserProfile {
+  final int? id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final String uuid;
+  final String email;
+  final String phone;
+  final String firstName;
+  final String lastName;
+  final String middleName;
+  final String birthDay;
+  final String photo;
+  final String city;
+  final String type;
+  final String iin;
+  final String bin;
+  final dynamic access;
+  final String role;
+
+  const UserProfile({
+    this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.uuid,
+    required this.email,
+    required this.phone,
+    required this.firstName,
+    required this.lastName,
+    required this.middleName,
+    required this.birthDay,
+    required this.photo,
+    required this.city,
+    required this.type,
+    required this.iin,
+    required this.bin,
+    this.access,
+    required this.role,
+  });
+
+  factory UserProfile.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserProfileToJson(this);
+}
+
+@JsonSerializable()
+class UserProfileResponse {
+  final UserProfile data;
+
+  const UserProfileResponse({required this.data});
+
+  factory UserProfileResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserProfileResponseToJson(this);
+}

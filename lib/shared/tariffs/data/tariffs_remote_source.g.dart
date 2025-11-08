@@ -20,12 +20,12 @@ class _TariffsRemoteSource implements TariffsRemoteSource {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<TariffCategoryModel>> getTariffCategories() async {
+  Future<TariffCategoriesApiResponse> getTariffCategories() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<TariffCategoryModel>>(
+    final _options = _setStreamType<TariffCategoriesApiResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -35,15 +35,38 @@ class _TariffsRemoteSource implements TariffsRemoteSource {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<TariffCategoryModel> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late TariffCategoriesApiResponse _value;
     try {
-      _value = _result.data!
-          .map(
-            (dynamic i) =>
-                TariffCategoryModel.fromJson(i as Map<String, dynamic>),
+      _value = TariffCategoriesApiResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<CreateTariffResponse> createTariff(CreateTariffRequest request) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<CreateTariffResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/tariffs',
+            queryParameters: queryParameters,
+            data: _data,
           )
-          .toList();
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late CreateTariffResponse _value;
+    try {
+      _value = CreateTariffResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

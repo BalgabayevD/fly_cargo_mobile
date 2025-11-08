@@ -12,10 +12,22 @@ class TariffsRepositoryImpl implements TariffsRepository {
   @override
   Future<List<TariffCategoryModel>> getTariffCategories() async {
     try {
-      return await _remoteSourceImpl.instance.getTariffCategories();
+      final response = await _remoteSourceImpl.instance.getTariffCategories();
+      return response.data;
     } catch (e) {
       throw TariffsRepositoryException(
         'Ошибка получения категорий тарифов: $e',
+      );
+    }
+  }
+
+  @override
+  Future<CreateTariffResponse> createTariff(CreateTariffRequest request) async {
+    try {
+      return await _remoteSourceImpl.instance.createTariff(request);
+    } catch (e) {
+      throw TariffsRepositoryException(
+        'Ошибка создания тарифа: $e',
       );
     }
   }

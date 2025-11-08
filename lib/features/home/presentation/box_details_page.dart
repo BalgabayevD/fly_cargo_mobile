@@ -196,7 +196,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       isFragile: _formData!.isFragile,
       category: _formData!.category,
       comment: _formData!.comment,
-      contentPhotos: [], // TODO: Добавить загрузку фото
+      contentPhotos: _formData!.contentPhotoIds,
       description: _formData!.description,
       fromAddress: widget.fromAddress!.address,
       fromApartment: _formData!.fromApartment,

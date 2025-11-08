@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @Named('auth-interceptor')
 @LazySingleton(as: Interceptor)
@@ -12,15 +13,16 @@ class AuthInterceptor extends Interceptor {
   );
 
   @override
-  void onRequest(
+  Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = await _accessTokenBehavior.getSessionId();
-
-    if (token != null && token.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $token';
-    }
-    super.onRequest(options, handler);
+    await SharedPreferences.getInstance().then((store) {
+      final authToken = store.getString('auth-token');
+      if (authToken != null) {
+        options.headers['Authorization'] = "Bearer $authToken";
+      }
+      handler.next(options);
+    });
   }
 }
