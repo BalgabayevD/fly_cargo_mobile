@@ -7,6 +7,8 @@ import 'package:fly_cargo/features/user/presentation/user_notifications_page.dar
 import 'package:fly_cargo/features/user/presentation/user_order_history_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_payment_cards_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_payments_page.dart';
+import 'package:fly_cargo/features/user/presentation/widgets/menu_item_widget.dart';
+import 'package:fly_cargo/features/user/presentation/widgets/stat_item_widget.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
@@ -182,28 +184,28 @@ class UserProfilePage extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(
-                child: _buildStatItem(
-                  'Заказы',
-                  '0',
-                  Icons.shopping_bag,
-                  const Color(0xFF007AFF),
+              const Expanded(
+                child: StatItemWidget(
+                  label: 'Заказы',
+                  value: '0',
+                  icon: Icons.shopping_bag,
+                  color: Color(0xFF007AFF),
+                ),
+              ),
+              const Expanded(
+                child: StatItemWidget(
+                  label: 'Карты',
+                  value: '0',
+                  icon: Icons.credit_card,
+                  color: Color(0xFF34C759),
                 ),
               ),
               Expanded(
-                child: _buildStatItem(
-                  'Карты',
-                  '0',
-                  Icons.credit_card,
-                  const Color(0xFF34C759),
-                ),
-              ),
-              Expanded(
-                child: _buildStatItem(
-                  'С нами',
-                  '$daysSinceCreated ${_getDaysText(daysSinceCreated)}',
-                  Icons.calendar_today,
-                  const Color(0xFFFF9500),
+                child: StatItemWidget(
+                  label: 'С нами',
+                  value: '$daysSinceCreated ${_getDaysText(daysSinceCreated)}',
+                  icon: Icons.calendar_today,
+                  color: const Color(0xFFFF9500),
                 ),
               ),
             ],
@@ -213,69 +215,34 @@ class UserProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(
-    String label,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
-    return Column(
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(icon, color: color, size: 24),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF333333),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, color: Color(0xFF666666)),
-        ),
-      ],
-    );
-  }
-
   Widget _buildUserMenuSection(BuildContext context, dynamic profile) {
     return AppCard(
       variant: AppCardVariant.outlined,
       padding: EdgeInsets.zero,
       child: Column(
         children: [
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.person,
             title: 'Мой профиль',
             subtitle: 'Личная информация',
             onTap: () => _editProfile(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.credit_card,
             title: 'Платежные карты',
             subtitle: 'Добавить карту',
             onTap: () => _openPaymentCardsPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.notifications,
             title: 'Уведомления',
             subtitle: 'Настройки уведомлений',
             onTap: () => _openNotificationsPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.history,
             title: 'История заказов',
             subtitle: '0 заказов',
@@ -292,21 +259,21 @@ class UserProfilePage extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Column(
         children: [
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.payment,
             title: 'Платежи',
             subtitle: 'История транзакций',
             onTap: () => _openPaymentsPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.calculate,
             title: 'Калькулятор стоимости',
             subtitle: 'Расчет доставки',
             onTap: () => _openCostCalculatorPage(context),
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
-          _buildMenuItem(
+          MenuItemWidget(
             icon: Icons.contact_phone,
             title: 'Поддержка',
             subtitle: profile.phone,
@@ -314,43 +281,6 @@ class UserProfilePage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildMenuItem({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Icon(icon, color: const Color(0xFF666666), size: 20),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF333333),
-        ),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
-      ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Color(0xFFCCCCCC),
-      ),
-      onTap: onTap,
     );
   }
 
