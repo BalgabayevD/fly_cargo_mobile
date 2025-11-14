@@ -8,7 +8,6 @@ class SignCodeUseCase {
 
   SignCodeUseCase(this._authRepository);
 
-  /// Подтверждает код и выполняет вход в систему
   Future<SignCodeResponse> call({
     required String phoneNumber,
     required String code,
@@ -21,7 +20,6 @@ class SignCodeUseCase {
       throw ArgumentError('Код подтверждения не может быть пустым');
     }
 
-    // Валидация кода (обычно 4-6 цифр)
     if (!_isValidCode(code)) {
       throw ArgumentError('Неверный формат кода подтверждения');
     }
@@ -35,18 +33,15 @@ class SignCodeUseCase {
       throw Exception('Ошибка подтверждения кода');
     }
 
-    // Преобразуем SignUpResponse в SignCodeResponse
     return SignCodeResponse(
-      accessToken: response.user.id, // или другое поле из response
+      accessToken: response.user.id,
       refreshToken: null,
       userId: response.user.id,
       success: true,
     );
   }
 
-  /// Проверяет валидность кода подтверждения
   bool _isValidCode(String code) {
-    // Код должен содержать только цифры и быть длиной 4-6 символов
     final codeRegex = RegExp(r'^\d{4,6}$');
     return codeRegex.hasMatch(code);
   }

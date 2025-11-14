@@ -20,10 +20,7 @@ class BoxSelectionSectionWidget extends StatelessWidget
     with BoxSelectionSectionStyling {
   final void Function(BuildContext, String) onBoxDetailsTap;
 
-  const BoxSelectionSectionWidget({
-    super.key,
-    required this.onBoxDetailsTap,
-  });
+  const BoxSelectionSectionWidget({super.key, required this.onBoxDetailsTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +35,16 @@ class BoxSelectionSectionWidget extends StatelessWidget
                 state.selectedTariffId != null) {
               return Column(
                 children: [
-                  const SizedBox(height: BoxSelectionSectionStyling.buttonSpacing),
+                  const SizedBox(
+                    height: BoxSelectionSectionStyling.buttonSpacing,
+                  ),
                   SelectBoxButton(
                     onTap: () => onBoxDetailsTap(
                       context,
                       state.selectedTariffId.toString(),
                     ),
                   ),
+                  const SizedBox(height: 32),
                 ],
               );
             }
@@ -64,7 +64,9 @@ class BoxSelectionSectionWidget extends StatelessWidget
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(BoxSelectionSectionStyling.borderRadius),
+        borderRadius: BorderRadius.circular(
+          BoxSelectionSectionStyling.borderRadius,
+        ),
         border: Border.all(
           color: const Color(0xFFE0E0E0),
           width: BoxSelectionSectionStyling.borderWidth,
@@ -77,7 +79,11 @@ class BoxSelectionSectionWidget extends StatelessWidget
             height: BoxSelectionSectionStyling.containerSize,
             decoration: const BoxDecoration(
               color: Color(0xFFFF9500),
-              borderRadius: BorderRadius.all(Radius.circular(BoxSelectionSectionStyling.iconContainerBorderRadius)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  BoxSelectionSectionStyling.iconContainerBorderRadius,
+                ),
+              ),
             ),
             child: const Icon(
               Icons.inventory_2,
@@ -101,4 +107,3 @@ class BoxSelectionSectionWidget extends StatelessWidget
     );
   }
 }
-

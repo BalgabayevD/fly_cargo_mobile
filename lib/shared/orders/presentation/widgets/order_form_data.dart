@@ -12,6 +12,8 @@ class OrderFormData {
   final String toApartment;
   final String toEntrance;
   final String toFloor;
+  final String toName;
+  final String toPhone;
   final List<File> contentPhotos;
   final List<String> contentPhotoIds;
 
@@ -27,6 +29,8 @@ class OrderFormData {
     required this.toApartment,
     required this.toEntrance,
     required this.toFloor,
+    required this.toName,
+    required this.toPhone,
     this.contentPhotos = const [],
     this.contentPhotoIds = const [],
   });
@@ -43,6 +47,8 @@ class OrderFormData {
     String? toApartment,
     String? toEntrance,
     String? toFloor,
+    String? toName,
+    String? toPhone,
     List<File>? contentPhotos,
     List<String>? contentPhotoIds,
   }) {
@@ -58,6 +64,8 @@ class OrderFormData {
       toApartment: toApartment ?? this.toApartment,
       toEntrance: toEntrance ?? this.toEntrance,
       toFloor: toFloor ?? this.toFloor,
+      toName: toName ?? this.toName,
+      toPhone: toPhone ?? this.toPhone,
       contentPhotos: contentPhotos ?? this.contentPhotos,
       contentPhotoIds: contentPhotoIds ?? this.contentPhotoIds,
     );

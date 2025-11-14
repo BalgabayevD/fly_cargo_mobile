@@ -100,9 +100,12 @@ class BoxOptionWidget extends StatelessWidget {
             Text(
               box.dimensions,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 color: isSelected ? AppColors.primary : AppColors.textSecondary,
               ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
             ),
           ],
         ),

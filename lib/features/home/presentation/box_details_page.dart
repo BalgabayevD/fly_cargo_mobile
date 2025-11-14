@@ -84,6 +84,7 @@ class BoxDetailsContent extends StatefulWidget {
 class _BoxDetailsContentState extends State<BoxDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -191,6 +192,17 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       return;
     }
 
+    // Валидация формы
+    if (_formKey.currentState?.validate() != true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Заполните все обязательные поля'),
+          backgroundColor: Color(0xFFFF3B30),
+        ),
+      );
+      return;
+    }
+
     final orderData = OrderData(
       isDefect: _formData!.isDefect,
       isFragile: _formData!.isFragile,
@@ -216,6 +228,8 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       toFloor: _formData!.toFloor,
       toLatitude: 0.0, // TODO: Получить координаты
       toLongitude: 0.0, // TODO: Получить координаты
+      toName: _formData!.toName,
+      toPhone: _formData!.toPhone,
       volumetricWeight: _getBoxVolumetricWeight(widget.box),
       weight: _getBoxWeight(widget.box),
       width: _getBoxWidth(widget.box),
@@ -421,7 +435,10 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
               const SizedBox(height: 24),
 
               // Форма деталей заказа
-              OrderDetailsForm(onDataChanged: _onFormDataChanged),
+              OrderDetailsForm(
+                formKey: _formKey,
+                onDataChanged: _onFormDataChanged,
+              ),
               const SizedBox(height: 24),
 
               // Кнопка создания заказа

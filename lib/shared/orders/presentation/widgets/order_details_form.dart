@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_address_details_section.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_category_section.dart';
@@ -10,25 +12,34 @@ import 'package:fly_cargo/shared/orders/presentation/widgets/order_comment_secti
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_description_section.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_options_section.dart';
+import 'package:fly_cargo/shared/orders/presentation/widgets/order_section_header.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/photo_upload_widget.dart';
 
 class OrderDetailsForm extends StatefulWidget {
   final Function(OrderFormData) onDataChanged;
+  final GlobalKey<FormState>? formKey;
 
-  const OrderDetailsForm({super.key, required this.onDataChanged});
+  const OrderDetailsForm({
+    super.key,
+    required this.onDataChanged,
+    this.formKey,
+  });
 
   @override
   State<OrderDetailsForm> createState() => _OrderDetailsFormState();
 }
 
 class _OrderDetailsFormState extends State<OrderDetailsForm> {
-  final _formKey = GlobalKey<FormState>();
+  late final GlobalKey<FormState> _formKey;
+
   final _fromApartmentController = TextEditingController();
   final _fromEntranceController = TextEditingController();
   final _fromFloorController = TextEditingController();
   final _toApartmentController = TextEditingController();
   final _toEntranceController = TextEditingController();
   final _toFloorController = TextEditingController();
+  final _toNameController = TextEditingController();
+  final _toPhoneController = TextEditingController();
   final _commentController = TextEditingController();
   final _descriptionController = TextEditingController();
 
@@ -42,6 +53,7 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
   @override
   void initState() {
     super.initState();
+    _formKey = widget.formKey ?? GlobalKey<FormState>();
     _uploadOrderPhotoUseCase = getIt<UploadOrderPhotoUseCase>();
   }
 
@@ -53,6 +65,8 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
     _toApartmentController.dispose();
     _toEntranceController.dispose();
     _toFloorController.dispose();
+    _toNameController.dispose();
+    _toPhoneController.dispose();
     _commentController.dispose();
     _descriptionController.dispose();
     super.dispose();
@@ -71,6 +85,8 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
       toApartment: _toApartmentController.text,
       toEntrance: _toEntranceController.text,
       toFloor: _toFloorController.text,
+      toName: _toNameController.text,
+      toPhone: _toPhoneController.text,
       contentPhotos: _contentPhotos,
       contentPhotoIds: _contentPhotoIds.values.toList(),
     );
@@ -170,6 +186,91 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
             entranceController: _toEntranceController,
             floorController: _toFloorController,
             onDataChanged: _notifyDataChanged,
+          ),
+          const SizedBox(height: 24),
+
+          // Данные получателя
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OrderSectionHeader(
+                icon: Icons.person_outline,
+                title: 'Данные получателя',
+                subtitle: 'Укажите имя и телефон получателя',
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _toNameController,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Введите имя получателя';
+                  }
+                  if (value.trim().length < 2) {
+                    return 'Имя должно содержать минимум 2 символа';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Имя получателя *',
+                  hintText: 'Введите имя получателя',
+                  prefixIcon: Icon(Icons.person, size: 20, color: AppColors.textSecondary),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: AppColors.borderLight),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: AppColors.borderLight),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: AppColors.primary, width: 2),
+                  ),
+                  filled: true,
+                  fillColor: AppColors.surfaceVariant,
+                ),
+                onChanged: (_) => _notifyDataChanged(),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _toPhoneController,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  PhoneNumberFormatter(),
+                  LengthLimitingTextInputFormatter(18),
+                ],
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Введите номер телефона';
+                  }
+                  final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
+                  if (digitsOnly.length < 10) {
+                    return 'Введите корректный номер телефона';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Телефон получателя *',
+                  hintText: '+7 (XXX) XXX-XX-XX',
+                  prefixIcon: Icon(Icons.phone, size: 20, color: AppColors.textSecondary),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: AppColors.borderLight),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: AppColors.borderLight),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: AppColors.primary, width: 2),
+                  ),
+                  filled: true,
+                  fillColor: AppColors.surfaceVariant,
+                ),
+                onChanged: (_) => _notifyDataChanged(),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
 

@@ -12,7 +12,6 @@ class TariffSelectionWidget extends StatelessWidget {
     return BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
       builder: (context, state) {
         if (state is TariffSelectionLoaded) {
-          // Фильтруем категории, оставляя только те, у которых есть тарифы
           final categoriesWithTariffs = state.categories
               .where(
                 (category) =>
@@ -49,9 +48,8 @@ class TariffSelectionWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Категории тарифов
               SizedBox(
-                height: 50,
+                height: 44,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: categoriesWithTariffs.length,
@@ -106,7 +104,6 @@ class TariffSelectionWidget extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // Тарифы выбранной категории
               if (effectiveSelectedCategoryId != null) ...[
                 _buildTariffsList(context, state),
               ],
@@ -124,7 +121,6 @@ class TariffSelectionWidget extends StatelessWidget {
   }
 
   Widget _buildTariffsList(BuildContext context, TariffSelectionLoaded state) {
-    // Фильтруем категории, оставляя только те, у которых есть тарифы
     final categoriesWithTariffs = state.categories
         .where(
           (category) =>
@@ -198,7 +194,7 @@ class TariffOptionWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 100,
+        width: 120,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected
@@ -212,7 +208,6 @@ class TariffOptionWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Иконка или изображение
             Container(
               width: 60,
               height: 60,

@@ -98,10 +98,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             const YandexMapScreen(),
             DraggableScrollableSheet(
-              initialChildSize: 0.5,
+              initialChildSize: 0.6,
               snap: true,
-              minChildSize: 0.5,
-              maxChildSize: 0.5,
+              minChildSize: 0.6,
+              maxChildSize: 0.6,
               builder: (context, scrollController) {
                 return HomeBottomSheetContent(
                   fromAddress: _fromAddress,

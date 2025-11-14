@@ -109,6 +109,7 @@ class TariffDetailsContent extends StatefulWidget {
 class _TariffDetailsContentState extends State<TariffDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -260,7 +261,10 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
                   // Форма заказа
                   BlocProvider.value(
                     value: _ordersBloc,
-                    child: OrderDetailsForm(onDataChanged: _onFormDataChanged),
+                    child: OrderDetailsForm(
+                      formKey: _formKey,
+                      onDataChanged: _onFormDataChanged,
+                    ),
                   ),
 
                   const SizedBox(height: 24),
@@ -372,6 +376,17 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
   Future<void> _createOrder(BuildContext context) async {
     if (_formData == null) return;
 
+    // Валидация формы
+    if (_formKey.currentState?.validate() != true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Заполните все обязательные поля'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
     try {
       final orderData = OrderData(
         isDefect: _formData!.isDefect,
@@ -402,6 +417,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         toFloor: _formData!.toFloor,
         toLatitude: 0.0, // TODO: Получить из адреса
         toLongitude: 0.0, // TODO: Получить из адреса
+        toName: _formData!.toName,
+        toPhone: _formData!.toPhone,
         volumetricWeight: widget.tariff.volumetricWeight ?? 0.0,
         weight: widget.tariff.weight ?? 0.0,
         width: widget.tariff.width ?? 0.0,

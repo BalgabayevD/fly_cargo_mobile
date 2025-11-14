@@ -209,18 +209,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i215.AuthStatusUseCase>(
       () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
     );
-    gh.factory<_i138.AuthBloc>(
-      () => _i138.AuthBloc(
-        gh<_i919.SignInUseCase>(),
-        gh<_i215.AuthStatusUseCase>(),
-        gh<_i439.GetUserProfileUseCase>(),
-      ),
-    );
     gh.factory<_i910.UploadOrderPhotoUseCase>(
       () => _i910.UploadOrderPhotoUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
+    );
+    gh.factory<_i138.AuthBloc>(
+      () => _i138.AuthBloc(
+        gh<_i919.SignInUseCase>(),
+        gh<_i215.AuthStatusUseCase>(),
+      ),
     );
     gh.factory<_i369.CreateTariffUseCase>(
       () => _i369.CreateTariffUseCase(gh<_i528.TariffsRepository>()),

@@ -8,7 +8,6 @@ class SignInUseCase {
 
   SignInUseCase(this._authRepository);
 
-  /// Выполняет вход в систему по номеру телефона
   Future<SendOTPResponse?> call(String phoneNumber) async {
     if (phoneNumber.isEmpty) {
       throw ArgumentError('Номер телефона не может быть пустым');
@@ -21,7 +20,6 @@ class SignInUseCase {
     return await _authRepository.signIn(phoneNumber);
   }
 
-  /// Проверяет валидность номера телефона
   bool _isValidPhoneNumber(String phoneNumber) {
     final phoneRegex = RegExp(r'^\+\d{10,15}$');
     return phoneRegex.hasMatch(phoneNumber);

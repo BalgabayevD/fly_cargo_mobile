@@ -17,6 +17,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     LoadProfile event,
     Emitter<ProfileState> emit,
   ) async {
+    // Не загружаем профиль, если он уже загружается или уже загружен
+    if (state is ProfileLoading || state is ProfileLoaded) {
+      return;
+    }
+
     emit(const ProfileState.loading());
 
     try {

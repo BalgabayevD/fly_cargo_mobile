@@ -30,6 +30,8 @@ class CreateOrderRequest {
   final String toFloor;
   final double toLatitude;
   final double toLongitude;
+  final String toName;
+  final String toPhone;
   final double volumetricWeight;
   final double weight;
   final double width;
@@ -59,6 +61,8 @@ class CreateOrderRequest {
     required this.toFloor,
     required this.toLatitude,
     required this.toLongitude,
+    required this.toName,
+    required this.toPhone,
     required this.volumetricWeight,
     required this.weight,
     required this.width,
@@ -495,6 +499,8 @@ class OrderData {
   final String toFloor;
   final double toLatitude;
   final double toLongitude;
+  final String toName;
+  final String toPhone;
   final double volumetricWeight;
   final double weight;
   final double width;
@@ -524,6 +530,8 @@ class OrderData {
     required this.toFloor,
     required this.toLatitude,
     required this.toLongitude,
+    required this.toName,
+    required this.toPhone,
     required this.volumetricWeight,
     required this.weight,
     required this.width,
@@ -555,6 +563,8 @@ class OrderData {
       toFloor: toFloor,
       toLatitude: toLatitude,
       toLongitude: toLongitude,
+      toName: toName,
+      toPhone: toPhone,
       volumetricWeight: volumetricWeight,
       weight: weight,
       width: width,
