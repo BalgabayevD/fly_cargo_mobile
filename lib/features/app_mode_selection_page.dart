@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_home_page.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_demo_page.dart';
+
 class AppModeSelectionPage extends StatelessWidget {
   const AppModeSelectionPage({super.key});
   @override
@@ -21,7 +22,7 @@ class AppModeSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               const Text(
-                'Fly Cargo',
+                'Sapsano',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w700,
@@ -74,6 +75,7 @@ class AppModeSelectionPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildModeCard({
     required BuildContext context,
     required String title,
@@ -139,18 +141,21 @@ class AppModeSelectionPage extends StatelessWidget {
       ),
     );
   }
+
   void _navigateToClientMode(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const HomePage()),
     );
   }
+
   void _navigateToCourierMode(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const CourierHomePage()),
     );
   }
+
   void _navigateToUserProfile(BuildContext context) {
     Navigator.push(
       context,
