@@ -1,9 +1,11 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
 import 'package:fly_cargo/shared/orders/data/orders_remote_source.dart';
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
+
 @LazySingleton(as: OrdersRepository)
 class OrdersRepositoryImpl implements OrdersRepository {
   final OrdersRemoteSource _remoteSource;
@@ -18,6 +20,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
       throw OrdersException('Ошибка при создании заказа: $e');
     }
   }
+
   @override
   Future<String> uploadOrderPhoto(File photoFile) async {
     try {
@@ -32,7 +35,28 @@ class OrdersRepositoryImpl implements OrdersRepository {
       throw OrdersException('Ошибка при загрузке фотографии: $e');
     }
   }
+
+  @override
+  Future<List<OrderModel>> getClientOrders() async {
+    try {
+      final response = await _remoteSource.getClientOrders();
+      return response;
+    } catch (e) {
+      throw OrdersException('Ошибка при загрузке заказов: $e');
+    }
+  }
+
+  @override
+  Future<List<OrderModel>> getCourierOrders() async {
+    try {
+      final response = await _remoteSource.getCourierOrders();
+      return response;
+    } catch (e) {
+      throw OrdersException('Ошибка при загрузке заказов: $e');
+    }
+  }
 }
+
 class OrdersException implements Exception {
   final String message;
   const OrdersException(this.message);

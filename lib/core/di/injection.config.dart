@@ -64,6 +64,10 @@ import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.da
     as _i919;
 import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart'
     as _i49;
+import 'package:fly_cargo/shared/orders/domain/usecases/get_client_orders_usecase.dart'
+    as _i33;
+import 'package:fly_cargo/shared/orders/domain/usecases/get_courier_orsers_usecase.dart'
+    as _i189;
 import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart'
     as _i910;
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
@@ -215,6 +219,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
+    gh.factory<_i33.GetClientOrdersUseCase>(
+      () => _i33.GetClientOrdersUseCase(gh<_i919.OrdersRepository>()),
+    );
+    gh.factory<_i189.GetCourierOrdersUseCase>(
+      () => _i189.GetCourierOrdersUseCase(gh<_i919.OrdersRepository>()),
+    );
     gh.factory<_i138.AuthBloc>(
       () => _i138.AuthBloc(
         gh<_i919.SignInUseCase>(),
@@ -227,9 +237,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i133.GetTariffCategoriesUseCase>(
       () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
     );
-    gh.factory<_i837.OrdersBloc>(
-      () => _i837.OrdersBloc(gh<_i49.CreateOrderUseCase>()),
-    );
     gh.factory<_i480.ProfileBloc>(
       () => _i480.ProfileBloc(gh<_i439.GetUserProfileUseCase>()),
     );
@@ -240,6 +247,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i545.TariffsBloc>(
       () => _i545.TariffsBloc(gh<_i133.GetTariffCategoriesUseCase>()),
+    );
+    gh.factory<_i837.OrdersBloc>(
+      () => _i837.OrdersBloc(
+        gh<_i49.CreateOrderUseCase>(),
+        gh<_i33.GetClientOrdersUseCase>(),
+        gh<_i189.GetCourierOrdersUseCase>(),
+      ),
     );
     return this;
   }
