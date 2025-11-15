@@ -7,7 +7,6 @@ class CityRouteModel {
   final String toCity;
   final int toCityId;
   final String updatedAt;
-
   const CityRouteModel({
     required this.createdAt,
     required this.fromCity,
@@ -18,7 +17,6 @@ class CityRouteModel {
     required this.toCityId,
     required this.updatedAt,
   });
-
   factory CityRouteModel.fromJson(Map<String, dynamic> json) {
     return CityRouteModel(
       createdAt: json['createdAt'] as String,
@@ -31,7 +29,6 @@ class CityRouteModel {
       updatedAt: json['updatedAt'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return {
       'createdAt': createdAt,

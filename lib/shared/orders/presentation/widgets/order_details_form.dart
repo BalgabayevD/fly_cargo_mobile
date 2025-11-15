@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
@@ -14,24 +13,18 @@ import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dar
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_options_section.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_section_header.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/photo_upload_widget.dart';
-
 class OrderDetailsForm extends StatefulWidget {
   final Function(OrderFormData) onDataChanged;
   final GlobalKey<FormState>? formKey;
-
   const OrderDetailsForm({
-    super.key,
-    required this.onDataChanged,
+    required this.onDataChanged, super.key,
     this.formKey,
   });
-
   @override
   State<OrderDetailsForm> createState() => _OrderDetailsFormState();
 }
-
 class _OrderDetailsFormState extends State<OrderDetailsForm> {
   late final GlobalKey<FormState> _formKey;
-
   final _fromApartmentController = TextEditingController();
   final _fromEntranceController = TextEditingController();
   final _fromFloorController = TextEditingController();
@@ -42,21 +35,18 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
   final _toPhoneController = TextEditingController();
   final _commentController = TextEditingController();
   final _descriptionController = TextEditingController();
-
   bool _isDefect = false;
   bool _isFragile = false;
   String _category = 'Обычный';
   List<File> _contentPhotos = [];
-  Map<File, String> _contentPhotoIds = {};
+  final Map<File, String> _contentPhotoIds = {};
   late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
-
   @override
   void initState() {
     super.initState();
     _formKey = widget.formKey ?? GlobalKey<FormState>();
     _uploadOrderPhotoUseCase = getIt<UploadOrderPhotoUseCase>();
   }
-
   @override
   void dispose() {
     _fromApartmentController.dispose();
@@ -71,7 +61,6 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
     _descriptionController.dispose();
     super.dispose();
   }
-
   void _notifyDataChanged() {
     final data = OrderFormData(
       isDefect: _isDefect,
@@ -92,22 +81,17 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
     );
     widget.onDataChanged(data);
   }
-
   Future<void> _handlePhotosChanged(List<File> photos) async {
     final previousPhotos = Set<File>.from(_contentPhotos);
     final newPhotos = Set<File>.from(photos);
-
     final addedPhotos = newPhotos.difference(previousPhotos);
     final removedPhotos = previousPhotos.difference(newPhotos);
-
     for (final photo in removedPhotos) {
       _contentPhotoIds.remove(photo);
     }
-
     setState(() {
       _contentPhotos = photos;
     });
-
     for (final photo in addedPhotos) {
       try {
         final photoId = await _uploadOrderPhotoUseCase(photo);
@@ -129,10 +113,8 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
         });
       }
     }
-
     _notifyDataChanged();
   }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -157,7 +139,6 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
             },
           ),
           const SizedBox(height: 24),
-
           OrderCategorySection(
             category: _category,
             onCategoryChanged: (value) {
@@ -168,7 +149,6 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
             },
           ),
           const SizedBox(height: 24),
-
           OrderAddressDetailsSection(
             title: 'Детали адреса отправки',
             subtitle: 'Укажите дополнительные детали для курьера',
@@ -178,7 +158,6 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
             onDataChanged: _notifyDataChanged,
           ),
           const SizedBox(height: 24),
-
           OrderAddressDetailsSection(
             title: 'Детали адреса доставки',
             subtitle: 'Укажите дополнительные детали для курьера',
@@ -188,8 +167,6 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
             onDataChanged: _notifyDataChanged,
           ),
           const SizedBox(height: 24),
-
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -273,19 +250,16 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
             ],
           ),
           const SizedBox(height: 24),
-
           OrderCommentSection(
             controller: _commentController,
             onDataChanged: _notifyDataChanged,
           ),
           const SizedBox(height: 24),
-
           OrderDescriptionSection(
             controller: _descriptionController,
             onDataChanged: _notifyDataChanged,
           ),
           const SizedBox(height: 24),
-
           PhotoUploadWidget(
             photos: _contentPhotos,
             onPhotosChanged: _handlePhotosChanged,

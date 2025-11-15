@@ -2,35 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/destination/presentation/pages/choose_address_page.dart';
 import 'package:fly_cargo/shared/destination/presentation/pages/choose_city_page.dart';
-
 class SendPackageBottomSheet extends StatefulWidget {
   final Function(AddressModel fromAddress, AddressModel toAddress)?
   onAddressesSelected;
   final AddressModel? initialFromAddress;
   final AddressModel? initialToAddress;
-
   const SendPackageBottomSheet({
     super.key,
     this.onAddressesSelected,
     this.initialFromAddress,
     this.initialToAddress,
   });
-
   @override
   State<SendPackageBottomSheet> createState() => _SendPackageBottomSheetState();
 }
-
 class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
-
   @override
   void initState() {
     super.initState();
     _fromAddress = widget.initialFromAddress;
     _toAddress = widget.initialToAddress;
   }
-
   Future<void> _selectFromAddress() async {
     final city = await Navigator.push<dynamic>(
       context,
@@ -38,7 +32,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
         builder: (context) => const ChooseCityPage(cityType: CityType.from),
       ),
     );
-
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
         context,
@@ -46,7 +39,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           builder: (context) => ChooseAddressPage(city: city.name),
         ),
       );
-
       if (address != null) {
         setState(() {
           _fromAddress = AddressModel(
@@ -59,7 +51,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
       }
     }
   }
-
   Future<void> _selectToAddress() async {
     if (_fromAddress == null) {
       _showAlert(
@@ -68,7 +59,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
       );
       return;
     }
-
     final city = await Navigator.push<dynamic>(
       context,
       MaterialPageRoute(
@@ -78,7 +68,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
         ),
       ),
     );
-
     if (city != null) {
       final address = await Navigator.push<AddressModel>(
         context,
@@ -86,7 +75,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
           builder: (context) => ChooseAddressPage(city: city.name),
         ),
       );
-
       if (address != null) {
         setState(() {
           _toAddress = AddressModel(
@@ -99,7 +87,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,7 +144,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               ],
             ),
             const SizedBox(height: 24),
-
             const Text(
               'Откуда?',
               style: TextStyle(
@@ -167,7 +153,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               ),
             ),
             const SizedBox(height: 12),
-
             GestureDetector(
               onTap: _selectFromAddress,
               child: Container(
@@ -222,7 +207,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               ),
             ),
             const SizedBox(height: 24),
-
             const Text(
               'Куда?',
               style: TextStyle(
@@ -232,7 +216,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               ),
             ),
             const SizedBox(height: 12),
-
             GestureDetector(
               onTap: _selectToAddress,
               child: Container(
@@ -287,7 +270,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
               ),
             ),
             const SizedBox(height: 32),
-
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -325,7 +307,6 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
       ),
     );
   }
-
   void _showAlert(String title, String message) {
     showDialog(
       context: context,

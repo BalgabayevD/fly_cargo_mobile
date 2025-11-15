@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_card.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_section_header.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/widgets/tariff_category_dropdown.dart';
-
 class OrderCategorySection extends StatelessWidget {
   final String category;
   final ValueChanged<String> onCategoryChanged;
-
   const OrderCategorySection({
-    super.key,
-    required this.category,
-    required this.onCategoryChanged,
+    required this.category, required this.onCategoryChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(

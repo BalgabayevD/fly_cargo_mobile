@@ -3,27 +3,21 @@ import 'package:fly_cargo/features/courier/models/order_model.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_profile_page.dart';
 import 'package:fly_cargo/features/courier/presentation/order_details_page.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 class CourierHomePage extends StatefulWidget {
   const CourierHomePage({super.key});
-
   @override
   State<CourierHomePage> createState() => _CourierHomePageState();
 }
-
 class _CourierHomePageState extends State<CourierHomePage> {
   List<CourierOrder> _orders = [];
   bool _isLoading = true;
   String _selectedFilter = 'all';
-
   @override
   void initState() {
     super.initState();
     _loadOrders();
   }
-
   void _loadOrders() {
-
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _orders = _getMockOrders();
@@ -31,7 +25,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
       });
     });
   }
-
   List<CourierOrder> _getMockOrders() {
     return [
       CourierOrder(
@@ -118,7 +111,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     ];
   }
-
   List<CourierOrder> get _filteredOrders {
     switch (_selectedFilter) {
       case 'pending':
@@ -141,7 +133,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
         return _orders;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,7 +162,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
       body: Column(
         children: [
-
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: SingleChildScrollView(
@@ -189,8 +179,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
               ),
             ),
           ),
-
-
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -217,7 +205,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     );
   }
-
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedFilter == value;
     return GestureDetector(
@@ -243,7 +230,6 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     );
   }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -270,14 +256,12 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     );
   }
-
   void _openOrderDetails(CourierOrder order) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => OrderDetailsPage(order: order)),
     );
   }
-
   void _openProfile() {
     Navigator.push(
       context,
@@ -285,13 +269,10 @@ class _CourierHomePageState extends State<CourierHomePage> {
     );
   }
 }
-
 class OrderCard extends StatelessWidget {
   final CourierOrder order;
   final VoidCallback onTap;
-
-  const OrderCard({super.key, required this.order, required this.onTap});
-
+  const OrderCard({required this.order, required this.onTap, super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -314,7 +295,6 @@ class OrderCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -347,8 +327,6 @@ class OrderCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-
-
               if (order.priority != OrderPriority.medium)
                 Container(
                   margin: const EdgeInsets.only(bottom: 8),
@@ -369,8 +347,6 @@ class OrderCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
               _buildAddressRow(
                 icon: Icons.location_on,
                 iconColor: const Color(0xFF007AFF),
@@ -387,8 +363,6 @@ class OrderCard extends StatelessWidget {
                 label: 'Доставить',
               ),
               const SizedBox(height: 12),
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -422,8 +396,6 @@ class OrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-
-
               const SizedBox(height: 8),
               Text(
                 'Создан: ${_formatDateTime(order.createdAt)}',
@@ -435,7 +407,6 @@ class OrderCard extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildAddressRow({
     required IconData icon,
     required Color iconColor,
@@ -457,11 +428,9 @@ class OrderCard extends StatelessWidget {
       ],
     );
   }
-
   String _formatDateTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
-
     if (difference.inDays > 0) {
       return '${difference.inDays} дн. назад';
     } else if (difference.inHours > 0) {

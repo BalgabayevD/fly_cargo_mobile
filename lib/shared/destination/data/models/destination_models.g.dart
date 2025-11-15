@@ -1,8 +1,10 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'destination_models.dart';
 
-
-
-
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
 
 CitiesFromResponse _$CitiesFromResponseFromJson(Map<String, dynamic> json) =>
     CitiesFromResponse(

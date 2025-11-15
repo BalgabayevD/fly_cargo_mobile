@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class CourierProfile {
   final String id;
   final String name;
@@ -15,24 +14,15 @@ class CourierProfile {
   final String? vehicleType;
   final String? licenseNumber;
   final List<String> workingAreas;
-
   const CourierProfile({
     required this.id,
     required this.name,
     required this.phone,
-    this.email,
+    required this.joinDate, required this.rating, required this.totalDeliveries, required this.completedDeliveries, required this.totalEarnings, required this.status, required this.workingAreas, this.email,
     this.avatarUrl,
-    required this.joinDate,
-    required this.rating,
-    required this.totalDeliveries,
-    required this.completedDeliveries,
-    required this.totalEarnings,
-    required this.status,
     this.vehicleType,
     this.licenseNumber,
-    required this.workingAreas,
   });
-
   String get statusText {
     switch (status) {
       case 'active':
@@ -45,7 +35,6 @@ class CourierProfile {
         return 'Неизвестно';
     }
   }
-
   Color get statusColor {
     switch (status) {
       case 'active':
@@ -58,13 +47,11 @@ class CourierProfile {
         return const Color(0xFF666666);
     }
   }
-
   double get completionRate {
     if (totalDeliveries == 0) return 0.0;
     return (completedDeliveries / totalDeliveries) * 100;
   }
 }
-
 class CourierIncome {
   final double todayEarnings;
   final double weekEarnings;
@@ -74,7 +61,6 @@ class CourierIncome {
   final int weekDeliveries;
   final int monthDeliveries;
   final List<IncomeTransaction> transactions;
-
   const CourierIncome({
     required this.todayEarnings,
     required this.weekEarnings,
@@ -86,7 +72,6 @@ class CourierIncome {
     required this.transactions,
   });
 }
-
 class IncomeTransaction {
   final String id;
   final double amount;
@@ -94,7 +79,6 @@ class IncomeTransaction {
   final DateTime date;
   final String type;
   final String? orderId;
-
   const IncomeTransaction({
     required this.id,
     required this.amount,
@@ -103,7 +87,6 @@ class IncomeTransaction {
     required this.type,
     this.orderId,
   });
-
   String get typeText {
     switch (type) {
       case 'delivery':
@@ -116,7 +99,6 @@ class IncomeTransaction {
         return 'Другое';
     }
   }
-
   Color get typeColor {
     switch (type) {
       case 'delivery':
@@ -130,7 +112,6 @@ class IncomeTransaction {
     }
   }
 }
-
 class CourierNotification {
   final String id;
   final String title;
@@ -138,7 +119,6 @@ class CourierNotification {
   final DateTime date;
   final bool isRead;
   final String type;
-
   const CourierNotification({
     required this.id,
     required this.title,
@@ -147,7 +127,6 @@ class CourierNotification {
     required this.isRead,
     required this.type,
   });
-
   String get typeText {
     switch (type) {
       case 'order':
@@ -160,7 +139,6 @@ class CourierNotification {
         return 'Другое';
     }
   }
-
   Color get typeColor {
     switch (type) {
       case 'order':

@@ -1,8 +1,10 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'orders_models.dart';
 
-
-
-
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
 
 CreateOrderRequest _$CreateOrderRequestFromJson(Map<String, dynamic> json) =>
     CreateOrderRequest(
@@ -87,26 +89,19 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
   id: (json['id'] as num).toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   fromCityId: (json['fromCityId'] as num).toInt(),
   fromLatitude: (json['fromLatitude'] as num).toDouble(),
   fromLongitude: (json['fromLongitude'] as num).toDouble(),
   fromApartment: json['fromApartment'] as String,
-  fromEntrance: json['fromEntrance'] as String,
   fromFloor: json['fromFloor'] as String,
   fromAddress: json['fromAddress'] as String,
   toCityId: (json['toCityId'] as num).toInt(),
   toLatitude: (json['toLatitude'] as num).toDouble(),
   toLongitude: (json['toLongitude'] as num).toDouble(),
   toApartment: json['toApartment'] as String,
-  toEntrance: json['toEntrance'] as String,
   toFloor: json['toFloor'] as String,
   toAddress: json['toAddress'] as String,
-  price: (json['price'] as num?)?.toDouble(),
   tariffId: (json['tariffId'] as num).toInt(),
-  tariff: json['tariff'] == null
-      ? null
-      : TariffModel.fromJson(json['tariff'] as Map<String, dynamic>),
   comment: json['comment'] as String,
   description: json['description'] as String,
   category: json['category'] as String,
@@ -117,25 +112,32 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
   contentPhotos: (json['contentPhotos'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
-  defectPhotos: (json['defectPhotos'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
   volumetricWeight: (json['volumetricWeight'] as num).toDouble(),
   weight: (json['weight'] as num).toDouble(),
   width: (json['width'] as num).toDouble(),
   length: (json['length'] as num).toDouble(),
   height: (json['height'] as num).toDouble(),
+  participants: (json['participants'] as List<dynamic>)
+      .map((e) => ParticipantModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  qrs: json['qrs'] as List<dynamic>,
+  calculationId: (json['calculationId'] as num).toInt(),
+  deletedAt: json['deletedAt'] as String?,
+  price: (json['price'] as num?)?.toDouble(),
+  tariff: json['tariff'] == null
+      ? null
+      : TariffModel.fromJson(json['tariff'] as Map<String, dynamic>),
+  defectPhotos: (json['defectPhotos'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
   fromCity: json['fromCity'] == null
       ? null
       : CityModel.fromJson(json['fromCity'] as Map<String, dynamic>),
   toCity: json['toCity'] == null
       ? null
       : CityModel.fromJson(json['toCity'] as Map<String, dynamic>),
-  participants: (json['participants'] as List<dynamic>)
-      .map((e) => ParticipantModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  qrs: json['qrs'] as List<dynamic>,
-  calculationId: (json['calculationId'] as num).toInt(),
+  fromEntrance: json['fromEntrance'] as String?,
+  toEntrance: json['toEntrance'] as String?,
   priceCalculations: json['priceCalculations'] == null
       ? null
       : PriceCalculationModel.fromJson(
@@ -189,15 +191,15 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
     };
 
 TariffModel _$TariffModelFromJson(Map<String, dynamic> json) => TariffModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   isActive: json['isActive'] as bool,
   name: json['name'] as String,
   description: json['description'] as String,
-  icon: (json['icon'] as num?)?.toInt(),
   image: json['image'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  deletedAt: json['deletedAt'] as String?,
+  icon: (json['icon'] as num?)?.toInt(),
   sortIndex: (json['sortIndex'] as num?)?.toInt(),
   fields: (json['fields'] as List<dynamic>?)?.map((e) => e as String).toList(),
   tariffCategoryId: (json['tariffCategoryId'] as num?)?.toInt(),
@@ -250,14 +252,14 @@ Map<String, dynamic> _$TariffModelToJson(TariffModel instance) =>
 
 TariffCategoryModel _$TariffCategoryModelFromJson(Map<String, dynamic> json) =>
     TariffCategoryModel(
-      id: (json['id'] as num?)?.toInt(),
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
-      deletedAt: json['deletedAt'] as String?,
       name: json['name'] as String,
       key: json['key'] as String,
-      sortIndex: (json['sortIndex'] as num?)?.toInt(),
       active: json['active'] as bool,
+      id: (json['id'] as num?)?.toInt(),
+      deletedAt: json['deletedAt'] as String?,
+      sortIndex: (json['sortIndex'] as num?)?.toInt(),
       tariffs: (json['tariffs'] as List<dynamic>?)
           ?.map((e) => TariffModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -278,14 +280,14 @@ Map<String, dynamic> _$TariffCategoryModelToJson(
 };
 
 PackageModel _$PackageModelFromJson(Map<String, dynamic> json) => PackageModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   isActive: json['isActive'] as bool,
   name: json['name'] as String,
   description: json['description'] as String,
   image: json['image'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  deletedAt: json['deletedAt'] as String?,
   price: (json['price'] as num?)?.toDouble(),
 );
 
@@ -303,11 +305,11 @@ Map<String, dynamic> _$PackageModelToJson(PackageModel instance) =>
     };
 
 CityModel _$CityModelFromJson(Map<String, dynamic> json) => CityModel(
-  id: (json['id'] as num?)?.toInt(),
   name: json['name'] as String,
   country: json['country'] as String,
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
+  id: (json['id'] as num?)?.toInt(),
   deletedAt: json['deletedAt'] as String?,
   RoutesFrom: json['RoutesFrom'] as List<dynamic>?,
   RoutesTo: json['RoutesTo'] as List<dynamic>?,
@@ -326,16 +328,16 @@ Map<String, dynamic> _$CityModelToJson(CityModel instance) => <String, dynamic>{
 
 ParticipantModel _$ParticipantModelFromJson(Map<String, dynamic> json) =>
     ParticipantModel(
-      id: (json['id'] as num?)?.toInt(),
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
+      target: json['target'] as String,
+      id: (json['id'] as num?)?.toInt(),
       deletedAt: json['deletedAt'] as String?,
       orderId: (json['orderId'] as num?)?.toInt(),
       userId: (json['userId'] as num?)?.toInt(),
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      target: json['target'] as String,
     );
 
 Map<String, dynamic> _$ParticipantModelToJson(ParticipantModel instance) =>
@@ -351,10 +353,8 @@ Map<String, dynamic> _$ParticipantModelToJson(ParticipantModel instance) =>
     };
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   uuid: json['uuid'] as String,
   email: json['email'] as String,
   phone: json['phone'] as String,
@@ -367,8 +367,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   type: json['type'] as String,
   iin: json['iin'] as String,
   bin: json['bin'] as String,
-  access: json['access'],
   role: json['role'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  deletedAt: json['deletedAt'] as String?,
+  access: json['access'],
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -395,9 +397,9 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
 PriceCalculationModel _$PriceCalculationModelFromJson(
   Map<String, dynamic> json,
 ) => PriceCalculationModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
+  id: (json['id'] as num?)?.toInt(),
   deletedAt: json['deletedAt'] as String?,
   length: (json['length'] as num?)?.toDouble(),
   height: (json['height'] as num?)?.toDouble(),

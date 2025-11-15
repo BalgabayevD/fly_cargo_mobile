@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_card.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_section_header.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_text_field.dart';
-
 class OrderAddressDetailsSection extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -10,17 +9,9 @@ class OrderAddressDetailsSection extends StatelessWidget {
   final TextEditingController entranceController;
   final TextEditingController floorController;
   final VoidCallback onDataChanged;
-
   const OrderAddressDetailsSection({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.apartmentController,
-    required this.entranceController,
-    required this.floorController,
-    required this.onDataChanged,
+    required this.title, required this.subtitle, required this.apartmentController, required this.entranceController, required this.floorController, required this.onDataChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/transaction_item_widget.dart';
-
 class TransactionsListWidget extends StatelessWidget {
   final List<IncomeTransaction> transactions;
-
-  const TransactionsListWidget({super.key, required this.transactions});
-
+  const TransactionsListWidget({required this.transactions, super.key});
   @override
   Widget build(BuildContext context) {
     return AppCardWithTitle(

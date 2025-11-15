@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
-
 enum AppIconSize { xs, sm, md, lg, xl }
-
 enum AppIconVariant {
   primary,
   secondary,
@@ -13,37 +11,29 @@ enum AppIconVariant {
   warning,
   error,
 }
-
 class AppIcon extends StatelessWidget {
   final IconData icon;
   final AppIconSize size;
   final AppIconVariant variant;
   final Color? color;
   final VoidCallback? onTap;
-
   const AppIcon({
-    super.key,
-    required this.icon,
+    required this.icon, super.key,
     this.size = AppIconSize.md,
     this.variant = AppIconVariant.primary,
     this.color,
     this.onTap,
   });
-
   @override
   Widget build(BuildContext context) {
     final iconSize = _getSize();
     final iconColor = color ?? _getColor();
-
     Widget iconWidget = Icon(icon, size: iconSize, color: iconColor);
-
     if (onTap != null) {
       iconWidget = GestureDetector(onTap: onTap, child: iconWidget);
     }
-
     return iconWidget;
   }
-
   double _getSize() {
     switch (size) {
       case AppIconSize.xs:
@@ -58,7 +48,6 @@ class AppIcon extends StatelessWidget {
         return AppSpacing.iconSizeXL;
     }
   }
-
   Color _getColor() {
     switch (variant) {
       case AppIconVariant.primary:
@@ -78,8 +67,6 @@ class AppIcon extends StatelessWidget {
     }
   }
 }
-
-
 class AppIconContainer extends StatelessWidget {
   final IconData icon;
   final AppIconSize size;
@@ -88,10 +75,8 @@ class AppIconContainer extends StatelessWidget {
   final Color? iconColor;
   final VoidCallback? onTap;
   final double? borderRadius;
-
   const AppIconContainer({
-    super.key,
-    required this.icon,
+    required this.icon, super.key,
     this.size = AppIconSize.md,
     this.variant = AppIconVariant.primary,
     this.backgroundColor,
@@ -99,7 +84,6 @@ class AppIconContainer extends StatelessWidget {
     this.onTap,
     this.borderRadius,
   });
-
   @override
   Widget build(BuildContext context) {
     final containerSize = _getContainerSize();
@@ -107,7 +91,6 @@ class AppIconContainer extends StatelessWidget {
     final bgColor = backgroundColor ?? _getBackgroundColor();
     final icColor = iconColor ?? _getIconColor();
     final radius = borderRadius ?? AppSpacing.radiusSM;
-
     Widget container = Container(
       width: containerSize,
       height: containerSize,
@@ -117,14 +100,11 @@ class AppIconContainer extends StatelessWidget {
       ),
       child: Icon(icon, size: iconSize, color: icColor),
     );
-
     if (onTap != null) {
       container = GestureDetector(onTap: onTap, child: container);
     }
-
     return container;
   }
-
   double _getContainerSize() {
     switch (size) {
       case AppIconSize.xs:
@@ -139,7 +119,6 @@ class AppIconContainer extends StatelessWidget {
         return AppSpacing.avatarSizeXL;
     }
   }
-
   double _getIconSize() {
     switch (size) {
       case AppIconSize.xs:
@@ -154,7 +133,6 @@ class AppIconContainer extends StatelessWidget {
         return AppSpacing.iconSizeXL;
     }
   }
-
   Color _getBackgroundColor() {
     switch (variant) {
       case AppIconVariant.primary:
@@ -173,7 +151,6 @@ class AppIconContainer extends StatelessWidget {
         return AppColors.error.withValues(alpha: 0.1);
     }
   }
-
   Color _getIconColor() {
     switch (variant) {
       case AppIconVariant.primary:
@@ -193,8 +170,6 @@ class AppIconContainer extends StatelessWidget {
     }
   }
 }
-
-
 class AppIconWithBadge extends StatelessWidget {
   final IconData icon;
   final AppIconSize size;
@@ -204,10 +179,8 @@ class AppIconWithBadge extends StatelessWidget {
   final Color? badgeColor;
   final Color? badgeTextColor;
   final VoidCallback? onTap;
-
   const AppIconWithBadge({
-    super.key,
-    required this.icon,
+    required this.icon, super.key,
     this.size = AppIconSize.md,
     this.variant = AppIconVariant.primary,
     this.badgeText,
@@ -216,7 +189,6 @@ class AppIconWithBadge extends StatelessWidget {
     this.badgeTextColor,
     this.onTap,
   });
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -254,33 +226,26 @@ class AppIconWithBadge extends StatelessWidget {
     );
   }
 }
-
-
 class AppAnimatedIcon extends StatefulWidget {
   final IconData icon;
   final AppIconSize size;
   final AppIconVariant variant;
   final Duration duration;
   final VoidCallback? onTap;
-
   const AppAnimatedIcon({
-    super.key,
-    required this.icon,
+    required this.icon, super.key,
     this.size = AppIconSize.md,
     this.variant = AppIconVariant.primary,
     this.duration = const Duration(milliseconds: 200),
     this.onTap,
   });
-
   @override
   State<AppAnimatedIcon> createState() => _AppAnimatedIconState();
 }
-
 class _AppAnimatedIconState extends State<AppAnimatedIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
-
   @override
   void initState() {
     super.initState();
@@ -290,13 +255,11 @@ class _AppAnimatedIconState extends State<AppAnimatedIcon>
       end: 0.8,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
-
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

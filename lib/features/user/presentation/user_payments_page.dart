@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class UserPaymentsPage extends StatefulWidget {
   const UserPaymentsPage({super.key});
-
   @override
   State<UserPaymentsPage> createState() => _UserPaymentsPageState();
 }
-
 class _UserPaymentsPageState extends State<UserPaymentsPage> {
   late List<PaymentTransaction> _transactions;
   String _selectedPeriod = 'all';
-
   @override
   void initState() {
     super.initState();
     _transactions = _getMockTransactions();
   }
-
   List<PaymentTransaction> _getMockTransactions() {
     return [
       PaymentTransaction(
@@ -58,11 +53,9 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     ];
   }
-
   @override
   Widget build(BuildContext context) {
     final filteredTransactions = _getFilteredTransactions();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -90,13 +83,8 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
       body: Column(
         children: [
-
           _buildStatsSection(),
-
-
           _buildFilterChips(),
-
-
           Expanded(
             child: filteredTransactions.isEmpty
                 ? _buildEmptyState()
@@ -112,7 +100,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
-
   Widget _buildStatsSection() {
     final totalSpent = _transactions
         .where(
@@ -121,7 +108,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
               txn.status == PaymentStatus.completed,
         )
         .fold(0.0, (sum, txn) => sum + txn.amount);
-
     final totalReceived = _transactions
         .where(
           (txn) =>
@@ -129,7 +115,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
               txn.status == PaymentStatus.completed,
         )
         .fold(0.0, (sum, txn) => sum + txn.amount);
-
     return Container(
       margin: const EdgeInsets.all(20),
       child: AppCard(
@@ -162,7 +147,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
-
   Widget _buildStatItem(
     String label,
     String value,
@@ -189,7 +173,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ],
     );
   }
-
   Widget _buildFilterChips() {
     return Container(
       height: 60,
@@ -208,7 +191,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
-
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedPeriod == value;
     return FilterChip(
@@ -227,7 +209,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -265,7 +246,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
-
   Widget _buildTransactionCard(PaymentTransaction transaction) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -273,7 +253,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         variant: AppCardVariant.outlined,
         child: Row(
           children: [
-
             Container(
               width: 48,
               height: 48,
@@ -290,8 +269,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
               ),
             ),
             const SizedBox(width: 16),
-
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,8 +325,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
                 ],
               ),
             ),
-
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -374,7 +349,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
-
   List<PaymentTransaction> _getFilteredTransactions() {
     switch (_selectedPeriod) {
       case 'outgoing':
@@ -393,7 +367,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return _transactions;
     }
   }
-
   Color _getTransactionColor(PaymentType type) {
     switch (type) {
       case PaymentType.outgoing:
@@ -402,7 +375,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return const Color(0xFF34C759);
     }
   }
-
   IconData _getTransactionIcon(PaymentType type) {
     switch (type) {
       case PaymentType.outgoing:
@@ -411,7 +383,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return Icons.arrow_downward;
     }
   }
-
   Color _getStatusColor(PaymentStatus status) {
     switch (status) {
       case PaymentStatus.completed:
@@ -422,7 +393,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return const Color(0xFFFF3B30);
     }
   }
-
   String _getStatusText(PaymentStatus status) {
     switch (status) {
       case PaymentStatus.completed:
@@ -433,11 +403,9 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return 'Ошибка';
     }
   }
-
   String _formatTime(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
-
     if (difference.inMinutes < 60) {
       return '${difference.inMinutes} мин назад';
     } else if (difference.inHours < 24) {
@@ -448,7 +416,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       return '${timestamp.day}.${timestamp.month}.${timestamp.year}';
     }
   }
-
   void _showFilterDialog() {
     showModalBottomSheet(
       context: context,
@@ -493,7 +460,6 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
     );
   }
 }
-
 class PaymentTransaction {
   final String id;
   final double amount;
@@ -502,7 +468,6 @@ class PaymentTransaction {
   final PaymentStatus status;
   final DateTime timestamp;
   final String method;
-
   const PaymentTransaction({
     required this.id,
     required this.amount,
@@ -513,7 +478,5 @@ class PaymentTransaction {
     required this.method,
   });
 }
-
 enum PaymentType { outgoing, incoming }
-
 enum PaymentStatus { completed, pending, failed }

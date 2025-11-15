@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
-
 class DeliveryCardWidget extends StatelessWidget {
   final CourierOrder delivery;
   final VoidCallback onTap;
-
   const DeliveryCardWidget({
-    super.key,
-    required this.delivery,
-    required this.onTap,
+    required this.delivery, required this.onTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,7 +28,6 @@ class DeliveryCardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -66,8 +60,6 @@ class DeliveryCardWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-
-
               _buildAddressRow(
                 icon: Icons.location_on,
                 iconColor: const Color(0xFF007AFF),
@@ -84,8 +76,6 @@ class DeliveryCardWidget extends StatelessWidget {
                 label: 'Доставить',
               ),
               const SizedBox(height: 12),
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -119,8 +109,6 @@ class DeliveryCardWidget extends StatelessWidget {
                   ),
                 ],
               ),
-
-
               const SizedBox(height: 8),
               Text(
                 'Создан: ${_formatDateTime(delivery.createdAt)}',
@@ -132,7 +120,6 @@ class DeliveryCardWidget extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildAddressRow({
     required IconData icon,
     required Color iconColor,
@@ -154,11 +141,9 @@ class DeliveryCardWidget extends StatelessWidget {
       ],
     );
   }
-
   String _formatDateTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
-
     if (difference.inDays > 0) {
       return '${difference.inDays} дн. назад';
     } else if (difference.inHours > 0) {

@@ -5,43 +5,32 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-
-
 class CodeInputPage extends StatefulWidget {
   final String phoneNumber;
   final String deviceId;
   final String preAuthSessionId;
-
   const CodeInputPage({
-    super.key,
-    required this.phoneNumber,
-    required this.deviceId,
-    required this.preAuthSessionId,
+    required this.phoneNumber, required this.deviceId, required this.preAuthSessionId, super.key,
   });
-
   @override
   State<CodeInputPage> createState() => _CodeInputPageState();
 }
-
 class _CodeInputPageState extends State<CodeInputPage> {
   final List<TextEditingController> _controllers = List.generate(
     6,
     (index) => TextEditingController(),
   );
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-
   int _currentIndex = 0;
   bool _isCodeComplete = false;
   int _resendTimer = 60;
   bool _canResend = false;
-
   @override
   void initState() {
     super.initState();
     _startResendTimer();
     _focusNodes[0].requestFocus();
   }
-
   @override
   void dispose() {
     for (final controller in _controllers) {
@@ -52,11 +41,9 @@ class _CodeInputPageState extends State<CodeInputPage> {
     }
     super.dispose();
   }
-
   void _startResendTimer() {
     _resendTimer = 60;
     _canResend = false;
-
     Future.doWhile(() async {
       await Future.delayed(const Duration(seconds: 1));
       if (mounted) {
@@ -71,12 +58,9 @@ class _CodeInputPageState extends State<CodeInputPage> {
       return false;
     });
   }
-
   void _onCodeChanged(int index, String value) {
     if (value.length == 1) {
       _controllers[index].text = value;
-
-
       if (index < 5) {
         _currentIndex = index + 1;
         _focusNodes[_currentIndex].requestFocus();
@@ -85,35 +69,28 @@ class _CodeInputPageState extends State<CodeInputPage> {
         _checkCodeComplete();
       }
     } else if (value.isEmpty && index > 0) {
-
       _currentIndex = index - 1;
       _focusNodes[_currentIndex].requestFocus();
     }
-
     _checkCodeComplete();
   }
-
   void _checkCodeComplete() {
     final code = _controllers.map((c) => c.text).join();
     final isComplete = code.length == 6;
-
     if (_isCodeComplete != isComplete) {
       setState(() {
         _isCodeComplete = isComplete;
       });
     }
   }
-
   void _onCodeSubmitted() {
     if (_isCodeComplete) {
       final code = _controllers.map((c) => c.text).join();
-
       context.read<AuthBloc>().add(
         AuthVerifyCodeRequested(phoneNumber: widget.phoneNumber, code: code),
       );
     }
   }
-
   void _onResendCode() {
     if (_canResend) {
       context.read<AuthBloc>().add(
@@ -122,7 +99,6 @@ class _CodeInputPageState extends State<CodeInputPage> {
       _startResendTimer();
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,11 +125,8 @@ class _CodeInputPageState extends State<CodeInputPage> {
               ),
             );
           } else if (state is AuthAuthenticated) {
-
-
             Navigator.of(context).popUntil((route) => route.isFirst);
           } else if (state is AuthCodeSent) {
-
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Код отправлен повторно'),
@@ -170,7 +143,6 @@ class _CodeInputPageState extends State<CodeInputPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Spacer(flex: 2),
-
                 Center(
                   child: Container(
                     width: 80,
@@ -188,18 +160,13 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     ),
                   ),
                 ),
-
                 SizedBox(height: AppSpacing.xxl),
-
                 Text(
                   'Введите код из SMS',
                   style: AppTypography.h3,
                   textAlign: TextAlign.center,
                 ),
-
                 SizedBox(height: AppSpacing.md),
-
-
                 Text(
                   'Мы отправили код на номер\n${widget.phoneNumber}',
                   style: AppTypography.bodyMedium.copyWith(
@@ -207,10 +174,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-
                 SizedBox(height: AppSpacing.xxxl),
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(6, (index) {
@@ -274,14 +238,10 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     );
                   }),
                 ),
-
                 SizedBox(height: AppSpacing.xxxl),
-
-
                 BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
                     final isLoading = state is AuthLoading;
-
                     return AppButton(
                       text: 'Подтвердить',
                       onPressed: _isCodeComplete && !isLoading
@@ -294,10 +254,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     );
                   },
                 ),
-
                 SizedBox(height: AppSpacing.xl),
-
-
                 if (_canResend)
                   AppButton(
                     text: 'Отправить код повторно',
@@ -314,10 +271,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-
                 const Spacer(flex: 3),
-
-
                 Text(
                   'Не получили код? Проверьте правильность номера или обратитесь в поддержку',
                   style: AppTypography.caption,

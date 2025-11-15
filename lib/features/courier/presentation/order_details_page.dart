@@ -1,31 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
-
 class OrderDetailsPage extends StatefulWidget {
   final CourierOrder order;
-
-  const OrderDetailsPage({super.key, required this.order});
-
+  const OrderDetailsPage({required this.order, super.key});
   @override
   State<OrderDetailsPage> createState() => _OrderDetailsPageState();
 }
-
 class _OrderDetailsPageState extends State<OrderDetailsPage> {
   late CourierOrder _order;
-
   @override
   void initState() {
     super.initState();
     _order = widget.order;
   }
-
   void _updateOrderStatus(OrderStatus newStatus) {
     setState(() {
       _order = _order.copyWith(status: newStatus);
     });
-
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Статус заказа обновлен: ${_order.statusText}'),
@@ -33,7 +25,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,31 +57,18 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             _buildStatusCard(),
             const SizedBox(height: 20),
-
-
             _buildOrderInfoCard(),
             const SizedBox(height: 20),
-
-
             _buildAddressesCard(),
             const SizedBox(height: 20),
-
-
             _buildRecipientCard(),
             const SizedBox(height: 20),
-
-
             _buildCargoCard(),
             const SizedBox(height: 20),
-
-
             _buildAdditionalInfoCard(),
             const SizedBox(height: 20),
-
-
             _buildActionButtons(),
             const SizedBox(height: 20),
           ],
@@ -98,7 +76,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildStatusCard() {
     return AppCard(
       variant: AppCardVariant.filled,
@@ -171,7 +148,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildOrderInfoCard() {
     return AppCardWithTitle(
       title: 'Информация о заказе',
@@ -190,14 +166,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildAddressesCard() {
     return AppCardWithTitle(
       title: 'Маршрут доставки',
       variant: AppCardVariant.filled,
       child: Column(
         children: [
-
           _buildAddressItem(
             icon: Icons.location_on,
             iconColor: const Color(0xFF007AFF),
@@ -206,7 +180,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             address: _order.pickupAddress.address,
           ),
           const SizedBox(height: 16),
-
           const Center(
             child: Icon(
               Icons.keyboard_arrow_down,
@@ -215,7 +188,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             ),
           ),
           const SizedBox(height: 16),
-
           _buildAddressItem(
             icon: Icons.location_on,
             iconColor: const Color(0xFF34C759),
@@ -227,7 +199,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildRecipientCard() {
     return AppCardWithTitle(
       title: 'Получатель',
@@ -260,7 +231,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildCargoCard() {
     return AppCardWithTitle(
       title: 'Информация о грузе',
@@ -289,12 +259,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildAdditionalInfoCard() {
     if (_order.notes == null && _order.courierName == null) {
       return const SizedBox.shrink();
     }
-
     return AppCardWithTitle(
       title: 'Дополнительная информация',
       variant: AppCardVariant.filled,
@@ -307,11 +275,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildActionButtons() {
     return Column(
       children: [
-
         if (_order.status == OrderStatus.assigned) ...[
           AppButton(
             text: 'Забрать груз',
@@ -340,10 +306,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             icon: Icons.check_circle,
           ),
         ],
-
         const SizedBox(height: 12),
-
-
         Column(
           children: [
             AppButton(
@@ -368,7 +331,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ],
     );
   }
-
   Widget _buildInfoRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -396,7 +358,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   Widget _buildAddressItem({
     required IconData icon,
     required Color iconColor,
@@ -448,11 +409,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ],
     );
   }
-
   String _formatDateTime(DateTime dateTime) {
     return '${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year} в ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
   }
-
   void _showOrderActions(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -466,7 +425,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               title: const Text('Поделиться заказом'),
               onTap: () {
                 Navigator.pop(context);
-
               },
             ),
             ListTile(
@@ -474,7 +432,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               title: const Text('Печать накладной'),
               onTap: () {
                 Navigator.pop(context);
-
               },
             ),
             ListTile(
@@ -482,7 +439,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               title: const Text('История заказа'),
               onTap: () {
                 Navigator.pop(context);
-
               },
             ),
           ],
@@ -490,9 +446,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   void _makeCall(String phone) {
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Звонок на номер $phone'),
@@ -500,9 +454,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   void _sendMessage(String phone) {
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Отправка сообщения на номер $phone'),
@@ -510,7 +462,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   void _reportProblem() {
     showDialog(
       context: context,
@@ -538,7 +489,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       ),
     );
   }
-
   void _cancelOrder() {
     showDialog(
       context: context,

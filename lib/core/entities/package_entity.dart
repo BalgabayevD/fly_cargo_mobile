@@ -1,5 +1,4 @@
 import 'package:fly_cargo/core/entities/box_entity.dart';
-
 class PackageEntity {
   final String id;
   final BoxEntity box;
@@ -12,21 +11,18 @@ class PackageEntity {
   final double? insuranceValue;
   final DateTime createdAt;
   final DateTime? updatedAt;
-
   const PackageEntity({
     required this.id,
     required this.box,
-    this.recipientName,
+    required this.createdAt, this.recipientName,
     this.recipientPhone,
     this.cargoDescription,
     this.packagingPhotos = const [],
     this.contentPhotos = const [],
     this.isInsured = false,
     this.insuranceValue,
-    required this.createdAt,
     this.updatedAt,
   });
-
   PackageEntity copyWith({
     String? id,
     BoxEntity? box,
@@ -54,7 +50,6 @@ class PackageEntity {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -71,7 +66,6 @@ class PackageEntity {
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
-
   @override
   int get hashCode {
     return id.hashCode ^
@@ -86,7 +80,6 @@ class PackageEntity {
         createdAt.hashCode ^
         updatedAt.hashCode;
   }
-
   @override
   String toString() {
     return 'PackageEntity(id: $id, box: $box, recipientName: $recipientName, isInsured: $isInsured)';

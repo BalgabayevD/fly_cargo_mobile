@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
 class DeliveriesStatisticsDialog extends StatelessWidget {
   final Map<String, dynamic> statistics;
-
   const DeliveriesStatisticsDialog({
-    super.key,
-    required this.statistics,
+    required this.statistics, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -30,7 +26,6 @@ class DeliveriesStatisticsDialog extends StatelessWidget {
       ],
     );
   }
-
   Widget _buildStatRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),

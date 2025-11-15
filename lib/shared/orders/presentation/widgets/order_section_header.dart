@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class OrderSectionHeader extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-
   const OrderSectionHeader({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.subtitle,
+    required this.icon, required this.title, required this.subtitle, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Row(

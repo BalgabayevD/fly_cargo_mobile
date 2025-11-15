@@ -5,7 +5,6 @@ import 'package:fly_cargo/features/home/presentation/widgets/placeholder_item_wi
 import 'package:fly_cargo/features/home/presentation/widgets/route_header_widget.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/send_package_button_widget.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 mixin HomeBottomSheetContentStyling {
   static const double handleWidth = 40.0;
   static const double handleHeight = 4.0;
@@ -16,7 +15,6 @@ mixin HomeBottomSheetContentStyling {
   static const double largeSpacing = 24.0;
   static const double sectionSpacing = 12.0;
 }
-
 class HomeBottomSheetContent extends StatelessWidget
     with HomeBottomSheetContentStyling {
   final AddressModel? fromAddress;
@@ -25,17 +23,9 @@ class HomeBottomSheetContent extends StatelessWidget
   final VoidCallback onAddressSelectionTap;
   final void Function(BuildContext, String) onBoxDetailsTap;
   final ScrollController scrollController;
-
   const HomeBottomSheetContent({
-    super.key,
-    required this.fromAddress,
-    required this.toAddress,
-    required this.onSendPackagePressed,
-    required this.onAddressSelectionTap,
-    required this.onBoxDetailsTap,
-    required this.scrollController,
+    required this.fromAddress, required this.toAddress, required this.onSendPackagePressed, required this.onAddressSelectionTap, required this.onBoxDetailsTap, required this.scrollController, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,7 +59,6 @@ class HomeBottomSheetContent extends StatelessWidget
       ),
     );
   }
-
   Widget _buildHandle() {
     return Center(
       child: Container(
@@ -83,7 +72,6 @@ class HomeBottomSheetContent extends StatelessWidget
       ),
     );
   }
-
   Widget _buildAddressesContent(BuildContext context) {
     return Column(
       children: [
@@ -112,5 +100,4 @@ class HomeBottomSheetContent extends StatelessWidget
       ],
     );
   }
-
 }

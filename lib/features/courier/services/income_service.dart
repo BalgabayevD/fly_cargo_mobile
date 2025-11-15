@@ -1,5 +1,4 @@
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
-
 abstract class IncomeService {
   Future<CourierIncome> getIncome();
   List<IncomeTransaction> getTransactionsForPeriod(
@@ -11,15 +10,12 @@ abstract class IncomeService {
   int getTimeOnRoadForPeriod(String period);
   double getDistanceForPeriod(String period);
 }
-
 class MockIncomeService implements IncomeService {
   @override
   Future<CourierIncome> getIncome() async {
-
     await Future.delayed(const Duration(seconds: 1));
     return _getMockIncome();
   }
-
   @override
   List<IncomeTransaction> getTransactionsForPeriod(
     List<IncomeTransaction> transactions,
@@ -48,7 +44,6 @@ class MockIncomeService implements IncomeService {
         return [];
     }
   }
-
   @override
   double getEarningsForPeriod(CourierIncome income, String period) {
     switch (period) {
@@ -64,7 +59,6 @@ class MockIncomeService implements IncomeService {
         return 0.0;
     }
   }
-
   @override
   int getDeliveriesForPeriod(CourierIncome income, String period) {
     switch (period) {
@@ -78,10 +72,8 @@ class MockIncomeService implements IncomeService {
         return 0;
     }
   }
-
   @override
   int getTimeOnRoadForPeriod(String period) {
-
     switch (period) {
       case 'today':
         return 6;
@@ -93,10 +85,8 @@ class MockIncomeService implements IncomeService {
         return 0;
     }
   }
-
   @override
   double getDistanceForPeriod(String period) {
-
     switch (period) {
       case 'today':
         return 45.5;
@@ -108,7 +98,6 @@ class MockIncomeService implements IncomeService {
         return 0.0;
     }
   }
-
   CourierIncome _getMockIncome() {
     return CourierIncome(
       todayEarnings: 2500.0,

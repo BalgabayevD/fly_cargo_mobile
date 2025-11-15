@@ -8,12 +8,10 @@ import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:injectable/injectable.dart';
-
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
   final AuthStatusUseCase _authStatusUseCase;
-
   AuthBloc(this._signInUseCase, this._authStatusUseCase)
     : super(const AuthInitial()) {
     on<AuthInitialized>(_onInitialized);
@@ -21,12 +19,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthVerifyCodeRequested>(_verifyCode);
     on<AuthLogout>(_onLogout);
   }
-
   Future<void> _onInitialized(
     AuthInitialized event,
     Emitter<AuthState> emit,
   ) async {
-
     final session = await FlutterBetterAuth.client.getSession();
     if (session.data?.session != null) {
       emit(
@@ -38,16 +34,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
     }
   }
-
   Future<void> _onRequestOTP(
     AuthRequestOTPRequested event,
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthLoading());
-
     try {
       final response = await _signInUseCase(event.phoneNumber);
-
       if (response != null) {
         emit(
           AuthCodeSent(
@@ -63,23 +56,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthError(message: 'Не удалось отправить код: ${e.toString()}'));
     }
   }
-
   Future<void> _verifyCode(
     AuthVerifyCodeRequested event,
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthLoading());
-
     try {
       await FlutterBetterAuth.client.phone.verify(
         body: VerifyPhoneBody(phoneNumber: event.phoneNumber, code: event.code),
       );
       final sessionStatus = await _authStatusUseCase.getSessionStatus();
       final isAuthenticated = sessionStatus?.session != null;
-
       if (isAuthenticated) {
         final token = await _authStatusUseCase.getCurrentToken();
-
         emit(
           AuthAuthenticated(
             userType: UserType.client,
@@ -94,7 +83,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthError(message: 'Не удалось подтвердить код: ${e.toString()}'));
     }
   }
-
   Future<void> _onLogout(AuthLogout event, Emitter<AuthState> emit) async {
     await FlutterBetterAuth.client.signOut();
     emit(const AuthInitial());

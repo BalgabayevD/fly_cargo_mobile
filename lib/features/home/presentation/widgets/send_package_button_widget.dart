@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 mixin SendPackageButtonStyling {
   static const double buttonHeight = 56.0;
   static const double borderRadius = 16.0;
@@ -9,13 +8,10 @@ mixin SendPackageButtonStyling {
   static const double shadowOffset = 4.0;
   static const double shadowAlpha = 0.3;
 }
-
 class SendPackageButtonWidget extends StatelessWidget
     with SendPackageButtonStyling {
   final VoidCallback onTap;
-
-  const SendPackageButtonWidget({super.key, required this.onTap});
-
+  const SendPackageButtonWidget({required this.onTap, super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

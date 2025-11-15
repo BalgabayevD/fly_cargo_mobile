@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 class OrderConfirmationPage extends StatelessWidget {
   final dynamic box;
   final AddressModel fromAddress;
@@ -9,17 +8,12 @@ class OrderConfirmationPage extends StatelessWidget {
   final Map<String, String>? recipientData;
   final String? cargoDescription;
   final List<String>? photos;
-
   const OrderConfirmationPage({
-    super.key,
-    required this.box,
-    required this.fromAddress,
-    required this.toAddress,
+    required this.box, required this.fromAddress, required this.toAddress, super.key,
     this.recipientData,
     this.cargoDescription,
     this.photos,
   });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +40,6 @@ class OrderConfirmationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             const Text(
               'Проверьте данные заказа',
               style: TextStyle(
@@ -61,8 +54,6 @@ class OrderConfirmationPage extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
             ),
             const SizedBox(height: 30),
-
-
             AppCardWithTitle(
               title: 'Упаковка',
               variant: AppCardVariant.filled,
@@ -131,14 +122,11 @@ class OrderConfirmationPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-
             AppCardWithTitle(
               title: 'Маршрут доставки',
               variant: AppCardVariant.filled,
               child: Column(
                 children: [
-
                   _buildAddressItem(
                     icon: Icons.location_on,
                     iconColor: const Color(0xFF007AFF),
@@ -147,7 +135,6 @@ class OrderConfirmationPage extends StatelessWidget {
                     address: fromAddress.address,
                   ),
                   const SizedBox(height: 16),
-
                   const Center(
                     child: Icon(
                       Icons.keyboard_arrow_down,
@@ -156,7 +143,6 @@ class OrderConfirmationPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-
                   _buildAddressItem(
                     icon: Icons.location_on,
                     iconColor: const Color(0xFF34C759),
@@ -168,8 +154,6 @@ class OrderConfirmationPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-
             if (recipientData != null) ...[
               AppCardWithTitle(
                 title: 'Получатель',
@@ -192,8 +176,6 @@ class OrderConfirmationPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
             ],
-
-
             if (cargoDescription != null && cargoDescription!.isNotEmpty) ...[
               AppCardWithTitle(
                 title: 'Описание груза',
@@ -209,8 +191,6 @@ class OrderConfirmationPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
             ],
-
-
             if (photos != null && photos!.isNotEmpty) ...[
               AppCardWithTitle(
                 title: 'Фотографии',
@@ -225,8 +205,6 @@ class OrderConfirmationPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
             ],
-
-
             AppPriceCard(
               title: 'Итого к оплате',
               price: 'от ${box.basePrice.toInt()} ${box.currency}',
@@ -235,8 +213,6 @@ class OrderConfirmationPage extends StatelessWidget {
               isFullWidth: true,
             ),
             const SizedBox(height: 30),
-
-
             Row(
               children: [
                 Expanded(
@@ -264,7 +240,6 @@ class OrderConfirmationPage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildAddressItem({
     required IconData icon,
     required Color iconColor,
@@ -316,7 +291,6 @@ class OrderConfirmationPage extends StatelessWidget {
       ],
     );
   }
-
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -343,7 +317,6 @@ class OrderConfirmationPage extends StatelessWidget {
       ],
     );
   }
-
   void _showCancelDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -377,9 +350,7 @@ class OrderConfirmationPage extends StatelessWidget {
       ),
     );
   }
-
   void _confirmOrder(BuildContext context) {
-
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

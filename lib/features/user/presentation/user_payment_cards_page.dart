@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/models/user_profile_model.dart';
-
 class UserPaymentCardsPage extends StatefulWidget {
   const UserPaymentCardsPage({super.key});
-
   @override
   State<UserPaymentCardsPage> createState() => _UserPaymentCardsPageState();
 }
-
 class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
   late List<PaymentCard> _paymentCards;
-
   @override
   void initState() {
     super.initState();
     _paymentCards = _getMockPaymentCards();
   }
-
   List<PaymentCard> _getMockPaymentCards() {
     return [
       PaymentCard(
@@ -38,7 +33,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       ),
     ];
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +84,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
             ),
     );
   }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -136,7 +129,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       ),
     );
   }
-
   Widget _buildPaymentCard(PaymentCard card) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -236,7 +228,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       ),
     );
   }
-
   Widget _buildAddCardButton() {
     return AppButton(
       text: 'Добавить новую карту',
@@ -247,7 +238,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       icon: Icons.add,
     );
   }
-
   Color _getCardColor(String type) {
     switch (type.toLowerCase()) {
       case 'visa':
@@ -258,7 +248,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
         return const Color(0xFF666666);
     }
   }
-
   void _addPaymentCard() {
     showModalBottomSheet(
       context: context,
@@ -266,7 +255,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       builder: (context) => _buildAddCardModal(),
     );
   }
-
   Widget _buildAddCardModal() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -346,7 +334,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       ),
     );
   }
-
   void _handleCardAction(String action, PaymentCard card) {
     switch (action) {
       case 'set_primary':
@@ -360,7 +347,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
         break;
     }
   }
-
   void _setPrimaryCard(PaymentCard card) {
     setState(() {
       for (var c in _paymentCards) {
@@ -381,7 +367,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       ),
     );
   }
-
   void _editCard(PaymentCard card) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -390,7 +375,6 @@ class _UserPaymentCardsPageState extends State<UserPaymentCardsPage> {
       ),
     );
   }
-
   void _deleteCard(PaymentCard card) {
     showDialog(
       context: context,

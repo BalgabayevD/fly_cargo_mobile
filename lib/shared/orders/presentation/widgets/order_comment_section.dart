@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_section_header.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_text_area.dart';
-
 class OrderCommentSection extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onDataChanged;
-
   const OrderCommentSection({
-    super.key,
-    required this.controller,
-    required this.onDataChanged,
+    required this.controller, required this.onDataChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(

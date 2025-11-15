@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/models/user_profile_model.dart';
-
 class UserOrderHistoryPage extends StatefulWidget {
   const UserOrderHistoryPage({super.key});
-
   @override
   State<UserOrderHistoryPage> createState() => _UserOrderHistoryPageState();
 }
-
 class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
   late List<Order> _orders;
   String _selectedFilter = 'all';
-
   @override
   void initState() {
     super.initState();
     _orders = _getMockOrders();
   }
-
   List<Order> _getMockOrders() {
     return [
       Order(
@@ -68,11 +63,9 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     ];
   }
-
   @override
   Widget build(BuildContext context) {
     final filteredOrders = _getFilteredOrders();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -100,10 +93,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
       body: Column(
         children: [
-
           _buildFilterChips(),
-
-
           Expanded(
             child: filteredOrders.isEmpty
                 ? _buildEmptyState()
@@ -119,7 +109,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   Widget _buildFilterChips() {
     return Container(
       height: 60,
@@ -138,7 +127,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedFilter == value;
     return FilterChip(
@@ -157,7 +145,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -195,7 +182,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   Widget _buildOrderCard(Order order) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -204,7 +190,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -237,8 +222,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
               ],
             ),
             const SizedBox(height: 12),
-
-
             _buildAddressRow(
               icon: Icons.location_on,
               label: 'Откуда',
@@ -251,8 +234,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
               address: order.toAddress,
             ),
             const SizedBox(height: 12),
-
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -276,8 +257,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
               ],
             ),
             const SizedBox(height: 12),
-
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -320,7 +299,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   Widget _buildAddressRow({
     required IconData icon,
     required String label,
@@ -349,7 +327,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ],
     );
   }
-
   List<Order> _getFilteredOrders() {
     switch (_selectedFilter) {
       case 'completed':
@@ -368,11 +345,9 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
         return _orders;
     }
   }
-
   String _formatDate(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
-
     if (difference.inDays == 0) {
       return 'Сегодня';
     } else if (difference.inDays == 1) {
@@ -383,7 +358,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       return '${date.day}.${date.month}.${date.year}';
     }
   }
-
   void _showFilterDialog() {
     showModalBottomSheet(
       context: context,
@@ -427,7 +401,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   void _viewOrderDetails(Order order) {
     showModalBottomSheet(
       context: context,
@@ -467,7 +440,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   Widget _buildDetailRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -495,7 +467,6 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
-
   void _repeatOrder(Order order) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

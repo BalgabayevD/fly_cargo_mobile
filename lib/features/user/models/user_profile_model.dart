@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class UserProfile {
   final String id;
   final String name;
@@ -11,20 +10,13 @@ class UserProfile {
   final List<PaymentCard> paymentCards;
   final List<Order> orderHistory;
   final NotificationSettings notificationSettings;
-
   const UserProfile({
     required this.id,
     required this.name,
     required this.phone,
-    this.email,
+    required this.joinDate, required this.status, required this.paymentCards, required this.orderHistory, required this.notificationSettings, this.email,
     this.avatarUrl,
-    required this.joinDate,
-    required this.status,
-    required this.paymentCards,
-    required this.orderHistory,
-    required this.notificationSettings,
   });
-
   String get statusText {
     switch (status) {
       case 'active':
@@ -37,7 +29,6 @@ class UserProfile {
         return 'Неизвестно';
     }
   }
-
   Color get statusColor {
     switch (status) {
       case 'active':
@@ -50,12 +41,10 @@ class UserProfile {
         return const Color(0xFF666666);
     }
   }
-
   PaymentCard? get primaryCard {
     return paymentCards.isNotEmpty ? paymentCards.first : null;
   }
 }
-
 class PaymentCard {
   final String id;
   final String type;
@@ -63,7 +52,6 @@ class PaymentCard {
   final String holderName;
   final bool isPrimary;
   final DateTime expiryDate;
-
   const PaymentCard({
     required this.id,
     required this.type,
@@ -72,11 +60,9 @@ class PaymentCard {
     required this.isPrimary,
     required this.expiryDate,
   });
-
   String get displayName {
     return '$type -$lastFourDigits';
   }
-
   IconData get icon {
     switch (type.toLowerCase()) {
       case 'visa':
@@ -88,7 +74,6 @@ class PaymentCard {
     }
   }
 }
-
 class Order {
   final String id;
   final String fromAddress;
@@ -97,7 +82,6 @@ class Order {
   final OrderStatus status;
   final double cost;
   final String? description;
-
   const Order({
     required this.id,
     required this.fromAddress,
@@ -107,7 +91,6 @@ class Order {
     required this.cost,
     this.description,
   });
-
   String get statusText {
     switch (status) {
       case OrderStatus.pending:
@@ -120,7 +103,6 @@ class Order {
         return 'Отменен';
     }
   }
-
   Color get statusColor {
     switch (status) {
       case OrderStatus.pending:
@@ -134,22 +116,18 @@ class Order {
     }
   }
 }
-
 enum OrderStatus { pending, inProgress, completed, cancelled }
-
 class NotificationSettings {
   final bool orderUpdates;
   final bool promotions;
   final bool paymentNotifications;
   final bool systemNotifications;
-
   const NotificationSettings({
     required this.orderUpdates,
     required this.promotions,
     required this.paymentNotifications,
     required this.systemNotifications,
   });
-
   NotificationSettings copyWith({
     bool? orderUpdates,
     bool? promotions,

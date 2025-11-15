@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class SelectBoxButton extends StatelessWidget {
   final VoidCallback onTap;
-
-  const SelectBoxButton({super.key, required this.onTap});
-
+  const SelectBoxButton({required this.onTap, super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

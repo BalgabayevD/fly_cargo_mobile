@@ -5,23 +5,17 @@ import 'package:fly_cargo/shared/destination/data/models/destination_models.dart
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_event.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_state.dart';
-
 enum CityType { from, to }
-
 class ChooseCityPage extends StatefulWidget {
   final CityType cityType;
   final String? fromCityId;
-
-  const ChooseCityPage({super.key, required this.cityType, this.fromCityId});
-
+  const ChooseCityPage({required this.cityType, super.key, this.fromCityId});
   @override
   State<ChooseCityPage> createState() => _ChooseCityPageState();
 }
-
 class _ChooseCityPageState extends State<ChooseCityPage> {
   final TextEditingController _searchController = TextEditingController();
   late final DestinationBloc _destinationBloc;
-
   @override
   void initState() {
     super.initState();
@@ -29,13 +23,11 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
     _loadCities();
     _searchController.addListener(_filterCities);
   }
-
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
   }
-
   void _loadCities() {
     if (widget.cityType == CityType.from) {
       _destinationBloc.add(const LoadCitiesFromEvent());
@@ -45,22 +37,17 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
       );
     }
   }
-
   void _filterCities() {
-
     setState(() {});
   }
-
   List<CityModel> _getFilteredCities(List<CityModel> cities) {
     final query = _searchController.text.toLowerCase();
     if (query.isEmpty) return cities;
-
     return cities.where((city) {
       return city.name.toLowerCase().contains(query) ||
           (city.region?.toLowerCase().contains(query) ?? false);
     }).toList();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,7 +123,6 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
                     ),
                   );
                 }
-
                 if (state is DestinationError) {
                   return Center(
                     child: Padding(
@@ -184,7 +170,6 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
                     ),
                   );
                 }
-
                 List<CityModel> cities = [];
                 if (state is CitiesFromLoaded) {
                   cities = state.cities;
@@ -193,9 +178,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
                 } else if (state is AllCitiesLoaded) {
                   cities = state.cities;
                 }
-
                 final filteredCities = _getFilteredCities(cities);
-
                 if (filteredCities.isEmpty) {
                   return const Center(
                     child: Column(
@@ -227,7 +210,6 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
                     ),
                   );
                 }
-
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: filteredCities.length,

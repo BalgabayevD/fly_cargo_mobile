@@ -12,22 +12,16 @@ import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yandex_maps_mapkit_lite/init.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initMapkit(apiKey: '58894ad5-9031-4696-9c4e-4d62ebd8e3cc');
-
   ServiceLocator().init();
-
   await configureDependencies();
-
   await FlutterBetterAuth.initialize(url: 'https://authfc.maguya.kz/api/auth');
-
   FlutterBetterAuth.dioClient.interceptors.add(
     InterceptorsWrapper(
       onResponse: (res, handler) async {
         final authToken = res.headers.map['set-auth-token'];
-
         await SharedPreferences.getInstance().then((store) {
           if (authToken != null && authToken.isNotEmpty) {
             store.setString('auth-token', authToken.first);
@@ -37,7 +31,6 @@ Future<void> main() async {
       },
     ),
   );
-
   runApp(
     MultiBlocProvider(
       providers: [
@@ -52,10 +45,8 @@ Future<void> main() async {
     ),
   );
 }
-
 class App extends StatelessWidget {
   const App({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -65,7 +56,6 @@ class App extends StatelessWidget {
       ),
       home: const HomePage(),
       onGenerateRoute: AuthRouter.generateRoute,
-
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class OrderTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
@@ -8,17 +7,13 @@ class OrderTextField extends StatelessWidget {
   final IconData? prefixIcon;
   final int maxLines;
   final VoidCallback? onChanged;
-
   const OrderTextField({
-    super.key,
-    required this.controller,
-    required this.label,
+    required this.controller, required this.label, super.key,
     this.hintText,
     this.prefixIcon,
     this.maxLines = 1,
     this.onChanged,
   });
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(

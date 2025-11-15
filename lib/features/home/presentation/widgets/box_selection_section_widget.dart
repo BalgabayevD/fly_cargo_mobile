@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/select_box_button.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/tariff_selection_widget.dart';
-
 mixin BoxSelectionSectionStyling {
   static const double spacing = 16.0;
   static const double buttonSpacing = 20.0;
@@ -15,13 +14,10 @@ mixin BoxSelectionSectionStyling {
   static const double iconContainerBorderRadius = 8.0;
   static const double textSpacing = 12.0;
 }
-
 class BoxSelectionSectionWidget extends StatelessWidget
     with BoxSelectionSectionStyling {
   final void Function(BuildContext, String) onBoxDetailsTap;
-
-  const BoxSelectionSectionWidget({super.key, required this.onBoxDetailsTap});
-
+  const BoxSelectionSectionWidget({required this.onBoxDetailsTap, super.key});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,7 +50,6 @@ class BoxSelectionSectionWidget extends StatelessWidget
       ],
     );
   }
-
   Widget _buildBoxSelectionHeader() {
     return Container(
       padding: const EdgeInsets.all(BoxSelectionSectionStyling.padding),

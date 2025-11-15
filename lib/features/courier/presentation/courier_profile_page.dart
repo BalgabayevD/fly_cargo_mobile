@@ -4,23 +4,18 @@ import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_deliveries_page.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_income_page.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_notifications_page.dart';
-
 class CourierProfilePage extends StatefulWidget {
   const CourierProfilePage({super.key});
-
   @override
   State<CourierProfilePage> createState() => _CourierProfilePageState();
 }
-
 class _CourierProfilePageState extends State<CourierProfilePage> {
   late CourierProfile _profile;
-
   @override
   void initState() {
     super.initState();
     _profile = _getMockProfile();
   }
-
   CourierProfile _getMockProfile() {
     return CourierProfile(
       id: 'courier_1',
@@ -38,7 +33,6 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       workingAreas: ['Алматы', 'Астана'],
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,15 +64,10 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-
             _buildProfileHeader(),
             const SizedBox(height: 30),
-
-
             _buildStatsSection(),
             const SizedBox(height: 30),
-
-
             _buildProfileMenu(),
             const SizedBox(height: 20),
           ],
@@ -86,11 +75,9 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
-
   Widget _buildProfileHeader() {
     return Column(
       children: [
-
         Container(
           width: 100,
           height: 100,
@@ -106,8 +93,6 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
               : const Icon(Icons.person, size: 50, color: Color(0xFF999999)),
         ),
         const SizedBox(height: 16),
-
-
         Text(
           _profile.name,
           style: const TextStyle(
@@ -117,15 +102,11 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
           ),
         ),
         const SizedBox(height: 4),
-
-
         Text(
           _profile.phone,
           style: const TextStyle(fontSize: 16, color: Color(0xFF666666)),
         ),
         const SizedBox(height: 8),
-
-
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
@@ -144,7 +125,6 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ],
     );
   }
-
   Widget _buildStatsSection() {
     return AppCard(
       variant: AppCardVariant.filled,
@@ -191,7 +171,6 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
-
   Widget _buildStatItem(
     String label,
     String value,
@@ -226,7 +205,6 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ],
     );
   }
-
   Widget _buildProfileMenu() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -264,7 +242,6 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
-
   Widget _buildMenuItem({
     required IconData icon,
     required String title,
@@ -301,9 +278,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       onTap: onTap,
     );
   }
-
   void _editProfile() {
-
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Редактирование профиля будет реализовано'),
@@ -311,21 +286,18 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
-
   void _openIncomePage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CourierIncomePage()),
     );
   }
-
   void _openNotificationsPage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CourierNotificationsPage()),
     );
   }
-
   void _openDeliveriesPage() {
     Navigator.push(
       context,

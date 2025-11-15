@@ -1,12 +1,17 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
 part of 'profile_state.dart';
 
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
 
-
-
-
-
+// dart format off
 T _$identity<T>(T value) => value;
-
+/// @nodoc
 mixin _$ProfileState {
 
 
@@ -30,25 +35,25 @@ String toString() {
 
 }
 
-
+/// @nodoc
 class $ProfileStateCopyWith<$Res>  {
 $ProfileStateCopyWith(ProfileState _, $Res Function(ProfileState) __);
 }
 
 
-
+/// Adds pattern-matching-related methods to [ProfileState].
 extension ProfileStatePatterns on ProfileState {
-
-
-
-
-
-
-
-
-
-
-
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
 @optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ProfileInitial value)?  initial,TResult Function( ProfileLoading value)?  loading,TResult Function( ProfileLoaded value)?  loaded,TResult Function( ProfileError value)?  error,required TResult orElse(),}){
 final _that = this;
@@ -62,18 +67,18 @@ return error(_that);case _:
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
 
 @optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ProfileInitial value)  initial,required TResult Function( ProfileLoading value)  loading,required TResult Function( ProfileLoaded value)  loaded,required TResult Function( ProfileError value)  error,}){
 final _that = this;
@@ -87,17 +92,17 @@ return error(_that);case _:
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
 
 @optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ProfileInitial value)?  initial,TResult? Function( ProfileLoading value)?  loading,TResult? Function( ProfileLoaded value)?  loaded,TResult? Function( ProfileError value)?  error,}){
 final _that = this;
@@ -111,17 +116,17 @@ return error(_that);case _:
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserProfile profile,  int daysSinceCreated)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
@@ -134,18 +139,18 @@ return error(_that.message);case _:
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserProfile profile,  int daysSinceCreated)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
@@ -158,17 +163,17 @@ return error(_that.message);case _:
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserProfile profile,  int daysSinceCreated)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
@@ -184,12 +189,12 @@ return error(_that.message);case _:
 
 }
 
-
+/// @nodoc
 
 
 class ProfileInitial implements ProfileState {
   const ProfileInitial();
-
+  
 
 
 
@@ -216,12 +221,12 @@ String toString() {
 
 
 
-
+/// @nodoc
 
 
 class ProfileLoading implements ProfileState {
   const ProfileLoading();
-
+  
 
 
 
@@ -248,18 +253,18 @@ String toString() {
 
 
 
-
+/// @nodoc
 
 
 class ProfileLoaded implements ProfileState {
   const ProfileLoaded({required this.profile, required this.daysSinceCreated});
-
+  
 
  final  UserProfile profile;
  final  int daysSinceCreated;
 
-
-
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $ProfileLoadedCopyWith<ProfileLoaded> get copyWith => _$ProfileLoadedCopyWithImpl<ProfileLoaded>(this, _$identity);
@@ -283,7 +288,7 @@ String toString() {
 
 }
 
-
+/// @nodoc
 abstract mixin class $ProfileLoadedCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
   factory $ProfileLoadedCopyWith(ProfileLoaded value, $Res Function(ProfileLoaded) _then) = _$ProfileLoadedCopyWithImpl;
 @useResult
@@ -295,7 +300,7 @@ $Res call({
 
 
 }
-
+/// @nodoc
 class _$ProfileLoadedCopyWithImpl<$Res>
     implements $ProfileLoadedCopyWith<$Res> {
   _$ProfileLoadedCopyWithImpl(this._self, this._then);
@@ -303,12 +308,12 @@ class _$ProfileLoadedCopyWithImpl<$Res>
   final ProfileLoaded _self;
   final $Res Function(ProfileLoaded) _then;
 
-
-
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? profile = null,Object? daysSinceCreated = null,}) {
   return _then(ProfileLoaded(
-profile: null == profile ? _self.profile : profile
-as UserProfile,daysSinceCreated: null == daysSinceCreated ? _self.daysSinceCreated : daysSinceCreated
+profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as UserProfile,daysSinceCreated: null == daysSinceCreated ? _self.daysSinceCreated : daysSinceCreated // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -316,17 +321,17 @@ as int,
 
 }
 
-
+/// @nodoc
 
 
 class ProfileError implements ProfileState {
   const ProfileError({required this.message});
-
+  
 
  final  String message;
 
-
-
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $ProfileErrorCopyWith<ProfileError> get copyWith => _$ProfileErrorCopyWithImpl<ProfileError>(this, _$identity);
@@ -350,7 +355,7 @@ String toString() {
 
 }
 
-
+/// @nodoc
 abstract mixin class $ProfileErrorCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
   factory $ProfileErrorCopyWith(ProfileError value, $Res Function(ProfileError) _then) = _$ProfileErrorCopyWithImpl;
 @useResult
@@ -362,7 +367,7 @@ $Res call({
 
 
 }
-
+/// @nodoc
 class _$ProfileErrorCopyWithImpl<$Res>
     implements $ProfileErrorCopyWith<$Res> {
   _$ProfileErrorCopyWithImpl(this._self, this._then);
@@ -370,14 +375,16 @@ class _$ProfileErrorCopyWithImpl<$Res>
   final ProfileError _self;
   final $Res Function(ProfileError) _then;
 
-
-
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(ProfileError(
-message: null == message ? _self.message : message
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
 
 
 }
+
+// dart format on

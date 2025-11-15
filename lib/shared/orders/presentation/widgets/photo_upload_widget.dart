@@ -1,26 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:image_picker/image_picker.dart';
-
 class PhotoUploadWidget extends StatefulWidget {
   final List<File> photos;
   final ValueChanged<List<File>> onPhotosChanged;
-
   const PhotoUploadWidget({
-    super.key,
-    required this.photos,
-    required this.onPhotosChanged,
+    required this.photos, required this.onPhotosChanged, super.key,
   });
-
   @override
   State<PhotoUploadWidget> createState() => _PhotoUploadWidgetState();
 }
-
 class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
   final ImagePicker _picker = ImagePicker();
-
   Future<void> _pickImage() async {
     try {
       final XFile? image = await _picker.pickImage(
@@ -29,7 +21,6 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
         maxHeight: 1080,
         imageQuality: 85,
       );
-
       if (image != null) {
         final File imageFile = File(image.path);
         final updatedPhotos = List<File>.from(widget.photos)..add(imageFile);
@@ -44,7 +35,6 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
       );
     }
   }
-
   Future<void> _pickImageFromGallery() async {
     try {
       final XFile? image = await _picker.pickImage(
@@ -53,7 +43,6 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
         maxHeight: 1080,
         imageQuality: 85,
       );
-
       if (image != null) {
         final File imageFile = File(image.path);
         final updatedPhotos = List<File>.from(widget.photos)..add(imageFile);
@@ -68,13 +57,11 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
       );
     }
   }
-
   void _removePhoto(int index) {
     final updatedPhotos = List<File>.from(widget.photos);
     updatedPhotos.removeAt(index);
     widget.onPhotosChanged(updatedPhotos);
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -87,8 +74,6 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
           ),
         ),
         const SizedBox(height: 12),
-
-
         Row(
           children: [
             Expanded(
@@ -122,10 +107,7 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
             ),
           ],
         ),
-
         const SizedBox(height: 16),
-
-
         if (widget.photos.isNotEmpty) ...[
           Text(
             'Выбранные фото (${widget.photos.length})',

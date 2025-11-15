@@ -1,40 +1,32 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_event.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_state.dart';
-
 class ChooseAddressPage extends StatefulWidget {
   final String city;
-
-  const ChooseAddressPage({super.key, required this.city});
-
+  const ChooseAddressPage({required this.city, super.key});
   @override
   State<ChooseAddressPage> createState() => _ChooseAddressPageState();
 }
-
 class _ChooseAddressPageState extends State<ChooseAddressPage> {
   final TextEditingController _searchController = TextEditingController();
   late final DestinationBloc _destinationBloc;
   Timer? _debounceTimer;
-
   @override
   void initState() {
     super.initState();
     _destinationBloc = getIt<DestinationBloc>();
     _searchController.addListener(_onSearchChanged);
   }
-
   @override
   void dispose() {
     _debounceTimer?.cancel();
     _searchController.dispose();
     super.dispose();
   }
-
   void _onSearchChanged() {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 500), () {
@@ -46,7 +38,6 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
       }
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +111,6 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                     ),
                   );
                 }
-
                 if (state is DestinationError) {
                   return Center(
                     child: Padding(
@@ -156,10 +146,8 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                     ),
                   );
                 }
-
                 if (state is AddressesFound) {
                   final addresses = state.addresses;
-
                   if (addresses.isEmpty) {
                     return const Center(
                       child: Column(
@@ -191,7 +179,6 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                       ),
                     );
                   }
-
                   return ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: addresses.length,
@@ -230,8 +217,6 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                     },
                   );
                 }
-
-
                 return const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

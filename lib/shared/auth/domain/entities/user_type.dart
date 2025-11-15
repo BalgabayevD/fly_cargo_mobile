@@ -1,17 +1,9 @@
 enum UserType {
-
   unauthorized,
-
-
   client,
-
-
   courier,
 }
-
-
 extension UserTypeExtension on UserType {
-
   String get displayName {
     switch (this) {
       case UserType.unauthorized:
@@ -22,8 +14,6 @@ extension UserTypeExtension on UserType {
         return 'Курьер';
     }
   }
-
-
   String get apiValue {
     switch (this) {
       case UserType.unauthorized:
@@ -34,13 +24,7 @@ extension UserTypeExtension on UserType {
         return 'courier';
     }
   }
-
-
   bool get isAuthenticated => this != UserType.unauthorized;
-
-
   bool get isClient => this == UserType.client;
-
-
   bool get isCourier => this == UserType.courier;
 }

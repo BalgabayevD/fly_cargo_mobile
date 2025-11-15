@@ -11,25 +11,20 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_details_form.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
-
 class TariffDetailsPage extends StatelessWidget {
   final int tariffId;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
-
   const TariffDetailsPage({
-    super.key,
-    required this.tariffId,
+    required this.tariffId, super.key,
     this.fromAddress,
     this.toAddress,
   });
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
       builder: (context, state) {
         if (state is TariffSelectionLoaded) {
-
           dynamic selectedTariff;
           for (final category in state.categories) {
             if (category.tariffs != null) {
@@ -42,7 +37,6 @@ class TariffDetailsPage extends StatelessWidget {
             }
             if (selectedTariff != null) break;
           }
-
           if (selectedTariff == null) {
             return Scaffold(
               appBar: AppBar(
@@ -59,14 +53,12 @@ class TariffDetailsPage extends StatelessWidget {
               body: const Center(child: Text('Тариф не найден')),
             );
           }
-
           return TariffDetailsContent(
             tariff: selectedTariff,
             fromAddress: fromAddress,
             toAddress: toAddress,
           );
         }
-
         if (state is TariffSelectionError) {
           return Scaffold(
             appBar: AppBar(
@@ -83,43 +75,33 @@ class TariffDetailsPage extends StatelessWidget {
             body: Center(child: Text(state.message)),
           );
         }
-
         return const Scaffold(body: Center(child: CircularProgressIndicator()));
       },
     );
   }
 }
-
 class TariffDetailsContent extends StatefulWidget {
   final dynamic tariff;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
-
   const TariffDetailsContent({
-    super.key,
-    required this.tariff,
+    required this.tariff, super.key,
     this.fromAddress,
     this.toAddress,
   });
-
   @override
   State<TariffDetailsContent> createState() => _TariffDetailsContentState();
 }
-
 class _TariffDetailsContentState extends State<TariffDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
   final _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
     _ordersBloc = getIt<OrdersBloc>();
-
-
     _ordersBloc.stream.listen((state) {
       if (state is OrderCreated) {
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Заказ успешно создан!'),
@@ -127,11 +109,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
             duration: Duration(seconds: 2),
           ),
         );
-
-
         Navigator.of(context).popUntil((route) => route.isFirst);
       } else if (state is OrdersError) {
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Ошибка создания заказа: ${state.message}'),
@@ -142,20 +121,16 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       }
     });
   }
-
   void _onFormDataChanged(OrderFormData data) {
     setState(() {
       _formData = data;
     });
   }
-
   @override
   void dispose() {
-
     _ordersBloc.close();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,7 +170,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Container(
               width: double.infinity,
               height: 200,
@@ -226,23 +200,18 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
                       ),
                     ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Text(
                     widget.tariff.name,
                     style: AppTypography.h3.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   const SizedBox(height: 8),
-
-
                   if (widget.tariff.description.isNotEmpty) ...[
                     Text(
                       widget.tariff.description,
@@ -252,13 +221,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
                     ),
                     const SizedBox(height: 16),
                   ],
-
-
                   _buildTariffCharacteristics(),
-
                   const SizedBox(height: 24),
-
-
                   BlocProvider.value(
                     value: _ordersBloc,
                     child: OrderDetailsForm(
@@ -266,10 +230,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
                       onDataChanged: _onFormDataChanged,
                     ),
                   ),
-
                   const SizedBox(height: 24),
-
-
                   BlocBuilder<OrdersBloc, OrdersState>(
                     bloc: _ordersBloc,
                     builder: (context, state) {
@@ -315,7 +276,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       ),
     );
   }
-
   Widget _buildTariffCharacteristics() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -349,7 +309,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       ),
     );
   }
-
   Widget _buildCharacteristicRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -372,11 +331,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       ),
     );
   }
-
   Future<void> _createOrder(BuildContext context) async {
     if (_formData == null) return;
-
-
     if (_formKey.currentState?.validate() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -386,7 +342,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       );
       return;
     }
-
     try {
       final orderData = OrderData(
         isDefect: _formData!.isDefect,
@@ -423,7 +378,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         weight: widget.tariff.weight ?? 0.0,
         width: widget.tariff.width ?? 0.0,
       );
-
       _ordersBloc.add(CreateOrderEvent(orderData: orderData));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -1,8 +1,10 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'auth_models.dart';
 
-
-
-
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
 
 SignInRequest _$SignInRequestFromJson(Map<String, dynamic> json) =>
     SignInRequest(phoneNumber: json['phoneNumber'] as String);
@@ -38,10 +40,10 @@ Map<String, dynamic> _$SignCodeRequestToJson(SignCodeRequest instance) =>
 
 SignCodeResponse _$SignCodeResponseFromJson(Map<String, dynamic> json) =>
     SignCodeResponse(
+      success: json['success'] as bool,
       accessToken: json['accessToken'] as String?,
       refreshToken: json['refreshToken'] as String?,
       userId: json['userId'] as String?,
-      success: json['success'] as bool,
     );
 
 Map<String, dynamic> _$SignCodeResponseToJson(SignCodeResponse instance) =>
@@ -71,10 +73,8 @@ Map<String, dynamic> _$SessionStatusResponseToJson(
 };
 
 UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   uuid: json['uuid'] as String,
   email: json['email'] as String,
   phone: json['phone'] as String,
@@ -87,8 +87,10 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
   type: json['type'] as String,
   iin: json['iin'] as String,
   bin: json['bin'] as String,
-  access: json['access'],
   role: json['role'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  deletedAt: json['deletedAt'] as String?,
+  access: json['access'],
 );
 
 Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>

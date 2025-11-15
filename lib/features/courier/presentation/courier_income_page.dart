@@ -6,27 +6,22 @@ import 'package:fly_cargo/features/courier/presentation/widgets/income_stats_wid
 import 'package:fly_cargo/features/courier/presentation/widgets/period_selector_widget.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/transactions_list_widget.dart';
 import 'package:fly_cargo/features/courier/services/income_service.dart';
-
 class CourierIncomePage extends StatefulWidget {
   const CourierIncomePage({super.key});
-
   @override
   State<CourierIncomePage> createState() => _CourierIncomePageState();
 }
-
 class _CourierIncomePageState extends State<CourierIncomePage> {
   late CourierIncome _income;
   String _selectedPeriod = 'today';
   bool _isLoading = true;
   late final IncomeService _incomeService;
-
   @override
   void initState() {
     super.initState();
     _incomeService = MockIncomeService();
     _loadIncome();
   }
-
   Future<void> _loadIncome() async {
     try {
       final income = await _incomeService.getIncome();
@@ -38,10 +33,8 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
       setState(() {
         _isLoading = false;
       });
-
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +72,6 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   PeriodSelectorWidget(
                     selectedPeriod: _selectedPeriod,
                     onPeriodChanged: (period) {
@@ -89,8 +81,6 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                     },
                   ),
                   const SizedBox(height: 20),
-
-
                   IncomeStatsWidget(
                     earnings: _incomeService.getEarningsForPeriod(
                       _income,
@@ -102,8 +92,6 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-
                   DetailedStatsWidget(
                     deliveries: _incomeService.getDeliveriesForPeriod(
                       _income,
@@ -118,8 +106,6 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-
                   TransactionsListWidget(
                     transactions: _incomeService.getTransactionsForPeriod(
                       _income.transactions,
@@ -132,7 +118,6 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
             ),
     );
   }
-
   void _showPaymentMethods() {
     showModalBottomSheet(
       context: context,

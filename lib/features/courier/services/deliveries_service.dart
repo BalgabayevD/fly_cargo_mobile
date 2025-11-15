@@ -1,6 +1,5 @@
 import 'package:fly_cargo/features/courier/models/order_model.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 abstract class DeliveriesService {
   Future<List<CourierOrder>> getDeliveries();
   List<CourierOrder> filterDeliveries(
@@ -9,15 +8,12 @@ abstract class DeliveriesService {
   );
   Map<String, dynamic> getStatistics(List<CourierOrder> deliveries);
 }
-
 class MockDeliveriesService implements DeliveriesService {
   @override
   Future<List<CourierOrder>> getDeliveries() async {
-
     await Future.delayed(const Duration(seconds: 1));
     return _getMockDeliveries();
   }
-
   @override
   List<CourierOrder> filterDeliveries(
     List<CourierOrder> deliveries,
@@ -46,7 +42,6 @@ class MockDeliveriesService implements DeliveriesService {
         return deliveries;
     }
   }
-
   @override
   Map<String, dynamic> getStatistics(List<CourierOrder> deliveries) {
     final deliveredCount = deliveries
@@ -58,7 +53,6 @@ class MockDeliveriesService implements DeliveriesService {
     final totalEarnings = deliveries
         .where((d) => d.status == OrderStatus.delivered)
         .fold(0.0, (sum, d) => sum + d.estimatedPrice);
-
     return {
       'totalDeliveries': deliveries.length,
       'deliveredCount': deliveredCount,
@@ -69,7 +63,6 @@ class MockDeliveriesService implements DeliveriesService {
           : 0.0,
     };
   }
-
   List<CourierOrder> _getMockDeliveries() {
     return [
       CourierOrder(

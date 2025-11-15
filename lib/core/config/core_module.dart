@@ -8,12 +8,10 @@ import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_settings.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
-
 @module
 abstract class CoreModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
-
   @Named('log-interceptor')
   @lazySingleton
   Interceptor logInterceptor(Talker talker) {
@@ -31,7 +29,6 @@ abstract class CoreModule {
       ),
     );
   }
-
   @singleton
   Talker get talker {
     final talker = Talker(
@@ -45,7 +42,6 @@ abstract class CoreModule {
         settings: TalkerLoggerSettings(enableColors: false, maxLineWidth: 200),
       ),
     );
-
     Bloc.observer = TalkerBlocObserver(
       talker: talker,
       settings: const TalkerBlocLoggerSettings(
@@ -55,7 +51,6 @@ abstract class CoreModule {
         printChanges: true,
       ),
     );
-
     return talker;
   }
 }

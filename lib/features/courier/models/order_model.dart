@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 enum OrderStatus {
   pending,
   assigned,
@@ -9,14 +8,12 @@ enum OrderStatus {
   delivered,
   cancelled,
 }
-
 enum OrderPriority {
   low,
   medium,
   high,
   urgent,
 }
-
 class CourierOrder {
   final String id;
   final String orderNumber;
@@ -38,30 +35,19 @@ class CourierOrder {
   final String? notes;
   final String? courierId;
   final String? courierName;
-
   const CourierOrder({
     required this.id,
     required this.orderNumber,
     required this.status,
     required this.priority,
     required this.createdAt,
-    this.estimatedDeliveryTime,
-    required this.pickupAddress,
-    required this.deliveryAddress,
-    required this.recipientName,
-    required this.recipientPhone,
+    required this.pickupAddress, required this.deliveryAddress, required this.recipientName, required this.recipientPhone, required this.boxType, required this.boxName, required this.boxDimensions, required this.estimatedPrice, required this.currency, this.estimatedDeliveryTime,
     this.cargoDescription,
-    required this.boxType,
-    required this.boxName,
-    required this.boxDimensions,
-    required this.estimatedPrice,
-    required this.currency,
     this.photos,
     this.notes,
     this.courierId,
     this.courierName,
   });
-
   CourierOrder copyWith({
     String? id,
     String? orderNumber,
@@ -108,7 +94,6 @@ class CourierOrder {
       courierName: courierName ?? this.courierName,
     );
   }
-
   String get statusText {
     switch (status) {
       case OrderStatus.pending:
@@ -125,7 +110,6 @@ class CourierOrder {
         return 'Отменен';
     }
   }
-
   String get priorityText {
     switch (priority) {
       case OrderPriority.low:
@@ -138,7 +122,6 @@ class CourierOrder {
         return 'Срочный';
     }
   }
-
   Color get statusColor {
     switch (status) {
       case OrderStatus.pending:
@@ -155,7 +138,6 @@ class CourierOrder {
         return const Color(0xFFFF3B30);
     }
   }
-
   Color get priorityColor {
     switch (priority) {
       case OrderPriority.low:

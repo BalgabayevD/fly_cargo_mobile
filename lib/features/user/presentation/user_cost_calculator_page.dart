@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class UserCostCalculatorPage extends StatefulWidget {
   const UserCostCalculatorPage({super.key});
-
   @override
   State<UserCostCalculatorPage> createState() => _UserCostCalculatorPageState();
 }
-
 class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _dimensionsController = TextEditingController();
-
   String _selectedServiceType = 'standard';
   String _selectedUrgency = 'normal';
   double _calculatedCost = 0.0;
   bool _isCalculating = false;
-
   @override
   void dispose() {
     _fromController.dispose();
@@ -27,7 +22,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
     _dimensionsController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,15 +48,10 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             _buildCalculatorForm(),
             const SizedBox(height: 20),
-
-
             if (_calculatedCost > 0) _buildCalculationResult(),
             const SizedBox(height: 20),
-
-
             AppButton(
               text: _isCalculating ? 'Рассчитываем...' : 'Рассчитать стоимость',
               onPressed: _isCalculating ? null : _calculateCost,
@@ -72,15 +61,12 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
               isLoading: _isCalculating,
             ),
             const SizedBox(height: 20),
-
-
             _buildTariffInfo(),
           ],
         ),
       ),
     );
   }
-
   Widget _buildCalculatorForm() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -96,8 +82,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
             ),
           ),
           const SizedBox(height: 20),
-
-
           _buildTextField(
             controller: _fromController,
             label: 'Откуда',
@@ -105,7 +89,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
             icon: Icons.location_on,
           ),
           const SizedBox(height: 16),
-
           _buildTextField(
             controller: _toController,
             label: 'Куда',
@@ -113,16 +96,10 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
             icon: Icons.location_on,
           ),
           const SizedBox(height: 20),
-
-
           _buildServiceTypeSelector(),
           const SizedBox(height: 20),
-
-
           _buildUrgencySelector(),
           const SizedBox(height: 20),
-
-
           Row(
             children: [
               Expanded(
@@ -149,7 +126,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -181,7 +157,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Widget _buildServiceTypeSelector() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +194,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ],
     );
   }
-
   Widget _buildServiceTypeOption(
     String value,
     String title,
@@ -278,7 +252,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Widget _buildUrgencySelector() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,7 +287,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ],
     );
   }
-
   Widget _buildUrgencyOption(String value, String title, String subtitle) {
     final isSelected = _selectedUrgency == value;
     return GestureDetector(
@@ -360,7 +332,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Widget _buildCalculationResult() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -421,7 +392,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Widget _buildTariffInfo() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -447,7 +417,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Widget _buildTariffItem(String title, String price) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -470,7 +439,6 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       ),
     );
   }
-
   Future<void> _calculateCost() async {
     if (_fromController.text.isEmpty || _toController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -481,23 +449,14 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       );
       return;
     }
-
     setState(() {
       _isCalculating = true;
     });
-
-
     await Future.delayed(const Duration(seconds: 2));
-
-
     double baseCost = 500.0;
-
-
     if (_selectedServiceType == 'express') {
       baseCost += 500.0;
     }
-
-
     switch (_selectedUrgency) {
       case 'urgent':
         baseCost *= 1.5;
@@ -506,13 +465,10 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
         baseCost *= 2.0;
         break;
     }
-
-
     final weight = double.tryParse(_weightController.text) ?? 0.5;
     if (weight > 1.0) {
       baseCost += (weight - 1.0) * 100.0;
     }
-
     setState(() {
       _calculatedCost = baseCost;
       _isCalculating = false;

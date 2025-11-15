@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class IncomeStatsWidget extends StatelessWidget {
   final double earnings;
   final int deliveries;
-
   const IncomeStatsWidget({
-    super.key,
-    required this.earnings,
-    required this.deliveries,
+    required this.earnings, required this.deliveries, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return AppCard(
@@ -47,7 +42,6 @@ class IncomeStatsWidget extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildStatItem(String label, String value, IconData icon) {
     return Column(
       children: [

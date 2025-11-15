@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
-
 class CourierNotificationsPage extends StatefulWidget {
   const CourierNotificationsPage({super.key});
-
   @override
   State<CourierNotificationsPage> createState() =>
       _CourierNotificationsPageState();
 }
-
 class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
   List<CourierNotification> _notifications = [];
   bool _isLoading = true;
   String _selectedFilter = 'all';
-
   @override
   void initState() {
     super.initState();
     _loadNotifications();
   }
-
   void _loadNotifications() {
-
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _notifications = _getMockNotifications();
@@ -29,7 +23,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       });
     });
   }
-
   List<CourierNotification> _getMockNotifications() {
     return [
       CourierNotification(
@@ -86,7 +79,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     ];
   }
-
   List<CourierNotification> get _filteredNotifications {
     switch (_selectedFilter) {
       case 'unread':
@@ -109,7 +101,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
         return _notifications;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +130,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
       body: Column(
         children: [
-
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: SingleChildScrollView(
@@ -159,8 +149,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
               ),
             ),
           ),
-
-
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -187,7 +175,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     );
   }
-
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedFilter == value;
     return GestureDetector(
@@ -213,7 +200,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     );
   }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -244,7 +230,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     );
   }
-
   void _markAsRead(CourierNotification notification) {
     setState(() {
       final index = _notifications.indexWhere((n) => n.id == notification.id);
@@ -260,7 +245,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       }
     });
   }
-
   void _markAllAsRead() {
     setState(() {
       _notifications = _notifications
@@ -276,7 +260,6 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
           )
           .toList();
     });
-
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Все уведомления отмечены как прочитанные'),
@@ -285,17 +268,12 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
     );
   }
 }
-
 class NotificationCard extends StatelessWidget {
   final CourierNotification notification;
   final VoidCallback onTap;
-
   const NotificationCard({
-    super.key,
-    required this.notification,
-    required this.onTap,
+    required this.notification, required this.onTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -317,7 +295,6 @@ class NotificationCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Container(
                 width: 40,
                 height: 40,
@@ -332,8 +309,6 @@ class NotificationCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,7 +389,6 @@ class NotificationCard extends StatelessWidget {
       ),
     );
   }
-
   IconData _getNotificationIcon(String type) {
     switch (type) {
       case 'order':
@@ -427,11 +401,9 @@ class NotificationCard extends StatelessWidget {
         return Icons.notifications;
     }
   }
-
   String _formatDateTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
-
     if (difference.inDays > 0) {
       return '${difference.inDays} дн. назад';
     } else if (difference.inHours > 0) {

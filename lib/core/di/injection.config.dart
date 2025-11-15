@@ -1,3 +1,14 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
+
+// **************************************************************************
+// InjectableConfigGenerator
+// **************************************************************************
+
+// ignore_for_file: type=lint
+// coverage:ignore-file
+
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
 import 'package:fly_cargo/core/config/core_module.dart' as _i624;
 import 'package:fly_cargo/core/network/api_config.dart' as _i469;
@@ -80,7 +91,7 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:talker/talker.dart' as _i993;
 
 extension GetItInjectableX on _i174.GetIt {
-
+  // initializes the registration of main-scope dependencies inside of GetIt
   Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,

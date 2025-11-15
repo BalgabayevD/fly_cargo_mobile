@@ -6,7 +6,6 @@ class BoxEntity {
   final String imagePath;
   final double basePrice;
   final String currency;
-
   const BoxEntity({
     required this.id,
     required this.name,
@@ -16,7 +15,6 @@ class BoxEntity {
     required this.basePrice,
     required this.currency,
   });
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -29,7 +27,6 @@ class BoxEntity {
         other.basePrice == basePrice &&
         other.currency == currency;
   }
-
   @override
   int get hashCode {
     return id.hashCode ^
@@ -40,7 +37,6 @@ class BoxEntity {
         basePrice.hashCode ^
         currency.hashCode;
   }
-
   @override
   String toString() {
     return 'BoxEntity(id: $id, name: $name, dimensions: $dimensions, basePrice: $basePrice)';

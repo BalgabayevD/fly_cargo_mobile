@@ -11,19 +11,15 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_details_form.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
-
 class BoxDetailsPage extends StatelessWidget {
   final String boxType;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
-
   const BoxDetailsPage({
-    super.key,
-    required this.boxType,
+    required this.boxType, super.key,
     this.fromAddress,
     this.toAddress,
   });
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -34,7 +30,6 @@ class BoxDetailsPage extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         }
-
         if (snapshot.hasError || !snapshot.hasData) {
           return Scaffold(
             appBar: AppBar(
@@ -53,7 +48,6 @@ class BoxDetailsPage extends StatelessWidget {
             ),
           );
         }
-
         final box = snapshot.data!;
         return BoxDetailsContent(
           box: box,
@@ -64,41 +58,32 @@ class BoxDetailsPage extends StatelessWidget {
     );
   }
 }
-
 class BoxDetailsContent extends StatefulWidget {
   final dynamic box;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
-
   const BoxDetailsContent({
-    super.key,
-    required this.box,
+    required this.box, super.key,
     this.fromAddress,
     this.toAddress,
   });
-
   @override
   State<BoxDetailsContent> createState() => _BoxDetailsContentState();
 }
-
 class _BoxDetailsContentState extends State<BoxDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
   final _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
     _ordersBloc = getIt<OrdersBloc>();
   }
-
   void _onFormDataChanged(OrderFormData data) {
     setState(() {
       _formData = data;
     });
   }
-
-
   double _getBoxHeight(BoxEntity box) {
     switch (box.id) {
       case 'small':
@@ -111,7 +96,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
         return 30.0;
     }
   }
-
   double _getBoxLength(BoxEntity box) {
     switch (box.id) {
       case 'small':
@@ -124,7 +108,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
         return 20.0;
     }
   }
-
   double _getBoxWidth(BoxEntity box) {
     switch (box.id) {
       case 'small':
@@ -137,7 +120,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
         return 20.0;
     }
   }
-
   double _getBoxWeight(BoxEntity box) {
     switch (box.id) {
       case 'small':
@@ -150,14 +132,12 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
         return 1.0;
     }
   }
-
   double _getBoxVolumetricWeight(BoxEntity box) {
     return _getBoxLength(box) *
         _getBoxWidth(box) *
         _getBoxHeight(box) /
         5000;
   }
-
   int _getBoxTariffId(BoxEntity box) {
     switch (box.id) {
       case 'small':
@@ -170,7 +150,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
         return 2;
     }
   }
-
   void _createOrder() {
     if (widget.fromAddress == null || widget.toAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -181,7 +160,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       );
       return;
     }
-
     if (_formData == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -191,8 +169,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       );
       return;
     }
-
-
     if (_formKey.currentState?.validate() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -202,7 +178,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       );
       return;
     }
-
     final orderData = OrderData(
       isDefect: _formData!.isDefect,
       isFragile: _formData!.isFragile,
@@ -234,10 +209,8 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       weight: _getBoxWeight(widget.box),
       width: _getBoxWidth(widget.box),
     );
-
     _ordersBloc.add(CreateOrderEvent(orderData: orderData));
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<OrdersBloc, OrdersState>(
@@ -293,7 +266,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -311,7 +283,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-
                       Container(
                         width: 160,
                         height: 160,
@@ -328,8 +299,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                         ),
                       ),
                       const SizedBox(height: 20),
-
-
                       Text(
                         widget.box.name,
                         style: AppTypography.h4.copyWith(
@@ -339,8 +308,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
-
-
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -363,8 +330,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                 ),
               ),
               const SizedBox(height: 24),
-
-
               AppCardWithTitle(
                 title: 'Описание',
                 variant: AppCardVariant.filled,
@@ -376,8 +341,6 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                 ),
               ),
               const SizedBox(height: 30),
-
-
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -433,15 +396,11 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                 ),
               ),
               const SizedBox(height: 24),
-
-
               OrderDetailsForm(
                 formKey: _formKey,
                 onDataChanged: _onFormDataChanged,
               ),
               const SizedBox(height: 24),
-
-
               BlocBuilder<OrdersBloc, OrdersState>(
                 bloc: _ordersBloc,
                 builder: (context, state) {

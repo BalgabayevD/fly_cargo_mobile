@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/home/presentation/recipient_page.dart';
-
 class OptionsListWidget extends StatelessWidget {
   const OptionsListWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return AppCard(
@@ -62,7 +60,6 @@ class OptionsListWidget extends StatelessWidget {
       ),
     );
   }
-
   void _showPhotoDialog(BuildContext context, String type) {
     showDialog(
       context: context,
@@ -80,7 +77,6 @@ class OptionsListWidget extends StatelessWidget {
       ),
     );
   }
-
   void _showRecipientDialog(BuildContext context) async {
     final result = await Navigator.push<Map<String, String>>(
       context,
@@ -88,9 +84,7 @@ class OptionsListWidget extends StatelessWidget {
         builder: (context) => const RecipientPage(),
       ),
     );
-
     if (result != null) {
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Данные получателя сохранены: ${result['name']}'),
@@ -99,7 +93,6 @@ class OptionsListWidget extends StatelessWidget {
       );
     }
   }
-
   void _showCargoDescriptionDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -117,7 +110,6 @@ class OptionsListWidget extends StatelessWidget {
       ),
     );
   }
-
   void _showInsuranceDialog(BuildContext context) {
     showDialog(
       context: context,

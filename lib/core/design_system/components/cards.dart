@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 import 'package:fly_cargo/core/design_system/typography.dart';
-
 enum AppCardVariant { elevated, outlined, filled }
-
 class AppCard extends StatelessWidget {
   final Widget child;
   final AppCardVariant variant;
@@ -14,10 +12,8 @@ class AppCard extends StatelessWidget {
   final Color? backgroundColor;
   final double? elevation;
   final BorderRadius? borderRadius;
-
   const AppCard({
-    super.key,
-    required this.child,
+    required this.child, super.key,
     this.variant = AppCardVariant.elevated,
     this.padding,
     this.margin,
@@ -26,19 +22,16 @@ class AppCard extends StatelessWidget {
     this.elevation,
     this.borderRadius,
   });
-
   @override
   Widget build(BuildContext context) {
     final cardDecoration = _getDecoration();
     final cardPadding = padding ?? EdgeInsets.all(AppSpacing.cardPadding);
     final cardMargin = margin ?? EdgeInsets.zero;
-
     Widget cardChild = Container(
       padding: cardPadding,
       decoration: cardDecoration,
       child: child,
     );
-
     if (onTap != null) {
       cardChild = InkWell(
         onTap: onTap,
@@ -47,14 +40,11 @@ class AppCard extends StatelessWidget {
         child: cardChild,
       );
     }
-
     if (cardMargin != EdgeInsets.zero) {
       cardChild = Container(margin: cardMargin, child: cardChild);
     }
-
     return cardChild;
   }
-
   BoxDecoration _getDecoration() {
     switch (variant) {
       case AppCardVariant.elevated:
@@ -89,8 +79,6 @@ class AppCard extends StatelessWidget {
     }
   }
 }
-
-
 class AppCardWithTitle extends StatelessWidget {
   final String title;
   final Widget child;
@@ -100,11 +88,8 @@ class AppCardWithTitle extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? titleAction;
   final TextStyle? titleStyle;
-
   const AppCardWithTitle({
-    super.key,
-    required this.title,
-    required this.child,
+    required this.title, required this.child, super.key,
     this.variant = AppCardVariant.elevated,
     this.padding,
     this.margin,
@@ -112,7 +97,6 @@ class AppCardWithTitle extends StatelessWidget {
     this.titleAction,
     this.titleStyle,
   });
-
   @override
   Widget build(BuildContext context) {
     return AppCard(
@@ -142,8 +126,6 @@ class AppCardWithTitle extends StatelessWidget {
     );
   }
 }
-
-
 class AppIconCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -152,18 +134,14 @@ class AppIconCard extends StatelessWidget {
   final AppCardVariant variant;
   final Color? iconColor;
   final Color? iconBackgroundColor;
-
   const AppIconCard({
-    super.key,
-    required this.icon,
-    required this.title,
+    required this.icon, required this.title, super.key,
     this.subtitle,
     this.onTap,
     this.variant = AppCardVariant.elevated,
     this.iconColor,
     this.iconBackgroundColor,
   });
-
   @override
   Widget build(BuildContext context) {
     return AppCard(
@@ -207,24 +185,19 @@ class AppIconCard extends StatelessWidget {
     );
   }
 }
-
-
 class AppSelectionCard extends StatelessWidget {
   final Widget child;
   final bool isSelected;
   final VoidCallback? onTap;
   final Color? selectedColor;
   final Color? unselectedColor;
-
   const AppSelectionCard({
-    super.key,
-    required this.child,
+    required this.child, super.key,
     this.isSelected = false,
     this.onTap,
     this.selectedColor,
     this.unselectedColor,
   });
-
   @override
   Widget build(BuildContext context) {
     return AppCard(
@@ -251,8 +224,6 @@ class AppSelectionCard extends StatelessWidget {
     );
   }
 }
-
-
 class AppPriceCard extends StatelessWidget {
   final String title;
   final String price;
@@ -261,18 +232,14 @@ class AppPriceCard extends StatelessWidget {
   final VoidCallback? onTap;
   final AppCardVariant variant;
   final bool isFullWidth;
-
   const AppPriceCard({
-    super.key,
-    required this.title,
-    required this.price,
+    required this.title, required this.price, super.key,
     this.subtitle,
     this.child,
     this.onTap,
     this.variant = AppCardVariant.filled,
     this.isFullWidth = false,
   });
-
   @override
   Widget build(BuildContext context) {
     Widget cardContent = AppCard(
@@ -315,11 +282,9 @@ class AppPriceCard extends StatelessWidget {
         ),
       ),
     );
-
     if (isFullWidth) {
       return SizedBox(width: double.infinity, child: cardContent);
     }
-
     return cardContent;
   }
 }

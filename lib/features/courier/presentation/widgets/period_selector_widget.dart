@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-
 class PeriodSelectorWidget extends StatelessWidget {
   final String selectedPeriod;
   final ValueChanged<String> onPeriodChanged;
-
   const PeriodSelectorWidget({
-    super.key,
-    required this.selectedPeriod,
-    required this.onPeriodChanged,
+    required this.selectedPeriod, required this.onPeriodChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,7 +19,6 @@ class PeriodSelectorWidget extends StatelessWidget {
       ],
     );
   }
-
   Widget _buildPeriodChip(String value, String label) {
     final isSelected = selectedPeriod == value;
     return GestureDetector(

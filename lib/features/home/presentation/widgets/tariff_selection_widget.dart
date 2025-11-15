@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
-
 class TariffSelectionWidget extends StatelessWidget {
   const TariffSelectionWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
@@ -18,7 +16,6 @@ class TariffSelectionWidget extends StatelessWidget {
                     category.tariffs != null && category.tariffs!.isNotEmpty,
               )
               .toList();
-
           if (categoriesWithTariffs.isEmpty) {
             return Container(
               padding: const EdgeInsets.all(16),
@@ -37,14 +34,11 @@ class TariffSelectionWidget extends StatelessWidget {
               ),
             );
           }
-
-
           final effectiveSelectedCategoryId =
               state.selectedCategoryId ??
               (categoriesWithTariffs.isNotEmpty
                   ? categoriesWithTariffs.first.id
                   : null);
-
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -57,7 +51,6 @@ class TariffSelectionWidget extends StatelessWidget {
                     final category = categoriesWithTariffs[index];
                     final isSelected =
                         effectiveSelectedCategoryId == category.id;
-
                     return Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: GestureDetector(
@@ -101,25 +94,20 @@ class TariffSelectionWidget extends StatelessWidget {
                   },
                 ),
               ),
-
               const SizedBox(height: 16),
-
               if (effectiveSelectedCategoryId != null) ...[
                 _buildTariffsList(context, state),
               ],
             ],
           );
         }
-
         if (state is TariffSelectionError) {
           return Center(child: Text(state.message, style: AppTypography.error));
         }
-
         return const Center(child: CircularProgressIndicator());
       },
     );
   }
-
   Widget _buildTariffsList(BuildContext context, TariffSelectionLoaded state) {
     final categoriesWithTariffs = state.categories
         .where(
@@ -127,12 +115,10 @@ class TariffSelectionWidget extends StatelessWidget {
               category.tariffs != null && category.tariffs!.isNotEmpty,
         )
         .toList();
-
     final selectedCategory = categoriesWithTariffs.firstWhere(
       (category) => category.id == state.selectedCategoryId,
       orElse: () => categoriesWithTariffs.first,
     );
-
     if (selectedCategory.tariffs == null || selectedCategory.tariffs!.isEmpty) {
       return Container(
         padding: const EdgeInsets.all(16),
@@ -151,7 +137,6 @@ class TariffSelectionWidget extends StatelessWidget {
         ),
       );
     }
-
     return SizedBox(
       height: 160,
       child: ListView.builder(
@@ -160,7 +145,6 @@ class TariffSelectionWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           final tariff = selectedCategory.tariffs![index];
           final isSelected = state.selectedTariffId == tariff.id;
-
           return Padding(
             padding: const EdgeInsets.only(right: 12),
             child: TariffOptionWidget(
@@ -176,19 +160,13 @@ class TariffSelectionWidget extends StatelessWidget {
     );
   }
 }
-
 class TariffOptionWidget extends StatelessWidget {
   final TariffModel tariff;
   final bool isSelected;
   final VoidCallback onTap;
-
   const TariffOptionWidget({
-    super.key,
-    required this.tariff,
-    required this.isSelected,
-    required this.onTap,
+    required this.tariff, required this.isSelected, required this.onTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

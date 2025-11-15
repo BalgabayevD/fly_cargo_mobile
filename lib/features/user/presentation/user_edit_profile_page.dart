@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
-
 class UserEditProfilePage extends StatelessWidget {
   const UserEditProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +73,6 @@ class UserEditProfilePage extends StatelessWidget {
       ),
     );
   }
-
   void _saveProfile(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -86,23 +83,18 @@ class UserEditProfilePage extends StatelessWidget {
     Navigator.pop(context);
   }
 }
-
 class _EditProfileContent extends StatefulWidget {
   final dynamic profile;
-
   const _EditProfileContent({required this.profile});
-
   @override
   State<_EditProfileContent> createState() => _EditProfileContentState();
 }
-
 class _EditProfileContentState extends State<_EditProfileContent> {
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _middleNameController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
-
   @override
   void initState() {
     super.initState();
@@ -112,7 +104,6 @@ class _EditProfileContentState extends State<_EditProfileContent> {
     _phoneController = TextEditingController(text: widget.profile.phone);
     _emailController = TextEditingController(text: widget.profile.email);
   }
-
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -122,25 +113,20 @@ class _EditProfileContentState extends State<_EditProfileContent> {
     _emailController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-
           _buildAvatarSection(),
           const SizedBox(height: 30),
-
-
           _buildEditForm(),
           const SizedBox(height: 30),
         ],
       ),
     );
   }
-
   Widget _buildAvatarSection() {
     return Column(
       children: [
@@ -198,11 +184,9 @@ class _EditProfileContentState extends State<_EditProfileContent> {
       ],
     );
   }
-
   Widget _buildDefaultAvatar() {
     return const Icon(Icons.person, size: 60, color: Color(0xFF999999));
   }
-
   Widget _buildEditForm() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -218,32 +202,24 @@ class _EditProfileContentState extends State<_EditProfileContent> {
             ),
           ),
           const SizedBox(height: 20),
-
-
           _buildTextField(
             controller: _firstNameController,
             label: 'Имя',
             icon: Icons.person,
           ),
           const SizedBox(height: 16),
-
-
           _buildTextField(
             controller: _lastNameController,
             label: 'Фамилия',
             icon: Icons.person_outline,
           ),
           const SizedBox(height: 16),
-
-
           _buildTextField(
             controller: _middleNameController,
             label: 'Отчество',
             icon: Icons.person_outline,
           ),
           const SizedBox(height: 16),
-
-
           _buildTextField(
             controller: _phoneController,
             label: 'Телефон',
@@ -251,8 +227,6 @@ class _EditProfileContentState extends State<_EditProfileContent> {
             keyboardType: TextInputType.phone,
           ),
           const SizedBox(height: 16),
-
-
           _buildTextField(
             controller: _emailController,
             label: 'Email',
@@ -263,7 +237,6 @@ class _EditProfileContentState extends State<_EditProfileContent> {
       ),
     );
   }
-
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -293,7 +266,6 @@ class _EditProfileContentState extends State<_EditProfileContent> {
       ),
     );
   }
-
   void _changeAvatar(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -335,7 +307,6 @@ class _EditProfileContentState extends State<_EditProfileContent> {
       ),
     );
   }
-
   void _takePhoto(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -344,7 +315,6 @@ class _EditProfileContentState extends State<_EditProfileContent> {
       ),
     );
   }
-
   void _selectFromGallery(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

@@ -1,6 +1,5 @@
 import 'package:fly_cargo/features/destination/models/city_route_model.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 class ApiCityModel {
   final String country;
   final String createdAt;
@@ -10,18 +9,15 @@ class ApiCityModel {
   final List<CityRouteModel>? routesTo;
   final String updatedAt;
   final String? deletedAt;
-
   const ApiCityModel({
     required this.country,
     required this.createdAt,
     required this.id,
     required this.name,
-    this.routesFrom,
+    required this.updatedAt, this.routesFrom,
     this.routesTo,
-    required this.updatedAt,
     this.deletedAt,
   });
-
   factory ApiCityModel.fromJson(Map<String, dynamic> json) {
     return ApiCityModel(
       country: json['country'] as String,
@@ -48,7 +44,6 @@ class ApiCityModel {
       deletedAt: json['deletedAt'] as String?,
     );
   }
-
   Map<String, dynamic> toJson() {
     return {
       'country': country,
@@ -61,8 +56,6 @@ class ApiCityModel {
       'deletedAt': deletedAt,
     };
   }
-
-
   CityModel toCityModel() {
     return CityModel(id: id.toString(), name: name, region: country);
   }

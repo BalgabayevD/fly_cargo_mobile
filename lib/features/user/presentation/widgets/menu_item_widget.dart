@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 mixin MenuItemStyling {
   static const double iconSize = 20.0;
   static const double containerSize = 40.0;
@@ -9,21 +8,14 @@ mixin MenuItemStyling {
   static const Color trailingIconColor = Color(0xFFCCCCCC);
   static const Color containerColor = Color(0xFFF5F5F5);
 }
-
 class MenuItemWidget extends StatelessWidget with MenuItemStyling {
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-
   const MenuItemWidget({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
+    required this.icon, required this.title, required this.subtitle, required this.onTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return ListTile(

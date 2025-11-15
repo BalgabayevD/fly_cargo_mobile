@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class OrderOptionTile extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -8,17 +7,9 @@ class OrderOptionTile extends StatelessWidget {
   final String subtitle;
   final bool value;
   final ValueChanged<bool> onChanged;
-
   const OrderOptionTile({
-    super.key,
-    required this.icon,
-    required this.iconColor,
-    required this.title,
-    required this.subtitle,
-    required this.value,
-    required this.onChanged,
+    required this.icon, required this.iconColor, required this.title, required this.subtitle, required this.value, required this.onChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

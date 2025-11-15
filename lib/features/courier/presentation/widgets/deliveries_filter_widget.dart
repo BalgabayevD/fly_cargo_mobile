@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-
 class DeliveriesFilterWidget extends StatelessWidget {
   final String selectedFilter;
   final ValueChanged<String> onFilterChanged;
-
   const DeliveriesFilterWidget({
-    super.key,
-    required this.selectedFilter,
-    required this.onFilterChanged,
+    required this.selectedFilter, required this.onFilterChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +27,6 @@ class DeliveriesFilterWidget extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildFilterChip(String value, String label) {
     final isSelected = selectedFilter == value;
     return GestureDetector(

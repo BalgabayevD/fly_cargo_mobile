@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/entities/box_entity.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/box_selection_bloc.dart';
-
 class BoxSelectionWidget extends StatelessWidget {
   const BoxSelectionWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BoxSelectionBloc, BoxSelectionState>(
@@ -29,29 +27,21 @@ class BoxSelectionWidget extends StatelessWidget {
             }).toList(),
           );
         }
-
         if (state is BoxSelectionError) {
           return Center(child: Text(state.message, style: AppTypography.error));
         }
-
         return const Center(child: CircularProgressIndicator());
       },
     );
   }
 }
-
 class BoxOptionWidget extends StatelessWidget {
   final BoxEntity box;
   final bool isSelected;
   final VoidCallback onTap;
-
   const BoxOptionWidget({
-    super.key,
-    required this.box,
-    required this.isSelected,
-    required this.onTap,
+    required this.box, required this.isSelected, required this.onTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -112,7 +102,6 @@ class BoxOptionWidget extends StatelessWidget {
       ),
     );
   }
-
   String _getShortName(String fullName) {
     if (fullName.contains('Маленькая')) return 'Маленькая';
     if (fullName.contains('Средняя')) return 'Средняя';

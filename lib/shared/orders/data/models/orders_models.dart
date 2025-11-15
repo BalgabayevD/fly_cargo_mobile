@@ -2,8 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'orders_models.g.dart';
 
-
-
 @JsonSerializable()
 class CreateOrderRequest {
   final bool isDefect;
@@ -35,7 +33,6 @@ class CreateOrderRequest {
   final double volumetricWeight;
   final double weight;
   final double width;
-
   const CreateOrderRequest({
     required this.isDefect,
     required this.isFragile,
@@ -67,24 +64,17 @@ class CreateOrderRequest {
     required this.weight,
     required this.width,
   });
-
   factory CreateOrderRequest.fromJson(Map<String, dynamic> json) =>
       _$CreateOrderRequestFromJson(json);
-
   Map<String, dynamic> toJson() => _$CreateOrderRequestToJson(this);
 }
-
-
 
 @JsonSerializable()
 class CreateOrderResponse {
   final OrderModel data;
-
   const CreateOrderResponse({required this.data});
-
   factory CreateOrderResponse.fromJson(Map<String, dynamic> json) =>
       _$CreateOrderResponseFromJson(json);
-
   Map<String, dynamic> toJson() => _$CreateOrderResponseToJson(this);
 }
 
@@ -98,14 +88,14 @@ class OrderModel {
   final double fromLatitude;
   final double fromLongitude;
   final String fromApartment;
-  final String fromEntrance;
+  final String? fromEntrance;
   final String fromFloor;
   final String fromAddress;
   final int toCityId;
   final double toLatitude;
   final double toLongitude;
   final String toApartment;
-  final String toEntrance;
+  final String? toEntrance;
   final String toFloor;
   final String toAddress;
   final double? price;
@@ -131,29 +121,23 @@ class OrderModel {
   final List<dynamic> qrs;
   final int calculationId;
   final PriceCalculationModel? priceCalculations;
-
   const OrderModel({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    this.deletedAt,
     required this.fromCityId,
     required this.fromLatitude,
     required this.fromLongitude,
     required this.fromApartment,
-    required this.fromEntrance,
     required this.fromFloor,
     required this.fromAddress,
     required this.toCityId,
     required this.toLatitude,
     required this.toLongitude,
     required this.toApartment,
-    required this.toEntrance,
     required this.toFloor,
     required this.toAddress,
-    this.price,
     required this.tariffId,
-    this.tariff,
     required this.comment,
     required this.description,
     required this.category,
@@ -162,23 +146,26 @@ class OrderModel {
     required this.isDefect,
     required this.photos,
     required this.contentPhotos,
-    this.defectPhotos,
     required this.volumetricWeight,
     required this.weight,
     required this.width,
     required this.length,
     required this.height,
-    this.fromCity,
-    this.toCity,
     required this.participants,
     required this.qrs,
     required this.calculationId,
+    this.deletedAt,
+    this.price,
+    this.tariff,
+    this.defectPhotos,
+    this.fromCity,
+    this.toCity,
+    this.fromEntrance,
+    this.toEntrance,
     this.priceCalculations,
   });
-
   factory OrderModel.fromJson(Map<String, dynamic> json) =>
       _$OrderModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$OrderModelToJson(this);
 }
 
@@ -207,17 +194,16 @@ class TariffModel {
   final double? additionalCostForFragileCargo;
   final TariffCategoryModel? tariffCategory;
   final PackageModel? package;
-
   const TariffModel({
-    this.id,
     required this.createdAt,
     required this.updatedAt,
-    this.deletedAt,
     required this.isActive,
     required this.name,
     required this.description,
-    this.icon,
     required this.image,
+    this.id,
+    this.deletedAt,
+    this.icon,
     this.sortIndex,
     this.fields,
     this.tariffCategoryId,
@@ -233,10 +219,8 @@ class TariffModel {
     this.tariffCategory,
     this.package,
   });
-
   factory TariffModel.fromJson(Map<String, dynamic> json) =>
       _$TariffModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$TariffModelToJson(this);
 }
 
@@ -251,22 +235,19 @@ class TariffCategoryModel {
   final int? sortIndex;
   final bool active;
   final List<TariffModel>? tariffs;
-
   const TariffCategoryModel({
-    this.id,
     required this.createdAt,
     required this.updatedAt,
-    this.deletedAt,
     required this.name,
     required this.key,
-    this.sortIndex,
     required this.active,
+    this.id,
+    this.deletedAt,
+    this.sortIndex,
     this.tariffs,
   });
-
   factory TariffCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$TariffCategoryModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$TariffCategoryModelToJson(this);
 }
 
@@ -281,22 +262,19 @@ class PackageModel {
   final String description;
   final String image;
   final double? price;
-
   const PackageModel({
-    this.id,
     required this.createdAt,
     required this.updatedAt,
-    this.deletedAt,
     required this.isActive,
     required this.name,
     required this.description,
     required this.image,
+    this.id,
+    this.deletedAt,
     this.price,
   });
-
   factory PackageModel.fromJson(Map<String, dynamic> json) =>
       _$PackageModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$PackageModelToJson(this);
 }
 
@@ -310,21 +288,18 @@ class CityModel {
   final String? deletedAt;
   final List<dynamic>? RoutesFrom;
   final List<dynamic>? RoutesTo;
-
   const CityModel({
-    this.id,
     required this.name,
     required this.country,
     required this.createdAt,
     required this.updatedAt,
+    this.id,
     this.deletedAt,
     this.RoutesFrom,
     this.RoutesTo,
   });
-
   factory CityModel.fromJson(Map<String, dynamic> json) =>
       _$CityModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$CityModelToJson(this);
 }
 
@@ -338,21 +313,18 @@ class ParticipantModel {
   final int? userId;
   final UserModel? user;
   final String target;
-
   const ParticipantModel({
-    this.id,
     required this.createdAt,
     required this.updatedAt,
+    required this.target,
+    this.id,
     this.deletedAt,
     this.orderId,
     this.userId,
     this.user,
-    required this.target,
   });
-
   factory ParticipantModel.fromJson(Map<String, dynamic> json) =>
       _$ParticipantModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$ParticipantModelToJson(this);
 }
 
@@ -376,12 +348,9 @@ class UserModel {
   final String bin;
   final dynamic access;
   final String role;
-
   const UserModel({
-    this.id,
     required this.createdAt,
     required this.updatedAt,
-    this.deletedAt,
     required this.uuid,
     required this.email,
     required this.phone,
@@ -394,13 +363,13 @@ class UserModel {
     required this.type,
     required this.iin,
     required this.bin,
-    this.access,
     required this.role,
+    this.id,
+    this.deletedAt,
+    this.access,
   });
-
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }
 
@@ -434,11 +403,10 @@ class PriceCalculationModel {
   final double? netProfit;
   final double? orderProfitabilityPercentage;
   final double? plannedMarkup;
-
   const PriceCalculationModel({
-    this.id,
     required this.createdAt,
     required this.updatedAt,
+    this.id,
     this.deletedAt,
     this.length,
     this.height,
@@ -465,14 +433,10 @@ class PriceCalculationModel {
     this.orderProfitabilityPercentage,
     this.plannedMarkup,
   });
-
   factory PriceCalculationModel.fromJson(Map<String, dynamic> json) =>
       _$PriceCalculationModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$PriceCalculationModelToJson(this);
 }
-
-
 
 class OrderData {
   final bool isDefect;
@@ -504,7 +468,6 @@ class OrderData {
   final double volumetricWeight;
   final double weight;
   final double width;
-
   const OrderData({
     required this.isDefect,
     required this.isFragile,
@@ -536,7 +499,6 @@ class OrderData {
     required this.weight,
     required this.width,
   });
-
   CreateOrderRequest toCreateOrderRequest() {
     return CreateOrderRequest(
       isDefect: isDefect,
@@ -576,13 +538,11 @@ class OrderResult {
   final int orderId;
   final String status;
   final String message;
-
   const OrderResult({
     required this.orderId,
     required this.status,
     required this.message,
   });
-
   factory OrderResult.fromOrderModel(OrderModel order) {
     return OrderResult(
       orderId: order.id,

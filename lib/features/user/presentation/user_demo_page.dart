@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
-
 class UserDemoPage extends StatelessWidget {
   const UserDemoPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,18 +120,15 @@ class UserDemoPage extends StatelessWidget {
     );
   }
 }
-
 class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final String description;
-
   const _FeatureItem({
     required this.icon,
     required this.title,
     required this.description,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(

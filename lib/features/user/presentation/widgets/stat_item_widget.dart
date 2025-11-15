@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 mixin StatItemStyling {
   static const double iconSize = 24.0;
   static const double containerSize = 50.0;
@@ -8,21 +7,14 @@ mixin StatItemStyling {
   static const double labelSpacing = 4.0;
   static const double alpha = 0.1;
 }
-
 class StatItemWidget extends StatelessWidget with StatItemStyling {
   final String label;
   final String value;
   final IconData icon;
   final Color color;
-
   const StatItemWidget({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.color,
+    required this.label, required this.value, required this.icon, required this.color, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(

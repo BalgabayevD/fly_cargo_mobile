@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
-
 class TransactionItemWidget extends StatelessWidget {
   final IncomeTransaction transaction;
-
-  const TransactionItemWidget({super.key, required this.transaction});
-
+  const TransactionItemWidget({required this.transaction, super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,7 +66,6 @@ class TransactionItemWidget extends StatelessWidget {
       ),
     );
   }
-
   IconData _getTransactionIcon(String type) {
     switch (type) {
       case 'delivery':
@@ -82,7 +78,6 @@ class TransactionItemWidget extends StatelessWidget {
         return Icons.payment;
     }
   }
-
   String _formatDateTime(DateTime dateTime) {
     return '${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')} в ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
   }

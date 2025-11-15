@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 mixin RouteHeaderStyling {
   static const double iconSize = 18.0;
   static const double containerSize = 32.0;
@@ -8,15 +7,11 @@ mixin RouteHeaderStyling {
   static const double padding = 16.0;
   static const double borderWidth = 1.0;
 }
-
 class RouteHeaderWidget extends StatelessWidget with RouteHeaderStyling {
   final VoidCallback onEditTap;
-
   const RouteHeaderWidget({
-    super.key,
-    required this.onEditTap,
+    required this.onEditTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(

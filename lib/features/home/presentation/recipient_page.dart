@@ -1,36 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class RecipientPage extends StatefulWidget {
   final String? initialName;
   final String? initialPhone;
-
   const RecipientPage({super.key, this.initialName, this.initialPhone});
-
   @override
   State<RecipientPage> createState() => _RecipientPageState();
 }
-
 class _RecipientPageState extends State<RecipientPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
     _nameController.text = widget.initialName ?? '';
     _phoneController.text = widget.initialPhone ?? '';
   }
-
   @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
     super.dispose();
   }
-
   String? _validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Введите имя получателя';
@@ -40,12 +33,10 @@ class _RecipientPageState extends State<RecipientPage> {
     }
     return null;
   }
-
   String? _validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Введите номер телефона';
     }
-
     final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}$');
     final cleanPhone = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     if (!phoneRegex.hasMatch(cleanPhone)) {
@@ -53,18 +44,15 @@ class _RecipientPageState extends State<RecipientPage> {
     }
     return null;
   }
-
   void _saveRecipient() {
     if (_formKey.currentState!.validate()) {
       final recipientData = {
         'name': _nameController.text.trim(),
         'phone': _phoneController.text.trim(),
       };
-
       Navigator.pop(context, recipientData);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +81,6 @@ class _RecipientPageState extends State<RecipientPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const Text(
                 'Контактная информация получателя',
                 style: TextStyle(
@@ -108,8 +95,6 @@ class _RecipientPageState extends State<RecipientPage> {
                 style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
               ),
               const SizedBox(height: 30),
-
-
               const Text(
                 'Имя получателя',
                 style: TextStyle(
@@ -164,8 +149,6 @@ class _RecipientPageState extends State<RecipientPage> {
                 textCapitalization: TextCapitalization.words,
               ),
               const SizedBox(height: 24),
-
-
               const Text(
                 'Номер телефона',
                 style: TextStyle(
@@ -224,8 +207,6 @@ class _RecipientPageState extends State<RecipientPage> {
                 style: const TextStyle(fontSize: 16, color: Color(0xFF333333)),
               ),
               const SizedBox(height: 40),
-
-
               AppButton(
                 text: 'Сохранить данные',
                 onPressed: _saveRecipient,

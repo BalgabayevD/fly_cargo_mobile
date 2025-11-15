@@ -1,5 +1,4 @@
 import 'dart:io';
-
 class OrderFormData {
   final bool isDefect;
   final bool isFragile;
@@ -16,7 +15,6 @@ class OrderFormData {
   final String toPhone;
   final List<File> contentPhotos;
   final List<String> contentPhotoIds;
-
   const OrderFormData({
     required this.isDefect,
     required this.isFragile,
@@ -34,7 +32,6 @@ class OrderFormData {
     this.contentPhotos = const [],
     this.contentPhotoIds = const [],
   });
-
   OrderFormData copyWith({
     bool? isDefect,
     bool? isFragile,

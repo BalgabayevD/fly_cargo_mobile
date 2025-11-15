@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 mixin AddressCardStyling {
   static const double iconContainerSize = 48.0;
   static const double editIconSize = 16.0;
@@ -14,21 +13,14 @@ mixin AddressCardStyling {
   static const double shadowOffset = 2.0;
   static const double shadowAlpha = 0.05;
 }
-
 class AddressCardWidget extends StatelessWidget with AddressCardStyling {
   final AddressModel address;
   final String label;
   final List<Color> gradientColors;
   final VoidCallback onTap;
-
   const AddressCardWidget({
-    super.key,
-    required this.address,
-    required this.label,
-    required this.gradientColors,
-    required this.onTap,
+    required this.address, required this.label, required this.gradientColors, required this.onTap, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

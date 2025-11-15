@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/presentation/courier_home_page.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_demo_page.dart';
-
 class AppModeSelectionPage extends StatelessWidget {
   const AppModeSelectionPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +14,6 @@ class AppModeSelectionPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               const Icon(
                 Icons.local_shipping,
                 size: 80,
@@ -37,8 +34,6 @@ class AppModeSelectionPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Color(0xFF666666)),
               ),
               const SizedBox(height: 60),
-
-
               _buildModeCard(
                 context: context,
                 title: 'Клиент',
@@ -48,8 +43,6 @@ class AppModeSelectionPage extends StatelessWidget {
                 onTap: () => _navigateToClientMode(context),
               ),
               const SizedBox(height: 20),
-
-
               _buildModeCard(
                 context: context,
                 title: 'Курьер',
@@ -59,8 +52,6 @@ class AppModeSelectionPage extends StatelessWidget {
                 onTap: () => _navigateToCourierMode(context),
               ),
               const SizedBox(height: 40),
-
-
               TextButton(
                 onPressed: () => _navigateToUserProfile(context),
                 child: const Text(
@@ -73,8 +64,6 @@ class AppModeSelectionPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-
               const Text(
                 'Для разработки и тестирования',
                 style: TextStyle(fontSize: 12, color: Color(0xFF999999)),
@@ -85,7 +74,6 @@ class AppModeSelectionPage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildModeCard({
     required BuildContext context,
     required String title,
@@ -151,21 +139,18 @@ class AppModeSelectionPage extends StatelessWidget {
       ),
     );
   }
-
   void _navigateToClientMode(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const HomePage()),
     );
   }
-
   void _navigateToCourierMode(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const CourierHomePage()),
     );
   }
-
   void _navigateToUserProfile(BuildContext context) {
     Navigator.push(
       context,

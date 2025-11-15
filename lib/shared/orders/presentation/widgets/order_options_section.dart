@@ -2,21 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_option_tile.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_section_header.dart';
-
 class OrderOptionsSection extends StatelessWidget {
   final bool isDefect;
   final bool isFragile;
   final ValueChanged<bool> onDefectChanged;
   final ValueChanged<bool> onFragileChanged;
-
   const OrderOptionsSection({
-    super.key,
-    required this.isDefect,
-    required this.isFragile,
-    required this.onDefectChanged,
-    required this.onFragileChanged,
+    required this.isDefect, required this.isFragile, required this.onDefectChanged, required this.onFragileChanged, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +25,6 @@ class OrderOptionsSection extends StatelessWidget {
       ],
     );
   }
-
   Widget _buildOptionsContainer() {
     return Container(
       decoration: BoxDecoration(

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-
 mixin PlaceholderItemStyling {
   static const double containerSize = 40.0;
   static const double borderRadius = 10.0;
 }
-
 class PlaceholderItemWidget extends StatelessWidget
     with PlaceholderItemStyling {
   const PlaceholderItemWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ListTile(

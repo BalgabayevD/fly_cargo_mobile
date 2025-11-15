@@ -5,27 +5,22 @@ import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_filte
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_statistics_dialog.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/delivery_card_widget.dart';
 import 'package:fly_cargo/features/courier/services/deliveries_service.dart';
-
 class CourierDeliveriesPage extends StatefulWidget {
   const CourierDeliveriesPage({super.key});
-
   @override
   State<CourierDeliveriesPage> createState() => _CourierDeliveriesPageState();
 }
-
 class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
   List<CourierOrder> _deliveries = [];
   bool _isLoading = true;
   String _selectedFilter = 'all';
   late final DeliveriesService _deliveriesService;
-
   @override
   void initState() {
     super.initState();
     _deliveriesService = MockDeliveriesService();
     _loadDeliveries();
   }
-
   Future<void> _loadDeliveries() async {
     try {
       final deliveries = await _deliveriesService.getDeliveries();
@@ -37,14 +32,11 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       setState(() {
         _isLoading = false;
       });
-
     }
   }
-
   List<CourierOrder> get _filteredDeliveries {
     return _deliveriesService.filterDeliveries(_deliveries, _selectedFilter);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +66,6 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       ),
       body: Column(
         children: [
-
           DeliveriesFilterWidget(
             selectedFilter: _selectedFilter,
             onFilterChanged: (filter) {
@@ -83,8 +74,6 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
               });
             },
           ),
-
-
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -111,7 +100,6 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       ),
     );
   }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -142,7 +130,6 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       ),
     );
   }
-
   void _openDeliveryDetails(CourierOrder delivery) {
     Navigator.push(
       context,
@@ -151,7 +138,6 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       ),
     );
   }
-
   void _showStatistics() {
     final statistics = _deliveriesService.getStatistics(_deliveries);
     showDialog(

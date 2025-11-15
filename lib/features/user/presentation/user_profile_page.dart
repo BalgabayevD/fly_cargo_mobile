@@ -12,10 +12,8 @@ import 'package:fly_cargo/features/user/presentation/widgets/stat_item_widget.da
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
-
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,19 +50,12 @@ class UserProfilePage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-
                   _buildProfileHeader(profile),
                   const SizedBox(height: 30),
-
-
                   _buildStatsSection(daysSinceCreated),
                   const SizedBox(height: 30),
-
-
                   _buildUserMenuSection(context, profile),
                   const SizedBox(height: 20),
-
-
                   _buildServicesMenuSection(context, profile),
                   const SizedBox(height: 20),
                 ],
@@ -105,12 +96,10 @@ class UserProfilePage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildProfileHeader(dynamic profile) {
     final fullName = '${profile.firstName} ${profile.lastName}'.trim();
     return Column(
       children: [
-
         Container(
           width: 100,
           height: 100,
@@ -131,8 +120,6 @@ class UserProfilePage extends StatelessWidget {
               : _buildDefaultAvatar(),
         ),
         const SizedBox(height: 16),
-
-
         Text(
           fullName.isNotEmpty ? fullName : 'Пользователь',
           style: const TextStyle(
@@ -142,8 +129,6 @@ class UserProfilePage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-
-
         Text(
           profile.phone,
           style: const TextStyle(fontSize: 16, color: Color(0xFF666666)),
@@ -151,7 +136,6 @@ class UserProfilePage extends StatelessWidget {
       ],
     );
   }
-
   String _getDaysText(int days) {
     if (days % 10 == 1 && days % 100 != 11) {
       return 'день';
@@ -163,11 +147,9 @@ class UserProfilePage extends StatelessWidget {
       return 'дней';
     }
   }
-
   Widget _buildDefaultAvatar() {
     return const Icon(Icons.person, size: 50, color: Color(0xFF999999));
   }
-
   Widget _buildStatsSection(int daysSinceCreated) {
     return AppCard(
       variant: AppCardVariant.filled,
@@ -214,7 +196,6 @@ class UserProfilePage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildUserMenuSection(BuildContext context, dynamic profile) {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -252,7 +233,6 @@ class UserProfilePage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildServicesMenuSection(BuildContext context, dynamic profile) {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -283,49 +263,42 @@ class UserProfilePage extends StatelessWidget {
       ),
     );
   }
-
   void _editProfile(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserEditProfilePage()),
     );
   }
-
   void _openPaymentCardsPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserPaymentCardsPage()),
     );
   }
-
   void _openNotificationsPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserNotificationsPage()),
     );
   }
-
   void _openOrderHistoryPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserOrderHistoryPage()),
     );
   }
-
   void _openPaymentsPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserPaymentsPage()),
     );
   }
-
   void _openCostCalculatorPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const UserCostCalculatorPage()),
     );
   }
-
   void _openContactPage(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

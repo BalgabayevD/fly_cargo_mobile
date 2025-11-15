@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-
 class DetailedStatsWidget extends StatelessWidget {
   final int deliveries;
   final double rating;
   final int timeOnRoad;
   final double distance;
-
   const DetailedStatsWidget({
-    super.key,
-    required this.deliveries,
-    required this.rating,
-    required this.timeOnRoad,
-    required this.distance,
+    required this.deliveries, required this.rating, required this.timeOnRoad, required this.distance, super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return AppCardWithTitle(
@@ -30,7 +23,6 @@ class DetailedStatsWidget extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildStatRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),

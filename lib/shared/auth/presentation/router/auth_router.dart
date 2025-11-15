@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/code_input_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
-
 class AuthRouter {
   static const String phoneInput = '/auth/phone-input';
   static const String codeInput = '/auth/code-input';
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case phoneInput:
@@ -13,13 +11,11 @@ class AuthRouter {
           builder: (_) => const PhoneInputPage(),
           settings: settings,
         );
-
       case codeInput:
         final args = settings.arguments as Map<String, dynamic>?;
         if (args == null) {
           throw ArgumentError('Missing required arguments for code input page');
         }
-
         return MaterialPageRoute(
           builder: (_) => CodeInputPage(
             phoneNumber: args['phoneNumber'] as String,
@@ -28,16 +24,13 @@ class AuthRouter {
           ),
           settings: settings,
         );
-
       default:
         throw ArgumentError('Unknown route: ${settings.name}');
     }
   }
-
   static Future<void> navigateToPhoneInput(BuildContext context) {
     return Navigator.of(context).pushNamed(phoneInput);
   }
-
   static Future<void> navigateToCodeInput(
     BuildContext context, {
     required String phoneNumber,
@@ -53,7 +46,6 @@ class AuthRouter {
       },
     );
   }
-
   static Future<void> replaceWithCodeInput(
     BuildContext context, {
     required String phoneNumber,

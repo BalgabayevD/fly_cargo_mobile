@@ -1,9 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'tariff_models.g.dart';
-
-
-
 @JsonSerializable()
 class PackageModel {
   final String createdAt;
@@ -15,27 +11,16 @@ class PackageModel {
   final String name;
   final double? price;
   final String updatedAt;
-
   const PackageModel({
     required this.createdAt,
-    this.deletedAt,
-    required this.description,
+    required this.description, required this.image, required this.isActive, required this.name, required this.updatedAt, this.deletedAt,
     this.id,
-    required this.image,
-    required this.isActive,
-    required this.name,
     this.price,
-    required this.updatedAt,
   });
-
   factory PackageModel.fromJson(Map<String, dynamic> json) =>
       _$PackageModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$PackageModelToJson(this);
 }
-
-
-
 @JsonSerializable()
 class TariffModel {
   final double? additionalCostForFragileCargo;
@@ -61,41 +46,28 @@ class TariffModel {
   final double? volumetricWeight;
   final double? weight;
   final double? width;
-
   const TariffModel({
-    this.additionalCostForFragileCargo,
+    required this.createdAt, required this.description, required this.id, required this.image, required this.isActive, required this.name, required this.updatedAt, this.additionalCostForFragileCargo,
     this.costPriceOfAirShipment,
-    required this.createdAt,
     this.deletedAt,
-    required this.description,
     this.fields,
     this.height,
     this.icon,
-    required this.id,
-    required this.image,
     this.invoiceWeight,
-    required this.isActive,
     this.length,
-    required this.name,
     this.package,
     this.packageId,
     this.sortIndex,
     this.tariffCategory,
     this.tariffCategoryId,
-    required this.updatedAt,
     this.volumetricWeight,
     this.weight,
     this.width,
   });
-
   factory TariffModel.fromJson(Map<String, dynamic> json) =>
       _$TariffModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$TariffModelToJson(this);
 }
-
-
-
 @JsonSerializable()
 class TariffCategoryModel {
   final bool active;
@@ -107,43 +79,27 @@ class TariffCategoryModel {
   final int? sortIndex;
   final List<TariffModel>? tariffs;
   final String updatedAt;
-
   const TariffCategoryModel({
     required this.active,
     required this.createdAt,
-    this.deletedAt,
+    required this.key, required this.name, required this.updatedAt, this.deletedAt,
     this.id,
-    required this.key,
-    required this.name,
     this.sortIndex,
     this.tariffs,
-    required this.updatedAt,
   });
-
   factory TariffCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$TariffCategoryModelFromJson(json);
-
   Map<String, dynamic> toJson() => _$TariffCategoryModelToJson(this);
 }
-
-
-
 @JsonSerializable()
 class TariffCategoriesApiResponse {
   final List<TariffCategoryModel> data;
-
   const TariffCategoriesApiResponse({required this.data});
-
   factory TariffCategoriesApiResponse.fromJson(Map<String, dynamic> json) =>
       _$TariffCategoriesApiResponseFromJson(json);
-
   Map<String, dynamic> toJson() => _$TariffCategoriesApiResponseToJson(this);
 }
-
 typedef TariffCategoriesResponse = List<TariffCategoryModel>;
-
-
-
 @JsonSerializable()
 class CreateTariffRequest {
   final double additionalCostForFragileCargo;
@@ -162,7 +118,6 @@ class CreateTariffRequest {
   final double volumetricWeight;
   final double weight;
   final double width;
-
   const CreateTariffRequest({
     required this.additionalCostForFragileCargo,
     required this.costPriceOfAirShipment,
@@ -181,27 +136,21 @@ class CreateTariffRequest {
     required this.weight,
     required this.width,
   });
-
   factory CreateTariffRequest.fromJson(Map<String, dynamic> json) =>
       _$CreateTariffRequestFromJson(json);
-
   Map<String, dynamic> toJson() => _$CreateTariffRequestToJson(this);
 }
-
 @JsonSerializable()
 class CreateTariffResponse {
   final int id;
   final String message;
   final bool success;
-
   const CreateTariffResponse({
     required this.id,
     required this.message,
     required this.success,
   });
-
   factory CreateTariffResponse.fromJson(Map<String, dynamic> json) =>
       _$CreateTariffResponseFromJson(json);
-
   Map<String, dynamic> toJson() => _$CreateTariffResponseToJson(this);
 }

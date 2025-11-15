@@ -1,5 +1,4 @@
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-
 class OrderData {
   final dynamic box;
   final AddressModel fromAddress;
@@ -7,7 +6,6 @@ class OrderData {
   final Map<String, String>? recipientData;
   final String? cargoDescription;
   final List<String>? photos;
-
   const OrderData({
     required this.box,
     required this.fromAddress,
@@ -16,7 +14,6 @@ class OrderData {
     this.cargoDescription,
     this.photos,
   });
-
   OrderData copyWith({
     dynamic box,
     AddressModel? fromAddress,

@@ -4,14 +4,11 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
 import 'package:fly_cargo/shared/tariffs/domain/usecases/create_tariff_usecase.dart';
 import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart';
-
 class CreateTariffPage extends StatefulWidget {
   const CreateTariffPage({super.key});
-
   @override
   State<CreateTariffPage> createState() => _CreateTariffPageState();
 }
-
 class _CreateTariffPageState extends State<CreateTariffPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -23,12 +20,10 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
   final _heightController = TextEditingController();
   final _volumetricWeightController = TextEditingController();
   final _iconController = TextEditingController();
-
   int? _selectedCategoryId;
   int? _selectedPackageId;
   bool _isActive = true;
   bool _isLoading = false;
-
   @override
   void dispose() {
     _nameController.dispose();
@@ -42,7 +37,6 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
     _iconController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,10 +65,8 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               _buildSectionTitle('Основная информация'),
               const SizedBox(height: 16),
-
               _buildTextField(
                 controller: _nameController,
                 label: 'Название тарифа',
@@ -82,42 +74,28 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
                 validator: (value) =>
                     value?.isEmpty == true ? 'Введите название' : null,
               ),
-
               const SizedBox(height: 16),
-
               _buildTextField(
                 controller: _descriptionController,
                 label: 'Описание',
                 hint: 'Введите описание тарифа',
                 maxLines: 3,
               ),
-
               const SizedBox(height: 16),
-
               _buildTextField(
                 controller: _imageController,
                 label: 'URL изображения',
                 hint: 'https://example.com/image.jpg',
               ),
-
               const SizedBox(height: 24),
-
-
               _buildSectionTitle('Категория и пакет'),
               const SizedBox(height: 16),
-
               _buildCategoryDropdown(),
-
               const SizedBox(height: 16),
-
               _buildPackageDropdown(),
-
               const SizedBox(height: 24),
-
-
               _buildSectionTitle('Размеры и вес'),
               const SizedBox(height: 16),
-
               Row(
                 children: [
                   Expanded(
@@ -139,9 +117,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 16),
-
               Row(
                 children: [
                   Expanded(
@@ -163,31 +139,23 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 16),
-
               _buildTextField(
                 controller: _heightController,
                 label: 'Высота (см)',
                 hint: '0.0',
                 keyboardType: TextInputType.number,
               ),
-
               const SizedBox(height: 24),
-
-
               _buildSectionTitle('Дополнительные параметры'),
               const SizedBox(height: 16),
-
               _buildTextField(
                 controller: _iconController,
                 label: 'Иконка (код)',
                 hint: '59717',
                 keyboardType: TextInputType.number,
               ),
-
               const SizedBox(height: 16),
-
               SwitchListTile(
                 title: const Text('Активный тариф'),
                 subtitle: const Text('Тариф будет доступен для выбора'),
@@ -198,10 +166,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
                   });
                 },
               ),
-
               const SizedBox(height: 32),
-
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -238,7 +203,6 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       ),
     );
   }
-
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
@@ -248,7 +212,6 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       ),
     );
   }
-
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -282,7 +245,6 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       ),
     );
   }
-
   Widget _buildCategoryDropdown() {
     return FutureBuilder<List<TariffCategoryModel>>(
       future: getIt<GetTariffCategoriesUseCase>()(),
@@ -290,13 +252,10 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         }
-
         if (snapshot.hasError || !snapshot.hasData) {
           return const Text('Ошибка загрузки категорий');
         }
-
         final categories = snapshot.data!;
-
         return DropdownButtonFormField<int>(
           value: _selectedCategoryId,
           decoration: InputDecoration(
@@ -332,9 +291,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       },
     );
   }
-
   Widget _buildPackageDropdown() {
-
     return DropdownButtonFormField<int>(
       value: _selectedPackageId,
       decoration: InputDecoration(
@@ -365,14 +322,11 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       validator: (value) => value == null ? 'Выберите пакет' : null,
     );
   }
-
   Future<void> _createTariff() async {
     if (!_formKey.currentState!.validate()) return;
-
     setState(() {
       _isLoading = true;
     });
-
     try {
       final request = CreateTariffRequest(
         additionalCostForFragileCargo: 0.0,
@@ -393,9 +347,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
         weight: double.tryParse(_weightController.text) ?? 0.0,
         width: double.tryParse(_widthController.text) ?? 0.0,
       );
-
       final response = await getIt<CreateTariffUseCase>()(request);
-
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -405,7 +357,6 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
                 : AppColors.error,
           ),
         );
-
         if (response.success) {
           Navigator.pop(context);
         }

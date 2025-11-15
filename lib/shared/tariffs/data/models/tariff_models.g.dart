@@ -1,19 +1,21 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'tariff_models.dart';
 
-
-
-
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
 
 PackageModel _$PackageModelFromJson(Map<String, dynamic> json) => PackageModel(
   createdAt: json['createdAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   description: json['description'] as String,
-  id: (json['id'] as num?)?.toInt(),
   image: json['image'] as String,
   isActive: json['isActive'] as bool,
   name: json['name'] as String,
-  price: (json['price'] as num?)?.toDouble(),
   updatedAt: json['updatedAt'] as String,
+  deletedAt: json['deletedAt'] as String?,
+  id: (json['id'] as num?)?.toInt(),
+  price: (json['price'] as num?)?.toDouble(),
 );
 
 Map<String, dynamic> _$PackageModelToJson(PackageModel instance) =>
@@ -30,21 +32,22 @@ Map<String, dynamic> _$PackageModelToJson(PackageModel instance) =>
     };
 
 TariffModel _$TariffModelFromJson(Map<String, dynamic> json) => TariffModel(
+  createdAt: json['createdAt'] as String,
+  description: json['description'] as String,
+  id: (json['id'] as num).toInt(),
+  image: json['image'] as String,
+  isActive: json['isActive'] as bool,
+  name: json['name'] as String,
+  updatedAt: json['updatedAt'] as String,
   additionalCostForFragileCargo: (json['additionalCostForFragileCargo'] as num?)
       ?.toDouble(),
   costPriceOfAirShipment: (json['costPriceOfAirShipment'] as num?)?.toDouble(),
-  createdAt: json['createdAt'] as String,
   deletedAt: json['deletedAt'] as String?,
-  description: json['description'] as String,
   fields: (json['fields'] as List<dynamic>?)?.map((e) => e as String).toList(),
   height: (json['height'] as num?)?.toDouble(),
   icon: (json['icon'] as num?)?.toInt(),
-  id: (json['id'] as num).toInt(),
-  image: json['image'] as String,
   invoiceWeight: (json['invoiceWeight'] as num?)?.toDouble(),
-  isActive: json['isActive'] as bool,
   length: (json['length'] as num?)?.toDouble(),
-  name: json['name'] as String,
   package: json['package'] == null
       ? null
       : PackageModel.fromJson(json['package'] as Map<String, dynamic>),
@@ -56,7 +59,6 @@ TariffModel _$TariffModelFromJson(Map<String, dynamic> json) => TariffModel(
           json['tariffCategory'] as Map<String, dynamic>,
         ),
   tariffCategoryId: (json['tariffCategoryId'] as num?)?.toInt(),
-  updatedAt: json['updatedAt'] as String,
   volumetricWeight: (json['volumetricWeight'] as num?)?.toDouble(),
   weight: (json['weight'] as num?)?.toDouble(),
   width: (json['width'] as num?)?.toDouble(),
@@ -93,15 +95,15 @@ TariffCategoryModel _$TariffCategoryModelFromJson(Map<String, dynamic> json) =>
     TariffCategoryModel(
       active: json['active'] as bool,
       createdAt: json['createdAt'] as String,
-      deletedAt: json['deletedAt'] as String?,
-      id: (json['id'] as num?)?.toInt(),
       key: json['key'] as String,
       name: json['name'] as String,
+      updatedAt: json['updatedAt'] as String,
+      deletedAt: json['deletedAt'] as String?,
+      id: (json['id'] as num?)?.toInt(),
       sortIndex: (json['sortIndex'] as num?)?.toInt(),
       tariffs: (json['tariffs'] as List<dynamic>?)
           ?.map((e) => TariffModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      updatedAt: json['updatedAt'] as String,
     );
 
 Map<String, dynamic> _$TariffCategoryModelToJson(

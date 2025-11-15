@@ -1,13 +1,8 @@
 import 'package:fly_cargo/core/entities/box_entity.dart';
-
 abstract class BoxLocalDataSource {
-
   List<BoxEntity> getAllBoxes();
-
-
   BoxEntity? getBoxByType(String type);
 }
-
 class BoxLocalDataSourceImpl implements BoxLocalDataSource {
   static const List<BoxEntity> _boxes = [
     BoxEntity(
@@ -41,12 +36,10 @@ class BoxLocalDataSourceImpl implements BoxLocalDataSource {
       currency: '₸',
     ),
   ];
-
   @override
   List<BoxEntity> getAllBoxes() {
     return List.from(_boxes);
   }
-
   @override
   BoxEntity? getBoxByType(String type) {
     try {
