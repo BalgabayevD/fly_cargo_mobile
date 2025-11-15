@@ -20,15 +20,23 @@ Future<void> main() async {
   ServiceLocator().init();
   await configureDependencies();
   await FlutterBetterAuth.initialize(url: 'https://authfc.maguya.kz/api/auth');
+
+  final prefs = await SharedPreferences.getInstance();
+
   FlutterBetterAuth.dioClient.interceptors.add(
     InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final currentToken = prefs.getString('auth-token');
+        if (currentToken != null && currentToken.isNotEmpty) {
+          options.headers['Authorization'] = 'Bearer $currentToken';
+        }
+        handler.next(options);
+      },
       onResponse: (res, handler) async {
         final authToken = res.headers.map['set-auth-token'];
-        await SharedPreferences.getInstance().then((store) {
-          if (authToken != null && authToken.isNotEmpty) {
-            store.setString('auth-token', authToken.first);
-          }
-        });
+        if (authToken != null && authToken.isNotEmpty) {
+          await prefs.setString('auth-token', authToken.first);
+        }
         handler.next(res);
       },
     ),

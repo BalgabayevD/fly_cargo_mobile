@@ -6,9 +6,9 @@ import 'package:injectable/injectable.dart';
 abstract class AuthModule {
   @factoryMethod
   AuthRemoteSource provideAuthRemoteSource(
-    @Named('public-dio') Dio publicDio,
+    @Named('private-dio') Dio privateDio,
     ApiConfig dataSourceConfig,
   ) {
-    return AuthRemoteSource(publicDio, baseUrl: ApiConfig.baseUrl);
+    return AuthRemoteSource(privateDio, baseUrl: ApiConfig.baseUrl);
   }
 }

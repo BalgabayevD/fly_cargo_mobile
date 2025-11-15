@@ -8,6 +8,7 @@ import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:injectable/injectable.dart';
+
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
@@ -24,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final session = await FlutterBetterAuth.client.getSession();
+
     if (session.data?.session != null) {
       emit(
         AuthAuthenticated(
@@ -32,8 +34,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           accessToken: session.data?.session.token,
         ),
       );
+      return;
+    }
+
+    try {
+      final profile = await _authStatusUseCase.getUserProfile();
+      final token = await _authStatusUseCase.getCurrentToken();
+      emit(
+        AuthAuthenticated(
+          userType: UserType.client,
+          userId: profile.id.toString(),
+          accessToken: token,
+        ),
+      );
+    } catch (e) {
+      // Оставляем AuthInitial состояние
     }
   }
+
   Future<void> _onRequestOTP(
     AuthRequestOTPRequested event,
     Emitter<AuthState> emit,
@@ -56,6 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthError(message: 'Не удалось отправить код: ${e.toString()}'));
     }
   }
+
   Future<void> _verifyCode(
     AuthVerifyCodeRequested event,
     Emitter<AuthState> emit,
@@ -65,14 +84,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await FlutterBetterAuth.client.phone.verify(
         body: VerifyPhoneBody(phoneNumber: event.phoneNumber, code: event.code),
       );
+
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      try {
+        final profile = await _authStatusUseCase.getUserProfile();
+        final token = await _authStatusUseCase.getCurrentToken();
+
+        emit(
+          AuthAuthenticated(
+            userType: UserType.client,
+            userId: profile.id.toString(),
+            accessToken: token,
+          ),
+        );
+        return;
+      } catch (profileError) {
+        // Ignore profile error, try session
+      }
+
       final sessionStatus = await _authStatusUseCase.getSessionStatus();
-      final isAuthenticated = sessionStatus?.session != null;
-      if (isAuthenticated) {
+
+      if (sessionStatus?.session != null) {
         final token = await _authStatusUseCase.getCurrentToken();
         emit(
           AuthAuthenticated(
             userType: UserType.client,
-            userId: sessionStatus?.session.userId,
+            userId: sessionStatus!.session.userId,
             accessToken: token,
           ),
         );
@@ -83,6 +121,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthError(message: 'Не удалось подтвердить код: ${e.toString()}'));
     }
   }
+
   Future<void> _onLogout(AuthLogout event, Emitter<AuthState> emit) async {
     await FlutterBetterAuth.client.signOut();
     emit(const AuthInitial());

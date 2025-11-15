@@ -104,9 +104,9 @@ extension GetItInjectableX on _i174.GetIt {
     final coreModule = _$CoreModule();
     final dioModule = _$DioModule();
     final tariffsModule = _$TariffsModule();
+    final authModule = _$AuthModule();
     final destinationModule = _$DestinationModule();
     final ordersModule = _$OrdersModule();
-    final authModule = _$AuthModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
@@ -129,7 +129,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => coreModule.logInterceptor(gh<_i993.Talker>()),
       instanceName: 'log-interceptor',
     );
-    gh.factory<_i361.Dio>(
+    gh.lazySingleton<_i361.Dio>(
       () => dioModule.getPrivateDio(
         gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
         gh<_i361.Interceptor>(instanceName: 'auth-interceptor'),
@@ -138,6 +138,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1059.TariffsRemoteSource>(
       () => tariffsModule.provideTariffsRemoteSource(
+        gh<_i361.Dio>(instanceName: 'private-dio'),
+        gh<_i469.ApiConfig>(),
+      ),
+    );
+    gh.factory<_i764.AuthRemoteSource>(
+      () => authModule.provideAuthRemoteSource(
         gh<_i361.Dio>(instanceName: 'private-dio'),
         gh<_i469.ApiConfig>(),
       ),
@@ -169,12 +175,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i281.GetCitiesFromUseCase>(
       () => _i281.GetCitiesFromUseCase(gh<_i405.DestinationRepository>()),
     );
-    gh.factory<_i361.Dio>(
-      () => dioModule.getPublicDio(
-        gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
-      ),
-      instanceName: 'public-dio',
-    );
     gh.factory<_i436.DestinationBloc>(
       () => _i436.DestinationBloc(
         gh<_i281.GetCitiesFromUseCase>(),
@@ -188,12 +188,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i528.TariffsRepository>(
       () => _i711.TariffsRepositoryImpl(gh<_i618.TariffsRemoteSourceImpl>()),
-    );
-    gh.factory<_i764.AuthRemoteSource>(
-      () => authModule.provideAuthRemoteSource(
-        gh<_i361.Dio>(instanceName: 'public-dio'),
-        gh<_i469.ApiConfig>(),
-      ),
     );
     gh.lazySingleton<_i214.AuthRepository>(
       () => _i505.AuthRepositoryImpl(gh<_i764.AuthRemoteSource>()),
@@ -216,14 +210,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i910.UploadOrderPhotoUseCase>(
       () => _i910.UploadOrderPhotoUseCase(gh<_i919.OrdersRepository>()),
     );
-    gh.factory<_i49.CreateOrderUseCase>(
-      () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i189.GetCourierOrdersUseCase>(
+      () => _i189.GetCourierOrdersUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.factory<_i33.GetClientOrdersUseCase>(
       () => _i33.GetClientOrdersUseCase(gh<_i919.OrdersRepository>()),
     );
-    gh.factory<_i189.GetCourierOrdersUseCase>(
-      () => _i189.GetCourierOrdersUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i49.CreateOrderUseCase>(
+      () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.factory<_i138.AuthBloc>(
       () => _i138.AuthBloc(
@@ -265,8 +259,8 @@ class _$DioModule extends _i794.DioModule {}
 
 class _$TariffsModule extends _i584.TariffsModule {}
 
+class _$AuthModule extends _i522.AuthModule {}
+
 class _$DestinationModule extends _i993.DestinationModule {}
 
 class _$OrdersModule extends _i561.OrdersModule {}
-
-class _$AuthModule extends _i522.AuthModule {}

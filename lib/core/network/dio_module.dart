@@ -4,17 +4,13 @@ import 'package:injectable/injectable.dart';
 @module
 abstract class DioModule {
   @Named('private-dio')
-  @injectable
+  @lazySingleton
   Dio getPrivateDio(
     @Named('log-interceptor') Interceptor logInterceptor,
     @Named('auth-interceptor') Interceptor authInterceptor,
   ) {
-    return FlutterBetterAuth.dioClient
-      ..interceptors.addAll([logInterceptor, authInterceptor]);
-  }
-  @Named('public-dio')
-  @injectable
-  Dio getPublicDio(@Named('log-interceptor') Interceptor logInterceptor) {
-    return FlutterBetterAuth.dioClient..interceptors.addAll([logInterceptor]);
+    final dio = Dio(FlutterBetterAuth.dioClient.options);
+    dio.interceptors.addAll([logInterceptor, authInterceptor]);
+    return dio;
   }
 }

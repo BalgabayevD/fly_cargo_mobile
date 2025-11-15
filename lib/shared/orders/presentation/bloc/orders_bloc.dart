@@ -44,7 +44,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ) async {
     emit(const OrdersLoading());
     try {
-      final result = await _getClientOrdersUseCase.call();
+      await _getClientOrdersUseCase.call();
       // emit(OrdersLoaded(orders: result));
     } catch (e) {
       emit(OrdersError(message: e.toString()));
@@ -57,7 +57,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ) async {
     emit(const OrdersLoading());
     try {
-      final result = await _getCourierOrdersUseCase.call();
+      await _getCourierOrdersUseCase.call();
       // emit(OrdersLoaded(orders: result));
     } catch (e) {
       emit(OrdersError(message: e.toString()));

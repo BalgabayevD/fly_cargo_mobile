@@ -18,11 +18,13 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
@@ -32,6 +34,7 @@ class _HomePageState extends State<HomePage> {
       _toAddress = toAddress;
     });
   }
+
   void _openAddressSelection() {
     showModalBottomSheet(
       context: context,
@@ -44,6 +47,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   void _onSendPackagePressed() {
     final authState = context.read<AuthBloc>().state;
     if (authState is AuthUnauthenticated || authState is AuthInitial) {
@@ -52,6 +56,7 @@ class _HomePageState extends State<HomePage> {
       _openAddressSelection();
     }
   }
+
   @override
   void initState() {
     context.read<AuthBloc>().add(AuthInitialized());
@@ -60,6 +65,7 @@ class _HomePageState extends State<HomePage> {
     context.read<OrdersBloc>().add(const GetClientOrdersEvent());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -112,6 +118,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   void _openBoxDetailsPage(BuildContext context, String boxType) {
     final tariffId = int.tryParse(boxType);
     if (tariffId != null) {
@@ -138,6 +145,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
   }
+
   void _openUserProfile(BuildContext context) {
     Navigator.push(
       context,
