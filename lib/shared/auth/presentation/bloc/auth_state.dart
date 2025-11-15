@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 
 abstract class AuthState extends Equatable {
@@ -21,29 +20,25 @@ class AuthAuthenticated extends AuthState {
   final UserType userType;
   final String? userId;
   final String? accessToken;
-  final UserProfile? userProfile;
 
   const AuthAuthenticated({
     required this.userType,
     this.userId,
     this.accessToken,
-    this.userProfile,
   });
 
   @override
-  List<Object?> get props => [userType, userId, accessToken, userProfile];
+  List<Object?> get props => [userType, userId, accessToken];
 
   AuthAuthenticated copyWith({
     UserType? userType,
     String? userId,
     String? accessToken,
-    UserProfile? userProfile,
   }) {
     return AuthAuthenticated(
       userType: userType ?? this.userType,
       userId: userId ?? this.userId,
       accessToken: accessToken ?? this.accessToken,
-      userProfile: userProfile ?? this.userProfile,
     );
   }
 }

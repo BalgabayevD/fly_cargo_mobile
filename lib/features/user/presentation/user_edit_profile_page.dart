@@ -1,55 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/user/models/user_profile_model.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 
-class UserEditProfilePage extends StatefulWidget {
+class UserEditProfilePage extends StatelessWidget {
   const UserEditProfilePage({super.key});
-
-  @override
-  State<UserEditProfilePage> createState() => _UserEditProfilePageState();
-}
-
-class _UserEditProfilePageState extends State<UserEditProfilePage> {
-  late TextEditingController _nameController;
-  late TextEditingController _phoneController;
-  late TextEditingController _emailController;
-  late UserProfile _profile;
-
-  @override
-  void initState() {
-    super.initState();
-    _profile = _getMockProfile();
-    _nameController = TextEditingController(text: _profile.name);
-    _phoneController = TextEditingController(text: _profile.phone);
-    _emailController = TextEditingController(text: _profile.email ?? '');
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    super.dispose();
-  }
-
-  UserProfile _getMockProfile() {
-    return UserProfile(
-      id: 'user_1',
-      name: 'Дамир',
-      phone: '+7 777 380 6602',
-      email: 'damir@example.com',
-      joinDate: DateTime(2024, 1, 15),
-      status: 'active',
-      paymentCards: const [],
-      orderHistory: const [],
-      notificationSettings: const NotificationSettings(
-        orderUpdates: true,
-        promotions: true,
-        paymentNotifications: true,
-        systemNotifications: false,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +29,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
         centerTitle: true,
         actions: [
           TextButton(
-            onPressed: _saveProfile,
+            onPressed: () => _saveProfile(context),
             child: const Text(
               'Сохранить',
               style: TextStyle(
@@ -85,19 +41,102 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            // Аватар
-            _buildAvatarSection(),
-            const SizedBox(height: 30),
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            loaded: (profile, daysSinceCreated) => _EditProfileContent(
+              profile: profile,
+            ),
+            error: (message) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 64,
+                    color: Color(0xFF999999),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    message,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF666666),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 
-            // Форма редактирования
-            _buildEditForm(),
-            const SizedBox(height: 30),
-          ],
-        ),
+  void _saveProfile(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Профиль сохранен'),
+        backgroundColor: Color(0xFF34C759),
+      ),
+    );
+    Navigator.pop(context);
+  }
+}
+
+class _EditProfileContent extends StatefulWidget {
+  final dynamic profile;
+
+  const _EditProfileContent({required this.profile});
+
+  @override
+  State<_EditProfileContent> createState() => _EditProfileContentState();
+}
+
+class _EditProfileContentState extends State<_EditProfileContent> {
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
+  late TextEditingController _middleNameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _firstNameController = TextEditingController(text: widget.profile.firstName);
+    _lastNameController = TextEditingController(text: widget.profile.lastName);
+    _middleNameController = TextEditingController(text: widget.profile.middleName);
+    _phoneController = TextEditingController(text: widget.profile.phone);
+    _emailController = TextEditingController(text: widget.profile.email);
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _middleNameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          // Аватар
+          _buildAvatarSection(),
+          const SizedBox(height: 30),
+
+          // Форма редактирования
+          _buildEditForm(),
+          const SizedBox(height: 30),
+        ],
       ),
     );
   }
@@ -115,10 +154,10 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
                 shape: BoxShape.circle,
                 border: Border.all(color: const Color(0xFFE0E0E0), width: 2),
               ),
-              child: _profile.avatarUrl != null
+              child: widget.profile.photo.isNotEmpty
                   ? ClipOval(
                       child: Image.network(
-                        _profile.avatarUrl!,
+                        widget.profile.photo,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             _buildDefaultAvatar(),
@@ -142,7 +181,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
                     color: Colors.white,
                     size: 18,
                   ),
-                  onPressed: _changeAvatar,
+                  onPressed: () => _changeAvatar(context),
                 ),
               ),
             ),
@@ -150,7 +189,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
         ),
         const SizedBox(height: 16),
         TextButton(
-          onPressed: _changeAvatar,
+          onPressed: () => _changeAvatar(context),
           child: const Text(
             'Изменить фото',
             style: TextStyle(fontSize: 16, color: Color(0xFF007AFF)),
@@ -182,9 +221,25 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
 
           // Имя
           _buildTextField(
-            controller: _nameController,
+            controller: _firstNameController,
             label: 'Имя',
             icon: Icons.person,
+          ),
+          const SizedBox(height: 16),
+
+          // Фамилия
+          _buildTextField(
+            controller: _lastNameController,
+            label: 'Фамилия',
+            icon: Icons.person_outline,
+          ),
+          const SizedBox(height: 16),
+
+          // Отчество
+          _buildTextField(
+            controller: _middleNameController,
+            label: 'Отчество',
+            icon: Icons.person_outline,
           ),
           const SizedBox(height: 16),
 
@@ -239,7 +294,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
     );
   }
 
-  void _changeAvatar() {
+  void _changeAvatar(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -261,7 +316,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
               title: const Text('Сделать фото'),
               onTap: () {
                 Navigator.pop(context);
-                _takePhoto();
+                _takePhoto(context);
               },
             ),
             ListTile(
@@ -272,7 +327,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
               title: const Text('Выбрать из галереи'),
               onTap: () {
                 Navigator.pop(context);
-                _selectFromGallery();
+                _selectFromGallery(context);
               },
             ),
           ],
@@ -281,7 +336,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
     );
   }
 
-  void _takePhoto() {
+  void _takePhoto(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Функция съемки фото будет реализована'),
@@ -290,23 +345,12 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
     );
   }
 
-  void _selectFromGallery() {
+  void _selectFromGallery(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Функция выбора из галереи будет реализована'),
         backgroundColor: Color(0xFF007AFF),
       ),
     );
-  }
-
-  void _saveProfile() {
-    // Здесь будет логика сохранения профиля
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Профиль сохранен'),
-        backgroundColor: Color(0xFF34C759),
-      ),
-    );
-    Navigator.pop(context);
   }
 }

@@ -33,30 +33,32 @@ class OrderAddressDetailsSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         OrderCard(
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                child: OrderTextField(
-                  controller: apartmentController,
-                  label: 'Квартира',
-                  onChanged: onDataChanged,
-                ),
+              OrderTextField(
+                controller: apartmentController,
+                label: 'Квартира',
+                onChanged: onDataChanged,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: OrderTextField(
-                  controller: entranceController,
-                  label: 'Подъезд',
-                  onChanged: onDataChanged,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: OrderTextField(
-                  controller: floorController,
-                  label: 'Этаж',
-                  onChanged: onDataChanged,
-                ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: OrderTextField(
+                      controller: entranceController,
+                      label: 'Подъезд',
+                      onChanged: onDataChanged,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: OrderTextField(
+                      controller: floorController,
+                      label: 'Этаж',
+                      onChanged: onDataChanged,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

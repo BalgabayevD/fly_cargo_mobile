@@ -150,6 +150,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
             );
           } else if (state is AuthAuthenticated) {
             // Успешная аутентификация - возвращаемся на главный экран
+            // Профиль будет загружен автоматически в home_page.dart при инициализации
             Navigator.of(context).popUntil((route) => route.isFirst);
           } else if (state is AuthCodeSent) {
             // Код отправлен повторно

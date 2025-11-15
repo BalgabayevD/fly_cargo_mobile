@@ -8,6 +8,7 @@ import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yandex_maps_mapkit_lite/init.dart';
@@ -45,6 +46,7 @@ Future<void> main() async {
         BlocProvider<TariffSelectionBloc>(
           create: (_) => getIt<TariffSelectionBloc>(),
         ),
+        BlocProvider<ProfileBloc>(create: (_) => getIt<ProfileBloc>()),
       ],
       child: const App(),
     ),
