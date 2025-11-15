@@ -129,11 +129,11 @@ class _EditProfileContentState extends State<_EditProfileContent> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          // Аватар
+
           _buildAvatarSection(),
           const SizedBox(height: 30),
 
-          // Форма редактирования
+
           _buildEditForm(),
           const SizedBox(height: 30),
         ],
@@ -219,7 +219,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 20),
 
-          // Имя
+
           _buildTextField(
             controller: _firstNameController,
             label: 'Имя',
@@ -227,7 +227,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 16),
 
-          // Фамилия
+
           _buildTextField(
             controller: _lastNameController,
             label: 'Фамилия',
@@ -235,7 +235,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 16),
 
-          // Отчество
+
           _buildTextField(
             controller: _middleNameController,
             label: 'Отчество',
@@ -243,7 +243,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 16),
 
-          // Телефон
+
           _buildTextField(
             controller: _phoneController,
             label: 'Телефон',
@@ -252,7 +252,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 16),
 
-          // Email
+
           _buildTextField(
             controller: _emailController,
             label: 'Email',

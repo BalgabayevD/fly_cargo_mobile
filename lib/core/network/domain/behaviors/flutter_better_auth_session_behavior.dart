@@ -9,17 +9,17 @@ class FlutterBetterAuthSessionBehavior implements GetSessionIdBehavior {
   @override
   Future<String?> getSessionId() async {
     try {
-      // Сначала проверяем, есть ли активная сессия
+
       final session = await FlutterBetterAuth.client.getSession();
       if (session.data?.session == null) {
         return null;
       }
 
-      // Если сессия есть, получаем токен
+
       final tokenResult = await FlutterBetterAuth.client.jwt.token();
       return tokenResult.data?.token;
     } catch (e) {
-      // Если произошла ошибка при получении токена, возвращаем null
+
       return null;
     }
   }

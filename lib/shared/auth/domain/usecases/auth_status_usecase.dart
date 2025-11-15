@@ -8,17 +8,17 @@ class AuthStatusUseCase {
 
   AuthStatusUseCase(this._authRepository);
 
-  /// Проверяет, авторизован ли пользователь
+
   Future<bool> isAuthenticated() async {
     return await _authRepository.isAuthenticated();
   }
 
-  /// Получает текущий токен пользователя
+
   Future<String?> getCurrentToken() async {
     return await _authRepository.getCurrentToken();
   }
 
-  /// Получает статус сессии через API
+
   Future<SessionResponse?> getSessionStatus() async {
     return await _authRepository.getSessionStatus();
   }

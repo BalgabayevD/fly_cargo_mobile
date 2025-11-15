@@ -213,7 +213,7 @@ class AppButton extends StatelessWidget {
   }
 }
 
-// Специальные кнопки
+
 class AppIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
@@ -275,7 +275,7 @@ class AppIconButton extends StatelessWidget {
   }
 }
 
-// Кнопка с загрузкой
+
 class AppLoadingButton extends StatefulWidget {
   final String text;
   final Future<void> Function()? onPressed;

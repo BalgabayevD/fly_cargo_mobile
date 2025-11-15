@@ -8,17 +8,17 @@ abstract class TariffsState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Начальное состояние
+
 class TariffsInitial extends TariffsState {
   const TariffsInitial();
 }
 
-/// Состояние загрузки
+
 class TariffsLoading extends TariffsState {
   const TariffsLoading();
 }
 
-/// Состояние успешной загрузки
+
 class TariffsLoaded extends TariffsState {
   final List<TariffCategoryModel> categories;
 
@@ -28,7 +28,7 @@ class TariffsLoaded extends TariffsState {
   List<Object?> get props => [categories];
 }
 
-/// Состояние ошибки
+
 class TariffsError extends TariffsState {
   final String message;
 

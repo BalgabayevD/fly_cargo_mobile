@@ -7,7 +7,7 @@ class UserProfile {
   final String? email;
   final String? avatarUrl;
   final DateTime joinDate;
-  final String status; // active, inactive, suspended
+  final String status;
   final List<PaymentCard> paymentCards;
   final List<Order> orderHistory;
   final NotificationSettings notificationSettings;
@@ -58,7 +58,7 @@ class UserProfile {
 
 class PaymentCard {
   final String id;
-  final String type; // visa, mastercard, etc.
+  final String type;
   final String lastFourDigits;
   final String holderName;
   final bool isPrimary;

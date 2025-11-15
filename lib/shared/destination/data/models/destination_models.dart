@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'destination_models.g.dart';
 
-// ========== Города ==========
+
 
 @JsonSerializable()
 class CitiesFromResponse {
@@ -54,7 +54,7 @@ class ApiCityModel {
   }
 }
 
-// ========== Адреса ==========
+
 
 @JsonSerializable()
 class AddressSuggestionsResponse {
@@ -81,15 +81,15 @@ class AddressSuggestionModel {
 
   AddressModel toAddressModel() {
     return AddressModel(
-      city: '', // Будет заполнено из контекста
+      city: '',
       address: title,
-      cityId: '', // Будет заполнено из контекста
+      cityId: '',
       fullAddress: title,
     );
   }
 }
 
-// ========== Domain модели ==========
+
 
 class CityModel {
   final String id;

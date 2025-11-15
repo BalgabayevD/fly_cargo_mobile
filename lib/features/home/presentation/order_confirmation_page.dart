@@ -46,7 +46,7 @@ class OrderConfirmationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок
+
             const Text(
               'Проверьте данные заказа',
               style: TextStyle(
@@ -62,7 +62,7 @@ class OrderConfirmationPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // Информация о коробке
+
             AppCardWithTitle(
               title: 'Упаковка',
               variant: AppCardVariant.filled,
@@ -132,13 +132,13 @@ class OrderConfirmationPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Адреса доставки
+
             AppCardWithTitle(
               title: 'Маршрут доставки',
               variant: AppCardVariant.filled,
               child: Column(
                 children: [
-                  // Адрес отправки
+
                   _buildAddressItem(
                     icon: Icons.location_on,
                     iconColor: const Color(0xFF007AFF),
@@ -147,7 +147,7 @@ class OrderConfirmationPage extends StatelessWidget {
                     address: fromAddress.address,
                   ),
                   const SizedBox(height: 16),
-                  // Стрелка
+
                   const Center(
                     child: Icon(
                       Icons.keyboard_arrow_down,
@@ -156,7 +156,7 @@ class OrderConfirmationPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Адрес доставки
+
                   _buildAddressItem(
                     icon: Icons.location_on,
                     iconColor: const Color(0xFF34C759),
@@ -169,7 +169,7 @@ class OrderConfirmationPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Данные получателя
+
             if (recipientData != null) ...[
               AppCardWithTitle(
                 title: 'Получатель',
@@ -193,7 +193,7 @@ class OrderConfirmationPage extends StatelessWidget {
               const SizedBox(height: 20),
             ],
 
-            // Описание груза
+
             if (cargoDescription != null && cargoDescription!.isNotEmpty) ...[
               AppCardWithTitle(
                 title: 'Описание груза',
@@ -210,7 +210,7 @@ class OrderConfirmationPage extends StatelessWidget {
               const SizedBox(height: 20),
             ],
 
-            // Фотографии
+
             if (photos != null && photos!.isNotEmpty) ...[
               AppCardWithTitle(
                 title: 'Фотографии',
@@ -226,7 +226,7 @@ class OrderConfirmationPage extends StatelessWidget {
               const SizedBox(height: 20),
             ],
 
-            // Стоимость
+
             AppPriceCard(
               title: 'Итого к оплате',
               price: 'от ${box.basePrice.toInt()} ${box.currency}',
@@ -236,7 +236,7 @@ class OrderConfirmationPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // Кнопки действий
+
             Row(
               children: [
                 Expanded(
@@ -359,8 +359,8 @@ class OrderConfirmationPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context); // Закрыть диалог
-              Navigator.pop(context); // Вернуться на главную
+              Navigator.pop(context);
+              Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Заказ отменен'),
@@ -379,8 +379,8 @@ class OrderConfirmationPage extends StatelessWidget {
   }
 
   void _confirmOrder(BuildContext context) {
-    // Здесь будет логика подтверждения заказа
-    Navigator.pop(context); // Вернуться на главную
+
+    Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Заказ успешно оформлен!'),

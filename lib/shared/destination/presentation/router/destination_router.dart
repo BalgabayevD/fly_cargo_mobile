@@ -31,7 +31,7 @@ class DestinationRouter {
     }
   }
 
-  /// Навигация к странице выбора города
+
   static Future<T?> navigateToChooseCity<T>({
     required BuildContext context,
     required CityType cityType,
@@ -44,7 +44,7 @@ class DestinationRouter {
     );
   }
 
-  /// Навигация к странице выбора адреса
+
   static Future<T?> navigateToChooseAddress<T>({
     required BuildContext context,
     required String city,

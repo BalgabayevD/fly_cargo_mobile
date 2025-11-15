@@ -1,10 +1,8 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'tariff_models.dart';
 
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
+
+
+
 
 PackageModel _$PackageModelFromJson(Map<String, dynamic> json) => PackageModel(
   createdAt: json['createdAt'] as String,

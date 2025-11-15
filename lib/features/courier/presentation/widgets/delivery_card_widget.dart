@@ -33,7 +33,7 @@ class DeliveryCardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Заголовок с номером заказа и статусом
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -67,7 +67,7 @@ class DeliveryCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              // Адреса
+
               _buildAddressRow(
                 icon: Icons.location_on,
                 iconColor: const Color(0xFF007AFF),
@@ -85,7 +85,7 @@ class DeliveryCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              // Получатель и цена
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -120,7 +120,7 @@ class DeliveryCardWidget extends StatelessWidget {
                 ],
               ),
 
-              // Время создания
+
               const SizedBox(height: 8),
               Text(
                 'Создан: ${_formatDateTime(delivery.createdAt)}',

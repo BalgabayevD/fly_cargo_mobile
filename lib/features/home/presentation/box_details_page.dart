@@ -98,56 +98,56 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
     });
   }
 
-  // Методы для получения размеров коробки на основе типа
+
   double _getBoxHeight(BoxEntity box) {
     switch (box.id) {
       case 'small':
-        return 20.0; // см
+        return 20.0;
       case 'medium':
-        return 30.0; // см
+        return 30.0;
       case 'big':
-        return 40.0; // см
+        return 40.0;
       default:
-        return 30.0; // см по умолчанию
+        return 30.0;
     }
   }
 
   double _getBoxLength(BoxEntity box) {
     switch (box.id) {
       case 'small':
-        return 15.0; // см
+        return 15.0;
       case 'medium':
-        return 20.0; // см
+        return 20.0;
       case 'big':
-        return 30.0; // см
+        return 30.0;
       default:
-        return 20.0; // см по умолчанию
+        return 20.0;
     }
   }
 
   double _getBoxWidth(BoxEntity box) {
     switch (box.id) {
       case 'small':
-        return 10.0; // см
+        return 10.0;
       case 'medium':
-        return 20.0; // см
+        return 20.0;
       case 'big':
-        return 30.0; // см
+        return 30.0;
       default:
-        return 20.0; // см по умолчанию
+        return 20.0;
     }
   }
 
   double _getBoxWeight(BoxEntity box) {
     switch (box.id) {
       case 'small':
-        return 0.5; // кг
+        return 0.5;
       case 'medium':
-        return 1.0; // кг
+        return 1.0;
       case 'big':
-        return 2.0; // кг
+        return 2.0;
       default:
-        return 1.0; // кг по умолчанию
+        return 1.0;
     }
   }
 
@@ -155,7 +155,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
     return _getBoxLength(box) *
         _getBoxWidth(box) *
         _getBoxHeight(box) /
-        5000; // формула объемного веса
+        5000;
   }
 
   int _getBoxTariffId(BoxEntity box) {
@@ -167,7 +167,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       case 'big':
         return 3;
       default:
-        return 2; // средний тариф по умолчанию
+        return 2;
     }
   }
 
@@ -192,7 +192,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       return;
     }
 
-    // Валидация формы
+
     if (_formKey.currentState?.validate() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -215,19 +215,19 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
       fromCityId: int.parse(widget.fromAddress!.cityId),
       fromEntrance: _formData!.fromEntrance,
       fromFloor: _formData!.fromFloor,
-      fromLatitude: 0.0, // TODO: Получить координаты
-      fromLongitude: 0.0, // TODO: Получить координаты
+      fromLatitude: 0.0,
+      fromLongitude: 0.0,
       height: _getBoxHeight(widget.box),
       length: _getBoxLength(widget.box),
-      photos: [], // TODO: Добавить загрузку фото
+      photos: [],
       tariffId: _getBoxTariffId(widget.box),
       toAddress: widget.toAddress!.address,
       toApartment: _formData!.toApartment,
       toCityId: int.parse(widget.toAddress!.cityId),
       toEntrance: _formData!.toEntrance,
       toFloor: _formData!.toFloor,
-      toLatitude: 0.0, // TODO: Получить координаты
-      toLongitude: 0.0, // TODO: Получить координаты
+      toLatitude: 0.0,
+      toLongitude: 0.0,
       toName: _formData!.toName,
       toPhone: _formData!.toPhone,
       volumetricWeight: _getBoxVolumetricWeight(widget.box),
@@ -293,7 +293,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Карточка с информацией о коробке
+
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -311,7 +311,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      // Изображение коробки
+
                       Container(
                         width: 160,
                         height: 160,
@@ -329,7 +329,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                       ),
                       const SizedBox(height: 20),
 
-                      // Название коробки
+
                       Text(
                         widget.box.name,
                         style: AppTypography.h4.copyWith(
@@ -340,7 +340,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
                       ),
                       const SizedBox(height: 8),
 
-                      // Размеры коробки
+
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -364,7 +364,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
               ),
               const SizedBox(height: 24),
 
-              // Описание
+
               AppCardWithTitle(
                 title: 'Описание',
                 variant: AppCardVariant.filled,
@@ -377,7 +377,7 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
               ),
               const SizedBox(height: 30),
 
-              // Цена
+
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -434,14 +434,14 @@ class _BoxDetailsContentState extends State<BoxDetailsContent> {
               ),
               const SizedBox(height: 24),
 
-              // Форма деталей заказа
+
               OrderDetailsForm(
                 formKey: _formKey,
                 onDataChanged: _onFormDataChanged,
               ),
               const SizedBox(height: 24),
 
-              // Кнопка создания заказа
+
               BlocBuilder<OrdersBloc, OrdersState>(
                 bloc: _ordersBloc,
                 builder: (context, state) {

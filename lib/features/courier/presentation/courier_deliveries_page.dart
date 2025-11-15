@@ -37,7 +37,7 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       setState(() {
         _isLoading = false;
       });
-      // Обработка ошибки
+
     }
   }
 
@@ -74,7 +74,7 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
       ),
       body: Column(
         children: [
-          // Фильтры
+
           DeliveriesFilterWidget(
             selectedFilter: _selectedFilter,
             onFilterChanged: (filter) {
@@ -84,7 +84,7 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
             },
           ),
 
-          // Список доставок
+
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())

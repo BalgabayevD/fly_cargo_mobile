@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Cover with unit tests: blocs, complex use cases
+- Do not cover the rest with tests: widgets, behaviors, etc.
+- After creating tests, run them and fix if necessary
+- Use `mocktail` for mocking (not `mockito`) - it handles complex classes better
+- For complex classes like `Localization`, create hand-written mocks that extend the class and override only needed properties
+- Register fallback values for analytics events in `setUpAll()` using `registerFallbackValue()`
+- Set up default behavior for `logEvent` in `setUp()` to return `SuccessResult(null)`
+- Use `any(named: 'event')` for verifying analytics event calls
+- Use `greaterThan(0)` for verification calls that may be called multiple times
+- A good example of use case test: [validate_own_transfer_use_case_test.dart](mdc:modules/bcc_transfers/test/features/transfer_own/domain/use_cases/validate_own_transfer_use_case_test.dart)
+- Recent examples of well-structured use case tests: [check_iin_use_case_test.dart](mdc:modules/bcc_authorization/test/features/auth/domain/use_cases/check_iin_use_case_test.dart) and [check_phone_use_case_test.dart](mdc:modules/bcc_authorization/test/features/auth/domain/use_cases/check_phone_use_case_test.dart)
+- A good example of bloc test: [pfm_transactions_bloc_test.dart](mdc:modules/bcc_pfm/test/src/features/history/presentation/blocs/pfm_transactions_bloc_test.dart)
+- A good example of bloc test: [auth_pin_check_bloc_test.dart](mdc:modules/bcc_authorization/test/features/auth/presentation/blocs/auth_pin_bloc/auth_pin_check_bloc_test.dart)

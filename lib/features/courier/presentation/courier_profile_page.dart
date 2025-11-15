@@ -70,15 +70,15 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Аватар и основная информация
+
             _buildProfileHeader(),
             const SizedBox(height: 30),
 
-            // Статистика
+
             _buildStatsSection(),
             const SizedBox(height: 30),
 
-            // Меню профиля
+
             _buildProfileMenu(),
             const SizedBox(height: 20),
           ],
@@ -90,7 +90,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
   Widget _buildProfileHeader() {
     return Column(
       children: [
-        // Аватар
+
         Container(
           width: 100,
           height: 100,
@@ -107,7 +107,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
         ),
         const SizedBox(height: 16),
 
-        // Имя
+
         Text(
           _profile.name,
           style: const TextStyle(
@@ -118,14 +118,14 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
         ),
         const SizedBox(height: 4),
 
-        // Телефон
+
         Text(
           _profile.phone,
           style: const TextStyle(fontSize: 16, color: Color(0xFF666666)),
         ),
         const SizedBox(height: 8),
 
-        // Статус
+
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
@@ -303,7 +303,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
   }
 
   void _editProfile() {
-    // Здесь будет логика редактирования профиля
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Редактирование профиля будет реализовано'),

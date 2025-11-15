@@ -94,4 +94,3 @@ class RouteHeaderWidget extends StatelessWidget with RouteHeaderStyling {
     );
   }
 }
-

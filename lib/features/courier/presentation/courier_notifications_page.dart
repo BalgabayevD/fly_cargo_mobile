@@ -21,7 +21,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
   }
 
   void _loadNotifications() {
-    // Имитация загрузки данных
+
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _notifications = _getMockNotifications();
@@ -139,7 +139,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
       body: Column(
         children: [
-          // Фильтры
+
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: SingleChildScrollView(
@@ -160,7 +160,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
             ),
           ),
 
-          // Список уведомлений
+
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -317,7 +317,7 @@ class NotificationCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Иконка типа уведомления
+
               Container(
                 width: 40,
                 height: 40,
@@ -333,7 +333,7 @@ class NotificationCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
 
-              // Содержимое уведомления
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

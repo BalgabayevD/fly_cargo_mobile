@@ -13,7 +13,7 @@ abstract class DeliveriesService {
 class MockDeliveriesService implements DeliveriesService {
   @override
   Future<List<CourierOrder>> getDeliveries() async {
-    // Имитация загрузки данных
+
     await Future.delayed(const Duration(seconds: 1));
     return _getMockDeliveries();
   }

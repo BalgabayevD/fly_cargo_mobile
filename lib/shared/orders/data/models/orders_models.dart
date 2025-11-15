@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'orders_models.g.dart';
 
-// ========== Запрос создания заказа ==========
+
 
 @JsonSerializable()
 class CreateOrderRequest {
@@ -74,7 +74,7 @@ class CreateOrderRequest {
   Map<String, dynamic> toJson() => _$CreateOrderRequestToJson(this);
 }
 
-// ========== Ответ создания заказа ==========
+
 
 @JsonSerializable()
 class CreateOrderResponse {
@@ -472,7 +472,7 @@ class PriceCalculationModel {
   Map<String, dynamic> toJson() => _$PriceCalculationModelToJson(this);
 }
 
-// ========== Domain модели ==========
+
 
 class OrderData {
   final bool isDefect;

@@ -10,7 +10,7 @@ enum CityType { from, to }
 
 class ChooseCityPage extends StatefulWidget {
   final CityType cityType;
-  final String? fromCityId; // ID города отправки для загрузки городов доставки
+  final String? fromCityId;
 
   const ChooseCityPage({super.key, required this.cityType, this.fromCityId});
 
@@ -47,7 +47,7 @@ class _ChooseCityPageState extends State<ChooseCityPage> {
   }
 
   void _filterCities() {
-    // Фильтрация будет происходить в UI на основе текущего состояния
+
     setState(() {});
   }
 

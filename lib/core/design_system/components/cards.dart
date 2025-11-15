@@ -90,7 +90,7 @@ class AppCard extends StatelessWidget {
   }
 }
 
-// Карточка с заголовком
+
 class AppCardWithTitle extends StatelessWidget {
   final String title;
   final Widget child;
@@ -143,7 +143,7 @@ class AppCardWithTitle extends StatelessWidget {
   }
 }
 
-// Карточка с иконкой
+
 class AppIconCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -208,7 +208,7 @@ class AppIconCard extends StatelessWidget {
   }
 }
 
-// Карточка для выбора
+
 class AppSelectionCard extends StatelessWidget {
   final Widget child;
   final bool isSelected;
@@ -252,7 +252,7 @@ class AppSelectionCard extends StatelessWidget {
   }
 }
 
-// Карточка с ценой
+
 class AppPriceCard extends StatelessWidget {
   final String title;
   final String price;

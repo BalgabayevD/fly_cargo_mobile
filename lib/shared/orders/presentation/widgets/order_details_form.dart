@@ -96,7 +96,7 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
   Future<void> _handlePhotosChanged(List<File> photos) async {
     final previousPhotos = Set<File>.from(_contentPhotos);
     final newPhotos = Set<File>.from(photos);
-    
+
     final addedPhotos = newPhotos.difference(previousPhotos);
     final removedPhotos = previousPhotos.difference(newPhotos);
 
@@ -189,7 +189,7 @@ class _OrderDetailsFormState extends State<OrderDetailsForm> {
           ),
           const SizedBox(height: 24),
 
-          // Данные получателя
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

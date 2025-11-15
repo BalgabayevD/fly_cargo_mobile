@@ -1,4 +1,4 @@
-﻿// core_module.dart
+﻿
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';

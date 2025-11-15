@@ -79,7 +79,7 @@ class AppIcon extends StatelessWidget {
   }
 }
 
-// Иконка в контейнере
+
 class AppIconContainer extends StatelessWidget {
   final IconData icon;
   final AppIconSize size;
@@ -194,7 +194,7 @@ class AppIconContainer extends StatelessWidget {
   }
 }
 
-// Иконка с бейджем
+
 class AppIconWithBadge extends StatelessWidget {
   final IconData icon;
   final AppIconSize size;
@@ -255,7 +255,7 @@ class AppIconWithBadge extends StatelessWidget {
   }
 }
 
-// Иконка с анимацией
+
 class AppAnimatedIcon extends StatefulWidget {
   final IconData icon;
   final AppIconSize size;

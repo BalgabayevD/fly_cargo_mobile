@@ -48,7 +48,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await FlutterBetterAuth.client.getSession();
       return response.data;
 
-      // return response.session.token;
+
     } catch (e) {
       throw AuthException('Ошибка при проверке сессии: $e');
     }

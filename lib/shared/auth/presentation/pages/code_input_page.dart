@@ -6,7 +6,7 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 
-/// Экран ввода SMS кода для подтверждения номера телефона
+
 class CodeInputPage extends StatefulWidget {
   final String phoneNumber;
   final String deviceId;
@@ -76,7 +76,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
     if (value.length == 1) {
       _controllers[index].text = value;
 
-      // Переходим к следующему полю
+
       if (index < 5) {
         _currentIndex = index + 1;
         _focusNodes[_currentIndex].requestFocus();
@@ -85,7 +85,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
         _checkCodeComplete();
       }
     } else if (value.isEmpty && index > 0) {
-      // Переходим к предыдущему полю при удалении
+
       _currentIndex = index - 1;
       _focusNodes[_currentIndex].requestFocus();
     }
@@ -149,11 +149,11 @@ class _CodeInputPageState extends State<CodeInputPage> {
               ),
             );
           } else if (state is AuthAuthenticated) {
-            // Успешная аутентификация - возвращаемся на главный экран
-            // Профиль будет загружен автоматически в home_page.dart при инициализации
+
+
             Navigator.of(context).popUntil((route) => route.isFirst);
           } else if (state is AuthCodeSent) {
-            // Код отправлен повторно
+
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Код отправлен повторно'),
@@ -199,7 +199,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
 
                 SizedBox(height: AppSpacing.md),
 
-                // Описание
+
                 Text(
                   'Мы отправили код на номер\n${widget.phoneNumber}',
                   style: AppTypography.bodyMedium.copyWith(
@@ -210,7 +210,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
 
                 SizedBox(height: AppSpacing.xxxl),
 
-                // Поля ввода кода
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(6, (index) {
@@ -277,7 +277,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
 
                 SizedBox(height: AppSpacing.xxxl),
 
-                // Кнопка подтверждения
+
                 BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
                     final isLoading = state is AuthLoading;
@@ -297,7 +297,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
 
                 SizedBox(height: AppSpacing.xl),
 
-                // Кнопка повторной отправки
+
                 if (_canResend)
                   AppButton(
                     text: 'Отправить код повторно',
@@ -317,7 +317,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
 
                 const Spacer(flex: 3),
 
-                // Информация о поддержке
+
                 Text(
                   'Не получили код? Проверьте правильность номера или обратитесь в поддержку',
                   style: AppTypography.caption,

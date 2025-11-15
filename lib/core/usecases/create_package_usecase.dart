@@ -6,7 +6,7 @@ class CreatePackageUseCase {
 
   const CreatePackageUseCase(this._repository);
 
-  /// Создать новую посылку
+
   Future<PackageEntity> call(PackageEntity package) async {
     return await _repository.createPackage(package);
   }

@@ -15,7 +15,7 @@ abstract class IncomeService {
 class MockIncomeService implements IncomeService {
   @override
   Future<CourierIncome> getIncome() async {
-    // Имитация загрузки данных
+
     await Future.delayed(const Duration(seconds: 1));
     return _getMockIncome();
   }
@@ -81,7 +81,7 @@ class MockIncomeService implements IncomeService {
 
   @override
   int getTimeOnRoadForPeriod(String period) {
-    // Моковые данные
+
     switch (period) {
       case 'today':
         return 6;
@@ -96,7 +96,7 @@ class MockIncomeService implements IncomeService {
 
   @override
   double getDistanceForPeriod(String period) {
-    // Моковые данные
+
     switch (period) {
       case 'today':
         return 45.5;

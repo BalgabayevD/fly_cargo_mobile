@@ -1,16 +1,16 @@
 import 'package:fly_cargo/core/entities/package_entity.dart';
 
 abstract class PackageLocalDataSource {
-  /// Сохранить посылку локально
+
   Future<void> savePackage(PackageEntity package);
 
-  /// Получить посылку по ID
+
   Future<PackageEntity?> getPackageById(String id);
 
-  /// Получить все посылки
+
   Future<List<PackageEntity>> getAllPackages();
 
-  /// Удалить посылку
+
   Future<void> deletePackage(String id);
 }
 

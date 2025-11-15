@@ -8,7 +8,7 @@ class SearchAddressesUseCase {
 
   SearchAddressesUseCase(this._destinationRepository);
 
-  /// Ищет адреса в указанном городе
+
   Future<List<AddressModel>> call({
     required String city,
     required String address,
@@ -21,7 +21,7 @@ class SearchAddressesUseCase {
       throw ArgumentError('Адрес для поиска не может быть пустым');
     }
 
-    // Валидация минимальной длины поискового запроса
+
     if (address.length < 2) {
       throw ArgumentError(
         'Поисковый запрос должен содержать минимум 2 символа',

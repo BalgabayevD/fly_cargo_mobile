@@ -71,7 +71,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Основная информация
+
               _buildSectionTitle('Основная информация'),
               const SizedBox(height: 16),
 
@@ -102,7 +102,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
 
               const SizedBox(height: 24),
 
-              // Категория и пакет
+
               _buildSectionTitle('Категория и пакет'),
               const SizedBox(height: 16),
 
@@ -114,7 +114,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
 
               const SizedBox(height: 24),
 
-              // Размеры и вес
+
               _buildSectionTitle('Размеры и вес'),
               const SizedBox(height: 16),
 
@@ -175,7 +175,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
 
               const SizedBox(height: 24),
 
-              // Дополнительные параметры
+
               _buildSectionTitle('Дополнительные параметры'),
               const SizedBox(height: 16),
 
@@ -201,7 +201,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
 
               const SizedBox(height: 32),
 
-              // Кнопка создания
+
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -334,7 +334,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
   }
 
   Widget _buildPackageDropdown() {
-    // TODO: Реализовать загрузку пакетов
+
     return DropdownButtonFormField<int>(
       value: _selectedPackageId,
       decoration: InputDecoration(

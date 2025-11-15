@@ -1,10 +1,10 @@
 import 'package:fly_cargo/core/entities/box_entity.dart';
 
 abstract class BoxLocalDataSource {
-  /// Получить все коробки из локального хранилища
+
   List<BoxEntity> getAllBoxes();
 
-  /// Получить коробку по типу из локального хранилища
+
   BoxEntity? getBoxByType(String type);
 }
 

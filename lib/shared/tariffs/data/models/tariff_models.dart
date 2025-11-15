@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'tariff_models.g.dart';
 
-// ========== Модель пакета ==========
+
 
 @JsonSerializable()
 class PackageModel {
@@ -34,7 +34,7 @@ class PackageModel {
   Map<String, dynamic> toJson() => _$PackageModelToJson(this);
 }
 
-// ========== Модель тарифа ==========
+
 
 @JsonSerializable()
 class TariffModel {
@@ -94,7 +94,7 @@ class TariffModel {
   Map<String, dynamic> toJson() => _$TariffModelToJson(this);
 }
 
-// ========== Модель категории тарифа ==========
+
 
 @JsonSerializable()
 class TariffCategoryModel {
@@ -126,7 +126,7 @@ class TariffCategoryModel {
   Map<String, dynamic> toJson() => _$TariffCategoryModelToJson(this);
 }
 
-// ========== Ответ API ==========
+
 
 @JsonSerializable()
 class TariffCategoriesApiResponse {
@@ -142,7 +142,7 @@ class TariffCategoriesApiResponse {
 
 typedef TariffCategoriesResponse = List<TariffCategoryModel>;
 
-// ========== Создание тарифа ==========
+
 
 @JsonSerializable()
 class CreateTariffRequest {

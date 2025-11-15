@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-/// Базовый класс для событий аутентификации
+
 abstract class AuthEvent extends Equatable {
   const AuthEvent();
 
@@ -8,12 +8,12 @@ abstract class AuthEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Событие инициализации аутентификации
+
 class AuthInitialized extends AuthEvent {
   const AuthInitialized();
 }
 
-/// Событие отправки номера телефона для получения кода
+
 class AuthRequestOTPRequested extends AuthEvent {
   final String phoneNumber;
 
@@ -23,7 +23,7 @@ class AuthRequestOTPRequested extends AuthEvent {
   List<Object?> get props => [phoneNumber];
 }
 
-/// Событие подтверждения кода
+
 class AuthVerifyCodeRequested extends AuthEvent {
   final String code, phoneNumber;
 
@@ -36,7 +36,7 @@ class AuthVerifyCodeRequested extends AuthEvent {
   List<Object?> get props => [code, phoneNumber];
 }
 
-/// Событие выхода из системы
+
 class AuthLogout extends AuthEvent {
   const AuthLogout();
 }

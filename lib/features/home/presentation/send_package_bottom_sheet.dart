@@ -80,7 +80,7 @@ class _SendPackageBottomSheetState extends State<SendPackageBottomSheet> {
     );
 
     if (city != null) {
-      final address = await Navigator.push<AddressModel>( 
+      final address = await Navigator.push<AddressModel>(
         context,
         MaterialPageRoute(
           builder: (context) => ChooseAddressPage(city: city.name),

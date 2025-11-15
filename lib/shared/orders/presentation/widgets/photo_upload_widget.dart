@@ -87,8 +87,8 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
           ),
         ),
         const SizedBox(height: 12),
-        
-        // Кнопки добавления фото
+
+
         Row(
           children: [
             Expanded(
@@ -122,10 +122,10 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
             ),
           ],
         ),
-        
+
         const SizedBox(height: 16),
-        
-        // Сетка фотографий
+
+
         if (widget.photos.isNotEmpty) ...[
           Text(
             'Выбранные фото (${widget.photos.length})',

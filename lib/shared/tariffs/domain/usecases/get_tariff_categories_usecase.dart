@@ -8,7 +8,7 @@ class GetTariffCategoriesUseCase {
 
   GetTariffCategoriesUseCase(this._tariffsRepository);
 
-  /// Получить все категории тарифов
+
   Future<List<TariffCategoryModel>> call() async {
     try {
       return await _tariffsRepository.getTariffCategories();

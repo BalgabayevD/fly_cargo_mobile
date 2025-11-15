@@ -100,10 +100,10 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
       body: Column(
         children: [
-          // Фильтры
+
           _buildFilterChips(),
 
-          // Список заказов
+
           Expanded(
             child: filteredOrders.isEmpty
                 ? _buildEmptyState()
@@ -204,7 +204,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок заказа
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -238,7 +238,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
             ),
             const SizedBox(height: 12),
 
-            // Адреса
+
             _buildAddressRow(
               icon: Icons.location_on,
               label: 'Откуда',
@@ -252,7 +252,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
             ),
             const SizedBox(height: 12),
 
-            // Описание и стоимость
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -277,7 +277,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
             ),
             const SizedBox(height: 12),
 
-            // Дата и действия
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

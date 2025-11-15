@@ -29,7 +29,7 @@ class TariffDetailsPage extends StatelessWidget {
     return BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
       builder: (context, state) {
         if (state is TariffSelectionLoaded) {
-          // Находим выбранный тариф
+
           dynamic selectedTariff;
           for (final category in state.categories) {
             if (category.tariffs != null) {
@@ -116,10 +116,10 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
     super.initState();
     _ordersBloc = getIt<OrdersBloc>();
 
-    // Слушаем изменения состояния OrdersBloc
+
     _ordersBloc.stream.listen((state) {
       if (state is OrderCreated) {
-        // Показываем сообщение об успехе
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Заказ успешно создан!'),
@@ -128,10 +128,10 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
           ),
         );
 
-        // Закрываем страницу и возвращаемся на главную
+
         Navigator.of(context).popUntil((route) => route.isFirst);
       } else if (state is OrdersError) {
-        // Показываем сообщение об ошибке
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Ошибка создания заказа: ${state.message}'),
@@ -151,7 +151,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
 
   @override
   void dispose() {
-    // Отписываемся от стрима при закрытии страницы
+
     _ordersBloc.close();
     super.dispose();
   }
@@ -195,7 +195,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Изображение тарифа
+
             Container(
               width: double.infinity,
               height: 200,
@@ -232,7 +232,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Название тарифа
+
                   Text(
                     widget.tariff.name,
                     style: AppTypography.h3.copyWith(
@@ -242,7 +242,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
 
                   const SizedBox(height: 8),
 
-                  // Описание тарифа
+
                   if (widget.tariff.description.isNotEmpty) ...[
                     Text(
                       widget.tariff.description,
@@ -253,12 +253,12 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
                     const SizedBox(height: 16),
                   ],
 
-                  // Характеристики тарифа
+
                   _buildTariffCharacteristics(),
 
                   const SizedBox(height: 24),
 
-                  // Форма заказа
+
                   BlocProvider.value(
                     value: _ordersBloc,
                     child: OrderDetailsForm(
@@ -269,7 +269,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
 
                   const SizedBox(height: 24),
 
-                  // Кнопка создания заказа
+
                   BlocBuilder<OrdersBloc, OrdersState>(
                     bloc: _ordersBloc,
                     builder: (context, state) {
@@ -376,7 +376,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
   Future<void> _createOrder(BuildContext context) async {
     if (_formData == null) return;
 
-    // Валидация формы
+
     if (_formKey.currentState?.validate() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -402,11 +402,11 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
             : 0,
         fromEntrance: _formData!.fromEntrance,
         fromFloor: _formData!.fromFloor,
-        fromLatitude: 0.0, // TODO: Получить из адреса
-        fromLongitude: 0.0, // TODO: Получить из адреса
+        fromLatitude: 0.0,
+        fromLongitude: 0.0,
         height: widget.tariff.height ?? 0.0,
         length: widget.tariff.length ?? 0.0,
-        photos: const [], // TODO: Добавить загрузку фото
+        photos: const [],
         tariffId: widget.tariff.id,
         toAddress: widget.toAddress?.fullAddress ?? '',
         toApartment: _formData!.toApartment,
@@ -415,8 +415,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
             : 0,
         toEntrance: _formData!.toEntrance,
         toFloor: _formData!.toFloor,
-        toLatitude: 0.0, // TODO: Получить из адреса
-        toLongitude: 0.0, // TODO: Получить из адреса
+        toLatitude: 0.0,
+        toLongitude: 0.0,
         toName: _formData!.toName,
         toPhone: _formData!.toPhone,
         volumetricWeight: widget.tariff.volumetricWeight ?? 0.0,

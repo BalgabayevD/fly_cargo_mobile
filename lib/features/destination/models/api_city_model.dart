@@ -62,7 +62,7 @@ class ApiCityModel {
     };
   }
 
-  // Конвертация в CityModel для использования в UI
+
   CityModel toCityModel() {
     return CityModel(id: id.toString(), name: name, region: country);
   }

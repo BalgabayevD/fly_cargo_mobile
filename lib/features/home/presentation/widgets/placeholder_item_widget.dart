@@ -25,4 +25,3 @@ class PlaceholderItemWidget extends StatelessWidget
     );
   }
 }
-

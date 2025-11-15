@@ -8,17 +8,17 @@ abstract class DestinationState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Начальное состояние
+
 class DestinationInitial extends DestinationState {
   const DestinationInitial();
 }
 
-/// Состояние загрузки
+
 class DestinationLoading extends DestinationState {
   const DestinationLoading();
 }
 
-/// Состояние успешной загрузки городов отправки
+
 class CitiesFromLoaded extends DestinationState {
   final List<CityModel> cities;
 
@@ -28,7 +28,7 @@ class CitiesFromLoaded extends DestinationState {
   List<Object?> get props => [cities];
 }
 
-/// Состояние успешной загрузки городов доставки
+
 class CitiesToLoaded extends DestinationState {
   final List<CityModel> cities;
 
@@ -38,7 +38,7 @@ class CitiesToLoaded extends DestinationState {
   List<Object?> get props => [cities];
 }
 
-/// Состояние успешной загрузки всех городов
+
 class AllCitiesLoaded extends DestinationState {
   final List<CityModel> cities;
 
@@ -48,7 +48,7 @@ class AllCitiesLoaded extends DestinationState {
   List<Object?> get props => [cities];
 }
 
-/// Состояние успешного поиска адресов
+
 class AddressesFound extends DestinationState {
   final List<AddressModel> addresses;
 
@@ -58,7 +58,7 @@ class AddressesFound extends DestinationState {
   List<Object?> get props => [addresses];
 }
 
-/// Состояние выбора города
+
 class CitySelected extends DestinationState {
   final CityModel selectedCity;
 
@@ -68,7 +68,7 @@ class CitySelected extends DestinationState {
   List<Object?> get props => [selectedCity];
 }
 
-/// Состояние выбора адреса
+
 class AddressSelected extends DestinationState {
   final AddressModel selectedAddress;
 
@@ -78,7 +78,7 @@ class AddressSelected extends DestinationState {
   List<Object?> get props => [selectedAddress];
 }
 
-/// Состояние ошибки
+
 class DestinationError extends DestinationState {
   final String message;
 

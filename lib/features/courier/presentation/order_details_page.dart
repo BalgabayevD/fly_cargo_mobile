@@ -25,7 +25,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       _order = _order.copyWith(status: newStatus);
     });
 
-    // Здесь будет API вызов для обновления статуса
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Статус заказа обновлен: ${_order.statusText}'),
@@ -66,31 +66,31 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Статус заказа
+
             _buildStatusCard(),
             const SizedBox(height: 20),
 
-            // Информация о заказе
+
             _buildOrderInfoCard(),
             const SizedBox(height: 20),
 
-            // Адреса
+
             _buildAddressesCard(),
             const SizedBox(height: 20),
 
-            // Получатель
+
             _buildRecipientCard(),
             const SizedBox(height: 20),
 
-            // Информация о грузе
+
             _buildCargoCard(),
             const SizedBox(height: 20),
 
-            // Дополнительная информация
+
             _buildAdditionalInfoCard(),
             const SizedBox(height: 20),
 
-            // Кнопки действий
+
             _buildActionButtons(),
             const SizedBox(height: 20),
           ],
@@ -197,7 +197,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
       variant: AppCardVariant.filled,
       child: Column(
         children: [
-          // Адрес отправки
+
           _buildAddressItem(
             icon: Icons.location_on,
             iconColor: const Color(0xFF007AFF),
@@ -206,7 +206,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             address: _order.pickupAddress.address,
           ),
           const SizedBox(height: 16),
-          // Стрелка
+
           const Center(
             child: Icon(
               Icons.keyboard_arrow_down,
@@ -215,7 +215,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             ),
           ),
           const SizedBox(height: 16),
-          // Адрес доставки
+
           _buildAddressItem(
             icon: Icons.location_on,
             iconColor: const Color(0xFF34C759),
@@ -311,7 +311,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   Widget _buildActionButtons() {
     return Column(
       children: [
-        // Основные действия в зависимости от статуса
+
         if (_order.status == OrderStatus.assigned) ...[
           AppButton(
             text: 'Забрать груз',
@@ -343,7 +343,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
         const SizedBox(height: 12),
 
-        // Дополнительные действия
+
         Column(
           children: [
             AppButton(
@@ -466,7 +466,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               title: const Text('Поделиться заказом'),
               onTap: () {
                 Navigator.pop(context);
-                // Логика поделиться
+
               },
             ),
             ListTile(
@@ -474,7 +474,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               title: const Text('Печать накладной'),
               onTap: () {
                 Navigator.pop(context);
-                // Логика печати
+
               },
             ),
             ListTile(
@@ -482,7 +482,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               title: const Text('История заказа'),
               onTap: () {
                 Navigator.pop(context);
-                // Логика истории
+
               },
             ),
           ],
@@ -492,7 +492,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   }
 
   void _makeCall(String phone) {
-    // Логика звонка
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Звонок на номер $phone'),
@@ -502,7 +502,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   }
 
   void _sendMessage(String phone) {
-    // Логика отправки сообщения
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Отправка сообщения на номер $phone'),

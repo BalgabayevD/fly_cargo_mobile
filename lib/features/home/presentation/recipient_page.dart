@@ -45,7 +45,7 @@ class _RecipientPageState extends State<RecipientPage> {
     if (value == null || value.trim().isEmpty) {
       return 'Введите номер телефона';
     }
-    // Простая валидация номера телефона
+
     final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}$');
     final cleanPhone = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     if (!phoneRegex.hasMatch(cleanPhone)) {
@@ -93,7 +93,7 @@ class _RecipientPageState extends State<RecipientPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Заголовок
+
               const Text(
                 'Контактная информация получателя',
                 style: TextStyle(
@@ -109,7 +109,7 @@ class _RecipientPageState extends State<RecipientPage> {
               ),
               const SizedBox(height: 30),
 
-              // Поле имени
+
               const Text(
                 'Имя получателя',
                 style: TextStyle(
@@ -165,7 +165,7 @@ class _RecipientPageState extends State<RecipientPage> {
               ),
               const SizedBox(height: 24),
 
-              // Поле телефона
+
               const Text(
                 'Номер телефона',
                 style: TextStyle(
@@ -225,7 +225,7 @@ class _RecipientPageState extends State<RecipientPage> {
               ),
               const SizedBox(height: 40),
 
-              // Кнопка сохранения
+
               AppButton(
                 text: 'Сохранить данные',
                 onPressed: _saveRecipient,

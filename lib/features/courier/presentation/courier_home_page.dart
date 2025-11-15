@@ -23,7 +23,7 @@ class _CourierHomePageState extends State<CourierHomePage> {
   }
 
   void _loadOrders() {
-    // Имитация загрузки данных
+
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _orders = _getMockOrders();
@@ -171,7 +171,7 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
       body: Column(
         children: [
-          // Фильтры
+
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: SingleChildScrollView(
@@ -190,7 +190,7 @@ class _CourierHomePageState extends State<CourierHomePage> {
             ),
           ),
 
-          // Список заказов
+
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -314,7 +314,7 @@ class OrderCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Заголовок с номером заказа и статусом
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -348,7 +348,7 @@ class OrderCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              // Приоритет
+
               if (order.priority != OrderPriority.medium)
                 Container(
                   margin: const EdgeInsets.only(bottom: 8),
@@ -370,7 +370,7 @@ class OrderCard extends StatelessWidget {
                   ),
                 ),
 
-              // Адреса
+
               _buildAddressRow(
                 icon: Icons.location_on,
                 iconColor: const Color(0xFF007AFF),
@@ -388,7 +388,7 @@ class OrderCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              // Получатель и цена
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -423,7 +423,7 @@ class OrderCard extends StatelessWidget {
                 ],
               ),
 
-              // Время создания
+
               const SizedBox(height: 8),
               Text(
                 'Создан: ${_formatDateTime(order.createdAt)}',

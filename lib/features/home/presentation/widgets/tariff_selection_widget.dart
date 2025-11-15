@@ -38,7 +38,7 @@ class TariffSelectionWidget extends StatelessWidget {
             );
           }
 
-          // Автоматически выбираем первую категорию, если ни одна не выбрана
+
           final effectiveSelectedCategoryId =
               state.selectedCategoryId ??
               (categoriesWithTariffs.isNotEmpty

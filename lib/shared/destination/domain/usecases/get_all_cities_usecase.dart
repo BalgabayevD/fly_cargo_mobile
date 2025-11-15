@@ -8,7 +8,7 @@ class GetAllCitiesUseCase {
 
   GetAllCitiesUseCase(this._destinationRepository);
 
-  /// Получает все доступные города (отправки + доставки)
+
   Future<List<CityModel>> call({String? fromCityId}) async {
     try {
       return await _destinationRepository.getAllCities(fromCityId: fromCityId);

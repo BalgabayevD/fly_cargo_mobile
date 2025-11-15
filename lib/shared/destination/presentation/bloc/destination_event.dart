@@ -8,12 +8,12 @@ abstract class DestinationEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Событие загрузки городов отправки
+
 class LoadCitiesFromEvent extends DestinationEvent {
   const LoadCitiesFromEvent();
 }
 
-/// Событие загрузки городов доставки
+
 class LoadCitiesToEvent extends DestinationEvent {
   final String fromCityId;
 
@@ -23,7 +23,7 @@ class LoadCitiesToEvent extends DestinationEvent {
   List<Object?> get props => [fromCityId];
 }
 
-/// Событие поиска адресов
+
 class SearchAddressesEvent extends DestinationEvent {
   final String city;
   final String address;
@@ -34,7 +34,7 @@ class SearchAddressesEvent extends DestinationEvent {
   List<Object?> get props => [city, address];
 }
 
-/// Событие загрузки всех городов
+
 class LoadAllCitiesEvent extends DestinationEvent {
   final String? fromCityId;
 
@@ -44,7 +44,7 @@ class LoadAllCitiesEvent extends DestinationEvent {
   List<Object?> get props => [fromCityId];
 }
 
-/// Событие выбора города
+
 class SelectCityEvent extends DestinationEvent {
   final CityModel city;
 
@@ -54,7 +54,7 @@ class SelectCityEvent extends DestinationEvent {
   List<Object?> get props => [city];
 }
 
-/// Событие выбора адреса
+
 class SelectAddressEvent extends DestinationEvent {
   final AddressModel address;
 
@@ -64,7 +64,7 @@ class SelectAddressEvent extends DestinationEvent {
   List<Object?> get props => [address];
 }
 
-/// Событие сброса состояния
+
 class ResetDestinationEvent extends DestinationEvent {
   const ResetDestinationEvent();
 }

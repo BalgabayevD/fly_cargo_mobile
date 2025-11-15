@@ -11,7 +11,7 @@ class CourierProfile {
   final int totalDeliveries;
   final int completedDeliveries;
   final double totalEarnings;
-  final String status; // active, inactive, suspended
+  final String status;
   final String? vehicleType;
   final String? licenseNumber;
   final List<String> workingAreas;
@@ -92,7 +92,7 @@ class IncomeTransaction {
   final double amount;
   final String description;
   final DateTime date;
-  final String type; // delivery, bonus, penalty
+  final String type;
   final String? orderId;
 
   const IncomeTransaction({
@@ -137,7 +137,7 @@ class CourierNotification {
   final String message;
   final DateTime date;
   final bool isRead;
-  final String type; // order, system, payment
+  final String type;
 
   const CourierNotification({
     required this.id,

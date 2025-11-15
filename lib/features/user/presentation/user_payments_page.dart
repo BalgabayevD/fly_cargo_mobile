@@ -90,13 +90,13 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
       body: Column(
         children: [
-          // Статистика
+
           _buildStatsSection(),
 
-          // Фильтры
+
           _buildFilterChips(),
 
-          // Список транзакций
+
           Expanded(
             child: filteredTransactions.isEmpty
                 ? _buildEmptyState()
@@ -273,7 +273,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         variant: AppCardVariant.outlined,
         child: Row(
           children: [
-            // Иконка типа транзакции
+
             Container(
               width: 48,
               height: 48,
@@ -291,7 +291,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
             ),
             const SizedBox(width: 16),
 
-            // Информация о транзакции
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,7 +349,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
               ),
             ),
 
-            // Сумма
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

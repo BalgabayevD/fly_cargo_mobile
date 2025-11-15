@@ -1,10 +1,8 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'file_upload_models.dart';
 
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
+
+
+
 
 FileUploadResponse _$FileUploadResponseFromJson(Map<String, dynamic> json) =>
     FileUploadResponse(data: json['data'] as String);

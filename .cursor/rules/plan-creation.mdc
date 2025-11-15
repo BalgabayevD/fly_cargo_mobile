@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Plan is a set of small, well-defined and testable actions to achieve an objective
+- Plan is provided to an AI agent
+- Plan is written in a markdown file
+- Name of the file is short and describes the main objective
+- Each action in the plan is marked as incomplete or complete to track progress

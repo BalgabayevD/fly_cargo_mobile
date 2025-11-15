@@ -8,17 +8,17 @@ abstract class OrdersState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Начальное состояние
+
 class OrdersInitial extends OrdersState {
   const OrdersInitial();
 }
 
-/// Состояние загрузки
+
 class OrdersLoading extends OrdersState {
   const OrdersLoading();
 }
 
-/// Состояние успешного создания заказа
+
 class OrderCreated extends OrdersState {
   final OrderResult orderResult;
 
@@ -28,7 +28,7 @@ class OrderCreated extends OrdersState {
   List<Object?> get props => [orderResult];
 }
 
-/// Состояние ошибки
+
 class OrdersError extends OrdersState {
   final String message;
 

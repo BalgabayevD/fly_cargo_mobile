@@ -62,11 +62,11 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Общие настройки
+
             _buildNotificationSection(),
             const SizedBox(height: 20),
 
-            // История уведомлений
+
             _buildNotificationHistory(),
             const SizedBox(height: 20),
           ],
@@ -91,7 +91,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
           ),
           const SizedBox(height: 20),
 
-          // Обновления заказов
+
           _buildNotificationItem(
             icon: Icons.local_shipping,
             title: 'Обновления заказов',
@@ -107,7 +107,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
 
-          // Промоакции
+
           _buildNotificationItem(
             icon: Icons.local_offer,
             title: 'Промоакции и скидки',
@@ -123,7 +123,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
 
-          // Платежные уведомления
+
           _buildNotificationItem(
             icon: Icons.payment,
             title: 'Платежные уведомления',
@@ -139,7 +139,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
           ),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
 
-          // Системные уведомления
+
           _buildNotificationItem(
             icon: Icons.settings,
             title: 'Системные уведомления',

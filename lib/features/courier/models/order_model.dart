@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 enum OrderStatus {
-  pending, // Ожидает курьера
-  assigned, // Назначен курьеру
-  pickedUp, // Забран у отправителя
-  inTransit, // В пути
-  delivered, // Доставлен
-  cancelled, // Отменен
+  pending,
+  assigned,
+  pickedUp,
+  inTransit,
+  delivered,
+  cancelled,
 }
 
 enum OrderPriority {
-  low, // Низкий
-  medium, // Средний
-  high, // Высокий
-  urgent, // Срочный
+  low,
+  medium,
+  high,
+  urgent,
 }
 
 class CourierOrder {

@@ -54,15 +54,15 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Форма расчета
+
             _buildCalculatorForm(),
             const SizedBox(height: 20),
 
-            // Результат расчета
+
             if (_calculatedCost > 0) _buildCalculationResult(),
             const SizedBox(height: 20),
 
-            // Кнопка расчета
+
             AppButton(
               text: _isCalculating ? 'Рассчитываем...' : 'Рассчитать стоимость',
               onPressed: _isCalculating ? null : _calculateCost,
@@ -73,7 +73,7 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
             ),
             const SizedBox(height: 20),
 
-            // Информация о тарифах
+
             _buildTariffInfo(),
           ],
         ),
@@ -97,7 +97,7 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
           ),
           const SizedBox(height: 20),
 
-          // Адреса
+
           _buildTextField(
             controller: _fromController,
             label: 'Откуда',
@@ -114,15 +114,15 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
           ),
           const SizedBox(height: 20),
 
-          // Тип услуги
+
           _buildServiceTypeSelector(),
           const SizedBox(height: 20),
 
-          // Срочность
+
           _buildUrgencySelector(),
           const SizedBox(height: 20),
 
-          // Вес и габариты
+
           Row(
             children: [
               Expanded(
@@ -486,18 +486,18 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
       _isCalculating = true;
     });
 
-    // Имитация расчета
+
     await Future.delayed(const Duration(seconds: 2));
 
-    // Простая логика расчета
+
     double baseCost = 500.0;
 
-    // Увеличение за тип услуги
+
     if (_selectedServiceType == 'express') {
       baseCost += 500.0;
     }
 
-    // Увеличение за срочность
+
     switch (_selectedUrgency) {
       case 'urgent':
         baseCost *= 1.5;
@@ -507,7 +507,7 @@ class _UserCostCalculatorPageState extends State<UserCostCalculatorPage> {
         break;
     }
 
-    // Увеличение за вес
+
     final weight = double.tryParse(_weightController.text) ?? 0.5;
     if (weight > 1.0) {
       baseCost += (weight - 1.0) * 100.0;

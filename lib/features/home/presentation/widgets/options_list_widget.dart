@@ -90,7 +90,7 @@ class OptionsListWidget extends StatelessWidget {
     );
 
     if (result != null) {
-      // ignore: use_build_context_synchronously
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Данные получателя сохранены: ${result['name']}'),

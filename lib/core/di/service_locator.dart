@@ -13,15 +13,15 @@ class ServiceLocator {
   factory ServiceLocator() => _instance;
   ServiceLocator._internal();
 
-  // Data Sources
+
   late final BoxLocalDataSource _boxLocalDataSource;
   late final PackageLocalDataSource _packageLocalDataSource;
 
-  // Repositories
+
   late final BoxRepository _boxRepository;
   late final PackageRepository _packageRepository;
 
-  // Use Cases
+
   late final GetBoxesUseCase _getBoxesUseCase;
   late final GetBoxByTypeUseCase _getBoxByTypeUseCase;
   late final CreatePackageUseCase _createPackageUseCase;
@@ -48,7 +48,7 @@ class ServiceLocator {
     _createPackageUseCase = CreatePackageUseCase(_packageRepository);
   }
 
-  // Getters
+
   GetBoxesUseCase get getBoxesUseCase => _getBoxesUseCase;
   GetBoxByTypeUseCase get getBoxByTypeUseCase => _getBoxByTypeUseCase;
   CreatePackageUseCase get createPackageUseCase => _createPackageUseCase;

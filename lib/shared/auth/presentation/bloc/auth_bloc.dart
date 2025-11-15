@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthInitialized event,
     Emitter<AuthState> emit,
   ) async {
-    // await FlutterBetterAuth.client.signOut();
+
     final session = await FlutterBetterAuth.client.getSession();
     if (session.data?.session != null) {
       emit(

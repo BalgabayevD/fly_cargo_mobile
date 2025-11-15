@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 
 class AppTypography {
-  // Размеры шрифтов
+
   static const double fontSize10 = 10.0;
   static const double fontSize12 = 12.0;
   static const double fontSize14 = 14.0;
@@ -14,7 +14,7 @@ class AppTypography {
   static const double fontSize32 = 32.0;
   static const double fontSize36 = 36.0;
 
-  // Веса шрифтов
+
   static const FontWeight fontWeightLight = FontWeight.w300;
   static const FontWeight fontWeightRegular = FontWeight.w400;
   static const FontWeight fontWeightMedium = FontWeight.w500;
@@ -22,13 +22,13 @@ class AppTypography {
   static const FontWeight fontWeightBold = FontWeight.w700;
   static const FontWeight fontWeightExtraBold = FontWeight.w800;
 
-  // Высоты строк
+
   static const double lineHeightTight = 1.2;
   static const double lineHeightNormal = 1.4;
   static const double lineHeightRelaxed = 1.5;
   static const double lineHeightLoose = 1.6;
 
-  // Заголовки
+
   static const TextStyle h1 = TextStyle(
     fontSize: fontSize32,
     fontWeight: fontWeightBold,
@@ -71,7 +71,7 @@ class AppTypography {
     height: lineHeightNormal,
   );
 
-  // Основной текст
+
   static const TextStyle bodyLarge = TextStyle(
     fontSize: fontSize16,
     fontWeight: fontWeightRegular,
@@ -93,7 +93,7 @@ class AppTypography {
     height: lineHeightNormal,
   );
 
-  // Заголовки для карточек и секций
+
   static const TextStyle cardTitle = TextStyle(
     fontSize: fontSize16,
     fontWeight: fontWeightSemiBold,
@@ -108,7 +108,7 @@ class AppTypography {
     height: lineHeightNormal,
   );
 
-  // Подзаголовки
+
   static const TextStyle subtitleLarge = TextStyle(
     fontSize: fontSize16,
     fontWeight: fontWeightMedium,
@@ -130,7 +130,7 @@ class AppTypography {
     height: lineHeightNormal,
   );
 
-  // Кнопки
+
   static const TextStyle buttonLarge = TextStyle(
     fontSize: fontSize16,
     fontWeight: fontWeightSemiBold,
@@ -152,7 +152,7 @@ class AppTypography {
     height: lineHeightNormal,
   );
 
-  // Ссылки
+
   static const TextStyle linkLarge = TextStyle(
     fontSize: fontSize16,
     fontWeight: fontWeightMedium,
@@ -177,7 +177,7 @@ class AppTypography {
     decoration: TextDecoration.underline,
   );
 
-  // Капшены и метки
+
   static const TextStyle caption = TextStyle(
     fontSize: fontSize12,
     fontWeight: fontWeightRegular,
@@ -193,7 +193,7 @@ class AppTypography {
     letterSpacing: 1.5,
   );
 
-  // Цены и числа
+
   static const TextStyle priceLarge = TextStyle(
     fontSize: fontSize24,
     fontWeight: fontWeightBold,
@@ -215,7 +215,7 @@ class AppTypography {
     height: lineHeightTight,
   );
 
-  // Состояния
+
   static const TextStyle success = TextStyle(
     fontSize: fontSize14,
     fontWeight: fontWeightMedium,
@@ -244,7 +244,7 @@ class AppTypography {
     height: lineHeightNormal,
   );
 
-  // Методы для создания кастомных стилей
+
   static TextStyle withColor(TextStyle style, Color color) {
     return style.copyWith(color: color);
   }

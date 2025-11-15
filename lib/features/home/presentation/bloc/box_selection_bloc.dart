@@ -3,7 +3,7 @@ import 'package:fly_cargo/core/entities/box_entity.dart';
 import 'package:fly_cargo/core/usecases/get_box_by_type_usecase.dart';
 import 'package:fly_cargo/core/usecases/get_boxes_usecase.dart';
 
-// Events
+
 abstract class BoxSelectionEvent {}
 
 class LoadBoxesEvent extends BoxSelectionEvent {}
@@ -16,7 +16,7 @@ class SelectBoxEvent extends BoxSelectionEvent {
 
 class ClearSelectionEvent extends BoxSelectionEvent {}
 
-// States
+
 abstract class BoxSelectionState {}
 
 class BoxSelectionInitial extends BoxSelectionState {}
@@ -46,7 +46,7 @@ class BoxSelectionError extends BoxSelectionState {
   BoxSelectionError(this.message);
 }
 
-// BLoC
+
 class BoxSelectionBloc extends Bloc<BoxSelectionEvent, BoxSelectionState> {
   final GetBoxesUseCase _getBoxesUseCase;
 

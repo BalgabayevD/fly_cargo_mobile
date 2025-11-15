@@ -3,7 +3,7 @@ import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
 import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart';
 import 'package:injectable/injectable.dart';
 
-// Events
+
 abstract class TariffSelectionEvent {}
 
 class LoadTariffCategoriesEvent extends TariffSelectionEvent {}
@@ -22,7 +22,7 @@ class SelectTariffEvent extends TariffSelectionEvent {
 
 class ClearSelectionEvent extends TariffSelectionEvent {}
 
-// States
+
 abstract class TariffSelectionState {}
 
 class TariffSelectionInitial extends TariffSelectionState {}
@@ -59,7 +59,7 @@ class TariffSelectionError extends TariffSelectionState {
   TariffSelectionError(this.message);
 }
 
-// BLoC
+
 @injectable
 class TariffSelectionBloc
     extends Bloc<TariffSelectionEvent, TariffSelectionState> {
@@ -84,7 +84,7 @@ class TariffSelectionBloc
     try {
       final categories = await _getTariffCategoriesUseCase();
 
-      // Фильтруем категории с тарифами и выбираем первую
+
       final categoriesWithTariffs = categories
           .where(
             (category) =>
@@ -120,7 +120,7 @@ class TariffSelectionBloc
       emit(
         currentState.copyWith(
           selectedCategoryId: event.categoryId,
-          selectedTariffId: null, // Сбрасываем выбор тарифа при смене категории
+          selectedTariffId: null,
         ),
       );
     }

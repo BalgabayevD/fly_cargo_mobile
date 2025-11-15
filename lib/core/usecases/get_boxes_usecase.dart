@@ -6,7 +6,7 @@ class GetBoxesUseCase {
 
   const GetBoxesUseCase(this._repository);
 
-  /// Получить все доступные коробки
+
   Future<List<BoxEntity>> call() async {
     return await _repository.getAllBoxes();
   }

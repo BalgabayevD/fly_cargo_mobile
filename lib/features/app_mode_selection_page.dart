@@ -16,7 +16,7 @@ class AppModeSelectionPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Логотип и заголовок
+
               const Icon(
                 Icons.local_shipping,
                 size: 80,
@@ -38,7 +38,7 @@ class AppModeSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 60),
 
-              // Кнопка клиента
+
               _buildModeCard(
                 context: context,
                 title: 'Клиент',
@@ -49,7 +49,7 @@ class AppModeSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Кнопка курьера
+
               _buildModeCard(
                 context: context,
                 title: 'Курьер',
@@ -60,7 +60,7 @@ class AppModeSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 40),
 
-              // Кнопка для тестирования профиля
+
               TextButton(
                 onPressed: () => _navigateToUserProfile(context),
                 child: const Text(
@@ -74,7 +74,7 @@ class AppModeSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Информация
+
               const Text(
                 'Для разработки и тестирования',
                 style: TextStyle(fontSize: 12, color: Color(0xFF999999)),

@@ -231,7 +231,7 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                   );
                 }
 
-                // Начальное состояние - показываем подсказку
+
                 return const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

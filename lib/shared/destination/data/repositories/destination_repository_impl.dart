@@ -36,7 +36,7 @@ class DestinationRepositoryImpl implements DestinationRepository {
   }) async {
     try {
       final response = await _remoteSource.searchAddresses(city, address);
-      // Если data равно null, возвращаем пустой список
+
       if (response.data == null) {
         return <AddressModel>[];
       }

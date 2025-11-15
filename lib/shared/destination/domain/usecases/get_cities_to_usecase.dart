@@ -8,7 +8,7 @@ class GetCitiesToUseCase {
 
   GetCitiesToUseCase(this._destinationRepository);
 
-  /// Получает список городов доставки для конкретного города отправки
+
   Future<List<CityModel>> call({required String fromCityId}) async {
     if (fromCityId.isEmpty) {
       throw ArgumentError('ID города отправки не может быть пустым');

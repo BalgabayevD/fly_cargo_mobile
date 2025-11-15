@@ -8,7 +8,7 @@ abstract class OrdersEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Событие создания заказа
+
 class CreateOrderEvent extends OrdersEvent {
   final OrderData orderData;
 
@@ -18,7 +18,7 @@ class CreateOrderEvent extends OrdersEvent {
   List<Object?> get props => [orderData];
 }
 
-/// Событие сброса состояния
+
 class ResetOrdersEvent extends OrdersEvent {
   const ResetOrdersEvent();
 }

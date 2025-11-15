@@ -6,7 +6,7 @@ class GetBoxByTypeUseCase {
 
   const GetBoxByTypeUseCase(this._repository);
 
-  /// Получить коробку по типу
+
   Future<BoxEntity?> call(String boxType) async {
     return await _repository.getBoxByType(boxType);
   }

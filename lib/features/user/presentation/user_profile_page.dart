@@ -52,19 +52,19 @@ class UserProfilePage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  // Аватар и основная информация
+
                   _buildProfileHeader(profile),
                   const SizedBox(height: 30),
 
-                  // Статистика пользователя
+
                   _buildStatsSection(daysSinceCreated),
                   const SizedBox(height: 30),
 
-                  // Первый блок меню (пользовательские настройки)
+
                   _buildUserMenuSection(context, profile),
                   const SizedBox(height: 20),
 
-                  // Второй блок меню (сервисы)
+
                   _buildServicesMenuSection(context, profile),
                   const SizedBox(height: 20),
                 ],
@@ -110,7 +110,7 @@ class UserProfilePage extends StatelessWidget {
     final fullName = '${profile.firstName} ${profile.lastName}'.trim();
     return Column(
       children: [
-        // Аватар
+
         Container(
           width: 100,
           height: 100,
@@ -132,7 +132,7 @@ class UserProfilePage extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
-        // Имя
+
         Text(
           fullName.isNotEmpty ? fullName : 'Пользователь',
           style: const TextStyle(
@@ -143,7 +143,7 @@ class UserProfilePage extends StatelessWidget {
         ),
         const SizedBox(height: 4),
 
-        // Телефон
+
         Text(
           profile.phone,
           style: const TextStyle(fontSize: 16, color: Color(0xFF666666)),

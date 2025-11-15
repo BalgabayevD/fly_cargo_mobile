@@ -38,7 +38,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
       setState(() {
         _isLoading = false;
       });
-      // Обработка ошибки
+
     }
   }
 
@@ -79,7 +79,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Периоды
+
                   PeriodSelectorWidget(
                     selectedPeriod: _selectedPeriod,
                     onPeriodChanged: (period) {
@@ -90,7 +90,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Основная статистика
+
                   IncomeStatsWidget(
                     earnings: _incomeService.getEarningsForPeriod(
                       _income,
@@ -103,7 +103,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Детальная статистика
+
                   DetailedStatsWidget(
                     deliveries: _incomeService.getDeliveriesForPeriod(
                       _income,
@@ -119,7 +119,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // История транзакций
+
                   TransactionsListWidget(
                     transactions: _incomeService.getTransactionsForPeriod(
                       _income.transactions,
