@@ -3,6 +3,29 @@ import 'package:json_annotation/json_annotation.dart';
 part 'orders_models.g.dart';
 
 @JsonSerializable()
+class QrModel {
+  final int? id;
+  final String? createdAt;
+  final String? updatedAt;
+  final int? orderId;
+  final String? target;
+  final String? uuid;
+
+  const QrModel({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.orderId,
+    this.target,
+    this.uuid,
+  });
+
+  factory QrModel.fromJson(Map<String, dynamic> json) =>
+      _$QrModelFromJson(json);
+  Map<String, dynamic> toJson() => _$QrModelToJson(this);
+}
+
+@JsonSerializable()
 class CreateOrderRequest {
   final bool isDefect;
   final bool isFragile;
@@ -118,7 +141,8 @@ class OrderModel {
   final CityModel? fromCity;
   final CityModel? toCity;
   final List<ParticipantModel> participants;
-  final List<dynamic> qrs;
+  @JsonKey(includeIfNull: true, defaultValue: null)
+  final List<QrModel>? qrs;
   final int calculationId;
   final PriceCalculationModel? priceCalculations;
   const OrderModel({
@@ -152,7 +176,6 @@ class OrderModel {
     required this.length,
     required this.height,
     required this.participants,
-    required this.qrs,
     required this.calculationId,
     this.deletedAt,
     this.price,
@@ -163,6 +186,7 @@ class OrderModel {
     this.fromEntrance,
     this.toEntrance,
     this.priceCalculations,
+    this.qrs,
   });
   factory OrderModel.fromJson(Map<String, dynamic> json) =>
       _$OrderModelFromJson(json);

@@ -6,6 +6,24 @@ part of 'orders_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+QrModel _$QrModelFromJson(Map<String, dynamic> json) => QrModel(
+  id: (json['id'] as num?)?.toInt(),
+  createdAt: json['createdAt'] as String?,
+  updatedAt: json['updatedAt'] as String?,
+  orderId: (json['orderId'] as num?)?.toInt(),
+  target: json['target'] as String?,
+  uuid: json['uuid'] as String?,
+);
+
+Map<String, dynamic> _$QrModelToJson(QrModel instance) => <String, dynamic>{
+  'id': instance.id,
+  'createdAt': instance.createdAt,
+  'updatedAt': instance.updatedAt,
+  'orderId': instance.orderId,
+  'target': instance.target,
+  'uuid': instance.uuid,
+};
+
 CreateOrderRequest _$CreateOrderRequestFromJson(Map<String, dynamic> json) =>
     CreateOrderRequest(
       isDefect: json['isDefect'] as bool,
@@ -120,7 +138,6 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
   participants: (json['participants'] as List<dynamic>)
       .map((e) => ParticipantModel.fromJson(e as Map<String, dynamic>))
       .toList(),
-  qrs: json['qrs'] as List<dynamic>,
   calculationId: (json['calculationId'] as num).toInt(),
   deletedAt: json['deletedAt'] as String?,
   price: (json['price'] as num?)?.toDouble(),
@@ -143,6 +160,9 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
       : PriceCalculationModel.fromJson(
           json['priceCalculations'] as Map<String, dynamic>,
         ),
+  qrs: (json['qrs'] as List<dynamic>?)
+      ?.map((e) => QrModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
