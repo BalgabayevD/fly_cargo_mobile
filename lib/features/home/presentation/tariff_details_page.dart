@@ -4,22 +4,28 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/create_tariff_page.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/tariff_characteristics_card.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/tariff_image_header.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
-import 'package:fly_cargo/shared/orders/presentation/widgets/order_details_form.dart';
+import 'package:fly_cargo/shared/orders/presentation/widgets/order_creation_form.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
+
 class TariffDetailsPage extends StatelessWidget {
   final int tariffId;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
+
   const TariffDetailsPage({
-    required this.tariffId, super.key,
+    required this.tariffId,
+    super.key,
     this.fromAddress,
     this.toAddress,
   });
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
@@ -37,65 +43,100 @@ class TariffDetailsPage extends StatelessWidget {
             }
             if (selectedTariff != null) break;
           }
+
           if (selectedTariff == null) {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                leading: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Color(0xFF333333),
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-              body: const Center(child: Text('Тариф не найден')),
-            );
+            return const _TariffNotFoundScreen();
           }
+
           return TariffDetailsContent(
             tariff: selectedTariff,
             fromAddress: fromAddress,
             toAddress: toAddress,
           );
         }
+
         if (state is TariffSelectionError) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Color(0xFF333333),
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
-            body: Center(child: Text(state.message)),
-          );
+          return _TariffErrorScreen(message: state.message);
         }
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
       },
     );
   }
 }
+
+/// Экран "Тариф не найден"
+class _TariffNotFoundScreen extends StatelessWidget {
+  const _TariffNotFoundScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.textPrimary,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: const Center(child: Text('Тариф не найден')),
+    );
+  }
+}
+
+/// Экран ошибки загрузки тарифа
+class _TariffErrorScreen extends StatelessWidget {
+  final String message;
+
+  const _TariffErrorScreen({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.textPrimary,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Center(child: Text(message)),
+    );
+  }
+}
+
+/// Контент страницы деталей тарифа
 class TariffDetailsContent extends StatefulWidget {
   final dynamic tariff;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
+
   const TariffDetailsContent({
-    required this.tariff, super.key,
+    required this.tariff,
+    super.key,
     this.fromAddress,
     this.toAddress,
   });
+
   @override
   State<TariffDetailsContent> createState() => _TariffDetailsContentState();
 }
+
 class _TariffDetailsContentState extends State<TariffDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -103,7 +144,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
     _ordersBloc.stream.listen((state) {
       if (state is OrderCreated) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Заказ успешно создан!'),
             backgroundColor: AppColors.success,
             duration: Duration(seconds: 2),
@@ -115,233 +156,37 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
           SnackBar(
             content: Text('Ошибка создания заказа: ${state.message}'),
             backgroundColor: AppColors.error,
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
     });
   }
+
   void _onFormDataChanged(OrderFormData data) {
     setState(() {
       _formData = data;
     });
   }
+
   @override
   void dispose() {
     _ordersBloc.close();
     super.dispose();
   }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          widget.tariff.name,
-          style: const TextStyle(
-            color: Color(0xFF333333),
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add, color: Color(0xFF333333)),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CreateTariffPage(),
-                ),
-              );
-            },
-            tooltip: 'Создать тариф',
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              color: AppColors.gray50,
-              child: widget.tariff.image.isNotEmpty
-                  ? Image.network(
-                      widget.tariff.image,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Icon(
-                            Icons.local_shipping,
-                            size: 60,
-                            color: AppColors.textSecondary,
-                          ),
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                    )
-                  : const Center(
-                      child: Icon(
-                        Icons.local_shipping,
-                        size: 60,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.tariff.name,
-                    style: AppTypography.h3.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  if (widget.tariff.description.isNotEmpty) ...[
-                    Text(
-                      widget.tariff.description,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  _buildTariffCharacteristics(),
-                  const SizedBox(height: 24),
-                  BlocProvider.value(
-                    value: _ordersBloc,
-                    child: OrderDetailsForm(
-                      formKey: _formKey,
-                      onDataChanged: _onFormDataChanged,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  BlocBuilder<OrdersBloc, OrdersState>(
-                    bloc: _ordersBloc,
-                    builder: (context, state) {
-                      return SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _formData != null
-                              ? () => _createOrder(context)
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: state is OrdersLoading
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : const Text(
-                                  'Создать заказ',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-  Widget _buildTariffCharacteristics() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.gray50,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Характеристики',
-            style: AppTypography.h5.copyWith(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 12),
-          _buildCharacteristicRow('Вес', '${widget.tariff.weight ?? 0} кг'),
-          if (widget.tariff.length != null && widget.tariff.length! > 0)
-            _buildCharacteristicRow('Длина', '${widget.tariff.length} см'),
-          if (widget.tariff.width != null && widget.tariff.width! > 0)
-            _buildCharacteristicRow('Ширина', '${widget.tariff.width} см'),
-          if (widget.tariff.height != null && widget.tariff.height! > 0)
-            _buildCharacteristicRow('Высота', '${widget.tariff.height} см'),
-          if (widget.tariff.volumetricWeight != null &&
-              widget.tariff.volumetricWeight! > 0)
-            _buildCharacteristicRow(
-              'Объемный вес',
-              '${widget.tariff.volumetricWeight} кг',
-            ),
-        ],
-      ),
-    );
-  }
-  Widget _buildCharacteristicRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-          Text(
-            value,
-            style: AppTypography.bodyMedium.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  Future<void> _createOrder(BuildContext context) async {
+
+  Future<void> _createOrder() async {
     if (_formData == null) return;
     if (_formKey.currentState?.validate() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Заполните все обязательные поля'),
           backgroundColor: AppColors.error,
         ),
       );
       return;
     }
+
     try {
       final orderData = OrderData(
         isDefect: _formData!.isDefect,
@@ -387,5 +232,243 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         ),
       );
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: _TariffDetailsAppBar(
+        tariffName: widget.tariff.name,
+        onCreateTariffPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CreateTariffPage(),
+            ),
+          );
+        },
+      ),
+      body: _TariffDetailsBody(
+        tariff: widget.tariff,
+        formKey: _formKey,
+        ordersBloc: _ordersBloc,
+        formData: _formData,
+        onFormDataChanged: _onFormDataChanged,
+        onCreateOrder: _createOrder,
+      ),
+    );
+  }
+}
+
+/// AppBar для страницы деталей тарифа
+class _TariffDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String tariffName;
+  final VoidCallback onCreateTariffPressed;
+
+  const _TariffDetailsAppBar({
+    required this.tariffName,
+    required this.onCreateTariffPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: AppColors.white,
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+        onPressed: () => Navigator.pop(context),
+      ),
+      title: Text(
+        tariffName,
+        style: AppTypography.h5.copyWith(
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add, color: AppColors.textPrimary),
+          onPressed: onCreateTariffPressed,
+          tooltip: 'Создать тариф',
+        ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+/// Тело страницы деталей тарифа
+class _TariffDetailsBody extends StatelessWidget {
+  final dynamic tariff;
+  final GlobalKey<FormState> formKey;
+  final OrdersBloc ordersBloc;
+  final OrderFormData? formData;
+  final Function(OrderFormData) onFormDataChanged;
+  final VoidCallback onCreateOrder;
+
+  const _TariffDetailsBody({
+    required this.tariff,
+    required this.formKey,
+    required this.ordersBloc,
+    required this.formData,
+    required this.onFormDataChanged,
+    required this.onCreateOrder,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TariffImageHeader(imageUrl: tariff.image),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _TariffTitle(name: tariff.name),
+                const SizedBox(height: AppSpacing.sm),
+                if (tariff.description.isNotEmpty) ...[
+                  _TariffDescription(description: tariff.description),
+                  const SizedBox(height: AppSpacing.lg),
+                ],
+                TariffCharacteristicsCard(
+                  weight: tariff.weight,
+                  length: tariff.length,
+                  width: tariff.width,
+                  height: tariff.height,
+                  volumetricWeight: tariff.volumetricWeight,
+                ),
+                const SizedBox(height: AppSpacing.xxl),
+                BlocProvider.value(
+                  value: ordersBloc,
+                  child: OrderCreationForm(
+                    formKey: formKey,
+                    onDataChanged: onFormDataChanged,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxl),
+                _CreateOrderButton(
+                  ordersBloc: ordersBloc,
+                  isEnabled: formData != null,
+                  onPressed: onCreateOrder,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Название тарифа
+class _TariffTitle extends StatelessWidget {
+  final String name;
+
+  const _TariffTitle({required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      name,
+      style: AppTypography.h3.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
+/// Описание тарифа
+class _TariffDescription extends StatelessWidget {
+  final String description;
+
+  const _TariffDescription({required this.description});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      description,
+      style: AppTypography.bodyMedium.copyWith(
+        color: AppColors.textSecondary,
+      ),
+    );
+  }
+}
+
+/// Кнопка создания заказа
+class _CreateOrderButton extends StatelessWidget {
+  final OrdersBloc ordersBloc;
+  final bool isEnabled;
+  final VoidCallback onPressed;
+
+  const _CreateOrderButton({
+    required this.ordersBloc,
+    required this.isEnabled,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OrdersBloc, OrdersState>(
+      bloc: ordersBloc,
+      builder: (context, state) {
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: isEnabled ? onPressed : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+              ),
+            ),
+            child: state is OrdersLoading
+                ? const _LoadingIndicator()
+                : const _ButtonLabel(),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Индикатор загрузки в кнопке
+class _LoadingIndicator extends StatelessWidget {
+  const _LoadingIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: AppSpacing.iconSizeMD,
+      width: AppSpacing.iconSizeMD,
+      child: CircularProgressIndicator(
+        color: AppColors.white,
+        strokeWidth: AppDimensions.progressStrokeWidth,
+      ),
+    );
+  }
+}
+
+/// Текст кнопки
+class _ButtonLabel extends StatelessWidget {
+  const _ButtonLabel();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Создать заказ',
+      style: AppTypography.buttonLarge.copyWith(
+        fontWeight: FontWeight.w600,
+      ),
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/box_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/box_details_page.dart';
+import 'package:fly_cargo/features/home/presentation/create_order_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/tariff_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/home_bottom_sheet_content.dart';
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => BoxDetailsPage(
+          builder: (context) => CreateOrderPage(
             boxType: boxType,
             fromAddress: _fromAddress,
             toAddress: _toAddress,
