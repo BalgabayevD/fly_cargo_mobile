@@ -1,4 +1,4 @@
-﻿import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+﻿import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
 

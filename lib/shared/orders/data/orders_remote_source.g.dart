@@ -24,8 +24,7 @@ class _OrdersRemoteSource implements OrdersRemoteSource {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<CreateOrderResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -40,6 +39,36 @@ class _OrdersRemoteSource implements OrdersRemoteSource {
     late CreateOrderResponse _value;
     try {
       _value = CreateOrderResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<CalculateOrderPriceResponse> calculateOrderPrice(
+    Map<String, dynamic> body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _options = _setStreamType<CalculateOrderPriceResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/orders/price',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late CalculateOrderPriceResponse _value;
+    try {
+      _value = CalculateOrderPriceResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

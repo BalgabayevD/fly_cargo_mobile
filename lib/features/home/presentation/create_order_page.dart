@@ -6,7 +6,7 @@ import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/core/entities/box_entity.dart';
 import 'package:fly_cargo/core/extensions/box_entity_extensions.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';

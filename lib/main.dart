@@ -9,6 +9,7 @@ import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
+import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,6 +47,9 @@ Future<void> main() async {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
         BlocProvider<TariffsBloc>(create: (_) => getIt<TariffsBloc>()),
+        BlocProvider<PriceCalculationBloc>(
+          create: (_) => getIt<PriceCalculationBloc>(),
+        ),
         BlocProvider<TariffSelectionBloc>(
           create: (_) => getIt<TariffSelectionBloc>(),
         ),

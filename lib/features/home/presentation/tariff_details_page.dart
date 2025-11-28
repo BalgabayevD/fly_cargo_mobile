@@ -7,10 +7,11 @@ import 'package:fly_cargo/features/home/presentation/create_tariff_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/tariff_characteristics_card.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/tariff_image_header.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
+import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_creation_form.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
 
@@ -135,12 +136,15 @@ class TariffDetailsContent extends StatefulWidget {
 class _TariffDetailsContentState extends State<TariffDetailsContent> {
   OrderFormData? _formData;
   late final OrdersBloc _ordersBloc;
+  late final PriceCalculationBloc _priceCalculationBloc;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     _ordersBloc = getIt<OrdersBloc>();
+    _priceCalculationBloc = getIt<PriceCalculationBloc>();
+
     _ordersBloc.stream.listen((state) {
       if (state is OrderCreated) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -161,6 +165,23 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         );
       }
     });
+
+    // Запускаем расчет цены для выбранного тарифа если есть адреса
+    if (widget.fromAddress != null && widget.toAddress != null) {
+      final fromCityId = int.tryParse(widget.fromAddress!.cityId);
+      final toCityId = int.tryParse(widget.toAddress!.cityId);
+
+      if (fromCityId != null && toCityId != null) {
+        _priceCalculationBloc.add(
+          CalculatePriceEvent(
+            tariffId: widget.tariff.id,
+            fromCityId: fromCityId,
+            toCityId: toCityId,
+            toPhone: '+77777777777', // Временный номер
+          ),
+        );
+      }
+    }
   }
 
   void _onFormDataChanged(OrderFormData data) {
@@ -172,6 +193,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
   @override
   void dispose() {
     _ordersBloc.close();
+    _priceCalculationBloc.close();
     super.dispose();
   }
 
@@ -253,6 +275,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         tariff: widget.tariff,
         formKey: _formKey,
         ordersBloc: _ordersBloc,
+        priceCalculationBloc: _priceCalculationBloc,
         formData: _formData,
         onFormDataChanged: _onFormDataChanged,
         onCreateOrder: _createOrder,
@@ -262,7 +285,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
 }
 
 /// AppBar для страницы деталей тарифа
-class _TariffDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
+class _TariffDetailsAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   final String tariffName;
   final VoidCallback onCreateTariffPressed;
 
@@ -307,6 +331,7 @@ class _TariffDetailsBody extends StatelessWidget {
   final dynamic tariff;
   final GlobalKey<FormState> formKey;
   final OrdersBloc ordersBloc;
+  final PriceCalculationBloc priceCalculationBloc;
   final OrderFormData? formData;
   final Function(OrderFormData) onFormDataChanged;
   final VoidCallback onCreateOrder;
@@ -315,6 +340,7 @@ class _TariffDetailsBody extends StatelessWidget {
     required this.tariff,
     required this.formKey,
     required this.ordersBloc,
+    required this.priceCalculationBloc,
     required this.formData,
     required this.onFormDataChanged,
     required this.onCreateOrder,
@@ -344,6 +370,10 @@ class _TariffDetailsBody extends StatelessWidget {
                   width: tariff.width,
                   height: tariff.height,
                   volumetricWeight: tariff.volumetricWeight,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                _PriceCalculationWidget(
+                  priceCalculationBloc: priceCalculationBloc,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
                 BlocProvider.value(
@@ -468,6 +498,227 @@ class _ButtonLabel extends StatelessWidget {
       'Создать заказ',
       style: AppTypography.buttonLarge.copyWith(
         fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+}
+
+/// Виджет для отображения рассчитанной стоимости заказа
+class _PriceCalculationWidget extends StatelessWidget {
+  final PriceCalculationBloc priceCalculationBloc;
+
+  const _PriceCalculationWidget({
+    required this.priceCalculationBloc,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PriceCalculationBloc, PriceCalculationState>(
+      bloc: priceCalculationBloc,
+      builder: (context, state) {
+        if (state is PriceCalculationLoading) {
+          return _buildLoadingCard();
+        }
+
+        if (state is PriceCalculationLoaded) {
+          return _buildPriceCard(state.priceCalculation);
+        }
+
+        if (state is PriceCalculationError) {
+          return _buildErrorCard(state.message);
+        }
+
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  Widget _buildLoadingCard() {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.gray50,
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: AppSpacing.iconSizeSM,
+            width: AppSpacing.iconSizeSM,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Text(
+            'Расчет стоимости...',
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceCard(PriceCalculationModel priceCalculation) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primary.withOpacity(0.1),
+            AppColors.primary.withOpacity(0.05),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+        border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Стоимость доставки',
+                style: AppTypography.h6.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.xs,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.success.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
+                ),
+                child: Text(
+                  'Рассчитано',
+                  style: AppTypography.caption.copyWith(
+                    color: AppColors.success,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                priceCalculation.sellingPrice?.toStringAsFixed(0) ?? '—',
+                style: AppTypography.h2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                child: Text(
+                  '₸',
+                  style: AppTypography.h5.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (priceCalculation.netProfit != null &&
+              priceCalculation.netProfit! > 0) ...[
+            const SizedBox(height: AppSpacing.sm),
+            const Divider(color: AppColors.border),
+            const SizedBox(height: AppSpacing.sm),
+            _buildPriceDetailRow(
+              'Маржинальность',
+              '${priceCalculation.marginality?.toStringAsFixed(0) ?? '—'} ₸',
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            _buildPriceDetailRow(
+              'Чистая прибыль',
+              '${priceCalculation.netProfit?.toStringAsFixed(0) ?? '—'} ₸',
+              isPositive: true,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceDetailRow(
+    String label,
+    String value, {
+    bool isPositive = false,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: AppTypography.bodySmall.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+        Text(
+          value,
+          style: AppTypography.bodyMedium.copyWith(
+            fontWeight: FontWeight.w600,
+            color: isPositive ? AppColors.success : AppColors.textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildErrorCard(String message) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.error.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+        border: Border.all(color: AppColors.error.withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: AppColors.error,
+            size: AppSpacing.iconSizeMD,
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Ошибка расчета',
+                  style: AppTypography.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.error,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  message,
+                  style: AppTypography.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

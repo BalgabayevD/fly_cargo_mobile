@@ -1,6 +1,7 @@
-import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
+
 @injectable
 class CreateOrderUseCase {
   final OrdersRepository _ordersRepository;
@@ -13,6 +14,7 @@ class CreateOrderUseCase {
       throw OrdersUseCaseException('Ошибка при создании заказа: $e');
     }
   }
+
   void _validateOrderData(OrderData orderData) {
     if (orderData.fromAddress.isEmpty) {
       throw ArgumentError('Адрес отправки не может быть пустым');
@@ -34,6 +36,7 @@ class CreateOrderUseCase {
     }
   }
 }
+
 class OrdersUseCaseException implements Exception {
   final String message;
   const OrdersUseCaseException(this.message);

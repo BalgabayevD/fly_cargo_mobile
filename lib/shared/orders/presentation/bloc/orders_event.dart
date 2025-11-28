@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+import 'package:fly_cargo/shared/orders/data/models/models.dart';
 
 abstract class OrdersEvent extends Equatable {
   const OrdersEvent();

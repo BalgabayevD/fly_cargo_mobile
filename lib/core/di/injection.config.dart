@@ -62,6 +62,8 @@ import 'package:fly_cargo/shared/orders/data/repositories/orders_repository_impl
     as _i157;
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart'
     as _i919;
+import 'package:fly_cargo/shared/orders/domain/usecases/calculate_order_price_usecase.dart'
+    as _i426;
 import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart'
     as _i49;
 import 'package:fly_cargo/shared/orders/domain/usecases/get_client_orders_usecase.dart'
@@ -72,6 +74,8 @@ import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_useca
     as _i910;
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
     as _i837;
+import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart'
+    as _i635;
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart'
     as _i480;
 import 'package:fly_cargo/shared/tariffs/config/tariffs_module.dart' as _i584;
@@ -213,6 +217,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i189.GetCourierOrdersUseCase>(
       () => _i189.GetCourierOrdersUseCase(gh<_i919.OrdersRepository>()),
     );
+    gh.factory<_i426.CalculateOrderPriceUseCase>(
+      () => _i426.CalculateOrderPriceUseCase(gh<_i919.OrdersRepository>()),
+    );
     gh.factory<_i33.GetClientOrdersUseCase>(
       () => _i33.GetClientOrdersUseCase(gh<_i919.OrdersRepository>()),
     );
@@ -223,6 +230,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i138.AuthBloc(
         gh<_i919.SignInUseCase>(),
         gh<_i215.AuthStatusUseCase>(),
+      ),
+    );
+    gh.factory<_i635.PriceCalculationBloc>(
+      () => _i635.PriceCalculationBloc(
+        calculateOrderPriceUseCase: gh<_i426.CalculateOrderPriceUseCase>(),
       ),
     );
     gh.factory<_i369.CreateTariffUseCase>(

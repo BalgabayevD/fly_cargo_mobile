@@ -16,6 +16,7 @@ import 'package:fly_cargo/shared/destination/data/models/destination_models.dart
 import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
+import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 
@@ -28,11 +29,38 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
+  
   void _onAddressesSelected(AddressModel fromAddress, AddressModel toAddress) {
     setState(() {
       _fromAddress = fromAddress;
       _toAddress = toAddress;
     });
+    
+    // Если уже выбран тариф, пересчитываем цену
+    _recalculatePriceIfPossible();
+  }
+  
+  void _recalculatePriceIfPossible() {
+    final tariffState = context.read<TariffSelectionBloc>().state;
+    if (tariffState is TariffSelectionLoaded && 
+        tariffState.selectedTariffId != null &&
+        _fromAddress != null &&
+        _toAddress != null) {
+      
+      final fromCityId = int.tryParse(_fromAddress!.cityId);
+      final toCityId = int.tryParse(_toAddress!.cityId);
+      
+      if (fromCityId != null && toCityId != null) {
+        context.read<PriceCalculationBloc>().add(
+          CalculatePriceEvent(
+            tariffId: tariffState.selectedTariffId!,
+            fromCityId: fromCityId,
+            toCityId: toCityId,
+            toPhone: '+77777777777', // Временный номер, можно запрашивать у пользователя позже
+          ),
+        );
+      }
+    }
   }
 
   void _openAddressSelection() {
@@ -59,11 +87,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    super.initState();
     context.read<AuthBloc>().add(AuthInitialized());
     context.read<TariffSelectionBloc>().add(LoadTariffCategoriesEvent());
     context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
     context.read<OrdersBloc>().add(const GetClientOrdersEvent());
-    super.initState();
+    
+    // Слушаем изменения выбора тарифа
+    context.read<TariffSelectionBloc>().stream.listen((state) {
+      if (state is TariffSelectionLoaded && state.selectedTariffId != null) {
+        _recalculatePriceIfPossible();
+      }
+    });
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:fly_cargo/shared/orders/data/models/orders_models.dart';
+import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/data/orders_remote_source.dart';
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -18,6 +18,27 @@ class OrdersRepositoryImpl implements OrdersRepository {
       return OrderResult.fromOrderModel(response.data);
     } catch (e) {
       throw OrdersException('Ошибка при создании заказа: $e');
+    }
+  }
+
+  @override
+  Future<PriceCalculationModel> calculateOrderPrice({
+    required int tariffId,
+    required int fromCityId,
+    required int toCityId,
+    required String toPhone,
+  }) async {
+    try {
+      final body = {
+        'tariffId': tariffId,
+        'fromCityId': fromCityId,
+        'toCityId': toCityId,
+        'toPhone': toPhone,
+      };
+      final response = await _remoteSource.calculateOrderPrice(body);
+      return response.data;
+    } catch (e) {
+      throw OrdersException('Ошибка при расчете стоимости заказа: $e');
     }
   }
 

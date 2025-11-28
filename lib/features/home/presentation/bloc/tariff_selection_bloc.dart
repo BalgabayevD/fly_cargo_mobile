@@ -45,10 +45,11 @@ class TariffSelectionError extends TariffSelectionState {
 class TariffSelectionBloc
     extends Bloc<TariffSelectionEvent, TariffSelectionState> {
   final GetTariffCategoriesUseCase _getTariffCategoriesUseCase;
+  
   TariffSelectionBloc({
     required GetTariffCategoriesUseCase getTariffCategoriesUseCase,
-  }) : _getTariffCategoriesUseCase = getTariffCategoriesUseCase,
-       super(TariffSelectionInitial()) {
+  })  : _getTariffCategoriesUseCase = getTariffCategoriesUseCase,
+        super(TariffSelectionInitial()) {
     on<LoadTariffCategoriesEvent>(_onLoadTariffCategories);
     on<SelectTariffCategoryEvent>(_onSelectTariffCategory);
     on<SelectTariffEvent>(_onSelectTariff);
