@@ -237,7 +237,12 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
           ),
           // Кнопка "Сохранить"
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.only(
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+              top: AppSpacing.lg,
+              bottom: 56,
+            ),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(

@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/pages/description_form_page.dart';
-import 'package:fly_cargo/features/home/presentation/pages/recipient_form_page.dart';
 import 'package:fly_cargo/features/home/presentation/tariff_details_page.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/choose_recipient_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/home_page_content.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/destination/presentation/models/city_type.dart';
@@ -120,13 +120,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _openRecipientForm() async {
-    final result = await Navigator.push<Map<String, String>>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RecipientFormPage(
-          initialName: _recipientName,
-          initialPhone: _recipientPhone,
-        ),
+    final result = await showModalBottomSheet<Map<String, String>>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => ChooseRecipientBottomSheet(
+        initialName: _recipientName,
+        initialPhone: _recipientPhone,
       ),
     );
 
