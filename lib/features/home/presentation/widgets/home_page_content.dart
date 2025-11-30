@@ -26,7 +26,8 @@ class HomePageContent extends StatelessWidget {
   final List<File> contentPhotos;
   final DateTime? deliveryDate;
   final double? calculatedPrice;
-  final VoidCallback onAddressSelection;
+  final VoidCallback onFromAddressSelection;
+  final VoidCallback onToAddressSelection;
   final VoidCallback onRecipientForm;
   final VoidCallback onTariffSelection;
   final VoidCallback onDescriptionForm;
@@ -53,7 +54,8 @@ class HomePageContent extends StatelessWidget {
     required this.contentPhotos,
     required this.deliveryDate,
     required this.calculatedPrice,
-    required this.onAddressSelection,
+    required this.onFromAddressSelection,
+    required this.onToAddressSelection,
     required this.onRecipientForm,
     required this.onTariffSelection,
     required this.onDescriptionForm,
@@ -77,13 +79,13 @@ class HomePageContent extends StatelessWidget {
           OrderFieldCard(
             label: 'Откуда',
             value: fromAddress?.fullAddress ?? 'Укажите адрес отправки',
-            onTap: onAddressSelection,
+            onTap: onFromAddressSelection,
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCard(
             label: 'Куда',
             value: toAddress?.fullAddress ?? 'Укажите адрес доставки',
-            onTap: onAddressSelection,
+            onTap: onToAddressSelection,
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCard(

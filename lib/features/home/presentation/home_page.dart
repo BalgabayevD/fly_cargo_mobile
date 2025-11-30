@@ -6,10 +6,11 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/home/presentation/pages/description_form_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/recipient_form_page.dart';
-import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/tariff_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/home_page_content.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/shared/destination/presentation/models/city_type.dart';
+import 'package:fly_cargo/shared/destination/presentation/widgets/choose_address_bottom_sheet.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,23 +39,64 @@ class _HomePageState extends State<HomePage> {
   DateTime? _deliveryDate;
   double? _calculatedPrice;
 
-  void _openAddressSelection() {
-    showModalBottomSheet(
+  Future<void> _openFromAddressSelection() async {
+    final address = await showModalBottomSheet<AddressModel>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => SendPackageBottomSheet(
-        onAddressesSelected: (fromAddress, toAddress) {
-          setState(() {
-            _fromAddress = fromAddress;
-            _toAddress = toAddress;
-          });
-          _recalculatePriceIfPossible();
-        },
-        initialFromAddress: _fromAddress,
-        initialToAddress: _toAddress,
+      builder: (context) => ChooseAddressBottomSheet(
+        initialCity: _fromAddress != null
+            ? CityModel(
+                id: _fromAddress!.cityId,
+                name: _fromAddress!.city,
+              )
+            : null,
+        initialAddress: _fromAddress,
+        title: 'Откуда',
+        cityType: CityType.from,
       ),
     );
+    if (address != null) {
+      setState(() {
+        _fromAddress = address;
+      });
+      _recalculatePriceIfPossible();
+    }
+  }
+
+  Future<void> _openToAddressSelection() async {
+    if (_fromAddress == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Сначала выберите город отправки'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+    final address = await showModalBottomSheet<AddressModel>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => ChooseAddressBottomSheet(
+        initialCity: _toAddress != null
+            ? CityModel(
+                id: _toAddress!.cityId,
+                name: _toAddress!.city,
+              )
+            : null,
+        initialAddress: _toAddress,
+        title: 'Куда',
+        cityType: CityType.to,
+        fromCityId: _fromAddress!.cityId,
+      ),
+    );
+    if (address != null) {
+      setState(() {
+        _toAddress = address;
+      });
+      _recalculatePriceIfPossible();
+    }
   }
 
   void _recalculatePriceIfPossible() {
@@ -266,7 +308,8 @@ class _HomePageState extends State<HomePage> {
         contentPhotos: _contentPhotos,
         deliveryDate: _deliveryDate,
         calculatedPrice: _calculatedPrice,
-        onAddressSelection: _openAddressSelection,
+        onFromAddressSelection: _openFromAddressSelection,
+        onToAddressSelection: _openToAddressSelection,
         onRecipientForm: _openRecipientForm,
         onTariffSelection: _openTariffSelection,
         onDescriptionForm: _openDescriptionForm,
