@@ -1,27 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/features/home/presentation/bloc/box_selection_bloc.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/create_order_page.dart';
+import 'package:fly_cargo/features/home/presentation/pages/description_form_page.dart';
+import 'package:fly_cargo/features/home/presentation/pages/recipient_form_page.dart';
 import 'package:fly_cargo/features/home/presentation/send_package_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/tariff_details_page.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/home_bottom_sheet_content.dart';
-import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/home_page_content.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
-import 'package:fly_cargo/shared/map/presentation/yandex_map_screen.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:image_picker/image_picker.dart';
 
+/// Главная страница с формой создания заказа
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -29,39 +25,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   AddressModel? _fromAddress;
   AddressModel? _toAddress;
-  
-  void _onAddressesSelected(AddressModel fromAddress, AddressModel toAddress) {
-    setState(() {
-      _fromAddress = fromAddress;
-      _toAddress = toAddress;
-    });
-    
-    // Если уже выбран тариф, пересчитываем цену
-    _recalculatePriceIfPossible();
-  }
-  
-  void _recalculatePriceIfPossible() {
-    final tariffState = context.read<TariffSelectionBloc>().state;
-    if (tariffState is TariffSelectionLoaded && 
-        tariffState.selectedTariffId != null &&
-        _fromAddress != null &&
-        _toAddress != null) {
-      
-      final fromCityId = int.tryParse(_fromAddress!.cityId);
-      final toCityId = int.tryParse(_toAddress!.cityId);
-      
-      if (fromCityId != null && toCityId != null) {
-        context.read<PriceCalculationBloc>().add(
-          CalculatePriceEvent(
-            tariffId: tariffState.selectedTariffId!,
-            fromCityId: fromCityId,
-            toCityId: toCityId,
-            toPhone: '+77777777777', // Временный номер, можно запрашивать у пользователя позже
-          ),
-        );
-      }
-    }
-  }
+  String? _recipientName;
+  String? _recipientPhone;
+  int? _selectedTariffId;
+  String? _tariffName;
+  double? _tariffWeight;
+  String? _description;
+  bool _isExpressDelivery = false;
+  bool _isFragile = false;
+  final List<File> _photos = [];
+  final List<File> _contentPhotos = [];
+  DateTime? _deliveryDate;
+  double? _calculatedPrice;
 
   void _openAddressSelection() {
     showModalBottomSheet(
@@ -69,122 +44,255 @@ class _HomePageState extends State<HomePage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => SendPackageBottomSheet(
-        onAddressesSelected: _onAddressesSelected,
+        onAddressesSelected: (fromAddress, toAddress) {
+          setState(() {
+            _fromAddress = fromAddress;
+            _toAddress = toAddress;
+          });
+          _recalculatePriceIfPossible();
+        },
         initialFromAddress: _fromAddress,
         initialToAddress: _toAddress,
       ),
     );
   }
 
-  void _onSendPackagePressed() {
-    final authState = context.read<AuthBloc>().state;
-    if (authState is AuthUnauthenticated || authState is AuthInitial) {
-      AuthRouter.navigateToPhoneInput(context);
-    } else {
-      _openAddressSelection();
+  void _recalculatePriceIfPossible() {
+    if (_selectedTariffId != null &&
+        _fromAddress != null &&
+        _toAddress != null) {
+      final fromCityId = int.tryParse(_fromAddress!.cityId);
+      final toCityId = int.tryParse(_toAddress!.cityId);
+
+      if (fromCityId != null && toCityId != null) {
+        context.read<PriceCalculationBloc>().add(
+          CalculatePriceEvent(
+            tariffId: _selectedTariffId!,
+            fromCityId: fromCityId,
+            toCityId: toCityId,
+            toPhone: _recipientPhone ?? '+77777777777',
+          ),
+        );
+      }
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<AuthBloc>().add(AuthInitialized());
-    context.read<TariffSelectionBloc>().add(LoadTariffCategoriesEvent());
-    context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
-    context.read<OrdersBloc>().add(const GetClientOrdersEvent());
-    
-    // Слушаем изменения выбора тарифа
-    context.read<TariffSelectionBloc>().stream.listen((state) {
-      if (state is TariffSelectionLoaded && state.selectedTariffId != null) {
-        _recalculatePriceIfPossible();
+  Future<void> _openRecipientForm() async {
+    final result = await Navigator.push<Map<String, String>>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecipientFormPage(
+          initialName: _recipientName,
+          initialPhone: _recipientPhone,
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        _recipientName = result['name'];
+        _recipientPhone = result['phone'];
+      });
+      _recalculatePriceIfPossible();
+    }
+  }
+
+  Future<void> _openDescriptionForm() async {
+    final result = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DescriptionFormPage(
+          initialDescription: _description,
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        _description = result;
+      });
+    }
+  }
+
+  void _openTariffSelection() {
+    if (_fromAddress == null || _toAddress == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Сначала укажите адреса отправки и доставки'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    final tariffState = context.read<TariffSelectionBloc>().state;
+    if (tariffState is TariffSelectionLoaded) {
+      final categories = tariffState.categories;
+      if (categories.isNotEmpty &&
+          categories.first.tariffs != null &&
+          categories.first.tariffs!.isNotEmpty) {
+        final tariff = categories.first.tariffs!.first;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TariffDetailsPage(
+              tariffId: tariff.id,
+              fromAddress: _fromAddress,
+              toAddress: _toAddress,
+            ),
+          ),
+        ).then((result) {
+          if (result != null && result is Map) {
+            setState(() {
+              _selectedTariffId = result['tariffId'];
+              _tariffName = result['tariffName'];
+              _tariffWeight = result['weight'];
+            });
+            _recalculatePriceIfPossible();
+          }
+        });
+      }
+    }
+  }
+
+  Future<void> _pickPhoto({bool isContent = false}) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        if (isContent) {
+          _contentPhotos.add(File(image.path));
+        } else {
+          _photos.add(File(image.path));
+        }
+      });
+    }
+  }
+
+  void _removePhoto(File photo, {bool isContent = false}) {
+    setState(() {
+      if (isContent) {
+        _contentPhotos.remove(photo);
+      } else {
+        _photos.remove(photo);
       }
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BoxSelectionBloc(
-        getBoxesUseCase: ServiceLocator().getBoxesUseCase,
-        getBoxByTypeUseCase: ServiceLocator().getBoxByTypeUseCase,
-      )..add(LoadBoxesEvent()),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: const Text(
-            'Fly Cargo',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF333333),
-            ),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.person, color: Color(0xFF333333)),
-              onPressed: () => _openUserProfile(context),
-            ),
-          ],
-        ),
-        body: Stack(
-          children: [
-            const YandexMapScreen(),
-            DraggableScrollableSheet(
-              initialChildSize: 0.6,
-              snap: true,
-              minChildSize: 0.6,
-              maxChildSize: 0.6,
-              builder: (context, scrollController) {
-                return HomeBottomSheetContent(
-                  fromAddress: _fromAddress,
-                  toAddress: _toAddress,
-                  onSendPackagePressed: _onSendPackagePressed,
-                  onAddressSelectionTap: _openAddressSelection,
-                  onBoxDetailsTap: _openBoxDetailsPage,
-                  scrollController: scrollController,
-                );
-              },
-            ),
-          ],
-        ),
+  void _submitOrder() {
+    if (_fromAddress == null || _toAddress == null) {
+      _showError('Укажите адреса отправки и доставки');
+      return;
+    }
+
+    if (_recipientName == null || _recipientPhone == null) {
+      _showError('Укажите данные получателя');
+      return;
+    }
+
+    if (_selectedTariffId == null) {
+      _showError('Выберите тариф');
+      return;
+    }
+
+    if (_description == null || _description!.isEmpty) {
+      _showError('Укажите описание посылки');
+      return;
+    }
+
+    // TODO: Создание заказа
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Функция создания заказа в разработке'),
+        backgroundColor: AppColors.success,
       ),
     );
   }
 
-  void _openBoxDetailsPage(BuildContext context, String boxType) {
-    final tariffId = int.tryParse(boxType);
-    if (tariffId != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TariffDetailsPage(
-            tariffId: tariffId,
-            fromAddress: _fromAddress,
-            toAddress: _toAddress,
-          ),
-        ),
-      );
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CreateOrderPage(
-            boxType: boxType,
-            fromAddress: _fromAddress,
-            toAddress: _toAddress,
-          ),
-        ),
-      );
-    }
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: AppColors.error,
+      ),
+    );
   }
 
-  void _openUserProfile(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserProfilePage()),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        title: const Text(
+          'Главная',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const HeroIcon(
+              HeroIcons.questionMarkCircle,
+              size: 24,
+              color: AppColors.textSecondary,
+            ),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Справка в разработке'),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: HomePageContent(
+        fromAddress: _fromAddress,
+        toAddress: _toAddress,
+        recipientName: _recipientName,
+        recipientPhone: _recipientPhone,
+        tariffName: _tariffName,
+        tariffWeight: _tariffWeight,
+        description: _description,
+        isExpressDelivery: _isExpressDelivery,
+        isFragile: _isFragile,
+        photos: _photos,
+        contentPhotos: _contentPhotos,
+        deliveryDate: _deliveryDate,
+        calculatedPrice: _calculatedPrice,
+        onAddressSelection: _openAddressSelection,
+        onRecipientForm: _openRecipientForm,
+        onTariffSelection: _openTariffSelection,
+        onDescriptionForm: _openDescriptionForm,
+        onToggleExpress: () {
+          setState(() {
+            _isExpressDelivery = !_isExpressDelivery;
+          });
+        },
+        onToggleFragile: () {
+          setState(() {
+            _isFragile = !_isFragile;
+          });
+        },
+        onPickPhoto: () => _pickPhoto(isContent: false),
+        onPickContentPhoto: () => _pickPhoto(isContent: true),
+        onRemovePhoto: (photo) => _removePhoto(photo, isContent: false),
+        onRemoveContentPhoto: (photo) => _removePhoto(photo, isContent: true),
+        onSubmitOrder: _submitOrder,
+        onInfoLink: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Информация о товарах в разработке'),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
+
 class AppTypography {
+  /// Базовое семейство шрифтов Montserrat
+  static String get fontFamily => 'Montserrat';
+
+  /// Получить TextStyle с Montserrat
+  static TextStyle _montserrat({
+    required double fontSize,
+    required FontWeight fontWeight,
+    Color? color,
+    double? height,
+  }) {
+    return GoogleFonts.montserrat(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      height: height,
+    );
+  }
   static const double fontSize10 = 10.0;
   static const double fontSize12 = 12.0;
   static const double fontSize14 = 14.0;
@@ -21,184 +40,180 @@ class AppTypography {
   static const double lineHeightNormal = 1.4;
   static const double lineHeightRelaxed = 1.5;
   static const double lineHeightLoose = 1.6;
-  static const TextStyle h1 = TextStyle(
-    fontSize: fontSize32,
-    fontWeight: fontWeightBold,
-    color: AppColors.textPrimary,
-    height: lineHeightTight,
-  );
-  static const TextStyle h2 = TextStyle(
-    fontSize: fontSize28,
-    fontWeight: fontWeightBold,
-    color: AppColors.textPrimary,
-    height: lineHeightTight,
-  );
-  static const TextStyle h3 = TextStyle(
-    fontSize: fontSize24,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.textPrimary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle h4 = TextStyle(
-    fontSize: fontSize20,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.textPrimary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle h5 = TextStyle(
-    fontSize: fontSize18,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.textPrimary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle h6 = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.textPrimary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle bodyLarge = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightRegular,
-    color: AppColors.textPrimary,
-    height: lineHeightRelaxed,
-  );
-  static const TextStyle bodyMedium = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightRegular,
-    color: AppColors.textPrimary,
-    height: lineHeightRelaxed,
-  );
-  static const TextStyle bodySmall = TextStyle(
-    fontSize: fontSize12,
-    fontWeight: fontWeightRegular,
-    color: AppColors.textSecondary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle cardTitle = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.textPrimary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle sectionTitle = TextStyle(
-    fontSize: fontSize18,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.textPrimary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle subtitleLarge = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightMedium,
-    color: AppColors.textSecondary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle subtitleMedium = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightMedium,
-    color: AppColors.textSecondary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle subtitleSmall = TextStyle(
-    fontSize: fontSize12,
-    fontWeight: fontWeightMedium,
-    color: AppColors.textSecondary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle buttonLarge = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.white,
-    height: lineHeightNormal,
-  );
-  static const TextStyle buttonMedium = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.white,
-    height: lineHeightNormal,
-  );
-  static const TextStyle buttonSmall = TextStyle(
-    fontSize: fontSize12,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.white,
-    height: lineHeightNormal,
-  );
-  static const TextStyle linkLarge = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightMedium,
-    color: AppColors.primary,
-    height: lineHeightNormal,
-    decoration: TextDecoration.underline,
-  );
-  static const TextStyle linkMedium = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightMedium,
-    color: AppColors.primary,
-    height: lineHeightNormal,
-    decoration: TextDecoration.underline,
-  );
-  static const TextStyle linkSmall = TextStyle(
-    fontSize: fontSize12,
-    fontWeight: fontWeightMedium,
-    color: AppColors.primary,
-    height: lineHeightNormal,
-    decoration: TextDecoration.underline,
-  );
-  static const TextStyle caption = TextStyle(
-    fontSize: fontSize12,
-    fontWeight: fontWeightRegular,
-    color: AppColors.textTertiary,
-    height: lineHeightNormal,
-  );
-  static const TextStyle overline = TextStyle(
-    fontSize: fontSize10,
-    fontWeight: fontWeightMedium,
-    color: AppColors.textTertiary,
-    height: lineHeightNormal,
-    letterSpacing: 1.5,
-  );
-  static const TextStyle priceLarge = TextStyle(
-    fontSize: fontSize24,
-    fontWeight: fontWeightBold,
-    color: AppColors.primary,
-    height: lineHeightTight,
-  );
-  static const TextStyle priceMedium = TextStyle(
-    fontSize: fontSize20,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.primary,
-    height: lineHeightTight,
-  );
-  static const TextStyle priceSmall = TextStyle(
-    fontSize: fontSize16,
-    fontWeight: fontWeightSemiBold,
-    color: AppColors.primary,
-    height: lineHeightTight,
-  );
-  static const TextStyle success = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightMedium,
-    color: AppColors.success,
-    height: lineHeightNormal,
-  );
-  static const TextStyle warning = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightMedium,
-    color: AppColors.warning,
-    height: lineHeightNormal,
-  );
-  static const TextStyle error = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightMedium,
-    color: AppColors.error,
-    height: lineHeightNormal,
-  );
-  static const TextStyle info = TextStyle(
-    fontSize: fontSize14,
-    fontWeight: fontWeightMedium,
-    color: AppColors.info,
-    height: lineHeightNormal,
-  );
+  static TextStyle get h1 => _montserrat(
+        fontSize: fontSize32,
+        fontWeight: fontWeightBold,
+        color: AppColors.textPrimary,
+        height: lineHeightTight,
+      );
+  static TextStyle get h2 => _montserrat(
+        fontSize: fontSize28,
+        fontWeight: fontWeightBold,
+        color: AppColors.textPrimary,
+        height: lineHeightTight,
+      );
+  static TextStyle get h3 => _montserrat(
+        fontSize: fontSize24,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.textPrimary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get h4 => _montserrat(
+        fontSize: fontSize20,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.textPrimary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get h5 => _montserrat(
+        fontSize: fontSize18,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.textPrimary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get h6 => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.textPrimary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get bodyLarge => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightRegular,
+        color: AppColors.textPrimary,
+        height: lineHeightRelaxed,
+      );
+  static TextStyle get bodyMedium => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightRegular,
+        color: AppColors.textPrimary,
+        height: lineHeightRelaxed,
+      );
+  static TextStyle get bodySmall => _montserrat(
+        fontSize: fontSize12,
+        fontWeight: fontWeightRegular,
+        color: AppColors.textSecondary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get cardTitle => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.textPrimary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get sectionTitle => _montserrat(
+        fontSize: fontSize18,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.textPrimary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get subtitleLarge => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightMedium,
+        color: AppColors.textSecondary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get subtitleMedium => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightMedium,
+        color: AppColors.textSecondary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get subtitleSmall => _montserrat(
+        fontSize: fontSize12,
+        fontWeight: fontWeightMedium,
+        color: AppColors.textSecondary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get buttonLarge => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.white,
+        height: lineHeightNormal,
+      );
+  static TextStyle get buttonMedium => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.white,
+        height: lineHeightNormal,
+      );
+  static TextStyle get buttonSmall => _montserrat(
+        fontSize: fontSize12,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.white,
+        height: lineHeightNormal,
+      );
+  static TextStyle get linkLarge => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightMedium,
+        color: AppColors.primary,
+        height: lineHeightNormal,
+      ).copyWith(decoration: TextDecoration.underline);
+  static TextStyle get linkMedium => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightMedium,
+        color: AppColors.primary,
+        height: lineHeightNormal,
+      ).copyWith(decoration: TextDecoration.underline);
+  static TextStyle get linkSmall => _montserrat(
+        fontSize: fontSize12,
+        fontWeight: fontWeightMedium,
+        color: AppColors.primary,
+        height: lineHeightNormal,
+      ).copyWith(decoration: TextDecoration.underline);
+  static TextStyle get caption => _montserrat(
+        fontSize: fontSize12,
+        fontWeight: fontWeightRegular,
+        color: AppColors.textTertiary,
+        height: lineHeightNormal,
+      );
+  static TextStyle get overline => _montserrat(
+        fontSize: fontSize10,
+        fontWeight: fontWeightMedium,
+        color: AppColors.textTertiary,
+        height: lineHeightNormal,
+      ).copyWith(letterSpacing: 1.5);
+  static TextStyle get priceLarge => _montserrat(
+        fontSize: fontSize24,
+        fontWeight: fontWeightBold,
+        color: AppColors.primary,
+        height: lineHeightTight,
+      );
+  static TextStyle get priceMedium => _montserrat(
+        fontSize: fontSize20,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.primary,
+        height: lineHeightTight,
+      );
+  static TextStyle get priceSmall => _montserrat(
+        fontSize: fontSize16,
+        fontWeight: fontWeightSemiBold,
+        color: AppColors.primary,
+        height: lineHeightTight,
+      );
+  static TextStyle get success => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightMedium,
+        color: AppColors.success,
+        height: lineHeightNormal,
+      );
+  static TextStyle get warning => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightMedium,
+        color: AppColors.warning,
+        height: lineHeightNormal,
+      );
+  static TextStyle get error => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightMedium,
+        color: AppColors.error,
+        height: lineHeightNormal,
+      );
+  static TextStyle get info => _montserrat(
+        fontSize: fontSize14,
+        fontWeight: fontWeightMedium,
+        color: AppColors.info,
+        height: lineHeightNormal,
+      );
   static TextStyle withColor(TextStyle style, Color color) {
     return style.copyWith(color: color);
   }
