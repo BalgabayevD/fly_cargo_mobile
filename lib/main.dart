@@ -6,7 +6,7 @@ import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/main_scaffold_page.dart';
+import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
@@ -69,7 +69,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Sapsano',
       theme: AppTheme.lightTheme,
-      home: const MainScaffoldPage(),
+      home: const OnboardingScreen(),
+      // MainScaffoldPage(),
       onGenerateRoute: AuthRouter.generateRoute,
     );
   }

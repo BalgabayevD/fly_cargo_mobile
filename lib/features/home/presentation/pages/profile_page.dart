@@ -41,85 +41,94 @@ class ProfilePage extends StatelessWidget {
             loading: () => const Center(
               child: CircularProgressIndicator(color: AppColors.primary),
             ),
-            loaded: (profile, _) => SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                children: [
-                  _ProfileField(
-                    label: 'Номер телефона',
-                    value: profile.phone,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  _ProfileField(
-                    label: 'Имя',
-                    value: profile.firstName,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  _ProfileField(
-                    label: 'Фамилия',
-                    value: profile.lastName,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  _ProfileField(
-                    label: 'Отчество',
-                    value: profile.middleName,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  _ProfileField(
-                    label: 'Дата рождения',
-                    value: profile.birthDay.isNotEmpty
-                        ? _formatBirthDay(profile.birthDay)
-                        : '',
-                  ),
-                  const SizedBox(height: AppSpacing.xxl),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: () => _logout(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                        ),
-                        elevation: 0,
+            loaded: (profile, _) => Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      _ProfileField(
+                        label: 'Номер телефона',
+                        value: profile.phone,
                       ),
-                      child: const Text(
-                        'Выйти из профиля',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.white,
+                      const Divider(height: 1),
+                      _ProfileField(
+                        label: 'Имя',
+                        value: profile.firstName,
+                      ),
+                      const Divider(height: 1),
+                      _ProfileField(
+                        label: 'Фамилия',
+                        value: profile.lastName,
+                      ),
+                      const Divider(height: 1),
+                      _ProfileField(
+                        label: 'Отчество',
+                        value: profile.middleName,
+                      ),
+                      const Divider(height: 1),
+                      _ProfileField(
+                        label: 'Дата рождения',
+                        value: profile.birthDay.isNotEmpty
+                            ? _formatBirthDay(profile.birthDay)
+                            : '',
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () => _logout(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            'Выйти из профиля',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.white,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  InkWell(
-                    onTap: () {
-                      // TODO: Открыть форму удаления профиля
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Функция удаления профиля в разработке'),
+                      const SizedBox(height: AppSpacing.md),
+                      InkWell(
+                        onTap: () {
+                          // TODO: Открыть форму удаления профиля
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Функция удаления профиля в разработке'),
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                          child: Text(
+                            'Заявка на удаление профиля',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.primary,
+                              decoration: TextDecoration.underline,
+                              decorationColor: AppColors.primary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      );
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                      child: Text(
-                        'Заявка на удаление профиля',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primary,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.primary,
-                        ),
-                        textAlign: TextAlign.center,
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             error: (message) => Center(
               child: Text(
@@ -184,14 +193,10 @@ class _ProfileField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(
-          color: AppColors.borderLight,
-          width: 1,
-        ),
+      color: AppColors.white,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +213,9 @@ class _ProfileField extends StatelessWidget {
             value.isNotEmpty ? value : 'Не указано',
             style: TextStyle(
               fontSize: 16,
-              color: value.isNotEmpty ? AppColors.textPrimary : AppColors.textTertiary,
+              color: value.isNotEmpty
+                  ? AppColors.textPrimary
+                  : AppColors.textTertiary,
               fontWeight: FontWeight.w500,
             ),
           ),

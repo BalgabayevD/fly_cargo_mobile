@@ -3,7 +3,7 @@ import 'create_order_request.dart';
 class OrderData {
   final bool isDefect;
   final bool isFragile;
-  final String category;
+  final String? category;
   final String comment;
   final List<String> contentPhotos;
   final String description;
@@ -11,9 +11,9 @@ class OrderData {
   final String fromApartment;
   final int fromCityId;
   final String fromEntrance;
-  final String fromFloor;
-  final double fromLatitude;
-  final double fromLongitude;
+  final String? fromFloor;
+  final double? fromLatitude;
+  final double? fromLongitude;
   final double height;
   final double length;
   final List<String> photos;
@@ -22,19 +22,18 @@ class OrderData {
   final String toApartment;
   final int toCityId;
   final String toEntrance;
-  final String toFloor;
-  final double toLatitude;
-  final double toLongitude;
+  final String? toFloor;
+  final double? toLatitude;
+  final double? toLongitude;
   final String toName;
   final String toPhone;
-  final double volumetricWeight;
+  final double? volumetricWeight;
   final double weight;
   final double width;
 
   const OrderData({
     required this.isDefect,
     required this.isFragile,
-    required this.category,
     required this.comment,
     required this.contentPhotos,
     required this.description,
@@ -42,9 +41,6 @@ class OrderData {
     required this.fromApartment,
     required this.fromCityId,
     required this.fromEntrance,
-    required this.fromFloor,
-    required this.fromLatitude,
-    required this.fromLongitude,
     required this.height,
     required this.length,
     required this.photos,
@@ -53,23 +49,30 @@ class OrderData {
     required this.toApartment,
     required this.toCityId,
     required this.toEntrance,
-    required this.toFloor,
-    required this.toLatitude,
-    required this.toLongitude,
     required this.toName,
     required this.toPhone,
-    required this.volumetricWeight,
     required this.weight,
     required this.width,
+    this.category,
+    this.fromFloor,
+    this.fromLatitude,
+    this.fromLongitude,
+    this.toFloor,
+    this.toLatitude,
+    this.toLongitude,
+    this.volumetricWeight,
   });
 
   CreateOrderRequest toCreateOrderRequest() {
+    // Если contentPhotos пустые, используем photos
+    final finalContentPhotos = contentPhotos.isEmpty ? photos : contentPhotos;
+
     return CreateOrderRequest(
       isDefect: isDefect,
       isFragile: isFragile,
       category: category,
       comment: comment,
-      contentPhotos: contentPhotos,
+      contentPhotos: finalContentPhotos,
       description: description,
       fromAddress: fromAddress,
       fromApartment: fromApartment,
@@ -97,4 +100,3 @@ class OrderData {
     );
   }
 }
-

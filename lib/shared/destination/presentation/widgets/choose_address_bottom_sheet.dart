@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/shared/destination/presentation/models/city_type.dart';
+import 'package:fly_cargo/shared/destination/presentation/widgets/address_autocomplete_field.dart';
 import 'package:fly_cargo/shared/destination/presentation/widgets/address_form_fields.dart';
 import 'package:fly_cargo/shared/destination/presentation/widgets/choose_city_bottom_sheet.dart';
 import 'package:heroicons/heroicons.dart';
@@ -38,7 +42,8 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _selectedCity = widget.initialCity ??
+    _selectedCity =
+        widget.initialCity ??
         (widget.initialAddress != null
             ? CityModel(
                 id: widget.initialAddress!.cityId,
@@ -49,21 +54,30 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
       text: widget.initialAddress?.address ?? '',
     );
     _apartmentController = TextEditingController(
-      text: widget.initialAddress?.fullAddress?.split(', ').firstWhere(
+      text:
+          widget.initialAddress?.fullAddress
+              ?.split(', ')
+              .firstWhere(
                 (part) => part.toLowerCase().contains('кв'),
                 orElse: () => '',
               ) ??
           '',
     );
     _entranceController = TextEditingController(
-      text: widget.initialAddress?.fullAddress?.split(', ').firstWhere(
+      text:
+          widget.initialAddress?.fullAddress
+              ?.split(', ')
+              .firstWhere(
                 (part) => part.toLowerCase().contains('подъезд'),
                 orElse: () => '',
               ) ??
           '',
     );
     _floorController = TextEditingController(
-      text: widget.initialAddress?.fullAddress?.split(', ').firstWhere(
+      text:
+          widget.initialAddress?.fullAddress
+              ?.split(', ')
+              .firstWhere(
                 (part) => part.toLowerCase().contains('этаж'),
                 orElse: () => '',
               ) ??
@@ -144,6 +158,15 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
       address: address,
       cityId: _selectedCity!.id,
       fullAddress: fullAddress,
+      apartment: _apartmentController.text.trim().isNotEmpty
+          ? _apartmentController.text.trim()
+          : null,
+      entrance: _entranceController.text.trim().isNotEmpty
+          ? _entranceController.text.trim()
+          : null,
+      floor: _floorController.text.trim().isNotEmpty
+          ? _floorController.text.trim()
+          : null,
     );
 
     Navigator.pop(context, addressModel);
@@ -201,11 +224,20 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                     onTap: _selectCity,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  // Адрес
-                  AddressTextField(
-                    label: 'Адрес',
-                    controller: _addressController,
-                    hintText: 'Введите адрес',
+                  // Адрес с автокомплитом
+                  BlocProvider.value(
+                    value: getIt<DestinationBloc>(),
+                    child: AddressAutocompleteField(
+                      label: 'Адрес',
+                      controller: _addressController,
+                      hintText: 'Введите адрес',
+                      cityName: _selectedCity?.name,
+                      onAddressSelected: (address) {
+                        setState(() {
+                          _addressController.text = address.address;
+                        });
+                      },
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   // Квартира
@@ -268,4 +300,3 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
     );
   }
 }
-

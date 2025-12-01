@@ -10,6 +10,7 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
+import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,6 +30,13 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     _loadAppVersion();
+    // Загружаем профиль при открытии страницы, если пользователь авторизован
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState is AuthAuthenticated) {
+        context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
+      }
+    });
   }
 
   Future<void> _loadAppVersion() async {
@@ -58,77 +66,85 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, authState) {
-          return BlocBuilder<ProfileBloc, ProfileState>(
-            builder: (context, profileState) {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: [
-                        AuthSection(
-                          authState: authState,
-                          profileState: profileState,
-                          onProfileTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ProfilePage(),
-                              ),
-                            );
-                          },
-                          onAuthTap: () {
-                            AuthRouter.navigateToPhoneInput(context);
-                          },
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        LanguageSection(
-                          onTap: () {
-                            // TODO: Открыть выбор языка
-                          },
-                        ),
-                        NotificationsSection(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const UserNotificationsPage(),
-                              ),
-                            );
-                          },
-                        ),
-                        ContactsSection(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ContactsPage(),
-                              ),
-                            );
-                          },
-                        ),
-                        LegalSections(
-                          onPrivacyTap: () =>
-                              _openUrl('https://example.com/privacy'),
-                          onTermsTap: () =>
-                              _openUrl('https://example.com/terms'),
-                          onLegalTap: () =>
-                              _openUrl('https://example.com/legal'),
-                          onRulesTap: () =>
-                              _openUrl('https://example.com/rules'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SettingsFooter(appVersion: _appVersion),
-                ],
-              );
-            },
-          );
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, authState) {
+          // Загружаем профиль при авторизации
+          if (authState is AuthAuthenticated) {
+            context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
+          }
         },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, authState) {
+            return BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, profileState) {
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: [
+                          AuthSection(
+                            authState: authState,
+                            profileState: profileState,
+                            onProfileTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfilePage(),
+                                ),
+                              );
+                            },
+                            onAuthTap: () {
+                              AuthRouter.navigateToPhoneInput(context);
+                            },
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          LanguageSection(
+                            onTap: () {
+                              // TODO: Открыть выбор языка
+                            },
+                          ),
+                          NotificationsSection(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const UserNotificationsPage(),
+                                ),
+                              );
+                            },
+                          ),
+                          ContactsSection(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ContactsPage(),
+                                ),
+                              );
+                            },
+                          ),
+                          LegalSections(
+                            onPrivacyTap: () =>
+                                _openUrl('https://example.com/privacy'),
+                            onTermsTap: () =>
+                                _openUrl('https://example.com/terms'),
+                            onLegalTap: () =>
+                                _openUrl('https://example.com/legal'),
+                            onRulesTap: () =>
+                                _openUrl('https://example.com/rules'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SettingsFooter(appVersion: _appVersion),
+                  ],
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

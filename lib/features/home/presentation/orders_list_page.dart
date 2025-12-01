@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/features/home/presentation/widgets/order_card.dart';
+import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
+import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 
 /// Страница списка заказов для вкладки "Заказы"
-class OrdersListPage extends StatelessWidget {
+class OrdersListPage extends StatefulWidget {
   const OrdersListPage({super.key});
+
+  @override
+  State<OrdersListPage> createState() => _OrdersListPageState();
+}
+
+class _OrdersListPageState extends State<OrdersListPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Загружаем заказы при открытии страницы
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<OrdersBloc>().add(const GetClientOrdersEvent());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +56,39 @@ class OrdersListPage extends StatelessWidget {
             return _ErrorStateWidget(message: state.message);
           }
 
-          // Временная заглушка с пустым состоянием
+          if (state is OrdersLoaded) {
+            if (state.orders.isEmpty) {
+              return const _EmptyStateWidget();
+            }
+            return _OrdersListWidget(orders: state.orders);
+          }
+
+          // Начальное состояние - показываем пустое состояние
           return const _EmptyStateWidget();
         },
       ),
+    );
+  }
+}
+
+/// Виджет списка заказов
+class _OrdersListWidget extends StatelessWidget {
+  final List<OrderModel> orders;
+
+  const _OrdersListWidget({required this.orders});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      itemCount: orders.length,
+      itemBuilder: (context, index) {
+        final order = orders[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: OrderCard(order: order),
+        );
+      },
     );
   }
 }

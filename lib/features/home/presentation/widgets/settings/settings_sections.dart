@@ -21,7 +21,7 @@ class AuthSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isAuthenticated = authState is AuthAuthenticated;
-    String? userName;
+    String? displayName;
     String? userPhone;
 
     if (isAuthenticated) {
@@ -30,7 +30,12 @@ class AuthSection extends StatelessWidget {
         loading: () {},
         loaded: (profile, _) {
           final fullName = '${profile.firstName} ${profile.lastName}'.trim();
-          userName = fullName.isNotEmpty ? fullName : null;
+          // Если есть имя - используем его, иначе телефон
+          if (fullName.isNotEmpty) {
+            displayName = fullName;
+          } else if (profile.phone.isNotEmpty) {
+            displayName = profile.phone;
+          }
           userPhone = profile.phone.isNotEmpty ? profile.phone : null;
         },
         error: (_) {},
@@ -38,8 +43,9 @@ class AuthSection extends StatelessWidget {
     }
 
     return SettingsUserMenuItem(
-      userName: userName,
+      displayName: displayName,
       userPhone: userPhone,
+      isAuthenticated: isAuthenticated,
       onTap: isAuthenticated ? onProfileTap : onAuthTap,
     );
   }

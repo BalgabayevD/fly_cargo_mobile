@@ -77,13 +77,15 @@ class SettingsMenuItem extends StatelessWidget {
 
 /// Пункт меню с информацией о пользователе
 class SettingsUserMenuItem extends StatelessWidget {
-  final String? userName;
+  final String? displayName;
   final String? userPhone;
+  final bool isAuthenticated;
   final VoidCallback onTap;
 
   const SettingsUserMenuItem({
     required this.onTap,
-    this.userName,
+    required this.isAuthenticated,
+    this.displayName,
     this.userPhone,
     super.key,
   });
@@ -107,26 +109,14 @@ class SettingsUserMenuItem extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
-              child: userName != null && userPhone != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          userName!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: AppColors.textPrimary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          userPhone!,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                      ],
+              child: isAuthenticated && displayName != null
+                  ? Text(
+                      displayName!,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w500,
+                      ),
                     )
                   : const Text(
                       'Авторизация в приложении',
