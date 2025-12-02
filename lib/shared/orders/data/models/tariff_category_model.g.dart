@@ -14,7 +14,7 @@ _TariffCategoryModel _$TariffCategoryModelFromJson(Map<String, dynamic> json) =>
       deletedAt: json['deletedAt'] as String?,
       name: json['name'] as String,
       key: json['key'] as String,
-      sortIndex: (json['sortIndex'] as num?)?.toInt(),
+      sortIndex: (json['sort_index'] as num?)?.toInt(),
       active: json['active'] as bool,
       tariffs: (json['tariffs'] as List<dynamic>?)
           ?.map((e) => TariffModel.fromJson(e as Map<String, dynamic>))
@@ -30,7 +30,7 @@ Map<String, dynamic> _$TariffCategoryModelToJson(
   'deletedAt': instance.deletedAt,
   'name': instance.name,
   'key': instance.key,
-  'sortIndex': instance.sortIndex,
+  'sort_index': instance.sortIndex,
   'active': instance.active,
   'tariffs': instance.tariffs,
 };

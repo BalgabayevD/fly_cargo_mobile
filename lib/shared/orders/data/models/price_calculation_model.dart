@@ -39,4 +39,3 @@ sealed class PriceCalculationModel with _$PriceCalculationModel {
   factory PriceCalculationModel.fromJson(Map<String, dynamic> json) =>
       _$PriceCalculationModelFromJson(json);
 }
-

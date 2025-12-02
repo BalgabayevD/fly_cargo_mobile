@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Радио-кнопка для выбора города
 class CityRadioOption extends StatelessWidget {
   final String cityName;
   final bool selected;
@@ -74,4 +73,3 @@ class CityRadioOption extends StatelessWidget {
     );
   }
 }
-

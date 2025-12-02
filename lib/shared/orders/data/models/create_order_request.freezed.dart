@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateOrderRequest {
 
- bool get isDefect; bool get isFragile; String get comment; List<String> get contentPhotos; String get description; String get fromAddress; String get fromApartment; int get fromCityId; String get fromEntrance; double get height; double get length; List<String> get photos; int get tariffId; String get toAddress; String get toApartment; int get toCityId; String get toEntrance; String get toName; String get toPhone; double get weight; double get width;@JsonKey(includeIfNull: false) String? get category;@JsonKey(includeIfNull: false) String? get fromFloor;@JsonKey(includeIfNull: false) double? get fromLatitude;@JsonKey(includeIfNull: false) double? get fromLongitude;@JsonKey(includeIfNull: false) String? get toFloor;@JsonKey(includeIfNull: false) double? get toLatitude;@JsonKey(includeIfNull: false) double? get toLongitude;@JsonKey(includeIfNull: false) double? get volumetricWeight;
+ bool get isDefect; bool get isFragile; List<String> get contentPhotos; String get description; String get fromAddress; int get fromCityId; double get height; double get length; List<String> get photos; int get tariffId; String get toAddress; int get toCityId; String get toName; String get toPhone; double get weight; double get width;@JsonKey(includeIfNull: false) String? get category;@JsonKey(includeIfNull: false) String? get comment;@JsonKey(includeIfNull: false) String? get fromApartment;@JsonKey(includeIfNull: false) String? get fromEntrance;@JsonKey(includeIfNull: false) String? get fromFloor;@JsonKey(includeIfNull: false) double? get fromLatitude;@JsonKey(includeIfNull: false) double? get fromLongitude;@JsonKey(includeIfNull: false) String? get toApartment;@JsonKey(includeIfNull: false) String? get toEntrance;@JsonKey(includeIfNull: false) String? get toFloor;@JsonKey(includeIfNull: false) double? get toLatitude;@JsonKey(includeIfNull: false) double? get toLongitude;
 /// Create a copy of CreateOrderRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CreateOrderRequestCopyWith<CreateOrderRequest> get copyWith => _$CreateOrderReq
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateOrderRequest&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&(identical(other.comment, comment) || other.comment == comment)&&const DeepCollectionEquality().equals(other.contentPhotos, contentPhotos)&&(identical(other.description, description) || other.description == description)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&const DeepCollectionEquality().equals(other.photos, photos)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.category, category) || other.category == category)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateOrderRequest&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&const DeepCollectionEquality().equals(other.contentPhotos, contentPhotos)&&(identical(other.description, description) || other.description == description)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&const DeepCollectionEquality().equals(other.photos, photos)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.category, category) || other.category == category)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,isDefect,isFragile,comment,const DeepCollectionEquality().hash(contentPhotos),description,fromAddress,fromApartment,fromCityId,fromEntrance,height,length,const DeepCollectionEquality().hash(photos),tariffId,toAddress,toApartment,toCityId,toEntrance,toName,toPhone,weight,width,category,fromFloor,fromLatitude,fromLongitude,toFloor,toLatitude,toLongitude,volumetricWeight]);
+int get hashCode => Object.hashAll([runtimeType,isDefect,isFragile,const DeepCollectionEquality().hash(contentPhotos),description,fromAddress,fromCityId,height,length,const DeepCollectionEquality().hash(photos),tariffId,toAddress,toCityId,toName,toPhone,weight,width,category,comment,fromApartment,fromEntrance,fromFloor,fromLatitude,fromLongitude,toApartment,toEntrance,toFloor,toLatitude,toLongitude]);
 
 @override
 String toString() {
-  return 'CreateOrderRequest(isDefect: $isDefect, isFragile: $isFragile, comment: $comment, contentPhotos: $contentPhotos, description: $description, fromAddress: $fromAddress, fromApartment: $fromApartment, fromCityId: $fromCityId, fromEntrance: $fromEntrance, height: $height, length: $length, photos: $photos, tariffId: $tariffId, toAddress: $toAddress, toApartment: $toApartment, toCityId: $toCityId, toEntrance: $toEntrance, toName: $toName, toPhone: $toPhone, weight: $weight, width: $width, category: $category, fromFloor: $fromFloor, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, toFloor: $toFloor, toLatitude: $toLatitude, toLongitude: $toLongitude, volumetricWeight: $volumetricWeight)';
+  return 'CreateOrderRequest(isDefect: $isDefect, isFragile: $isFragile, contentPhotos: $contentPhotos, description: $description, fromAddress: $fromAddress, fromCityId: $fromCityId, height: $height, length: $length, photos: $photos, tariffId: $tariffId, toAddress: $toAddress, toCityId: $toCityId, toName: $toName, toPhone: $toPhone, weight: $weight, width: $width, category: $category, comment: $comment, fromApartment: $fromApartment, fromEntrance: $fromEntrance, fromFloor: $fromFloor, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, toApartment: $toApartment, toEntrance: $toEntrance, toFloor: $toFloor, toLatitude: $toLatitude, toLongitude: $toLongitude)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CreateOrderRequestCopyWith<$Res>  {
   factory $CreateOrderRequestCopyWith(CreateOrderRequest value, $Res Function(CreateOrderRequest) _then) = _$CreateOrderRequestCopyWithImpl;
 @useResult
 $Res call({
- bool isDefect, bool isFragile, String comment, List<String> contentPhotos, String description, String fromAddress, String fromApartment, int fromCityId, String fromEntrance, double height, double length, List<String> photos, int tariffId, String toAddress, String toApartment, int toCityId, String toEntrance, String toName, String toPhone, double weight, double width,@JsonKey(includeIfNull: false) String? category,@JsonKey(includeIfNull: false) String? fromFloor,@JsonKey(includeIfNull: false) double? fromLatitude,@JsonKey(includeIfNull: false) double? fromLongitude,@JsonKey(includeIfNull: false) String? toFloor,@JsonKey(includeIfNull: false) double? toLatitude,@JsonKey(includeIfNull: false) double? toLongitude,@JsonKey(includeIfNull: false) double? volumetricWeight
+ bool isDefect, bool isFragile, List<String> contentPhotos, String description, String fromAddress, int fromCityId, double height, double length, List<String> photos, int tariffId, String toAddress, int toCityId, String toName, String toPhone, double weight, double width,@JsonKey(includeIfNull: false) String? category,@JsonKey(includeIfNull: false) String? comment,@JsonKey(includeIfNull: false) String? fromApartment,@JsonKey(includeIfNull: false) String? fromEntrance,@JsonKey(includeIfNull: false) String? fromFloor,@JsonKey(includeIfNull: false) double? fromLatitude,@JsonKey(includeIfNull: false) double? fromLongitude,@JsonKey(includeIfNull: false) String? toApartment,@JsonKey(includeIfNull: false) String? toEntrance,@JsonKey(includeIfNull: false) String? toFloor,@JsonKey(includeIfNull: false) double? toLatitude,@JsonKey(includeIfNull: false) double? toLongitude
 });
 
 
@@ -65,37 +65,36 @@ class _$CreateOrderRequestCopyWithImpl<$Res>
 
 /// Create a copy of CreateOrderRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isDefect = null,Object? isFragile = null,Object? comment = null,Object? contentPhotos = null,Object? description = null,Object? fromAddress = null,Object? fromApartment = null,Object? fromCityId = null,Object? fromEntrance = null,Object? height = null,Object? length = null,Object? photos = null,Object? tariffId = null,Object? toAddress = null,Object? toApartment = null,Object? toCityId = null,Object? toEntrance = null,Object? toName = null,Object? toPhone = null,Object? weight = null,Object? width = null,Object? category = freezed,Object? fromFloor = freezed,Object? fromLatitude = freezed,Object? fromLongitude = freezed,Object? toFloor = freezed,Object? toLatitude = freezed,Object? toLongitude = freezed,Object? volumetricWeight = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isDefect = null,Object? isFragile = null,Object? contentPhotos = null,Object? description = null,Object? fromAddress = null,Object? fromCityId = null,Object? height = null,Object? length = null,Object? photos = null,Object? tariffId = null,Object? toAddress = null,Object? toCityId = null,Object? toName = null,Object? toPhone = null,Object? weight = null,Object? width = null,Object? category = freezed,Object? comment = freezed,Object? fromApartment = freezed,Object? fromEntrance = freezed,Object? fromFloor = freezed,Object? fromLatitude = freezed,Object? fromLongitude = freezed,Object? toApartment = freezed,Object? toEntrance = freezed,Object? toFloor = freezed,Object? toLatitude = freezed,Object? toLongitude = freezed,}) {
   return _then(_self.copyWith(
 isDefect: null == isDefect ? _self.isDefect : isDefect // ignore: cast_nullable_to_non_nullable
 as bool,isFragile: null == isFragile ? _self.isFragile : isFragile // ignore: cast_nullable_to_non_nullable
-as bool,comment: null == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
-as String,contentPhotos: null == contentPhotos ? _self.contentPhotos : contentPhotos // ignore: cast_nullable_to_non_nullable
+as bool,contentPhotos: null == contentPhotos ? _self.contentPhotos : contentPhotos // ignore: cast_nullable_to_non_nullable
 as List<String>,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,fromAddress: null == fromAddress ? _self.fromAddress : fromAddress // ignore: cast_nullable_to_non_nullable
-as String,fromApartment: null == fromApartment ? _self.fromApartment : fromApartment // ignore: cast_nullable_to_non_nullable
 as String,fromCityId: null == fromCityId ? _self.fromCityId : fromCityId // ignore: cast_nullable_to_non_nullable
-as int,fromEntrance: null == fromEntrance ? _self.fromEntrance : fromEntrance // ignore: cast_nullable_to_non_nullable
-as String,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as int,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
 as double,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
 as double,photos: null == photos ? _self.photos : photos // ignore: cast_nullable_to_non_nullable
 as List<String>,tariffId: null == tariffId ? _self.tariffId : tariffId // ignore: cast_nullable_to_non_nullable
 as int,toAddress: null == toAddress ? _self.toAddress : toAddress // ignore: cast_nullable_to_non_nullable
-as String,toApartment: null == toApartment ? _self.toApartment : toApartment // ignore: cast_nullable_to_non_nullable
 as String,toCityId: null == toCityId ? _self.toCityId : toCityId // ignore: cast_nullable_to_non_nullable
-as int,toEntrance: null == toEntrance ? _self.toEntrance : toEntrance // ignore: cast_nullable_to_non_nullable
-as String,toName: null == toName ? _self.toName : toName // ignore: cast_nullable_to_non_nullable
+as int,toName: null == toName ? _self.toName : toName // ignore: cast_nullable_to_non_nullable
 as String,toPhone: null == toPhone ? _self.toPhone : toPhone // ignore: cast_nullable_to_non_nullable
 as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as double,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
 as double,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String?,comment: freezed == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
+as String?,fromApartment: freezed == fromApartment ? _self.fromApartment : fromApartment // ignore: cast_nullable_to_non_nullable
+as String?,fromEntrance: freezed == fromEntrance ? _self.fromEntrance : fromEntrance // ignore: cast_nullable_to_non_nullable
 as String?,fromFloor: freezed == fromFloor ? _self.fromFloor : fromFloor // ignore: cast_nullable_to_non_nullable
 as String?,fromLatitude: freezed == fromLatitude ? _self.fromLatitude : fromLatitude // ignore: cast_nullable_to_non_nullable
 as double?,fromLongitude: freezed == fromLongitude ? _self.fromLongitude : fromLongitude // ignore: cast_nullable_to_non_nullable
-as double?,toFloor: freezed == toFloor ? _self.toFloor : toFloor // ignore: cast_nullable_to_non_nullable
+as double?,toApartment: freezed == toApartment ? _self.toApartment : toApartment // ignore: cast_nullable_to_non_nullable
+as String?,toEntrance: freezed == toEntrance ? _self.toEntrance : toEntrance // ignore: cast_nullable_to_non_nullable
+as String?,toFloor: freezed == toFloor ? _self.toFloor : toFloor // ignore: cast_nullable_to_non_nullable
 as String?,toLatitude: freezed == toLatitude ? _self.toLatitude : toLatitude // ignore: cast_nullable_to_non_nullable
 as double?,toLongitude: freezed == toLongitude ? _self.toLongitude : toLongitude // ignore: cast_nullable_to_non_nullable
-as double?,volumetricWeight: freezed == volumetricWeight ? _self.volumetricWeight : volumetricWeight // ignore: cast_nullable_to_non_nullable
 as double?,
   ));
 }
@@ -178,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  String comment,  List<String> contentPhotos,  String description,  String fromAddress,  String fromApartment,  int fromCityId,  String fromEntrance,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  String toApartment,  int toCityId,  String toEntrance,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude, @JsonKey(includeIfNull: false)  double? volumetricWeight)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? comment, @JsonKey(includeIfNull: false)  String? fromApartment, @JsonKey(includeIfNull: false)  String? fromEntrance, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toApartment, @JsonKey(includeIfNull: false)  String? toEntrance, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateOrderRequest() when $default != null:
-return $default(_that.isDefect,_that.isFragile,_that.comment,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromApartment,_that.fromCityId,_that.fromEntrance,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toApartment,_that.toCityId,_that.toEntrance,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toFloor,_that.toLatitude,_that.toLongitude,_that.volumetricWeight);case _:
+return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromCityId,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toCityId,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.comment,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toLatitude,_that.toLongitude);case _:
   return orElse();
 
 }
@@ -199,10 +198,10 @@ return $default(_that.isDefect,_that.isFragile,_that.comment,_that.contentPhotos
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  String comment,  List<String> contentPhotos,  String description,  String fromAddress,  String fromApartment,  int fromCityId,  String fromEntrance,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  String toApartment,  int toCityId,  String toEntrance,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude, @JsonKey(includeIfNull: false)  double? volumetricWeight)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? comment, @JsonKey(includeIfNull: false)  String? fromApartment, @JsonKey(includeIfNull: false)  String? fromEntrance, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toApartment, @JsonKey(includeIfNull: false)  String? toEntrance, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude)  $default,) {final _that = this;
 switch (_that) {
 case _CreateOrderRequest():
-return $default(_that.isDefect,_that.isFragile,_that.comment,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromApartment,_that.fromCityId,_that.fromEntrance,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toApartment,_that.toCityId,_that.toEntrance,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toFloor,_that.toLatitude,_that.toLongitude,_that.volumetricWeight);}
+return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromCityId,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toCityId,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.comment,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toLatitude,_that.toLongitude);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -216,10 +215,10 @@ return $default(_that.isDefect,_that.isFragile,_that.comment,_that.contentPhotos
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDefect,  bool isFragile,  String comment,  List<String> contentPhotos,  String description,  String fromAddress,  String fromApartment,  int fromCityId,  String fromEntrance,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  String toApartment,  int toCityId,  String toEntrance,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude, @JsonKey(includeIfNull: false)  double? volumetricWeight)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? comment, @JsonKey(includeIfNull: false)  String? fromApartment, @JsonKey(includeIfNull: false)  String? fromEntrance, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toApartment, @JsonKey(includeIfNull: false)  String? toEntrance, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateOrderRequest() when $default != null:
-return $default(_that.isDefect,_that.isFragile,_that.comment,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromApartment,_that.fromCityId,_that.fromEntrance,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toApartment,_that.toCityId,_that.toEntrance,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toFloor,_that.toLatitude,_that.toLongitude,_that.volumetricWeight);case _:
+return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromCityId,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toCityId,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.comment,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toLatitude,_that.toLongitude);case _:
   return null;
 
 }
@@ -231,12 +230,11 @@ return $default(_that.isDefect,_that.isFragile,_that.comment,_that.contentPhotos
 @JsonSerializable()
 
 class _CreateOrderRequest extends CreateOrderRequest {
-  const _CreateOrderRequest({required this.isDefect, required this.isFragile, required this.comment, required final  List<String> contentPhotos, required this.description, required this.fromAddress, required this.fromApartment, required this.fromCityId, required this.fromEntrance, required this.height, required this.length, required final  List<String> photos, required this.tariffId, required this.toAddress, required this.toApartment, required this.toCityId, required this.toEntrance, required this.toName, required this.toPhone, required this.weight, required this.width, @JsonKey(includeIfNull: false) this.category, @JsonKey(includeIfNull: false) this.fromFloor, @JsonKey(includeIfNull: false) this.fromLatitude, @JsonKey(includeIfNull: false) this.fromLongitude, @JsonKey(includeIfNull: false) this.toFloor, @JsonKey(includeIfNull: false) this.toLatitude, @JsonKey(includeIfNull: false) this.toLongitude, @JsonKey(includeIfNull: false) this.volumetricWeight}): _contentPhotos = contentPhotos,_photos = photos,super._();
+  const _CreateOrderRequest({required this.isDefect, required this.isFragile, required final  List<String> contentPhotos, required this.description, required this.fromAddress, required this.fromCityId, required this.height, required this.length, required final  List<String> photos, required this.tariffId, required this.toAddress, required this.toCityId, required this.toName, required this.toPhone, required this.weight, required this.width, @JsonKey(includeIfNull: false) this.category, @JsonKey(includeIfNull: false) this.comment, @JsonKey(includeIfNull: false) this.fromApartment, @JsonKey(includeIfNull: false) this.fromEntrance, @JsonKey(includeIfNull: false) this.fromFloor, @JsonKey(includeIfNull: false) this.fromLatitude, @JsonKey(includeIfNull: false) this.fromLongitude, @JsonKey(includeIfNull: false) this.toApartment, @JsonKey(includeIfNull: false) this.toEntrance, @JsonKey(includeIfNull: false) this.toFloor, @JsonKey(includeIfNull: false) this.toLatitude, @JsonKey(includeIfNull: false) this.toLongitude}): _contentPhotos = contentPhotos,_photos = photos,super._();
   factory _CreateOrderRequest.fromJson(Map<String, dynamic> json) => _$CreateOrderRequestFromJson(json);
 
 @override final  bool isDefect;
 @override final  bool isFragile;
-@override final  String comment;
  final  List<String> _contentPhotos;
 @override List<String> get contentPhotos {
   if (_contentPhotos is EqualUnmodifiableListView) return _contentPhotos;
@@ -246,9 +244,7 @@ class _CreateOrderRequest extends CreateOrderRequest {
 
 @override final  String description;
 @override final  String fromAddress;
-@override final  String fromApartment;
 @override final  int fromCityId;
-@override final  String fromEntrance;
 @override final  double height;
 @override final  double length;
  final  List<String> _photos;
@@ -260,21 +256,23 @@ class _CreateOrderRequest extends CreateOrderRequest {
 
 @override final  int tariffId;
 @override final  String toAddress;
-@override final  String toApartment;
 @override final  int toCityId;
-@override final  String toEntrance;
 @override final  String toName;
 @override final  String toPhone;
 @override final  double weight;
 @override final  double width;
 @override@JsonKey(includeIfNull: false) final  String? category;
+@override@JsonKey(includeIfNull: false) final  String? comment;
+@override@JsonKey(includeIfNull: false) final  String? fromApartment;
+@override@JsonKey(includeIfNull: false) final  String? fromEntrance;
 @override@JsonKey(includeIfNull: false) final  String? fromFloor;
 @override@JsonKey(includeIfNull: false) final  double? fromLatitude;
 @override@JsonKey(includeIfNull: false) final  double? fromLongitude;
+@override@JsonKey(includeIfNull: false) final  String? toApartment;
+@override@JsonKey(includeIfNull: false) final  String? toEntrance;
 @override@JsonKey(includeIfNull: false) final  String? toFloor;
 @override@JsonKey(includeIfNull: false) final  double? toLatitude;
 @override@JsonKey(includeIfNull: false) final  double? toLongitude;
-@override@JsonKey(includeIfNull: false) final  double? volumetricWeight;
 
 /// Create a copy of CreateOrderRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -289,16 +287,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateOrderRequest&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&(identical(other.comment, comment) || other.comment == comment)&&const DeepCollectionEquality().equals(other._contentPhotos, _contentPhotos)&&(identical(other.description, description) || other.description == description)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&const DeepCollectionEquality().equals(other._photos, _photos)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.category, category) || other.category == category)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateOrderRequest&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&const DeepCollectionEquality().equals(other._contentPhotos, _contentPhotos)&&(identical(other.description, description) || other.description == description)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&const DeepCollectionEquality().equals(other._photos, _photos)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.category, category) || other.category == category)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,isDefect,isFragile,comment,const DeepCollectionEquality().hash(_contentPhotos),description,fromAddress,fromApartment,fromCityId,fromEntrance,height,length,const DeepCollectionEquality().hash(_photos),tariffId,toAddress,toApartment,toCityId,toEntrance,toName,toPhone,weight,width,category,fromFloor,fromLatitude,fromLongitude,toFloor,toLatitude,toLongitude,volumetricWeight]);
+int get hashCode => Object.hashAll([runtimeType,isDefect,isFragile,const DeepCollectionEquality().hash(_contentPhotos),description,fromAddress,fromCityId,height,length,const DeepCollectionEquality().hash(_photos),tariffId,toAddress,toCityId,toName,toPhone,weight,width,category,comment,fromApartment,fromEntrance,fromFloor,fromLatitude,fromLongitude,toApartment,toEntrance,toFloor,toLatitude,toLongitude]);
 
 @override
 String toString() {
-  return 'CreateOrderRequest(isDefect: $isDefect, isFragile: $isFragile, comment: $comment, contentPhotos: $contentPhotos, description: $description, fromAddress: $fromAddress, fromApartment: $fromApartment, fromCityId: $fromCityId, fromEntrance: $fromEntrance, height: $height, length: $length, photos: $photos, tariffId: $tariffId, toAddress: $toAddress, toApartment: $toApartment, toCityId: $toCityId, toEntrance: $toEntrance, toName: $toName, toPhone: $toPhone, weight: $weight, width: $width, category: $category, fromFloor: $fromFloor, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, toFloor: $toFloor, toLatitude: $toLatitude, toLongitude: $toLongitude, volumetricWeight: $volumetricWeight)';
+  return 'CreateOrderRequest(isDefect: $isDefect, isFragile: $isFragile, contentPhotos: $contentPhotos, description: $description, fromAddress: $fromAddress, fromCityId: $fromCityId, height: $height, length: $length, photos: $photos, tariffId: $tariffId, toAddress: $toAddress, toCityId: $toCityId, toName: $toName, toPhone: $toPhone, weight: $weight, width: $width, category: $category, comment: $comment, fromApartment: $fromApartment, fromEntrance: $fromEntrance, fromFloor: $fromFloor, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, toApartment: $toApartment, toEntrance: $toEntrance, toFloor: $toFloor, toLatitude: $toLatitude, toLongitude: $toLongitude)';
 }
 
 
@@ -309,7 +307,7 @@ abstract mixin class _$CreateOrderRequestCopyWith<$Res> implements $CreateOrderR
   factory _$CreateOrderRequestCopyWith(_CreateOrderRequest value, $Res Function(_CreateOrderRequest) _then) = __$CreateOrderRequestCopyWithImpl;
 @override @useResult
 $Res call({
- bool isDefect, bool isFragile, String comment, List<String> contentPhotos, String description, String fromAddress, String fromApartment, int fromCityId, String fromEntrance, double height, double length, List<String> photos, int tariffId, String toAddress, String toApartment, int toCityId, String toEntrance, String toName, String toPhone, double weight, double width,@JsonKey(includeIfNull: false) String? category,@JsonKey(includeIfNull: false) String? fromFloor,@JsonKey(includeIfNull: false) double? fromLatitude,@JsonKey(includeIfNull: false) double? fromLongitude,@JsonKey(includeIfNull: false) String? toFloor,@JsonKey(includeIfNull: false) double? toLatitude,@JsonKey(includeIfNull: false) double? toLongitude,@JsonKey(includeIfNull: false) double? volumetricWeight
+ bool isDefect, bool isFragile, List<String> contentPhotos, String description, String fromAddress, int fromCityId, double height, double length, List<String> photos, int tariffId, String toAddress, int toCityId, String toName, String toPhone, double weight, double width,@JsonKey(includeIfNull: false) String? category,@JsonKey(includeIfNull: false) String? comment,@JsonKey(includeIfNull: false) String? fromApartment,@JsonKey(includeIfNull: false) String? fromEntrance,@JsonKey(includeIfNull: false) String? fromFloor,@JsonKey(includeIfNull: false) double? fromLatitude,@JsonKey(includeIfNull: false) double? fromLongitude,@JsonKey(includeIfNull: false) String? toApartment,@JsonKey(includeIfNull: false) String? toEntrance,@JsonKey(includeIfNull: false) String? toFloor,@JsonKey(includeIfNull: false) double? toLatitude,@JsonKey(includeIfNull: false) double? toLongitude
 });
 
 
@@ -326,37 +324,36 @@ class __$CreateOrderRequestCopyWithImpl<$Res>
 
 /// Create a copy of CreateOrderRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isDefect = null,Object? isFragile = null,Object? comment = null,Object? contentPhotos = null,Object? description = null,Object? fromAddress = null,Object? fromApartment = null,Object? fromCityId = null,Object? fromEntrance = null,Object? height = null,Object? length = null,Object? photos = null,Object? tariffId = null,Object? toAddress = null,Object? toApartment = null,Object? toCityId = null,Object? toEntrance = null,Object? toName = null,Object? toPhone = null,Object? weight = null,Object? width = null,Object? category = freezed,Object? fromFloor = freezed,Object? fromLatitude = freezed,Object? fromLongitude = freezed,Object? toFloor = freezed,Object? toLatitude = freezed,Object? toLongitude = freezed,Object? volumetricWeight = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isDefect = null,Object? isFragile = null,Object? contentPhotos = null,Object? description = null,Object? fromAddress = null,Object? fromCityId = null,Object? height = null,Object? length = null,Object? photos = null,Object? tariffId = null,Object? toAddress = null,Object? toCityId = null,Object? toName = null,Object? toPhone = null,Object? weight = null,Object? width = null,Object? category = freezed,Object? comment = freezed,Object? fromApartment = freezed,Object? fromEntrance = freezed,Object? fromFloor = freezed,Object? fromLatitude = freezed,Object? fromLongitude = freezed,Object? toApartment = freezed,Object? toEntrance = freezed,Object? toFloor = freezed,Object? toLatitude = freezed,Object? toLongitude = freezed,}) {
   return _then(_CreateOrderRequest(
 isDefect: null == isDefect ? _self.isDefect : isDefect // ignore: cast_nullable_to_non_nullable
 as bool,isFragile: null == isFragile ? _self.isFragile : isFragile // ignore: cast_nullable_to_non_nullable
-as bool,comment: null == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
-as String,contentPhotos: null == contentPhotos ? _self._contentPhotos : contentPhotos // ignore: cast_nullable_to_non_nullable
+as bool,contentPhotos: null == contentPhotos ? _self._contentPhotos : contentPhotos // ignore: cast_nullable_to_non_nullable
 as List<String>,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,fromAddress: null == fromAddress ? _self.fromAddress : fromAddress // ignore: cast_nullable_to_non_nullable
-as String,fromApartment: null == fromApartment ? _self.fromApartment : fromApartment // ignore: cast_nullable_to_non_nullable
 as String,fromCityId: null == fromCityId ? _self.fromCityId : fromCityId // ignore: cast_nullable_to_non_nullable
-as int,fromEntrance: null == fromEntrance ? _self.fromEntrance : fromEntrance // ignore: cast_nullable_to_non_nullable
-as String,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as int,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
 as double,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
 as double,photos: null == photos ? _self._photos : photos // ignore: cast_nullable_to_non_nullable
 as List<String>,tariffId: null == tariffId ? _self.tariffId : tariffId // ignore: cast_nullable_to_non_nullable
 as int,toAddress: null == toAddress ? _self.toAddress : toAddress // ignore: cast_nullable_to_non_nullable
-as String,toApartment: null == toApartment ? _self.toApartment : toApartment // ignore: cast_nullable_to_non_nullable
 as String,toCityId: null == toCityId ? _self.toCityId : toCityId // ignore: cast_nullable_to_non_nullable
-as int,toEntrance: null == toEntrance ? _self.toEntrance : toEntrance // ignore: cast_nullable_to_non_nullable
-as String,toName: null == toName ? _self.toName : toName // ignore: cast_nullable_to_non_nullable
+as int,toName: null == toName ? _self.toName : toName // ignore: cast_nullable_to_non_nullable
 as String,toPhone: null == toPhone ? _self.toPhone : toPhone // ignore: cast_nullable_to_non_nullable
 as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as double,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
 as double,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String?,comment: freezed == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
+as String?,fromApartment: freezed == fromApartment ? _self.fromApartment : fromApartment // ignore: cast_nullable_to_non_nullable
+as String?,fromEntrance: freezed == fromEntrance ? _self.fromEntrance : fromEntrance // ignore: cast_nullable_to_non_nullable
 as String?,fromFloor: freezed == fromFloor ? _self.fromFloor : fromFloor // ignore: cast_nullable_to_non_nullable
 as String?,fromLatitude: freezed == fromLatitude ? _self.fromLatitude : fromLatitude // ignore: cast_nullable_to_non_nullable
 as double?,fromLongitude: freezed == fromLongitude ? _self.fromLongitude : fromLongitude // ignore: cast_nullable_to_non_nullable
-as double?,toFloor: freezed == toFloor ? _self.toFloor : toFloor // ignore: cast_nullable_to_non_nullable
+as double?,toApartment: freezed == toApartment ? _self.toApartment : toApartment // ignore: cast_nullable_to_non_nullable
+as String?,toEntrance: freezed == toEntrance ? _self.toEntrance : toEntrance // ignore: cast_nullable_to_non_nullable
+as String?,toFloor: freezed == toFloor ? _self.toFloor : toFloor // ignore: cast_nullable_to_non_nullable
 as String?,toLatitude: freezed == toLatitude ? _self.toLatitude : toLatitude // ignore: cast_nullable_to_non_nullable
 as double?,toLongitude: freezed == toLongitude ? _self.toLongitude : toLongitude // ignore: cast_nullable_to_non_nullable
-as double?,volumetricWeight: freezed == volumetricWeight ? _self.volumetricWeight : volumetricWeight // ignore: cast_nullable_to_non_nullable
 as double?,
   ));
 }

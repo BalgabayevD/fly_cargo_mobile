@@ -64,7 +64,6 @@ class OrderData {
   });
 
   CreateOrderRequest toCreateOrderRequest() {
-    // Если contentPhotos пустые, используем photos
     final finalContentPhotos = contentPhotos.isEmpty ? photos : contentPhotos;
 
     return CreateOrderRequest(
@@ -94,7 +93,6 @@ class OrderData {
       toLongitude: toLongitude,
       toName: toName,
       toPhone: toPhone,
-      volumetricWeight: volumetricWeight,
       weight: weight,
       width: width,
     );

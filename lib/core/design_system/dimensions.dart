@@ -2,32 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 
-/// Размеры компонентов приложения
 class AppDimensions {
-  // Размеры изображений
   static const double imageBoxSize = 160.0;
   static const double imageSmall = 80.0;
   static const double imageMedium = 120.0;
   static const double imageLarge = 200.0;
   
-  // Размеры кнопок
   static const double buttonHeightSmall = 40.0;
   static const double buttonHeightMedium = 48.0;
   static const double buttonHeightLarge = 56.0;
   
-  // Размеры прогресс-индикаторов
   static const double progressIndicatorSmall = 16.0;
   static const double progressIndicatorMedium = 24.0;
   static const double progressIndicatorLarge = 32.0;
   static const double progressStrokeWidth = 2.0;
   
-  // Размеры контейнеров
   static const double containerSmall = 120.0;
   static const double containerMedium = 160.0;
   static const double containerLarge = 200.0;
 }
 
-/// Стили теней для компонентов
 class AppShadows {
   static BoxShadow get cardShadow => BoxShadow(
         color: AppColors.black.withValues(alpha: 0.08),
@@ -57,7 +51,6 @@ class AppShadows {
   static List<BoxShadow> get buttonShadows => [buttonShadow];
 }
 
-/// Градиенты приложения
 class AppGradients {
   static LinearGradient get primaryGradient => const LinearGradient(
         colors: [AppColors.primary, AppColors.primaryDark],
@@ -92,7 +85,6 @@ class AppGradients {
       );
 }
 
-/// Декорации для контейнеров
 class AppDecorations {
   static BoxDecoration cardDecoration({
     Color? color,
@@ -154,4 +146,3 @@ class AppDecorations {
     );
   }
 }
-

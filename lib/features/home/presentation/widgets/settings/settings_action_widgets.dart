@@ -4,7 +4,6 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 
-/// Кнопка выхода
 class LogoutButton extends StatelessWidget {
   final VoidCallback onLogout;
 
@@ -36,7 +35,6 @@ class LogoutButton extends StatelessWidget {
   }
 }
 
-/// Виджет состояния ошибки
 class ErrorStateWidget extends StatelessWidget {
   final String message;
 

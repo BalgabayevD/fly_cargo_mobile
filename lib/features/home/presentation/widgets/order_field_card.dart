@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Универсальная карточка для отображения полей формы заказа
 class OrderFieldCard extends StatelessWidget {
   final String label;
   final String? value;
@@ -72,4 +71,3 @@ class OrderFieldCard extends StatelessWidget {
     );
   }
 }
-

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Элемент списка загруженных фото
 class PhotoListItem extends StatelessWidget {
   final String photoName;
   final VoidCallback onDelete;
@@ -60,4 +59,3 @@ class PhotoListItem extends StatelessWidget {
     );
   }
 }
-

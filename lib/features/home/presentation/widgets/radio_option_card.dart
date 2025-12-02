@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Карточка с радио-кнопкой для выбора опции
 class RadioOptionCard extends StatelessWidget {
   final String label;
   final bool selected;
@@ -71,4 +70,3 @@ class RadioOptionCard extends StatelessWidget {
     );
   }
 }
-

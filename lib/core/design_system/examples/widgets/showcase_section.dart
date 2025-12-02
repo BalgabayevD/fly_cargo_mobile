@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Виджет секции showcase
 class ShowcaseSection extends StatelessWidget {
   final String title;
   final Widget child;
@@ -25,4 +24,3 @@ class ShowcaseSection extends StatelessWidget {
     );
   }
 }
-

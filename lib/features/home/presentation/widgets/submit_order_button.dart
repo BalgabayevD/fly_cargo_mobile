@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Большая кнопка для отправки заказа с ценой
 class SubmitOrderButton extends StatelessWidget {
   final double? price;
   final VoidCallback onPressed;
@@ -52,4 +51,3 @@ class SubmitOrderButton extends StatelessWidget {
     );
   }
 }
-

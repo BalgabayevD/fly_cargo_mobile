@@ -13,7 +13,7 @@ _ParticipantModel _$ParticipantModelFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] as String,
       deletedAt: json['deletedAt'] as String?,
       orderId: (json['orderId'] as num?)?.toInt(),
-      userId: (json['userId'] as num?)?.toInt(),
+      userId: json['userId'] as String?,
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
 
-/// Элемент тарифа в списке
 class TariffItem extends StatelessWidget {
   final TariffModel tariff;
   final bool isSelected;
@@ -32,7 +31,6 @@ class TariffItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Radio button
             Container(
               width: 24,
               height: 24,
@@ -53,7 +51,6 @@ class TariffItem extends StatelessWidget {
                   : null,
             ),
             const SizedBox(width: AppSpacing.md),
-            // Иконка коробки (если есть image)
             if (tariff.image.isNotEmpty)
               Container(
                 width: 48,
@@ -71,7 +68,6 @@ class TariffItem extends StatelessWidget {
                 ),
               ),
             const SizedBox(width: AppSpacing.md),
-            // Название и описание
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +98,6 @@ class TariffItem extends StatelessWidget {
   }
 }
 
-/// Кнопка "Указать другие размеры"
 class CustomSizesButton extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -138,4 +133,3 @@ class CustomSizesButton extends StatelessWidget {
     );
   }
 }
-

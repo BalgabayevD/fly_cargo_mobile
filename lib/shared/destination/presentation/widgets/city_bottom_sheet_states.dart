@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Состояние загрузки для bottom sheet выбора города
 class CityLoadingState extends StatelessWidget {
   const CityLoadingState({super.key});
 
@@ -18,7 +17,6 @@ class CityLoadingState extends StatelessWidget {
   }
 }
 
-/// Состояние ошибки для bottom sheet выбора города
 class CityErrorState extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
@@ -66,7 +64,6 @@ class CityErrorState extends StatelessWidget {
   }
 }
 
-/// Состояние пустого списка для bottom sheet выбора города
 class CityEmptyState extends StatelessWidget {
   const CityEmptyState({super.key});
 
@@ -86,4 +83,3 @@ class CityEmptyState extends StatelessWidget {
     );
   }
 }
-

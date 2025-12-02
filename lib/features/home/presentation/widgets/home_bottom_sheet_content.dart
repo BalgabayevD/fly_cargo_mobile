@@ -7,7 +7,6 @@ import 'package:fly_cargo/features/home/presentation/widgets/route_header_widget
 import 'package:fly_cargo/features/home/presentation/widgets/send_package_button_widget.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
-/// Контент нижней панели главной страницы
 class HomeBottomSheetContent extends StatelessWidget {
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
@@ -69,7 +68,6 @@ class HomeBottomSheetContent extends StatelessWidget {
   }
 }
 
-/// Ручка для перетаскивания нижней панели
 class _BottomSheetHandle extends StatelessWidget {
   const _BottomSheetHandle();
 
@@ -89,7 +87,6 @@ class _BottomSheetHandle extends StatelessWidget {
   }
 }
 
-/// Контент с адресами и выбором коробки
 class _AddressesContent extends StatelessWidget {
   final AddressModel fromAddress;
   final AddressModel toAddress;

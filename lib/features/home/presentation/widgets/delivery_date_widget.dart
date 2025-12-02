@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:intl/intl.dart';
 
-/// Виджет для отображения примерной даты доставки
 class DeliveryDateWidget extends StatelessWidget {
   final DateTime? deliveryDate;
 
@@ -36,4 +35,3 @@ class DeliveryDateWidget extends StatelessWidget {
     );
   }
 }
-

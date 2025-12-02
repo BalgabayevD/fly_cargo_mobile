@@ -7,7 +7,6 @@ import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 import 'package:intl/intl.dart';
 
-/// Страница профиля пользователя
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -104,7 +103,6 @@ class ProfilePage extends StatelessWidget {
                       const SizedBox(height: AppSpacing.md),
                       InkWell(
                         onTap: () {
-                          // TODO: Открыть форму удаления профиля
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Функция удаления профиля в разработке'),
@@ -180,7 +178,6 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-/// Поле профиля
 class _ProfileField extends StatelessWidget {
   final String label;
   final String value;
@@ -224,4 +221,3 @@ class _ProfileField extends StatelessWidget {
     );
   }
 }
-

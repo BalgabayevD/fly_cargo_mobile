@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Секция демонстрации цветов
 class ColorsSection extends StatelessWidget {
   const ColorsSection({super.key});
 
@@ -26,7 +25,6 @@ class ColorsSection extends StatelessWidget {
   }
 }
 
-/// Строка с цветом
 class ColorRow extends StatelessWidget {
   final String name;
   final Color color;
@@ -70,4 +68,3 @@ class ColorRow extends StatelessWidget {
     );
   }
 }
-

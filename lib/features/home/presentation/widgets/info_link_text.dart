@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Текст-ссылка с оранжевым цветом
 class InfoLinkText extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
@@ -39,4 +38,3 @@ class InfoLinkText extends StatelessWidget {
     );
   }
 }
-

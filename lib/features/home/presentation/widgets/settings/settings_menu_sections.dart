@@ -3,7 +3,6 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/menu_item_widget.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/stat_item_widget.dart';
 
-/// Виджет секции статистики
 class StatsSection extends StatelessWidget {
   final int daysSinceCreated;
 
@@ -35,7 +34,6 @@ class StatsSection extends StatelessWidget {
   }
 }
 
-/// Виджет меню пользователя
 class UserMenuSection extends StatelessWidget {
   final VoidCallback onOrderHistory;
   final VoidCallback onPaymentCards;
@@ -80,7 +78,6 @@ class UserMenuSection extends StatelessWidget {
   }
 }
 
-/// Виджет меню сервисов
 class ServicesMenuSection extends StatelessWidget {
   final VoidCallback onCostCalculator;
   final VoidCallback onPayments;

@@ -1,8 +1,6 @@
 import 'package:fly_cargo/core/entities/box_entity.dart';
 
-/// Расширение для работы с параметрами коробки
 extension BoxParameters on BoxEntity {
-  /// Высота коробки в зависимости от типа
   double get height {
     switch (id) {
       case 'small':
@@ -16,7 +14,6 @@ extension BoxParameters on BoxEntity {
     }
   }
   
-  /// Длина коробки в зависимости от типа
   double get length {
     switch (id) {
       case 'small':
@@ -30,7 +27,6 @@ extension BoxParameters on BoxEntity {
     }
   }
   
-  /// Ширина коробки в зависимости от типа
   double get width {
     switch (id) {
       case 'small':
@@ -44,7 +40,6 @@ extension BoxParameters on BoxEntity {
     }
   }
   
-  /// Вес коробки в зависимости от типа
   double get weight {
     switch (id) {
       case 'small':
@@ -58,12 +53,10 @@ extension BoxParameters on BoxEntity {
     }
   }
   
-  /// Объемный вес коробки
   double get volumetricWeight {
     return length * width * height / 5000;
   }
   
-  /// ID тарифа для коробки
   int get tariffId {
     switch (id) {
       case 'small':
@@ -77,4 +70,3 @@ extension BoxParameters on BoxEntity {
     }
   }
 }
-

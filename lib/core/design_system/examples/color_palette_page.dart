@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Страница с визуальной палитрой всех цветов дизайн-системы
-/// Полезна для дизайнеров и разработчиков
 class ColorPalettePage extends StatelessWidget {
   const ColorPalettePage({super.key});
 
@@ -242,7 +240,6 @@ class ColorPalettePage extends StatelessWidget {
   }
 
   bool _isLightColor(Color color) {
-    // Расчет яркости цвета
     final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
     return luminance > 0.5;
   }
@@ -264,5 +261,3 @@ class _ColorInfo {
 
   _ColorInfo(this.name, this.color, this.hex);
 }
-
-

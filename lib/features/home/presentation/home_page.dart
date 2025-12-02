@@ -23,7 +23,6 @@ import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart'
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
 
-/// Главная страница с формой создания заказа
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -54,9 +53,9 @@ class _HomePageState extends State<HomePage> {
   double? _customHeight;
   final List<File> _photos = [];
   final List<File> _contentPhotos = [];
-  final Map<File, String> _photoIds = {}; // ID загруженных фото
+  final Map<File, String> _photoIds = {};
   final Map<File, String> _contentPhotoIds =
-      {}; // ID загруженных фото содержимого
+      {};
   DateTime? _deliveryDate;
   double? _calculatedPrice;
   late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
@@ -180,7 +179,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _openTariffSelection() async {
     final selectedTariff = _selectedTariffId != null
-        ? null // TODO: Найти тариф по ID если нужно
+        ? null
         : null;
 
     final result = await showModalBottomSheet<dynamic>(
@@ -194,20 +193,17 @@ class _HomePageState extends State<HomePage> {
 
     if (result != null) {
       if (result is tariffs.TariffModel) {
-        // Выбран тариф
         setState(() {
           _selectedTariff = result;
           _selectedTariffId = result.id;
           _tariffName = result.name;
           _tariffWeight = result.weight;
-          // Сбрасываем кастомные размеры при выборе тарифа
           _customLength = null;
           _customWidth = null;
           _customHeight = null;
         });
         _recalculatePriceIfPossible();
       } else if (result is Map && result.containsKey('customDimensions')) {
-        // Указаны кастомные размеры
         final dimensions = result['customDimensions'] as Map<String, double>;
         setState(() {
           _customLength = dimensions['length'];
@@ -232,7 +228,6 @@ class _HomePageState extends State<HomePage> {
         }
       });
 
-      // Загружаем фото на сервер
       try {
         final photoId = await _uploadOrderPhotoUseCase(photoFile);
         setState(() {
@@ -243,7 +238,6 @@ class _HomePageState extends State<HomePage> {
           }
         });
       } catch (e) {
-        // Удаляем фото если загрузка не удалась
         setState(() {
           if (isContent) {
             _contentPhotos.remove(photoFile);
@@ -296,7 +290,6 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    // Собираем ID загруженных фото
     final photoIds = _photos
         .map((photo) => _photoIds[photo] ?? '')
         .where((id) => id.isNotEmpty)
@@ -306,12 +299,10 @@ class _HomePageState extends State<HomePage> {
         .where((id) => id.isNotEmpty)
         .toList();
 
-    // Создаем OrderData
     final orderData = OrderData(
       isDefect: false,
       isFragile: _isFragile,
-      // category не передаем (опциональное)
-      comment: '', // TODO: Получить из формы если есть
+      comment: '',
       contentPhotos: contentPhotoIds,
       description: _description!,
       fromAddress: _fromAddress!.fullAddress ?? _fromAddress!.address,
@@ -321,7 +312,6 @@ class _HomePageState extends State<HomePage> {
       fromFloor: _fromAddress!.floor?.isNotEmpty == true
           ? _fromAddress!.floor
           : null,
-      // fromLatitude, fromLongitude не передаем (опциональные)
       height: _customHeight ?? _selectedTariff!.height ?? 0.0,
       length: _customLength ?? _selectedTariff!.length ?? 0.0,
       photos: photoIds,
@@ -331,7 +321,6 @@ class _HomePageState extends State<HomePage> {
       toCityId: int.tryParse(_toAddress!.cityId) ?? 0,
       toEntrance: _toAddress!.entrance ?? '',
       toFloor: _toAddress!.floor?.isNotEmpty == true ? _toAddress!.floor : null,
-      // toLatitude, toLongitude не передаем (опциональные)
       toName: _recipientName!,
       toPhone: _recipientPhone!,
       volumetricWeight: _selectedTariff!.volumetricWeight,
@@ -339,7 +328,6 @@ class _HomePageState extends State<HomePage> {
       width: _customWidth ?? _selectedTariff!.width ?? 0.0,
     );
 
-    // Отправляем заказ
     context.read<OrdersBloc>().add(CreateOrderEvent(orderData: orderData));
   }
 
@@ -357,7 +345,6 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<OrdersBloc, OrdersState>(
       listener: (context, state) {
         if (state is OrdersLoading) {
-          // Можно показать индикатор загрузки
         } else if (state is OrdersError) {
           _showError(state.message);
         } else if (state is OrderCreated) {
@@ -369,7 +356,6 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: AppColors.success,
             ),
           );
-          // Очищаем форму
           setState(() {
             _fromAddress = null;
             _toAddress = null;

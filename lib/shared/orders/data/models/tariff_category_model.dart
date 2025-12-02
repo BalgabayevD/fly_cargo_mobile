@@ -13,7 +13,7 @@ sealed class TariffCategoryModel with _$TariffCategoryModel {
     String? deletedAt,
     required String name,
     required String key,
-    int? sortIndex,
+    @JsonKey(name: 'sort_index') int? sortIndex,
     required bool active,
     List<TariffModel>? tariffs,
   }) = _TariffCategoryModel;
@@ -21,4 +21,3 @@ sealed class TariffCategoryModel with _$TariffCategoryModel {
   factory TariffCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$TariffCategoryModelFromJson(json);
 }
-

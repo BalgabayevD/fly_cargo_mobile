@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'auth_models.g.dart';
+
 @JsonSerializable()
 class SignInRequest {
   final String phoneNumber;
@@ -8,6 +10,7 @@ class SignInRequest {
       _$SignInRequestFromJson(json);
   Map<String, dynamic> toJson() => _$SignInRequestToJson(this);
 }
+
 @JsonSerializable()
 class SignInResponse {
   final String deviceId;
@@ -19,6 +22,7 @@ class SignInResponse {
   factory SignInResponse.fromJson(Map<String, dynamic> json) =>
       _$SignInResponseFromJson(json);
 }
+
 @JsonSerializable()
 class SignCodeRequest {
   final String deviceId;
@@ -33,6 +37,7 @@ class SignCodeRequest {
       _$SignCodeRequestFromJson(json);
   Map<String, dynamic> toJson() => _$SignCodeRequestToJson(this);
 }
+
 @JsonSerializable()
 class SignCodeResponse {
   final String? accessToken;
@@ -40,7 +45,8 @@ class SignCodeResponse {
   final String? userId;
   final bool success;
   const SignCodeResponse({
-    required this.success, this.accessToken,
+    required this.success,
+    this.accessToken,
     this.refreshToken,
     this.userId,
   });
@@ -48,6 +54,7 @@ class SignCodeResponse {
       _$SignCodeResponseFromJson(json);
   Map<String, dynamic> toJson() => _$SignCodeResponseToJson(this);
 }
+
 @JsonSerializable()
 class SessionStatusResponse {
   final bool exists;
@@ -62,6 +69,7 @@ class SessionStatusResponse {
       _$SessionStatusResponseFromJson(json);
   Map<String, dynamic> toJson() => _$SessionStatusResponseToJson(this);
 }
+
 @JsonSerializable()
 class UserProfile {
   final int? id;
@@ -83,7 +91,22 @@ class UserProfile {
   final dynamic access;
   final String role;
   const UserProfile({
-    required this.createdAt, required this.updatedAt, required this.uuid, required this.email, required this.phone, required this.firstName, required this.lastName, required this.middleName, required this.birthDay, required this.photo, required this.city, required this.type, required this.iin, required this.bin, required this.role, this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.uuid,
+    required this.email,
+    required this.phone,
+    required this.firstName,
+    required this.lastName,
+    required this.middleName,
+    required this.birthDay,
+    required this.photo,
+    required this.city,
+    required this.type,
+    required this.iin,
+    required this.bin,
+    required this.role,
+    this.id,
     this.deletedAt,
     this.access,
   });
@@ -91,6 +114,7 @@ class UserProfile {
       _$UserProfileFromJson(json);
   Map<String, dynamic> toJson() => _$UserProfileToJson(this);
 }
+
 @JsonSerializable()
 class UserProfileResponse {
   final UserProfile data;

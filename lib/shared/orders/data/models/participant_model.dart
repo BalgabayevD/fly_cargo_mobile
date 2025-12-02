@@ -12,7 +12,7 @@ sealed class ParticipantModel with _$ParticipantModel {
     required String updatedAt,
     String? deletedAt,
     int? orderId,
-    int? userId,
+    String? userId,
     UserModel? user,
     required String target,
   }) = _ParticipantModel;
@@ -20,4 +20,3 @@ sealed class ParticipantModel with _$ParticipantModel {
   factory ParticipantModel.fromJson(Map<String, dynamic> json) =>
       _$ParticipantModelFromJson(json);
 }
-

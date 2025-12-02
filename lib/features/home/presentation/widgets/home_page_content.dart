@@ -11,7 +11,6 @@ import 'package:fly_cargo/features/home/presentation/widgets/radio_option_card.d
 import 'package:fly_cargo/features/home/presentation/widgets/submit_order_button.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
-/// Контент главной страницы с формой создания заказа
 class HomePageContent extends StatelessWidget {
   final AddressModel? fromAddress;
   final AddressModel? toAddress;

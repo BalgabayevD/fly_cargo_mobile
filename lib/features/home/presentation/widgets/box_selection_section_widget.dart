@@ -107,7 +107,6 @@ class BoxSelectionSectionWidget extends StatelessWidget
   }
 }
 
-/// Компактный виджет для отображения цены на главной странице
 class _CompactPriceWidget extends StatelessWidget {
   const _CompactPriceWidget();
 

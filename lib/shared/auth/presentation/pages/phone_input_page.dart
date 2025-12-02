@@ -5,6 +5,7 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
+
 class PhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -82,11 +83,13 @@ class PhoneNumberFormatter extends TextInputFormatter {
     );
   }
 }
+
 class PhoneInputPage extends StatefulWidget {
   const PhoneInputPage({super.key});
   @override
   State<PhoneInputPage> createState() => _PhoneInputPageState();
 }
+
 class _PhoneInputPageState extends State<PhoneInputPage> {
   final TextEditingController _phoneController = TextEditingController();
   final FocusNode _phoneFocusNode = FocusNode();
@@ -97,12 +100,14 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
     super.initState();
     _phoneController.addListener(_onPhoneChanged);
   }
+
   @override
   void dispose() {
     _phoneController.dispose();
     _phoneFocusNode.dispose();
     super.dispose();
   }
+
   void _onPhoneChanged() {
     final phone = _phoneController.text;
     final isValid = _isValidPhoneNumber(phone);
@@ -112,11 +117,13 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
       });
     }
   }
+
   bool _isValidPhoneNumber(String phone) {
     final digitsOnly = phone.replaceAll(RegExp(r'[^\d]'), '');
     return digitsOnly.length == 11 &&
         (digitsOnly.startsWith('7') || digitsOnly.startsWith('8'));
   }
+
   void _onPhoneSubmitted() {
     if (_formKey.currentState?.validate() ?? false) {
       final phone = _phoneController.text.replaceAll(RegExp(r'[^\d]'), '');
@@ -130,6 +137,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +150,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
           onPressed: () => Navigator.of(context).pop(),
           variant: AppButtonVariant.ghost,
         ),
-        title: Text('Вход в систему', style: AppTypography.h6),
+        title: Text('Авторизация', style: AppTypography.h6),
         centerTitle: true,
       ),
       body: BlocListener<AuthBloc, AuthState>(
@@ -172,41 +180,30 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Spacer(flex: 2),
-                  Center(
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusRound,
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.phone_android,
-                        size: AppSpacing.iconSizeXL,
-                        color: AppColors.primary,
-                      ),
+                  SizedBox(height: AppSpacing.lg),
+                  Text(
+                    'Номер телефона',
+                    style: AppTypography.h4.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: AppSpacing.sm),
+                  Text(
+                    'Поможет создавать и отслеживать\nваши заказы',
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppColors.textSecondary,
                     ),
                   ),
                   SizedBox(height: AppSpacing.xxl),
                   Text(
-                    'Введите номер телефона',
-                    style: AppTypography.h3,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: AppSpacing.md),
-                  Text(
-                    'Мы отправим SMS-код для подтверждения номера',
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppColors.textSecondary,
+                    'Номер телефона',
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.primary,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: AppSpacing.xxxl),
+                  SizedBox(height: AppSpacing.xs),
                   TextFormField(
                     controller: _phoneController,
                     focusNode: _phoneFocusNode,
@@ -215,28 +212,27 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                       PhoneNumberFormatter(),
                       LengthLimitingTextInputFormatter(18),
                     ],
+                    style: AppTypography.bodyLarge,
                     decoration: InputDecoration(
-                      labelText: 'Номер телефона',
-                      hintText: '+7 (XXX) XXX-XX-XX',
-                      prefixIcon: Icon(
-                        Icons.phone,
-                        color: AppColors.textSecondary,
+                      hintText: '+7 (777) 123-45-65',
+                      hintStyle: AppTypography.bodyLarge.copyWith(
+                        color: AppColors.textTertiary,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusLG,
+                          AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(color: AppColors.border),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusLG,
+                          AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(color: AppColors.border),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusLG,
+                          AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(
                           color: AppColors.primary,
@@ -245,13 +241,13 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusLG,
+                          AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(color: AppColors.error),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusLG,
+                          AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(
                           color: AppColors.error,
@@ -260,6 +256,10 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                       ),
                       filled: true,
                       fillColor: AppColors.surface,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.md,
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -275,12 +275,12 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                     },
                     onFieldSubmitted: (_) => _onPhoneSubmitted(),
                   ),
-                  SizedBox(height: AppSpacing.xxxl),
+                  SizedBox(height: AppSpacing.xxl),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       final isLoading = state is AuthLoading;
                       return AppButton(
-                        text: 'Отправить код',
+                        text: 'Получить код',
                         onPressed: _isValidPhone && !isLoading
                             ? _onPhoneSubmitted
                             : null,
@@ -291,12 +291,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                       );
                     },
                   ),
-                  const Spacer(flex: 3),
-                  Text(
-                    'Нажимая "Отправить код", вы соглашаетесь с условиями использования и политикой конфиденциальности',
-                    style: AppTypography.caption,
-                    textAlign: TextAlign.center,
-                  ),
+                  const Spacer(),
                 ],
               ),
             ),

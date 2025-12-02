@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Карточка с характеристиками тарифа
 class TariffCharacteristicsCard extends StatelessWidget {
   final double? weight;
   final double? length;
@@ -53,7 +52,6 @@ class TariffCharacteristicsCard extends StatelessWidget {
   }
 }
 
-/// Строка характеристики
 class _CharacteristicRow extends StatelessWidget {
   final String label;
   final String value;
@@ -87,4 +85,3 @@ class _CharacteristicRow extends StatelessWidget {
     );
   }
 }
-

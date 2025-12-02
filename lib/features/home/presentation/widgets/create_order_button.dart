@@ -4,7 +4,6 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 
-/// Кнопка создания заказа с индикатором загрузки
 class CreateOrderButton extends StatelessWidget {
   final OrdersBloc ordersBloc;
   final VoidCallback onPressed;
@@ -45,7 +44,6 @@ class CreateOrderButton extends StatelessWidget {
   }
 }
 
-/// Индикатор загрузки
 class _LoadingIndicator extends StatelessWidget {
   const _LoadingIndicator();
 
@@ -62,7 +60,6 @@ class _LoadingIndicator extends StatelessWidget {
   }
 }
 
-/// Содержимое кнопки
 class _ButtonContent extends StatelessWidget {
   const _ButtonContent();
 

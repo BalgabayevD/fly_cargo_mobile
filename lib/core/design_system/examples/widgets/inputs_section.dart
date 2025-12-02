@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Секция демонстрации полей ввода
 class InputsSection extends StatelessWidget {
   const InputsSection({super.key});
 
@@ -44,4 +43,3 @@ class InputsSection extends StatelessWidget {
     );
   }
 }
-

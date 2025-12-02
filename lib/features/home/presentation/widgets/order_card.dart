@@ -4,7 +4,6 @@ import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/shared/orders/presentation/models/order_status.dart';
 import 'package:intl/intl.dart';
 
-/// Карточка заказа с цветами по статусу
 class OrderCard extends StatelessWidget {
   final OrderModel order;
 
@@ -35,7 +34,7 @@ class OrderCard extends StatelessWidget {
         border: status.borderColor != null
             ? Border.all(
                 color: status.borderColor!,
-                width: 1,
+                width: 1.5,
               )
             : null,
       ),
@@ -101,5 +100,3 @@ class OrderCard extends StatelessWidget {
     );
   }
 }
-
-

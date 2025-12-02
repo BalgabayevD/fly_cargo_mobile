@@ -9,8 +9,6 @@ import 'package:fly_cargo/core/design_system/examples/widgets/showcase_section.d
 import 'package:fly_cargo/core/design_system/examples/widgets/switches_section.dart';
 import 'package:fly_cargo/core/design_system/examples/widgets/typography_section.dart';
 
-/// Экран демонстрации компонентов дизайн-системы
-/// Используется для визуального тестирования и документации
 class DesignSystemShowcase extends StatefulWidget {
   const DesignSystemShowcase({super.key});
 

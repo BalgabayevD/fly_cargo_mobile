@@ -7,7 +7,6 @@ import 'package:fly_cargo/features/home/presentation/widgets/tariff_item_widget.
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Bottom sheet для выбора тарифа
 class ChooseTariffBottomSheet extends StatefulWidget {
   final TariffModel? initialTariff;
 
@@ -28,7 +27,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
   void initState() {
     super.initState();
     _selectedTariff = widget.initialTariff;
-    // Загружаем тарифы
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TariffSelectionBloc>().add(LoadTariffCategoriesEvent());
     });
@@ -48,7 +46,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
       builder: (context) => const SpecifyDimensionsBottomSheet(),
     ).then((result) {
       if (result != null && mounted) {
-        // Возвращаем результат с размерами в HomePage
         Navigator.pop(context, {
           'customDimensions': result,
         });
@@ -77,7 +74,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Заголовок
           Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Row(
@@ -101,7 +97,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
             ),
           ),
           const Divider(height: 1),
-          // Список тарифов
           Flexible(
             child: BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
               builder: (context, state) {
@@ -127,7 +122,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
                   );
                 }
                 if (state is TariffSelectionLoaded) {
-                  // Собираем все тарифы из всех категорий
                   final allTariffs = <TariffModel>[];
                   for (final category in state.categories) {
                     if (category.tariffs != null) {
@@ -145,7 +139,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
               },
             ),
           ),
-          // Кнопка "Выбрать"
           Padding(
             padding: const EdgeInsets.only(
               left: AppSpacing.lg,
@@ -180,7 +173,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
   }
 }
 
-/// Список тарифов
 class _TariffsList extends StatelessWidget {
   final List<TariffModel> tariffs;
   final TariffModel? selectedTariff;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Страница контактов
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});
 
@@ -124,7 +123,6 @@ class ContactsPage extends StatelessWidget {
   }
 }
 
-/// Элемент контакта
 class _ContactItem extends StatelessWidget {
   final String label;
   final String value;
@@ -159,4 +157,3 @@ class _ContactItem extends StatelessWidget {
     );
   }
 }
-

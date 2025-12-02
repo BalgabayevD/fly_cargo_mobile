@@ -36,4 +36,3 @@ sealed class TariffModel with _$TariffModel {
   factory TariffModel.fromJson(Map<String, dynamic> json) =>
       _$TariffModelFromJson(json);
 }
-

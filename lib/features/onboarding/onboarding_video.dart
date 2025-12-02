@@ -1,4 +1,6 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:fly_cargo/features/home/presentation/main_scaffold_page.dart';
+import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:video_player/video_player.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -19,7 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ..setLooping(true)
       ..setVolume(0.0)
       ..initialize().then((_) {
-        if (!mounted) return; // защита от setState после dispose
+        if (!mounted) return;
         setState(() {
           _isInitialized = true;
         });
@@ -39,13 +41,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // --- Видеофон ---
             _VideoBackground(
               controller: _controller,
               isInitialized: _isInitialized,
             ),
 
-            // --- Полупрозрачный градиент сверху вниз (для читаемости текста) ---
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -63,7 +63,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            // --- Интерфейс поверх видео ---
             Positioned.fill(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -73,13 +72,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Верхняя строка: пропустить (справа)
                     Row(
                       children: [
                         const Spacer(),
                         GestureDetector(
                           onTap: () {
-                            // логика пропуска
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) => const MainScaffoldPage(),
+                              ),
+                            );
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -102,10 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
 
-                    // Отступ сверху (до текста)
                     const Spacer(flex: 1),
 
-                    // Текст с выравниванием по левому краю
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -130,17 +130,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
 
-                    // Отступ снизу (до кнопки)
                     const Spacer(flex: 5),
 
-                    // Низ: кнопка и мелкий текст
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(
                           height: 52,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              AuthRouter.navigateToPhoneInput(context);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(

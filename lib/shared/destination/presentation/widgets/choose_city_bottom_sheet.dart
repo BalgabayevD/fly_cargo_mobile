@@ -11,7 +11,6 @@ import 'package:fly_cargo/shared/destination/presentation/widgets/city_bottom_sh
 import 'package:fly_cargo/shared/destination/presentation/widgets/city_radio_option.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Bottom sheet для выбора города
 class ChooseCityBottomSheet extends StatefulWidget {
   final CityType cityType;
   final String? fromCityId;
@@ -68,7 +67,6 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Заголовок с кнопкой закрытия
             Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
@@ -92,7 +90,6 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
               ),
             ),
             const Divider(height: 1),
-            // Список городов
             Flexible(
               child: BlocBuilder<DestinationBloc, DestinationState>(
                 bloc: _destinationBloc,
@@ -148,7 +145,6 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
                 },
               ),
             ),
-            // Кнопка "Выбрать"
             Padding(
               padding: const EdgeInsets.only(
                 left: AppSpacing.lg,
@@ -185,4 +181,3 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
     );
   }
 }
-

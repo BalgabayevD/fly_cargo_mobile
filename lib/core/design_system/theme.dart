@@ -4,7 +4,6 @@ import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 import 'package:fly_cargo/core/design_system/typography.dart';
 
-/// Тема приложения Fly Cargo
 class AppTheme {
   static ThemeData get lightTheme {
     final textTheme = GoogleFonts.montserratTextTheme();
@@ -13,7 +12,6 @@ class AppTheme {
       useMaterial3: true,
       fontFamily: AppTypography.fontFamily,
       
-      // Цветовая схема
       colorScheme: ColorScheme.light(
         primary: AppColors.primary,
         onPrimary: AppColors.white,
@@ -43,10 +41,8 @@ class AppTheme {
         scrim: AppColors.black,
       ),
       
-      // Цвета фона
       scaffoldBackgroundColor: AppColors.background,
       
-      // Типография
       textTheme: textTheme.copyWith(
         displayLarge: AppTypography.h1,
         displayMedium: AppTypography.h2,
@@ -69,7 +65,6 @@ class AppTheme {
         labelSmall: AppTypography.buttonSmall,
       ),
       
-      // Стиль AppBar
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.textPrimary,
@@ -82,7 +77,6 @@ class AppTheme {
         ),
       ),
       
-      // Стиль кнопок
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -123,7 +117,6 @@ class AppTheme {
         ),
       ),
       
-      // Стиль карточек
       cardTheme: CardThemeData(
         color: AppColors.white,
         elevation: 2,
@@ -134,7 +127,6 @@ class AppTheme {
         margin: EdgeInsets.zero,
       ),
       
-      // Стиль полей ввода
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surface,
@@ -188,13 +180,11 @@ class AppTheme {
         ),
       ),
       
-      // Стиль иконок
       iconTheme: const IconThemeData(
         color: AppColors.iconPrimary,
         size: AppSpacing.iconSizeMD,
       ),
       
-      // Стиль диалогов
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.white,
         elevation: 8,
@@ -206,7 +196,6 @@ class AppTheme {
         contentTextStyle: AppTypography.bodyMedium,
       ),
       
-      // Стиль Bottom Sheet
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: AppColors.white,
         elevation: 8,
@@ -218,7 +207,6 @@ class AppTheme {
         ),
       ),
       
-      // Стиль чипов
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.surface,
         selectedColor: AppColors.primaryWithOpacity(0.2),
@@ -234,14 +222,12 @@ class AppTheme {
         ),
       ),
       
-      // Стиль разделителей
       dividerTheme: const DividerThemeData(
         color: AppColors.border,
         thickness: AppSpacing.dividerHeight,
         space: AppSpacing.dividerHeight,
       ),
       
-      // Стиль переключателей
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.selected)) {
@@ -257,7 +243,6 @@ class AppTheme {
         }),
       ),
       
-      // Стиль чекбоксов
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.selected)) {
@@ -271,7 +256,6 @@ class AppTheme {
         ),
       ),
       
-      // Стиль радио-кнопок
       radioTheme: RadioThemeData(
         fillColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.selected)) {
@@ -281,7 +265,6 @@ class AppTheme {
         }),
       ),
       
-      // Стиль слайдеров
       sliderTheme: SliderThemeData(
         activeTrackColor: AppColors.primary,
         inactiveTrackColor: AppColors.gray300,
@@ -293,14 +276,12 @@ class AppTheme {
         ),
       ),
       
-      // Стиль прогресс-индикаторов
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
         linearTrackColor: AppColors.gray200,
         circularTrackColor: AppColors.gray200,
       ),
       
-      // Стиль Snackbar
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.gray800,
         contentTextStyle: AppTypography.bodyMedium.copyWith(
@@ -314,10 +295,7 @@ class AppTheme {
     );
   }
   
-  /// Темная тема (можно расширить позже)
   static ThemeData get darkTheme {
-    // TODO: Реализовать темную тему при необходимости
     return lightTheme;
   }
 }
-

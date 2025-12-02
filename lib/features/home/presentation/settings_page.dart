@@ -15,7 +15,6 @@ import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Страница настроек для вкладки "Настройки"
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -30,7 +29,6 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     _loadAppVersion();
-    // Загружаем профиль при открытии страницы, если пользователь авторизован
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final authState = context.read<AuthBloc>().state;
       if (authState is AuthAuthenticated) {
@@ -46,7 +44,6 @@ class _SettingsPageState extends State<SettingsPage> {
         _appVersion = packageInfo.version;
       });
     } catch (e) {
-      // Используем версию по умолчанию
     }
   }
 
@@ -68,7 +65,6 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, authState) {
-          // Загружаем профиль при авторизации
           if (authState is AuthAuthenticated) {
             context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
           }
@@ -101,7 +97,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           const SizedBox(height: AppSpacing.sm),
                           LanguageSection(
                             onTap: () {
-                              // TODO: Открыть выбор языка
                             },
                           ),
                           NotificationsSection(

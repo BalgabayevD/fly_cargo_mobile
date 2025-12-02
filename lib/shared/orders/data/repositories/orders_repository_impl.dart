@@ -61,7 +61,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   Future<List<OrderModel>> getClientOrders() async {
     try {
       final response = await _remoteSource.getClientOrders();
-      return response;
+      return response.data;
     } catch (e) {
       throw OrdersException('Ошибка при загрузке заказов: $e');
     }
@@ -71,7 +71,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   Future<List<OrderModel>> getCourierOrders() async {
     try {
       final response = await _remoteSource.getCourierOrders();
-      return response;
+      return response.data;
     } catch (e) {
       throw OrdersException('Ошибка при загрузке заказов: $e');
     }

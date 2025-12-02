@@ -9,7 +9,6 @@ import 'package:fly_cargo/shared/destination/presentation/bloc/destination_event
 import 'package:fly_cargo/shared/destination/presentation/widgets/address_autocomplete_overlay.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Поле ввода адреса с автокомплитом
 class AddressAutocompleteField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
@@ -55,7 +54,6 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
   }
 
   void _onTextChanged() {
-    // Не обрабатываем изменения если устанавливаем адрес программно
     if (_isSettingAddress) return;
 
     _debounceTimer?.cancel();
@@ -79,7 +77,6 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
   }
 
   void _showOverlay() {
-    // Удаляем старый overlay если есть
     if (_overlayEntry != null) {
       _overlayEntry!.remove();
       _overlayEntry = null;
@@ -125,32 +122,24 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
               child: AddressAutocompleteOverlayContent(
                 destinationBloc: _destinationBloc,
                 onAddressSelected: (address) {
-                  // ВАЖНО: Отменяем debounce таймер чтобы не запустился новый поиск
                   _debounceTimer?.cancel();
 
-                  // Используем address.address или fullAddress если есть
                   final addressText = address.fullAddress ?? address.address;
 
-                  // Устанавливаем флаг чтобы предотвратить обработку изменения
                   _isSettingAddress = true;
 
-                  // Устанавливаем текст синхронно
                   widget.controller.text = addressText;
 
-                  // Закрываем overlay
                   _removeOverlay();
 
-                  // Убираем фокус
                   _focusNode.unfocus();
 
-                  // Сбрасываем флаг ПОСЛЕ небольшой задержки
                   Future.delayed(const Duration(milliseconds: 500), () {
                     if (mounted) {
                       _isSettingAddress = false;
                     }
                   });
 
-                  // Вызываем callback
                   if (widget.onAddressSelected != null) {
                     widget.onAddressSelected!(address);
                   }
@@ -241,7 +230,6 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
               _removeOverlay();
             },
             onChanged: (_) {
-              // Overlay будет показан через debounce в _onTextChanged
             },
             decoration: _buildInputDecoration(),
             style: AppTypography.bodyLarge,

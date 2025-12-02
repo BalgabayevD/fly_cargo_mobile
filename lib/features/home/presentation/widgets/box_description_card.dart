@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Карточка с описанием коробки
 class BoxDescriptionCard extends StatelessWidget {
   final String description;
 
@@ -24,4 +23,3 @@ class BoxDescriptionCard extends StatelessWidget {
     );
   }
 }
-

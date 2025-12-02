@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
 
-/// Модальная страница для ввода данных получателя
 class RecipientFormPage extends StatefulWidget {
   final String? initialName;
   final String? initialPhone;
@@ -178,4 +177,3 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
     );
   }
 }
-

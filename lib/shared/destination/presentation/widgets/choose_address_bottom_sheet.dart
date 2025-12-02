@@ -10,7 +10,6 @@ import 'package:fly_cargo/shared/destination/presentation/widgets/address_form_f
 import 'package:fly_cargo/shared/destination/presentation/widgets/choose_city_bottom_sheet.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Bottom sheet для ввода адреса с полями квартиры, подъезда, этажа
 class ChooseAddressBottomSheet extends StatefulWidget {
   final CityModel? initialCity;
   final String? title;
@@ -184,7 +183,6 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Заголовок с кнопкой закрытия
           Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Row(
@@ -208,14 +206,12 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
             ),
           ),
           const Divider(height: 1),
-          // Поля ввода
           Flexible(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Город (кликабельный)
                   ReadOnlyAddressField(
                     label: 'Город',
                     value: _selectedCity != null
@@ -224,7 +220,6 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                     onTap: _selectCity,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  // Адрес с автокомплитом
                   BlocProvider.value(
                     value: getIt<DestinationBloc>(),
                     child: AddressAutocompleteField(
@@ -240,7 +235,6 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  // Квартира
                   AddressTextField(
                     label: 'Квартира',
                     controller: _apartmentController,
@@ -248,7 +242,6 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  // Подъезд
                   AddressTextField(
                     label: 'Подъезд',
                     controller: _entranceController,
@@ -256,7 +249,6 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  // Этаж
                   AddressTextField(
                     label: 'Этаж',
                     controller: _floorController,
@@ -267,7 +259,6 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
               ),
             ),
           ),
-          // Кнопка "Сохранить"
           Padding(
             padding: const EdgeInsets.only(
               left: AppSpacing.lg,

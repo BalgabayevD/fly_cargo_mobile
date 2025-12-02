@@ -7,7 +7,6 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 
-/// Страница списка заказов для вкладки "Заказы"
 class OrdersListPage extends StatefulWidget {
   const OrdersListPage({super.key});
 
@@ -19,7 +18,6 @@ class _OrdersListPageState extends State<OrdersListPage> {
   @override
   void initState() {
     super.initState();
-    // Загружаем заказы при открытии страницы
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<OrdersBloc>().add(const GetClientOrdersEvent());
     });
@@ -63,7 +61,6 @@ class _OrdersListPageState extends State<OrdersListPage> {
             return _OrdersListWidget(orders: state.orders);
           }
 
-          // Начальное состояние - показываем пустое состояние
           return const _EmptyStateWidget();
         },
       ),
@@ -71,7 +68,6 @@ class _OrdersListPageState extends State<OrdersListPage> {
   }
 }
 
-/// Виджет списка заказов
 class _OrdersListWidget extends StatelessWidget {
   final List<OrderModel> orders;
 
@@ -93,7 +89,6 @@ class _OrdersListWidget extends StatelessWidget {
   }
 }
 
-/// Виджет пустого состояния
 class _EmptyStateWidget extends StatelessWidget {
   const _EmptyStateWidget();
 
@@ -143,7 +138,6 @@ class _EmptyStateWidget extends StatelessWidget {
   }
 }
 
-/// Виджет состояния ошибки
 class _ErrorStateWidget extends StatelessWidget {
   final String message;
 

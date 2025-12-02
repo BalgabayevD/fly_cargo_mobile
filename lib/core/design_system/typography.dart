@@ -3,10 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 
 class AppTypography {
-  /// Базовое семейство шрифтов Montserrat
   static String get fontFamily => 'Montserrat';
 
-  /// Получить TextStyle с Montserrat
   static TextStyle _montserrat({
     required double fontSize,
     required FontWeight fontWeight,

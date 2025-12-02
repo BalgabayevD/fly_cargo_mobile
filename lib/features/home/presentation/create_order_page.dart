@@ -18,7 +18,6 @@ import 'widgets/box_info_card.dart';
 import 'widgets/create_order_button.dart';
 import 'widgets/price_info_container.dart';
 
-/// Страница создания заказа с выбранной коробкой
 class CreateOrderPage extends StatelessWidget {
   final String boxType;
   final AddressModel? fromAddress;
@@ -57,7 +56,6 @@ class CreateOrderPage extends StatelessWidget {
   }
 }
 
-/// Экран ошибки загрузки данных о коробке
 class _ErrorScreen extends StatelessWidget {
   const _ErrorScreen();
 
@@ -82,7 +80,6 @@ class _ErrorScreen extends StatelessWidget {
   }
 }
 
-/// Контент страницы создания заказа
 class CreateOrderContent extends StatefulWidget {
   final BoxEntity box;
   final AddressModel? fromAddress;
@@ -223,7 +220,6 @@ class _CreateOrderContentState extends State<CreateOrderContent> {
   }
 }
 
-/// AppBar для страницы создания заказа
 class _CreateOrderAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final String boxName;
@@ -266,7 +262,6 @@ class _CreateOrderAppBar extends StatelessWidget
       const Size.fromHeight(kToolbarHeight + AppSpacing.dividerHeight);
 }
 
-/// Тело страницы создания заказа
 class _CreateOrderBody extends StatelessWidget {
   final BoxEntity box;
   final GlobalKey<FormState> formKey;

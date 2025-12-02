@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Контейнер с информацией о стоимости доставки
 class PriceInfoContainer extends StatelessWidget {
   final double basePrice;
   final String currency;
@@ -32,7 +31,6 @@ class PriceInfoContainer extends StatelessWidget {
   }
 }
 
-/// Информация о цене
 class _PriceInfo extends StatelessWidget {
   final double basePrice;
   final String currency;
@@ -66,7 +64,6 @@ class _PriceInfo extends StatelessWidget {
   }
 }
 
-/// Иконка доставки
 class _ShippingIcon extends StatelessWidget {
   const _ShippingIcon();
 

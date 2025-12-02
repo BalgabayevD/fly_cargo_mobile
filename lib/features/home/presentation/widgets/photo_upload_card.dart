@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Карточка-кнопка для загрузки фото
 class PhotoUploadCard extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
@@ -52,4 +51,3 @@ class PhotoUploadCard extends StatelessWidget {
     );
   }
 }
-

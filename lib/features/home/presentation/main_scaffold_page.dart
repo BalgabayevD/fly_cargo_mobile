@@ -5,7 +5,6 @@ import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/features/home/presentation/orders_list_page.dart';
 import 'package:fly_cargo/features/home/presentation/settings_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
@@ -13,7 +12,6 @@ import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Основной scaffold с bottom navigation bar
 class MainScaffoldPage extends StatefulWidget {
   const MainScaffoldPage({super.key});
 
@@ -27,10 +25,6 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
   @override
   void initState() {
     super.initState();
-    // Инициализируем проверку авторизации при запуске
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthBloc>().add(const AuthInitialized());
-    });
   }
 
   final List<Widget> _pages = const [
@@ -43,7 +37,6 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
     setState(() {
       _currentIndex = index;
     });
-    // Загружаем заказы при переключении на вкладку "Заказы"
     if (index == 1) {
       context.read<OrdersBloc>().add(const GetClientOrdersEvent());
     }
@@ -53,7 +46,6 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, authState) {
-        // Загружаем профиль при авторизации
         if (authState is AuthAuthenticated) {
           context.read<ProfileBloc>().add(const ProfileEvent.loadProfile());
         }

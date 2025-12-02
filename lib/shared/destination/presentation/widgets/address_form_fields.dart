@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Поле только для чтения (город)
 class ReadOnlyAddressField extends StatelessWidget {
   final String label;
   final String value;
@@ -74,7 +73,6 @@ class ReadOnlyAddressField extends StatelessWidget {
   }
 }
 
-/// Поле ввода для адреса
 class AddressTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
@@ -143,4 +141,3 @@ class AddressTextField extends StatelessWidget {
     );
   }
 }
-

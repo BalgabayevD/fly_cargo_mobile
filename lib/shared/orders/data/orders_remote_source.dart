@@ -21,8 +21,8 @@ abstract class OrdersRemoteSource {
   Future<FileUploadResponse> uploadOrderPhoto(@Part() MultipartFile file);
 
   @GET('/api/v1/orders/client')
-  Future<List<OrderModel>> getClientOrders();
+  Future<OrdersResponse> getClientOrders();
 
   @GET('/api/v1/orders/courier')
-  Future<List<OrderModel>> getCourierOrders();
+  Future<OrdersResponse> getCourierOrders();
 }

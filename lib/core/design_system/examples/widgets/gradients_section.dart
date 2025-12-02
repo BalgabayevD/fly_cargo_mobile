@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Секция демонстрации градиентов
 class GradientsSection extends StatelessWidget {
   const GradientsSection({super.key});
 
@@ -70,4 +69,3 @@ class GradientsSection extends StatelessWidget {
     );
   }
 }
-

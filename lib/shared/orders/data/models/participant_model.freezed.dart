@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ParticipantModel {
 
- int? get id; String get createdAt; String get updatedAt; String? get deletedAt; int? get orderId; int? get userId; UserModel? get user; String get target;
+ int? get id; String get createdAt; String get updatedAt; String? get deletedAt; int? get orderId; String? get userId; UserModel? get user; String get target;
 /// Create a copy of ParticipantModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ParticipantModelCopyWith<$Res>  {
   factory $ParticipantModelCopyWith(ParticipantModel value, $Res Function(ParticipantModel) _then) = _$ParticipantModelCopyWithImpl;
 @useResult
 $Res call({
- int? id, String createdAt, String updatedAt, String? deletedAt, int? orderId, int? userId, UserModel? user, String target
+ int? id, String createdAt, String updatedAt, String? deletedAt, int? orderId, String? userId, UserModel? user, String target
 });
 
 
@@ -73,7 +73,7 @@ as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: 
 as String,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as String?,orderId: freezed == orderId ? _self.orderId : orderId // ignore: cast_nullable_to_non_nullable
 as int?,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel?,target: null == target ? _self.target : target // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -169,7 +169,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  int? orderId,  int? userId,  UserModel? user,  String target)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  int? orderId,  String? userId,  UserModel? user,  String target)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ParticipantModel() when $default != null:
 return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.orderId,_that.userId,_that.user,_that.target);case _:
@@ -190,7 +190,7 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.o
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  int? orderId,  int? userId,  UserModel? user,  String target)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  int? orderId,  String? userId,  UserModel? user,  String target)  $default,) {final _that = this;
 switch (_that) {
 case _ParticipantModel():
 return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.orderId,_that.userId,_that.user,_that.target);}
@@ -207,7 +207,7 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.o
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  int? orderId,  int? userId,  UserModel? user,  String target)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  int? orderId,  String? userId,  UserModel? user,  String target)?  $default,) {final _that = this;
 switch (_that) {
 case _ParticipantModel() when $default != null:
 return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.orderId,_that.userId,_that.user,_that.target);case _:
@@ -230,7 +230,7 @@ class _ParticipantModel implements ParticipantModel {
 @override final  String updatedAt;
 @override final  String? deletedAt;
 @override final  int? orderId;
-@override final  int? userId;
+@override final  String? userId;
 @override final  UserModel? user;
 @override final  String target;
 
@@ -267,7 +267,7 @@ abstract mixin class _$ParticipantModelCopyWith<$Res> implements $ParticipantMod
   factory _$ParticipantModelCopyWith(_ParticipantModel value, $Res Function(_ParticipantModel) _then) = __$ParticipantModelCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String createdAt, String updatedAt, String? deletedAt, int? orderId, int? userId, UserModel? user, String target
+ int? id, String createdAt, String updatedAt, String? deletedAt, int? orderId, String? userId, UserModel? user, String target
 });
 
 
@@ -292,7 +292,7 @@ as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: 
 as String,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as String?,orderId: freezed == orderId ? _self.orderId : orderId // ignore: cast_nullable_to_non_nullable
 as int?,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as String?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel?,target: null == target ? _self.target : target // ignore: cast_nullable_to_non_nullable
 as String,
   ));

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Bottom sheet для указания размеров посылки
 class SpecifyDimensionsBottomSheet extends StatefulWidget {
   final double? initialLength;
   final double? initialWidth;
@@ -102,7 +101,6 @@ class _SpecifyDimensionsBottomSheetState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Заголовок
           Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Row(
@@ -127,7 +125,6 @@ class _SpecifyDimensionsBottomSheetState
             ),
           ),
           const Divider(height: 1),
-          // Поля ввода
           Flexible(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppSpacing.lg),
@@ -151,7 +148,6 @@ class _SpecifyDimensionsBottomSheetState
               ),
             ),
           ),
-          // Кнопка "Сохранить"
           Padding(
             padding: const EdgeInsets.only(
               left: AppSpacing.lg,
@@ -185,7 +181,6 @@ class _SpecifyDimensionsBottomSheetState
   }
 }
 
-/// Поле для ввода размера
 class _DimensionField extends StatelessWidget {
   final String label;
   final TextEditingController controller;

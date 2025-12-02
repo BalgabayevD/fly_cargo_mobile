@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Секция демонстрации карточек
 class CardsSection extends StatelessWidget {
   final bool isSelected;
   final ValueChanged<bool> onSelectionChanged;
@@ -80,4 +79,3 @@ class CardsSection extends StatelessWidget {
     );
   }
 }
-

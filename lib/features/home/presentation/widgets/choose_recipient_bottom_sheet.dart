@@ -4,7 +4,6 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Bottom sheet для ввода данных получателя
 class ChooseRecipientBottomSheet extends StatefulWidget {
   final String? initialName;
   final String? initialPhone;
@@ -63,7 +62,6 @@ class _ChooseRecipientBottomSheetState
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Заголовок с кнопкой закрытия
             Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
@@ -87,14 +85,12 @@ class _ChooseRecipientBottomSheetState
               ),
             ),
             const Divider(height: 1),
-            // Поля ввода
             Flexible(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Имя
                     TextFormField(
                       controller: _nameController,
                       decoration: InputDecoration(
@@ -143,7 +139,6 @@ class _ChooseRecipientBottomSheetState
                       },
                     ),
                     const SizedBox(height: AppSpacing.lg),
-                    // Номер телефона
                     TextFormField(
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
@@ -201,7 +196,6 @@ class _ChooseRecipientBottomSheetState
                 ),
               ),
             ),
-            // Кнопка "Сохранить"
             Padding(
               padding: const EdgeInsets.only(
                 left: AppSpacing.lg,
@@ -235,4 +229,3 @@ class _ChooseRecipientBottomSheetState
     );
   }
 }
-

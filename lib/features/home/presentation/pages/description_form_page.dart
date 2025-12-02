@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Модальная страница для ввода описания посылки
 class DescriptionFormPage extends StatefulWidget {
   final String? initialDescription;
 
@@ -120,4 +119,3 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
     );
   }
 }
-

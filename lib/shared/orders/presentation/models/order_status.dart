@@ -2,93 +2,123 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 
-/// Статусы заказа
 enum OrderStatus {
-  awaitingPayment, // Ожидает оплаты
-  inWarehouse, // На складе
-  delivered, // Доставлен
+  awaitingPayment,
+  submitted,
+  inWarehouse,
+  inTransit,
+  delivered,
+  cancelled,
 }
 
-/// Расширение для получения текста статуса
 extension OrderStatusExtension on OrderStatus {
   String get text {
     switch (this) {
       case OrderStatus.awaitingPayment:
         return 'Ожидает оплаты';
+      case OrderStatus.submitted:
+        return 'На складе в Алмате';
       case OrderStatus.inWarehouse:
         return 'На складе в Алмате';
+      case OrderStatus.inTransit:
+        return 'В пути';
       case OrderStatus.delivered:
         return 'Доставлен';
+      case OrderStatus.cancelled:
+        return 'Отменен';
     }
   }
 
-  /// Цвет фона карточки
   Color get backgroundColor {
     switch (this) {
       case OrderStatus.awaitingPayment:
         return AppColors.white;
+      case OrderStatus.submitted:
+        return const Color(0xFFFFF4E6);
       case OrderStatus.inWarehouse:
-        return const Color(0xFFFFF4E6); // Светло-персиковый/оранжевый
+        return const Color(0xFFFFE4E8);
+      case OrderStatus.inTransit:
+        return const Color(0xFFE3F2FD);
       case OrderStatus.delivered:
-        return const Color(0xFFE8F5E9); // Светло-зеленый
+        return const Color(0xFFF1F8E9);
+      case OrderStatus.cancelled:
+        return const Color(0xFFF5F5F5);
     }
   }
 
-  /// Цвет границы карточки
   Color? get borderColor {
     switch (this) {
       case OrderStatus.awaitingPayment:
-        return const Color(0xFFFF9800); // Оранжевая граница
+        return AppColors.primary;
+      case OrderStatus.submitted:
+        return null;
       case OrderStatus.inWarehouse:
-        return null; // Без границы
+        return null;
+      case OrderStatus.inTransit:
+        return null;
       case OrderStatus.delivered:
-        return null; // Без границы
+        return null;
+      case OrderStatus.cancelled:
+        return null;
     }
   }
 
-  /// Цвет текста статуса
   Color get statusTextColor {
     switch (this) {
       case OrderStatus.awaitingPayment:
-        return const Color(0xFFFF9800); // Оранжевый
+        return AppColors.primary;
+      case OrderStatus.submitted:
+        return const Color(0xFFFF6F00);
       case OrderStatus.inWarehouse:
-        return const Color(0xFFFF5722); // Оранжево-красный
+        return const Color(0xFFD32F2F);
+      case OrderStatus.inTransit:
+        return const Color(0xFF1976D2);
       case OrderStatus.delivered:
-        return const Color(0xFF4CAF50); // Зеленый
+        return const Color(0xFF7CB342);
+      case OrderStatus.cancelled:
+        return const Color(0xFF757575);
     }
   }
 }
 
-/// Helper для определения статуса заказа
 class OrderStatusHelper {
-  /// Определить статус заказа на основе его полей
   static OrderStatus getStatus(OrderModel order) {
-    // Если не оплачен - ожидает оплаты
+    if (order.status != null && order.status!.isNotEmpty) {
+      switch (order.status!.toLowerCase()) {
+        case 'submitted':
+          return OrderStatus.submitted;
+        case 'in_warehouse':
+          return OrderStatus.inWarehouse;
+        case 'in_transit':
+          return OrderStatus.inTransit;
+        case 'delivered':
+          return OrderStatus.delivered;
+        case 'cancelled':
+          return OrderStatus.cancelled;
+        default:
+          break;
+      }
+    }
+
     if (!order.isPaid) {
       return OrderStatus.awaitingPayment;
     }
 
-    // Если есть QR коды - на складе
     if (order.qrs != null && order.qrs!.isNotEmpty) {
       return OrderStatus.inWarehouse;
     }
 
-    // Если удален (доставлен) - доставлен
     if (order.deletedAt != null) {
       return OrderStatus.delivered;
     }
 
-    // По умолчанию - на складе (если оплачен)
-    return OrderStatus.inWarehouse;
+    return OrderStatus.submitted;
   }
 
-  /// Получить трековый номер из QR кодов
   static String? getTrackingNumber(OrderModel order) {
     if (order.qrs != null && order.qrs!.isNotEmpty) {
-      // Берем первый QR код, возможно там есть uuid или другой идентификатор
       final qr = order.qrs!.first;
       if (qr.uuid != null && qr.uuid!.isNotEmpty) {
-        // Форматируем UUID как трековый номер (например, 123-456-789)
         final uuid = qr.uuid!;
         if (uuid.length >= 9) {
           return '${uuid.substring(0, 3)}-${uuid.substring(3, 6)}-${uuid.substring(6, 9)}';
@@ -99,5 +129,3 @@ class OrderStatusHelper {
     return null;
   }
 }
-
-

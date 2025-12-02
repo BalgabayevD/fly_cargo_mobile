@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Виджет заголовка профиля
 class ProfileHeaderWidget extends StatelessWidget {
   final dynamic profile;
 

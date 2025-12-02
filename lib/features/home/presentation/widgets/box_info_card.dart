@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/entities/box_entity.dart';
 
-/// Карточка с информацией о коробке
 class BoxInfoCard extends StatelessWidget {
   final BoxEntity box;
 
@@ -32,7 +31,6 @@ class BoxInfoCard extends StatelessWidget {
   }
 }
 
-/// Изображение коробки
 class _BoxImage extends StatelessWidget {
   final String imagePath;
 
@@ -55,7 +53,6 @@ class _BoxImage extends StatelessWidget {
   }
 }
 
-/// Название коробки
 class _BoxName extends StatelessWidget {
   final String name;
 
@@ -74,7 +71,6 @@ class _BoxName extends StatelessWidget {
   }
 }
 
-/// Размеры коробки
 class _BoxDimensions extends StatelessWidget {
   final String dimensions;
 

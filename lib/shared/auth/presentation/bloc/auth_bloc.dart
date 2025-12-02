@@ -48,7 +48,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     } catch (e) {
-      // Оставляем AuthInitial состояние
     }
   }
 
@@ -85,7 +84,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         body: VerifyPhoneBody(phoneNumber: event.phoneNumber, code: event.code),
       );
 
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      final sessionStatus = await _authStatusUseCase.getSessionStatus();
+
+      if (sessionStatus?.session == null) {
+        emit(const AuthError(message: 'Не удалось создать сессию'));
+        return;
+      }
 
       try {
         final profile = await _authStatusUseCase.getUserProfile();
@@ -98,14 +104,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             accessToken: token,
           ),
         );
-        return;
       } catch (profileError) {
-        // Ignore profile error, try session
-      }
-
-      final sessionStatus = await _authStatusUseCase.getSessionStatus();
-
-      if (sessionStatus?.session != null) {
         final token = await _authStatusUseCase.getCurrentToken();
         emit(
           AuthAuthenticated(
@@ -114,11 +113,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             accessToken: token,
           ),
         );
-      } else {
-        emit(const AuthUnauthenticated());
       }
     } catch (e) {
-      emit(AuthError(message: 'Не удалось подтвердить код: ${e.toString()}'));
+      emit(AuthError(message: 'Неверный код или ошибка подтверждения'));
     }
   }
 

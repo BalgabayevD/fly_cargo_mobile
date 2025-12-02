@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TariffCategoryModel {
 
- int? get id; String get createdAt; String get updatedAt; String? get deletedAt; String get name; String get key; int? get sortIndex; bool get active; List<TariffModel>? get tariffs;
+ int? get id; String get createdAt; String get updatedAt; String? get deletedAt; String get name; String get key;@JsonKey(name: 'sort_index') int? get sortIndex; bool get active; List<TariffModel>? get tariffs;
 /// Create a copy of TariffCategoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TariffCategoryModelCopyWith<$Res>  {
   factory $TariffCategoryModelCopyWith(TariffCategoryModel value, $Res Function(TariffCategoryModel) _then) = _$TariffCategoryModelCopyWithImpl;
 @useResult
 $Res call({
- int? id, String createdAt, String updatedAt, String? deletedAt, String name, String key, int? sortIndex, bool active, List<TariffModel>? tariffs
+ int? id, String createdAt, String updatedAt, String? deletedAt, String name, String key,@JsonKey(name: 'sort_index') int? sortIndex, bool active, List<TariffModel>? tariffs
 });
 
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key,  int? sortIndex,  bool active,  List<TariffModel>? tariffs)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key, @JsonKey(name: 'sort_index')  int? sortIndex,  bool active,  List<TariffModel>? tariffs)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TariffCategoryModel() when $default != null:
 return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.name,_that.key,_that.sortIndex,_that.active,_that.tariffs);case _:
@@ -179,7 +179,7 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.n
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key,  int? sortIndex,  bool active,  List<TariffModel>? tariffs)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key, @JsonKey(name: 'sort_index')  int? sortIndex,  bool active,  List<TariffModel>? tariffs)  $default,) {final _that = this;
 switch (_that) {
 case _TariffCategoryModel():
 return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.name,_that.key,_that.sortIndex,_that.active,_that.tariffs);}
@@ -196,7 +196,7 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.n
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key,  int? sortIndex,  bool active,  List<TariffModel>? tariffs)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key, @JsonKey(name: 'sort_index')  int? sortIndex,  bool active,  List<TariffModel>? tariffs)?  $default,) {final _that = this;
 switch (_that) {
 case _TariffCategoryModel() when $default != null:
 return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.name,_that.key,_that.sortIndex,_that.active,_that.tariffs);case _:
@@ -211,7 +211,7 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.n
 @JsonSerializable()
 
 class _TariffCategoryModel implements TariffCategoryModel {
-  const _TariffCategoryModel({this.id, required this.createdAt, required this.updatedAt, this.deletedAt, required this.name, required this.key, this.sortIndex, required this.active, final  List<TariffModel>? tariffs}): _tariffs = tariffs;
+  const _TariffCategoryModel({this.id, required this.createdAt, required this.updatedAt, this.deletedAt, required this.name, required this.key, @JsonKey(name: 'sort_index') this.sortIndex, required this.active, final  List<TariffModel>? tariffs}): _tariffs = tariffs;
   factory _TariffCategoryModel.fromJson(Map<String, dynamic> json) => _$TariffCategoryModelFromJson(json);
 
 @override final  int? id;
@@ -220,7 +220,7 @@ class _TariffCategoryModel implements TariffCategoryModel {
 @override final  String? deletedAt;
 @override final  String name;
 @override final  String key;
-@override final  int? sortIndex;
+@override@JsonKey(name: 'sort_index') final  int? sortIndex;
 @override final  bool active;
  final  List<TariffModel>? _tariffs;
 @override List<TariffModel>? get tariffs {
@@ -265,7 +265,7 @@ abstract mixin class _$TariffCategoryModelCopyWith<$Res> implements $TariffCateg
   factory _$TariffCategoryModelCopyWith(_TariffCategoryModel value, $Res Function(_TariffCategoryModel) _then) = __$TariffCategoryModelCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String createdAt, String updatedAt, String? deletedAt, String name, String key, int? sortIndex, bool active, List<TariffModel>? tariffs
+ int? id, String createdAt, String updatedAt, String? deletedAt, String name, String key,@JsonKey(name: 'sort_index') int? sortIndex, bool active, List<TariffModel>? tariffs
 });
 
 

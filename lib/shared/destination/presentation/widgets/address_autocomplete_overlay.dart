@@ -6,7 +6,6 @@ import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_state.dart';
 import 'package:heroicons/heroicons.dart';
 
-/// Виджет загрузки для автокомплита
 class _AddressAutocompleteLoading extends StatelessWidget {
   const _AddressAutocompleteLoading();
 
@@ -28,7 +27,6 @@ class _AddressAutocompleteLoading extends StatelessWidget {
   }
 }
 
-/// Виджет пустого состояния для автокомплита
 class _AddressAutocompleteEmpty extends StatelessWidget {
   const _AddressAutocompleteEmpty();
 
@@ -47,7 +45,6 @@ class _AddressAutocompleteEmpty extends StatelessWidget {
   }
 }
 
-/// Элемент списка адресов
 class _AddressAutocompleteItem extends StatelessWidget {
   final AddressModel address;
   final VoidCallback onTap;
@@ -90,7 +87,6 @@ class _AddressAutocompleteItem extends StatelessWidget {
   }
 }
 
-/// Список адресов для автокомплита
 class _AddressAutocompleteList extends StatelessWidget {
   final List<AddressModel> addresses;
   final Function(AddressModel) onAddressSelected;
@@ -118,7 +114,6 @@ class _AddressAutocompleteList extends StatelessWidget {
   }
 }
 
-/// Контент overlay для автокомплита адресов
 class AddressAutocompleteOverlayContent extends StatelessWidget {
   final DestinationBloc destinationBloc;
   final Function(AddressModel) onAddressSelected;

@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 
-/// Утилиты для работы с дизайн-системой
 class DesignUtils {
-  /// Создает отступ между виджетами по вертикали
   static SizedBox verticalSpace(double height) => SizedBox(height: height);
   
-  /// Создает отступ между виджетами по горизонтали
   static SizedBox horizontalSpace(double width) => SizedBox(width: width);
   
-  /// Предустановленные вертикальные отступы
   static const verticalSpaceXS = SizedBox(height: AppSpacing.xs);
   static const verticalSpaceSM = SizedBox(height: AppSpacing.sm);
   static const verticalSpaceMD = SizedBox(height: AppSpacing.md);
@@ -18,7 +14,6 @@ class DesignUtils {
   static const verticalSpaceXL = SizedBox(height: AppSpacing.xl);
   static const verticalSpaceXXL = SizedBox(height: AppSpacing.xxl);
   
-  /// Предустановленные горизонтальные отступы
   static const horizontalSpaceXS = SizedBox(width: AppSpacing.xs);
   static const horizontalSpaceSM = SizedBox(width: AppSpacing.sm);
   static const horizontalSpaceMD = SizedBox(width: AppSpacing.md);
@@ -26,7 +21,6 @@ class DesignUtils {
   static const horizontalSpaceXL = SizedBox(width: AppSpacing.xl);
   static const horizontalSpaceXXL = SizedBox(width: AppSpacing.xxl);
   
-  /// Создает Divider с кастомной высотой
   static Widget divider({
     double? height,
     double? thickness,
@@ -43,7 +37,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает вертикальный Divider
   static Widget verticalDivider({
     double? width,
     double? thickness,
@@ -60,7 +53,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает контейнер с тенью
   static BoxDecoration shadowDecoration({
     Color? backgroundColor,
     double? borderRadius,
@@ -81,7 +73,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает контейнер с градиентом
   static BoxDecoration gradientDecoration({
     required Gradient gradient,
     double? borderRadius,
@@ -94,7 +85,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает контейнер с рамкой
   static BoxDecoration borderedDecoration({
     Color? backgroundColor,
     double? borderRadius,
@@ -111,7 +101,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает CircularProgressIndicator с фирменными цветами
   static Widget loader({
     double? size,
     Color? color,
@@ -129,7 +118,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает Badge с кастомным содержимым
   static Widget badge({
     required String text,
     Color? backgroundColor,
@@ -157,7 +145,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает Avatar с инициалами
   static Widget avatar({
     String? imageUrl,
     String? initials,
@@ -195,7 +182,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает Shimmer эффект для загрузки
   static BoxDecoration shimmerDecoration() {
     return BoxDecoration(
       gradient: LinearGradient(
@@ -210,7 +196,6 @@ class DesignUtils {
     );
   }
   
-  /// Создает скругленное изображение
   static Widget roundedImage({
     required String imageUrl,
     double? width,
@@ -248,18 +233,14 @@ class DesignUtils {
     );
   }
   
-  /// Создает Padding с экранными отступами
   static EdgeInsets get screenPadding => const EdgeInsets.all(AppSpacing.screenPadding);
   
-  /// Создает горизонтальный Padding с экранными отступами
   static EdgeInsets get screenPaddingHorizontal =>
       const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding);
   
-  /// Создает вертикальный Padding с экранными отступами
   static EdgeInsets get screenPaddingVertical =>
       const EdgeInsets.symmetric(vertical: AppSpacing.screenPadding);
   
-  /// Показывает SnackBar с кастомным стилем
   static void showSnackBar(
     BuildContext context, {
     required String message,
@@ -317,11 +298,9 @@ class DesignUtils {
   }
 }
 
-/// Типы SnackBar
 enum SnackBarType {
   success,
   error,
   warning,
   info,
 }
-

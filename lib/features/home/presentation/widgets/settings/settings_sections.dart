@@ -3,7 +3,6 @@ import 'package:fly_cargo/features/home/presentation/widgets/settings/settings_m
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 
-/// Секция авторизации
 class AuthSection extends StatelessWidget {
   final AuthState authState;
   final ProfileState profileState;
@@ -30,7 +29,6 @@ class AuthSection extends StatelessWidget {
         loading: () {},
         loaded: (profile, _) {
           final fullName = '${profile.firstName} ${profile.lastName}'.trim();
-          // Если есть имя - используем его, иначе телефон
           if (fullName.isNotEmpty) {
             displayName = fullName;
           } else if (profile.phone.isNotEmpty) {
@@ -51,7 +49,6 @@ class AuthSection extends StatelessWidget {
   }
 }
 
-/// Секция языка
 class LanguageSection extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -67,7 +64,6 @@ class LanguageSection extends StatelessWidget {
   }
 }
 
-/// Секция уведомлений
 class NotificationsSection extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -82,7 +78,6 @@ class NotificationsSection extends StatelessWidget {
   }
 }
 
-/// Секция юридических документов
 class LegalSections extends StatelessWidget {
   final VoidCallback onPrivacyTap;
   final VoidCallback onTermsTap;
@@ -126,7 +121,6 @@ class LegalSections extends StatelessWidget {
   }
 }
 
-/// Секция контактов
 class ContactsSection extends StatelessWidget {
   final VoidCallback onTap;
 

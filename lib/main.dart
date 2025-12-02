@@ -6,8 +6,11 @@ import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
+import 'package:fly_cargo/features/home/presentation/main_scaffold_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
@@ -62,15 +65,45 @@ Future<void> main() async {
   );
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthBloc>().add(const AuthInitialized());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sapsano',
       theme: AppTheme.lightTheme,
-      home: const OnboardingScreen(),
-      // MainScaffoldPage(),
+      home: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthInitial || state is AuthUnauthenticated) {
+            return const OnboardingScreen();
+          }
+          if (state is AuthAuthenticated) {
+            return const MainScaffoldPage();
+          }
+          if (state is AuthLoading) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          return const OnboardingScreen();
+        },
+      ),
       onGenerateRoute: AuthRouter.generateRoute,
     );
   }
