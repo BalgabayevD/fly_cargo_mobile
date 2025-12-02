@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
@@ -34,7 +35,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: Text(
           _order.orderNumber,
@@ -424,21 +425,21 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               leading: const Icon(Icons.share),
               title: const Text('Поделиться заказом'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
               },
             ),
             ListTile(
               leading: const Icon(Icons.print),
               title: const Text('Печать накладной'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
               },
             ),
             ListTile(
               leading: const Icon(Icons.history),
               title: const Text('История заказа'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
               },
             ),
           ],
@@ -470,12 +471,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         content: const Text('Опишите проблему с заказом'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: const Text('Отмена'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              context.pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Проблема зафиксирована'),
@@ -497,12 +498,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
         content: const Text('Вы уверены, что хотите отменить этот заказ?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: const Text('Нет'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              context.pop();
               _updateOrderStatus(OrderStatus.cancelled);
             },
             child: const Text(

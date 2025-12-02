@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
-import 'package:fly_cargo/features/courier/presentation/courier_deliveries_page.dart';
-import 'package:fly_cargo/features/courier/presentation/courier_income_page.dart';
-import 'package:fly_cargo/features/courier/presentation/courier_notifications_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 class CourierProfilePage extends StatefulWidget {
   const CourierProfilePage({super.key});
   @override
@@ -42,7 +41,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Профиль курьера',
@@ -287,21 +286,12 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
     );
   }
   void _openIncomePage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CourierIncomePage()),
-    );
+    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierIncome}');
   }
   void _openNotificationsPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CourierNotificationsPage()),
-    );
+    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierNotifications}');
   }
   void _openDeliveriesPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CourierDeliveriesPage()),
-    );
+    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierDeliveries}');
   }
 }

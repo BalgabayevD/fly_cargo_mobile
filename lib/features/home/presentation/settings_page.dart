@@ -3,17 +3,16 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/home/presentation/pages/contacts_page.dart';
-import 'package:fly_cargo/features/home/presentation/pages/profile_page.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/settings/settings_menu_items.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/settings/settings_sections.dart';
-import 'package:fly_cargo/features/user/presentation/user_notifications_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
+import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -86,13 +85,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             authState: authState,
                             profileState: profileState,
                             onProfileTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ProfilePage(),
-                                ),
+                              context.go(
+                                '${AppRoutes.settings}/${AppRoutes.profile}',
                               );
                             },
+
                             onAuthTap: () {
                               AuthRouter.navigateToPhoneInput(context);
                             },
@@ -103,22 +100,15 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           NotificationsSection(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const UserNotificationsPage(),
-                                ),
+                              context.go(
+                                '${AppRoutes.settings}/${AppRoutes.notifications}',
                               );
                             },
                           ),
                           ContactsSection(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ContactsPage(),
-                                ),
+                              context.go(
+                                '${AppRoutes.settings}/${AppRoutes.contacts}',
                               );
                             },
                           ),

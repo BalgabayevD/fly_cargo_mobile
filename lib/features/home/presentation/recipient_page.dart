@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
@@ -50,7 +51,7 @@ class _RecipientPageState extends State<RecipientPage> {
         'name': _nameController.text.trim(),
         'phone': _phoneController.text.trim(),
       };
-      Navigator.pop(context, recipientData);
+      context.pop(recipientData);
     }
   }
   @override
@@ -62,7 +63,7 @@ class _RecipientPageState extends State<RecipientPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Данные получателя',

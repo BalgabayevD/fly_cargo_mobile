@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/user/presentation/user_cost_calculator_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_edit_profile_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_notifications_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_order_history_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_payment_cards_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_payments_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/menu_item_widget.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/stat_item_widget.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
@@ -23,7 +19,7 @@ class UserProfilePage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Профиль',
@@ -264,40 +260,22 @@ class UserProfilePage extends StatelessWidget {
     );
   }
   void _editProfile(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserEditProfilePage()),
-    );
+    context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}/${AppRoutes.userEditProfile}');
   }
   void _openPaymentCardsPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserPaymentCardsPage()),
-    );
+    context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}/${AppRoutes.userCards}');
   }
   void _openNotificationsPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserNotificationsPage()),
-    );
+    context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}/${AppRoutes.userNotifications}');
   }
   void _openOrderHistoryPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserOrderHistoryPage()),
-    );
+    context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}/${AppRoutes.userHistory}');
   }
   void _openPaymentsPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserPaymentsPage()),
-    );
+    context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}/${AppRoutes.userPayments}');
   }
   void _openCostCalculatorPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const UserCostCalculatorPage()),
-    );
+    context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}/${AppRoutes.userCalculator}');
   }
   void _openContactPage(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/models/user_profile_model.dart';
@@ -27,7 +28,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Уведомления',
@@ -315,7 +316,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
         backgroundColor: Color(0xFF34C759),
       ),
     );
-    Navigator.pop(context);
+    context.pop();
   }
   void _clearHistory() {
     showDialog(
@@ -327,12 +328,12 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: const Text('Отмена'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              context.pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('История очищена'),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/features/home/presentation/pages/description_form_page.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/choose_recipient_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/choose_tariff_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/home_page_content.dart';
@@ -20,6 +20,7 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart'
     as tariffs;
+import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -54,8 +55,7 @@ class _HomePageState extends State<HomePage> {
   final List<File> _photos = [];
   final List<File> _contentPhotos = [];
   final Map<File, String> _photoIds = {};
-  final Map<File, String> _contentPhotoIds =
-      {};
+  final Map<File, String> _contentPhotoIds = {};
   DateTime? _deliveryDate;
   double? _calculatedPrice;
   late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
@@ -161,13 +161,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _openDescriptionForm() async {
-    final result = await Navigator.push<String>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DescriptionFormPage(
-          initialDescription: _description,
-        ),
-      ),
+    final result = await context.push<String>(
+      '${AppRoutes.home}/${AppRoutes.descriptionForm}',
+      extra: _description,
     );
 
     if (result != null) {
@@ -178,9 +174,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _openTariffSelection() async {
-    final selectedTariff = _selectedTariffId != null
-        ? null
-        : null;
+    final selectedTariff = _selectedTariffId != null ? null : null;
 
     final result = await showModalBottomSheet<dynamic>(
       context: context,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
-import 'package:fly_cargo/features/courier/presentation/courier_profile_page.dart';
-import 'package:fly_cargo/features/courier/presentation/order_details_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 class CourierHomePage extends StatefulWidget {
   const CourierHomePage({super.key});
@@ -257,16 +257,13 @@ class _CourierHomePageState extends State<CourierHomePage> {
     );
   }
   void _openOrderDetails(CourierOrder order) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => OrderDetailsPage(order: order)),
+    context.push(
+      '${AppRoutes.courierHome}/${AppRoutes.courierOrderDetails}',
+      extra: order,
     );
   }
   void _openProfile() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CourierProfilePage()),
-    );
+    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}');
   }
 }
 class OrderCard extends StatelessWidget {

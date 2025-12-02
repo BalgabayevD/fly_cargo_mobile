@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
-import 'package:fly_cargo/features/courier/presentation/order_details_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_filter_widget.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_statistics_dialog.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/delivery_card_widget.dart';
@@ -51,7 +52,7 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Мои доставки',
@@ -138,11 +139,9 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
   }
 
   void _openDeliveryDetails(CourierOrder delivery) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => OrderDetailsPage(order: delivery),
-      ),
+    context.push(
+      '${AppRoutes.courierHome}/${AppRoutes.courierOrderDetails}',
+      extra: delivery,
     );
   }
 

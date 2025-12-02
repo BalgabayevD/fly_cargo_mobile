@@ -5,6 +5,7 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 
 class PhoneNumberFormatter extends TextInputFormatter {
   @override
@@ -164,13 +165,11 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
               ),
             );
           } else if (state is AuthCodeSent) {
-            Navigator.of(context).pushReplacementNamed(
-              '/auth/code-input',
-              arguments: {
-                'phoneNumber': state.phoneNumber,
-                'deviceId': state.deviceId,
-                'preAuthSessionId': state.preAuthSessionId,
-              },
+            AuthRouter.replaceWithCodeInput(
+              context,
+              phoneNumber: state.phoneNumber,
+              deviceId: state.deviceId,
+              preAuthSessionId: state.preAuthSessionId,
             );
           }
         },

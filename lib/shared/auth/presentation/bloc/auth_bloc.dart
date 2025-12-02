@@ -51,6 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
     } catch (e) {
       log(e.toString());
+      emit(const AuthUnauthenticated());
     }
   }
 

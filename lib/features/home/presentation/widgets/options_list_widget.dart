@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/home/presentation/recipient_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 class OptionsListWidget extends StatelessWidget {
   const OptionsListWidget({super.key});
   @override
@@ -70,7 +71,7 @@ class OptionsListWidget extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: const Text('Понятно'),
           ),
         ],
@@ -78,11 +79,8 @@ class OptionsListWidget extends StatelessWidget {
     );
   }
   void _showRecipientDialog(BuildContext context) async {
-    final result = await Navigator.push<Map<String, String>>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const RecipientPage(),
-      ),
+    final result = await context.push<Map<String, String>>(
+        '${AppRoutes.home}/${AppRoutes.recipientPage}'
     );
     if (result != null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -103,7 +101,7 @@ class OptionsListWidget extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: const Text('Понятно'),
           ),
         ],
@@ -120,7 +118,7 @@ class OptionsListWidget extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: const Text('Понятно'),
           ),
         ],

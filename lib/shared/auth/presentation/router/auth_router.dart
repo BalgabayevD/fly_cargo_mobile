@@ -1,64 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/shared/auth/presentation/pages/code_input_page.dart';
-import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:go_router/go_router.dart';
+
 class AuthRouter {
-  static const String phoneInput = '/auth/phone-input';
-  static const String codeInput = '/auth/code-input';
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case phoneInput:
-        return MaterialPageRoute(
-          builder: (_) => const PhoneInputPage(),
-          settings: settings,
-        );
-      case codeInput:
-        final args = settings.arguments as Map<String, dynamic>?;
-        if (args == null) {
-          throw ArgumentError('Missing required arguments for code input page');
-        }
-        return MaterialPageRoute(
-          builder: (_) => CodeInputPage(
-            phoneNumber: args['phoneNumber'] as String,
-            deviceId: args['deviceId'] as String,
-            preAuthSessionId: args['preAuthSessionId'] as String,
-          ),
-          settings: settings,
-        );
-      default:
-        throw ArgumentError('Unknown route: ${settings.name}');
-    }
-  }
   static Future<void> navigateToPhoneInput(BuildContext context) {
-    return Navigator.of(context).pushNamed(phoneInput);
+    return context.push(AppRoutes.login);
   }
+
   static Future<void> navigateToCodeInput(
     BuildContext context, {
     required String phoneNumber,
     required String deviceId,
     required String preAuthSessionId,
   }) {
-    return Navigator.of(context).pushNamed(
-      codeInput,
-      arguments: {
+    return context.push(
+      AppRoutes.verify,
+      extra: {
         'phoneNumber': phoneNumber,
         'deviceId': deviceId,
         'preAuthSessionId': preAuthSessionId,
       },
     );
   }
+
   static Future<void> replaceWithCodeInput(
     BuildContext context, {
     required String phoneNumber,
     required String deviceId,
     required String preAuthSessionId,
   }) {
-    return Navigator.of(context).pushReplacementNamed(
-      codeInput,
-      arguments: {
+    context.pushReplacement(
+      AppRoutes.verify,
+      extra: {
         'phoneNumber': phoneNumber,
         'deviceId': deviceId,
         'preAuthSessionId': preAuthSessionId,
       },
     );
+    return Future.value();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 class UserPaymentsPage extends StatefulWidget {
@@ -63,7 +64,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Платежи',
@@ -450,7 +451,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
                   setState(() {
                     _selectedPeriod = filter;
                   });
-                  Navigator.pop(context);
+                  context.pop();
                 },
               );
             }),

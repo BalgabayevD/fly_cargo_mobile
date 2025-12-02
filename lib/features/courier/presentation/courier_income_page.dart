@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
@@ -44,7 +45,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Мой доход',
@@ -153,7 +154,7 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
             AppButton(
               text: 'Добавить способ выплаты',
               onPressed: () {
-                Navigator.pop(context);
+                context.pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(

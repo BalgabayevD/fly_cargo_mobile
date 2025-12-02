@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/home/presentation/main_scaffold_page.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -75,29 +76,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Row(
                       children: [
                         const Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (_) => const MainScaffoldPage(),
-                              ),
-                            );
-                          },
-                          child: Container(
+                        TextButton(
+                          onPressed: () => context.go(AppRoutes.home),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.black.withValues(
+                              alpha: 0.4,
+                            ),
+                            foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
                               vertical: 6,
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.4),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
-                              'Пропустить',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
+                          ),
+                          child: const Text(
+                            'Пропустить',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),

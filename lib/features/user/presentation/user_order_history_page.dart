@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/models/user_profile_model.dart';
@@ -73,7 +74,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'История заказов',
@@ -392,7 +393,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
                   setState(() {
                     _selectedFilter = filter;
                   });
-                  Navigator.pop(context);
+                  context.pop();
                 },
               );
             }),
@@ -430,7 +431,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
             const SizedBox(height: 20),
             AppButton(
               text: 'Закрыть',
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
               size: AppButtonSize.large,
               variant: AppButtonVariant.primary,
               isFullWidth: true,

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/home/presentation/main_scaffold_page.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
+import 'package:go_router/go_router.dart';
 
 class CodeInputPage extends StatefulWidget {
   final String phoneNumber;
@@ -84,7 +85,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
         elevation: 0,
         leading: AppIconButton(
           icon: Icons.arrow_back_ios,
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           variant: AppButtonVariant.ghost,
         ),
         title: Text('Подтвердить', style: AppTypography.h6),
@@ -96,10 +97,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
         },
         listener: (context, state) {
           if (state is AuthAuthenticated) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => const MainScaffoldPage()),
-              (route) => false,
-            );
+            context.go(AppRoutes.home);
           }
         },
         child: BlocListener<AuthBloc, AuthState>(

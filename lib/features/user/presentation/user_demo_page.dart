@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 class UserDemoPage extends StatelessWidget {
   const UserDemoPage({super.key});
   @override
@@ -56,12 +57,7 @@ class UserDemoPage extends StatelessWidget {
             AppButton(
               text: 'Открыть профиль',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const UserProfilePage(),
-                  ),
-                );
+                context.push('${AppRoutes.userDemo}/${AppRoutes.userProfile}');
               },
               size: AppButtonSize.large,
               variant: AppButtonVariant.primary,

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
@@ -31,7 +32,7 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
 
   void _onSave() {
     if (_formKey.currentState?.validate() ?? false) {
-      Navigator.of(context).pop(_descriptionController.text);
+      context.pop(_descriptionController.text);
     }
   }
 
@@ -53,7 +54,7 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close, color: AppColors.textPrimary),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
       ),
       body: Form(

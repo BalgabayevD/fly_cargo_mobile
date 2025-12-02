@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
@@ -14,7 +15,7 @@ class UserEditProfilePage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Мой профиль',
@@ -80,7 +81,7 @@ class UserEditProfilePage extends StatelessWidget {
         backgroundColor: Color(0xFF34C759),
       ),
     );
-    Navigator.pop(context);
+    context.pop();
   }
 }
 class _EditProfileContent extends StatefulWidget {
@@ -287,7 +288,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
               leading: const Icon(Icons.camera_alt, color: Color(0xFF007AFF)),
               title: const Text('Сделать фото'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
                 _takePhoto(context);
               },
             ),
@@ -298,7 +299,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
               ),
               title: const Text('Выбрать из галереи'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
                 _selectFromGallery(context);
               },
             ),

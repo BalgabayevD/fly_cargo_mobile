@@ -5,17 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/service_locator.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/main_scaffold_page.dart';
-import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
+import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yandex_maps_mapkit_lite/init.dart';
 
@@ -27,6 +26,11 @@ Future<void> main() async {
   await FlutterBetterAuth.initialize(url: 'https://authfc.maguya.kz/api/auth');
 
   final prefs = await SharedPreferences.getInstance();
+  final authStatusUseCase = getIt<AuthStatusUseCase>();
+  final hasToken = await authStatusUseCase.isAuthenticated();
+
+  // Создаем инстанс AuthBloc здесь, чтобы передать один и тот же в провайдер и роутер
+  final authBloc = getIt<AuthBloc>();
 
   FlutterBetterAuth.dioClient.interceptors.add(
     InterceptorsWrapper(
@@ -46,10 +50,11 @@ Future<void> main() async {
       },
     ),
   );
+
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
+        BlocProvider<AuthBloc>(create: (_) => authBloc),
         BlocProvider<TariffsBloc>(create: (_) => getIt<TariffsBloc>()),
         BlocProvider<PriceCalculationBloc>(
           create: (_) => getIt<PriceCalculationBloc>(),
@@ -60,51 +65,48 @@ Future<void> main() async {
         BlocProvider<ProfileBloc>(create: (_) => getIt<ProfileBloc>()),
         BlocProvider<OrdersBloc>(create: (_) => getIt<OrdersBloc>()),
       ],
-      child: const App(),
+      child: App(
+        authBloc: authBloc,
+        initialRoute: hasToken ? AppRoutes.home : AppRoutes.onboarding,
+      ),
     ),
   );
 }
 
 class App extends StatefulWidget {
-  const App({super.key});
+  final AuthBloc authBloc;
+  final String initialRoute;
+
+  const App({
+    required this.authBloc,
+    required this.initialRoute,
+    super.key,
+  });
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
+  late final GoRouter _router;
+
   @override
   void initState() {
     super.initState();
+    // Инициализируем роутер с правильным начальным маршрутом и authBloc
+    _router = createRouter(widget.authBloc, widget.initialRoute);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthBloc>().add(const AuthInitialized());
+      widget.authBloc.add(const AuthInitialized());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Sapsano',
       theme: AppTheme.lightTheme,
-      home: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          if (state is AuthInitial || state is AuthUnauthenticated) {
-            return const OnboardingScreen();
-          }
-          if (state is AuthAuthenticated) {
-            return const MainScaffoldPage();
-          }
-          if (state is AuthLoading) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-          return const OnboardingScreen();
-        },
-      ),
-      onGenerateRoute: AuthRouter.generateRoute,
+      routerConfig: _router,
     );
   }
 }
