@@ -7,15 +7,15 @@ part of 'tariff_model.dart';
 // **************************************************************************
 
 _TariffModel _$TariffModelFromJson(Map<String, dynamic> json) => _TariffModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   isActive: json['isActive'] as bool,
   name: json['name'] as String,
   description: json['description'] as String,
-  icon: (json['icon'] as num?)?.toInt(),
   image: json['image'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  deletedAt: json['deletedAt'] as String?,
+  icon: (json['icon'] as num?)?.toInt(),
   sortIndex: (json['sortIndex'] as num?)?.toInt(),
   fields: (json['fields'] as List<dynamic>?)?.map((e) => e as String).toList(),
   tariffCategoryId: (json['tariffCategoryId'] as num?)?.toInt(),
@@ -41,15 +41,15 @@ _TariffModel _$TariffModelFromJson(Map<String, dynamic> json) => _TariffModel(
 
 Map<String, dynamic> _$TariffModelToJson(_TariffModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
-      'deletedAt': instance.deletedAt,
       'isActive': instance.isActive,
       'name': instance.name,
       'description': instance.description,
-      'icon': instance.icon,
       'image': instance.image,
+      'id': instance.id,
+      'deletedAt': instance.deletedAt,
+      'icon': instance.icon,
       'sortIndex': instance.sortIndex,
       'fields': instance.fields,
       'tariffCategoryId': instance.tariffCategoryId,

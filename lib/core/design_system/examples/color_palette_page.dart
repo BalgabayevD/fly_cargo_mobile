@@ -30,7 +30,11 @@ class ColorPalettePage extends StatelessWidget {
             'Вторичные цвета',
             [
               _ColorInfo('Secondary', AppColors.secondary, '#FFE4D2'),
-              _ColorInfo('Secondary Light', AppColors.secondaryLight, '#FFF3E9'),
+              _ColorInfo(
+                'Secondary Light',
+                AppColors.secondaryLight,
+                '#FFF3E9',
+              ),
               _ColorInfo('Secondary Dark', AppColors.secondaryDark, '#FFD1B3'),
             ],
           ),
@@ -104,7 +108,11 @@ class ColorPalettePage extends StatelessWidget {
             [
               _ColorInfo('Background', AppColors.background, '#FFFFFF'),
               _ColorInfo('Surface', AppColors.surface, '#F8F9FA'),
-              _ColorInfo('Surface Variant', AppColors.surfaceVariant, '#F5F5F5'),
+              _ColorInfo(
+                'Surface Variant',
+                AppColors.surfaceVariant,
+                '#F5F5F5',
+              ),
             ],
           ),
           DesignUtils.verticalSpaceLG,
@@ -141,7 +149,7 @@ class ColorPalettePage extends StatelessWidget {
 
   Widget _buildColorTile(BuildContext context, _ColorInfo colorInfo) {
     final isLightColor = _isLightColor(colorInfo.color);
-    
+
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: InkWell(
@@ -210,7 +218,10 @@ class ColorPalettePage extends StatelessWidget {
         DesignUtils.verticalSpaceSM,
         _buildGradientTile('Secondary Gradient', AppColors.secondaryGradient),
         DesignUtils.verticalSpaceSM,
-        _buildGradientTile('Primary Dark Gradient', AppColors.primaryDarkGradient),
+        _buildGradientTile(
+          'Primary Dark Gradient',
+          AppColors.primaryDarkGradient,
+        ),
       ],
     );
   }
@@ -240,7 +251,7 @@ class ColorPalettePage extends StatelessWidget {
   }
 
   bool _isLightColor(Color color) {
-    final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    final luminance = 0.299 * color.r + 0.587 * color.g + 0.114 * color.b;
     return luminance > 0.5;
   }
 

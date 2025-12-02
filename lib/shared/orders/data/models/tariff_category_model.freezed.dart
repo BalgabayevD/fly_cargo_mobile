@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TariffCategoryModel {
 
- int? get id; String get createdAt; String get updatedAt; String? get deletedAt; String get name; String get key;@JsonKey(name: 'sort_index') int? get sortIndex; bool get active; List<TariffModel>? get tariffs;
+ String get createdAt; String get updatedAt; String get name; String get key; bool get active; int? get id; String? get deletedAt;// ignore: invalid_annotation_target
+@JsonKey(name: 'sort_index') int? get sortIndex; List<TariffModel>? get tariffs;
 /// Create a copy of TariffCategoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $TariffCategoryModelCopyWith<TariffCategoryModel> get copyWith => _$TariffCatego
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TariffCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.sortIndex, sortIndex) || other.sortIndex == sortIndex)&&(identical(other.active, active) || other.active == active)&&const DeepCollectionEquality().equals(other.tariffs, tariffs));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TariffCategoryModel&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.active, active) || other.active == active)&&(identical(other.id, id) || other.id == id)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.sortIndex, sortIndex) || other.sortIndex == sortIndex)&&const DeepCollectionEquality().equals(other.tariffs, tariffs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,deletedAt,name,key,sortIndex,active,const DeepCollectionEquality().hash(tariffs));
+int get hashCode => Object.hash(runtimeType,createdAt,updatedAt,name,key,active,id,deletedAt,sortIndex,const DeepCollectionEquality().hash(tariffs));
 
 @override
 String toString() {
-  return 'TariffCategoryModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name, key: $key, sortIndex: $sortIndex, active: $active, tariffs: $tariffs)';
+  return 'TariffCategoryModel(createdAt: $createdAt, updatedAt: $updatedAt, name: $name, key: $key, active: $active, id: $id, deletedAt: $deletedAt, sortIndex: $sortIndex, tariffs: $tariffs)';
 }
 
 
@@ -48,7 +49,7 @@ abstract mixin class $TariffCategoryModelCopyWith<$Res>  {
   factory $TariffCategoryModelCopyWith(TariffCategoryModel value, $Res Function(TariffCategoryModel) _then) = _$TariffCategoryModelCopyWithImpl;
 @useResult
 $Res call({
- int? id, String createdAt, String updatedAt, String? deletedAt, String name, String key,@JsonKey(name: 'sort_index') int? sortIndex, bool active, List<TariffModel>? tariffs
+ String createdAt, String updatedAt, String name, String key, bool active, int? id, String? deletedAt,@JsonKey(name: 'sort_index') int? sortIndex, List<TariffModel>? tariffs
 });
 
 
@@ -65,17 +66,17 @@ class _$TariffCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of TariffCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? name = null,Object? key = null,Object? sortIndex = freezed,Object? active = null,Object? tariffs = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? createdAt = null,Object? updatedAt = null,Object? name = null,Object? key = null,Object? active = null,Object? id = freezed,Object? deletedAt = freezed,Object? sortIndex = freezed,Object? tariffs = freezed,}) {
   return _then(_self.copyWith(
-id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as String,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
-as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
-as String,sortIndex: freezed == sortIndex ? _self.sortIndex : sortIndex // ignore: cast_nullable_to_non_nullable
-as int?,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
-as bool,tariffs: freezed == tariffs ? _self.tariffs : tariffs // ignore: cast_nullable_to_non_nullable
+as String,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
+as bool,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
+as String?,sortIndex: freezed == sortIndex ? _self.sortIndex : sortIndex // ignore: cast_nullable_to_non_nullable
+as int?,tariffs: freezed == tariffs ? _self.tariffs : tariffs // ignore: cast_nullable_to_non_nullable
 as List<TariffModel>?,
   ));
 }
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key, @JsonKey(name: 'sort_index')  int? sortIndex,  bool active,  List<TariffModel>? tariffs)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String createdAt,  String updatedAt,  String name,  String key,  bool active,  int? id,  String? deletedAt, @JsonKey(name: 'sort_index')  int? sortIndex,  List<TariffModel>? tariffs)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TariffCategoryModel() when $default != null:
-return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.name,_that.key,_that.sortIndex,_that.active,_that.tariffs);case _:
+return $default(_that.createdAt,_that.updatedAt,_that.name,_that.key,_that.active,_that.id,_that.deletedAt,_that.sortIndex,_that.tariffs);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.n
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key, @JsonKey(name: 'sort_index')  int? sortIndex,  bool active,  List<TariffModel>? tariffs)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String createdAt,  String updatedAt,  String name,  String key,  bool active,  int? id,  String? deletedAt, @JsonKey(name: 'sort_index')  int? sortIndex,  List<TariffModel>? tariffs)  $default,) {final _that = this;
 switch (_that) {
 case _TariffCategoryModel():
-return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.name,_that.key,_that.sortIndex,_that.active,_that.tariffs);}
+return $default(_that.createdAt,_that.updatedAt,_that.name,_that.key,_that.active,_that.id,_that.deletedAt,_that.sortIndex,_that.tariffs);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -196,10 +197,10 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.n
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String createdAt,  String updatedAt,  String? deletedAt,  String name,  String key, @JsonKey(name: 'sort_index')  int? sortIndex,  bool active,  List<TariffModel>? tariffs)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String createdAt,  String updatedAt,  String name,  String key,  bool active,  int? id,  String? deletedAt, @JsonKey(name: 'sort_index')  int? sortIndex,  List<TariffModel>? tariffs)?  $default,) {final _that = this;
 switch (_that) {
 case _TariffCategoryModel() when $default != null:
-return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.name,_that.key,_that.sortIndex,_that.active,_that.tariffs);case _:
+return $default(_that.createdAt,_that.updatedAt,_that.name,_that.key,_that.active,_that.id,_that.deletedAt,_that.sortIndex,_that.tariffs);case _:
   return null;
 
 }
@@ -211,17 +212,18 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.n
 @JsonSerializable()
 
 class _TariffCategoryModel implements TariffCategoryModel {
-  const _TariffCategoryModel({this.id, required this.createdAt, required this.updatedAt, this.deletedAt, required this.name, required this.key, @JsonKey(name: 'sort_index') this.sortIndex, required this.active, final  List<TariffModel>? tariffs}): _tariffs = tariffs;
+  const _TariffCategoryModel({required this.createdAt, required this.updatedAt, required this.name, required this.key, required this.active, this.id, this.deletedAt, @JsonKey(name: 'sort_index') this.sortIndex, final  List<TariffModel>? tariffs}): _tariffs = tariffs;
   factory _TariffCategoryModel.fromJson(Map<String, dynamic> json) => _$TariffCategoryModelFromJson(json);
 
-@override final  int? id;
 @override final  String createdAt;
 @override final  String updatedAt;
-@override final  String? deletedAt;
 @override final  String name;
 @override final  String key;
-@override@JsonKey(name: 'sort_index') final  int? sortIndex;
 @override final  bool active;
+@override final  int? id;
+@override final  String? deletedAt;
+// ignore: invalid_annotation_target
+@override@JsonKey(name: 'sort_index') final  int? sortIndex;
  final  List<TariffModel>? _tariffs;
 @override List<TariffModel>? get tariffs {
   final value = _tariffs;
@@ -245,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TariffCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.sortIndex, sortIndex) || other.sortIndex == sortIndex)&&(identical(other.active, active) || other.active == active)&&const DeepCollectionEquality().equals(other._tariffs, _tariffs));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TariffCategoryModel&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.active, active) || other.active == active)&&(identical(other.id, id) || other.id == id)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.sortIndex, sortIndex) || other.sortIndex == sortIndex)&&const DeepCollectionEquality().equals(other._tariffs, _tariffs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,deletedAt,name,key,sortIndex,active,const DeepCollectionEquality().hash(_tariffs));
+int get hashCode => Object.hash(runtimeType,createdAt,updatedAt,name,key,active,id,deletedAt,sortIndex,const DeepCollectionEquality().hash(_tariffs));
 
 @override
 String toString() {
-  return 'TariffCategoryModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name, key: $key, sortIndex: $sortIndex, active: $active, tariffs: $tariffs)';
+  return 'TariffCategoryModel(createdAt: $createdAt, updatedAt: $updatedAt, name: $name, key: $key, active: $active, id: $id, deletedAt: $deletedAt, sortIndex: $sortIndex, tariffs: $tariffs)';
 }
 
 
@@ -265,7 +267,7 @@ abstract mixin class _$TariffCategoryModelCopyWith<$Res> implements $TariffCateg
   factory _$TariffCategoryModelCopyWith(_TariffCategoryModel value, $Res Function(_TariffCategoryModel) _then) = __$TariffCategoryModelCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String createdAt, String updatedAt, String? deletedAt, String name, String key,@JsonKey(name: 'sort_index') int? sortIndex, bool active, List<TariffModel>? tariffs
+ String createdAt, String updatedAt, String name, String key, bool active, int? id, String? deletedAt,@JsonKey(name: 'sort_index') int? sortIndex, List<TariffModel>? tariffs
 });
 
 
@@ -282,17 +284,17 @@ class __$TariffCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of TariffCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? name = null,Object? key = null,Object? sortIndex = freezed,Object? active = null,Object? tariffs = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? createdAt = null,Object? updatedAt = null,Object? name = null,Object? key = null,Object? active = null,Object? id = freezed,Object? deletedAt = freezed,Object? sortIndex = freezed,Object? tariffs = freezed,}) {
   return _then(_TariffCategoryModel(
-id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as String,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
-as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
-as String,sortIndex: freezed == sortIndex ? _self.sortIndex : sortIndex // ignore: cast_nullable_to_non_nullable
-as int?,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
-as bool,tariffs: freezed == tariffs ? _self._tariffs : tariffs // ignore: cast_nullable_to_non_nullable
+as String,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
+as bool,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
+as String?,sortIndex: freezed == sortIndex ? _self.sortIndex : sortIndex // ignore: cast_nullable_to_non_nullable
+as int?,tariffs: freezed == tariffs ? _self._tariffs : tariffs // ignore: cast_nullable_to_non_nullable
 as List<TariffModel>?,
   ));
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_better_auth/flutter_better_auth.dart';
 import 'package:flutter_better_auth/plugins/phone/models/verify/verify_phone_body.dart';
 import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
@@ -48,6 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     } catch (e) {
+      log(e.toString());
     }
   }
 

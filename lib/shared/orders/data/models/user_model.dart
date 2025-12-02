@@ -6,10 +6,8 @@ part 'user_model.g.dart';
 @freezed
 sealed class UserModel with _$UserModel {
   const factory UserModel({
-    int? id,
     required String createdAt,
     required String updatedAt,
-    String? deletedAt,
     required String uuid,
     required String email,
     required String phone,
@@ -22,8 +20,10 @@ sealed class UserModel with _$UserModel {
     required String type,
     required String iin,
     required String bin,
-    dynamic access,
     required String role,
+    int? id,
+    String? deletedAt,
+    dynamic access,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

@@ -7,10 +7,8 @@ part of 'user_model.dart';
 // **************************************************************************
 
 _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
-  deletedAt: json['deletedAt'] as String?,
   uuid: json['uuid'] as String,
   email: json['email'] as String,
   phone: json['phone'] as String,
@@ -23,16 +21,16 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   type: json['type'] as String,
   iin: json['iin'] as String,
   bin: json['bin'] as String,
-  access: json['access'],
   role: json['role'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  deletedAt: json['deletedAt'] as String?,
+  access: json['access'],
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
-      'deletedAt': instance.deletedAt,
       'uuid': instance.uuid,
       'email': instance.email,
       'phone': instance.phone,
@@ -45,6 +43,8 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'type': instance.type,
       'iin': instance.iin,
       'bin': instance.bin,
-      'access': instance.access,
       'role': instance.role,
+      'id': instance.id,
+      'deletedAt': instance.deletedAt,
+      'access': instance.access,
     };

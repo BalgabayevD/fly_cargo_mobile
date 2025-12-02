@@ -53,9 +53,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Colors.black.withOpacity(0.35),
-                      Colors.black.withOpacity(0.45),
-                      Colors.black.withOpacity(0.35),
+                      Colors.black.withValues(alpha: 0.35),
+                      Colors.black.withValues(alpha: 0.45),
+                      Colors.black.withValues(alpha: 0.35),
                     ],
                     stops: const [0.0, 0.45, 1.0],
                   ),
@@ -89,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.4),
+                              color: Colors.black.withValues(alpha: 0.4),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text(

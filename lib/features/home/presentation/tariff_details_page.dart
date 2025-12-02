@@ -558,14 +558,14 @@ class _PriceCalculationWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.primary.withOpacity(0.1),
-            AppColors.primary.withOpacity(0.05),
+            AppColors.primary.withValues(alpha: 0.1),
+            AppColors.primary.withValues(alpha: 0.05),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 2),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -586,7 +586,7 @@ class _PriceCalculationWidget extends StatelessWidget {
                   vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
+                  color: AppColors.success.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
                 ),
                 child: Text(
@@ -673,9 +673,9 @@ class _PriceCalculationWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.error.withOpacity(0.1),
+        color: AppColors.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: AppColors.error.withOpacity(0.3)),
+        border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [

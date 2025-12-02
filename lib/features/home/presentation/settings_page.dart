@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
@@ -44,6 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
         _appVersion = packageInfo.version;
       });
     } catch (e) {
+      log(e.toString());
     }
   }
 
@@ -96,8 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           const SizedBox(height: AppSpacing.sm),
                           LanguageSection(
-                            onTap: () {
-                            },
+                            onTap: () {},
                           ),
                           NotificationsSection(
                             onTap: () {

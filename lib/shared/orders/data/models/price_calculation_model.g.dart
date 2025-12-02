@@ -9,9 +9,9 @@ part of 'price_calculation_model.dart';
 _PriceCalculationModel _$PriceCalculationModelFromJson(
   Map<String, dynamic> json,
 ) => _PriceCalculationModel(
-  id: (json['id'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
+  id: (json['id'] as num?)?.toInt(),
   deletedAt: json['deletedAt'] as String?,
   length: (json['length'] as num?)?.toDouble(),
   height: (json['height'] as num?)?.toDouble(),
@@ -51,9 +51,9 @@ _PriceCalculationModel _$PriceCalculationModelFromJson(
 Map<String, dynamic> _$PriceCalculationModelToJson(
   _PriceCalculationModel instance,
 ) => <String, dynamic>{
-  'id': instance.id,
   'createdAt': instance.createdAt,
   'updatedAt': instance.updatedAt,
+  'id': instance.id,
   'deletedAt': instance.deletedAt,
   'length': instance.length,
   'height': instance.height,

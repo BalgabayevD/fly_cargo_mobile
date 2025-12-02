@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateOrderRequest {
 
- bool get isDefect; bool get isFragile; List<String> get contentPhotos; String get description; String get fromAddress; int get fromCityId; double get height; double get length; List<String> get photos; int get tariffId; String get toAddress; int get toCityId; String get toName; String get toPhone; double get weight; double get width;@JsonKey(includeIfNull: false) String? get category;@JsonKey(includeIfNull: false) String? get comment;@JsonKey(includeIfNull: false) String? get fromApartment;@JsonKey(includeIfNull: false) String? get fromEntrance;@JsonKey(includeIfNull: false) String? get fromFloor;@JsonKey(includeIfNull: false) double? get fromLatitude;@JsonKey(includeIfNull: false) double? get fromLongitude;@JsonKey(includeIfNull: false) String? get toApartment;@JsonKey(includeIfNull: false) String? get toEntrance;@JsonKey(includeIfNull: false) String? get toFloor;@JsonKey(includeIfNull: false) double? get toLatitude;@JsonKey(includeIfNull: false) double? get toLongitude;
+ bool get isDefect; bool get isFragile; List<String> get contentPhotos; String get description; String get fromAddress; int get fromCityId; double get height; double get length; List<String> get photos; int get tariffId; String get toAddress; int get toCityId; String get toName; String get toPhone; double get weight; double get width; String? get category; String? get comment; String? get fromApartment; String? get fromEntrance; String? get fromFloor; double? get fromLatitude; double? get fromLongitude; String? get toApartment; String? get toEntrance; String? get toFloor; double? get toLatitude; double? get toLongitude;
 /// Create a copy of CreateOrderRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CreateOrderRequestCopyWith<$Res>  {
   factory $CreateOrderRequestCopyWith(CreateOrderRequest value, $Res Function(CreateOrderRequest) _then) = _$CreateOrderRequestCopyWithImpl;
 @useResult
 $Res call({
- bool isDefect, bool isFragile, List<String> contentPhotos, String description, String fromAddress, int fromCityId, double height, double length, List<String> photos, int tariffId, String toAddress, int toCityId, String toName, String toPhone, double weight, double width,@JsonKey(includeIfNull: false) String? category,@JsonKey(includeIfNull: false) String? comment,@JsonKey(includeIfNull: false) String? fromApartment,@JsonKey(includeIfNull: false) String? fromEntrance,@JsonKey(includeIfNull: false) String? fromFloor,@JsonKey(includeIfNull: false) double? fromLatitude,@JsonKey(includeIfNull: false) double? fromLongitude,@JsonKey(includeIfNull: false) String? toApartment,@JsonKey(includeIfNull: false) String? toEntrance,@JsonKey(includeIfNull: false) String? toFloor,@JsonKey(includeIfNull: false) double? toLatitude,@JsonKey(includeIfNull: false) double? toLongitude
+ bool isDefect, bool isFragile, List<String> contentPhotos, String description, String fromAddress, int fromCityId, double height, double length, List<String> photos, int tariffId, String toAddress, int toCityId, String toName, String toPhone, double weight, double width, String? category, String? comment, String? fromApartment, String? fromEntrance, String? fromFloor, double? fromLatitude, double? fromLongitude, String? toApartment, String? toEntrance, String? toFloor, double? toLatitude, double? toLongitude
 });
 
 
@@ -177,7 +177,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? comment, @JsonKey(includeIfNull: false)  String? fromApartment, @JsonKey(includeIfNull: false)  String? fromEntrance, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toApartment, @JsonKey(includeIfNull: false)  String? toEntrance, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width,  String? category,  String? comment,  String? fromApartment,  String? fromEntrance,  String? fromFloor,  double? fromLatitude,  double? fromLongitude,  String? toApartment,  String? toEntrance,  String? toFloor,  double? toLatitude,  double? toLongitude)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateOrderRequest() when $default != null:
 return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromCityId,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toCityId,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.comment,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toLatitude,_that.toLongitude);case _:
@@ -198,7 +198,7 @@ return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.descrip
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? comment, @JsonKey(includeIfNull: false)  String? fromApartment, @JsonKey(includeIfNull: false)  String? fromEntrance, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toApartment, @JsonKey(includeIfNull: false)  String? toEntrance, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width,  String? category,  String? comment,  String? fromApartment,  String? fromEntrance,  String? fromFloor,  double? fromLatitude,  double? fromLongitude,  String? toApartment,  String? toEntrance,  String? toFloor,  double? toLatitude,  double? toLongitude)  $default,) {final _that = this;
 switch (_that) {
 case _CreateOrderRequest():
 return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromCityId,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toCityId,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.comment,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toLatitude,_that.toLongitude);}
@@ -215,7 +215,7 @@ return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.descrip
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width, @JsonKey(includeIfNull: false)  String? category, @JsonKey(includeIfNull: false)  String? comment, @JsonKey(includeIfNull: false)  String? fromApartment, @JsonKey(includeIfNull: false)  String? fromEntrance, @JsonKey(includeIfNull: false)  String? fromFloor, @JsonKey(includeIfNull: false)  double? fromLatitude, @JsonKey(includeIfNull: false)  double? fromLongitude, @JsonKey(includeIfNull: false)  String? toApartment, @JsonKey(includeIfNull: false)  String? toEntrance, @JsonKey(includeIfNull: false)  String? toFloor, @JsonKey(includeIfNull: false)  double? toLatitude, @JsonKey(includeIfNull: false)  double? toLongitude)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isDefect,  bool isFragile,  List<String> contentPhotos,  String description,  String fromAddress,  int fromCityId,  double height,  double length,  List<String> photos,  int tariffId,  String toAddress,  int toCityId,  String toName,  String toPhone,  double weight,  double width,  String? category,  String? comment,  String? fromApartment,  String? fromEntrance,  String? fromFloor,  double? fromLatitude,  double? fromLongitude,  String? toApartment,  String? toEntrance,  String? toFloor,  double? toLatitude,  double? toLongitude)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateOrderRequest() when $default != null:
 return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.description,_that.fromAddress,_that.fromCityId,_that.height,_that.length,_that.photos,_that.tariffId,_that.toAddress,_that.toCityId,_that.toName,_that.toPhone,_that.weight,_that.width,_that.category,_that.comment,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromLatitude,_that.fromLongitude,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toLatitude,_that.toLongitude);case _:
@@ -230,7 +230,7 @@ return $default(_that.isDefect,_that.isFragile,_that.contentPhotos,_that.descrip
 @JsonSerializable()
 
 class _CreateOrderRequest extends CreateOrderRequest {
-  const _CreateOrderRequest({required this.isDefect, required this.isFragile, required final  List<String> contentPhotos, required this.description, required this.fromAddress, required this.fromCityId, required this.height, required this.length, required final  List<String> photos, required this.tariffId, required this.toAddress, required this.toCityId, required this.toName, required this.toPhone, required this.weight, required this.width, @JsonKey(includeIfNull: false) this.category, @JsonKey(includeIfNull: false) this.comment, @JsonKey(includeIfNull: false) this.fromApartment, @JsonKey(includeIfNull: false) this.fromEntrance, @JsonKey(includeIfNull: false) this.fromFloor, @JsonKey(includeIfNull: false) this.fromLatitude, @JsonKey(includeIfNull: false) this.fromLongitude, @JsonKey(includeIfNull: false) this.toApartment, @JsonKey(includeIfNull: false) this.toEntrance, @JsonKey(includeIfNull: false) this.toFloor, @JsonKey(includeIfNull: false) this.toLatitude, @JsonKey(includeIfNull: false) this.toLongitude}): _contentPhotos = contentPhotos,_photos = photos,super._();
+  const _CreateOrderRequest({required this.isDefect, required this.isFragile, required final  List<String> contentPhotos, required this.description, required this.fromAddress, required this.fromCityId, required this.height, required this.length, required final  List<String> photos, required this.tariffId, required this.toAddress, required this.toCityId, required this.toName, required this.toPhone, required this.weight, required this.width, this.category, this.comment, this.fromApartment, this.fromEntrance, this.fromFloor, this.fromLatitude, this.fromLongitude, this.toApartment, this.toEntrance, this.toFloor, this.toLatitude, this.toLongitude}): _contentPhotos = contentPhotos,_photos = photos,super._();
   factory _CreateOrderRequest.fromJson(Map<String, dynamic> json) => _$CreateOrderRequestFromJson(json);
 
 @override final  bool isDefect;
@@ -261,18 +261,18 @@ class _CreateOrderRequest extends CreateOrderRequest {
 @override final  String toPhone;
 @override final  double weight;
 @override final  double width;
-@override@JsonKey(includeIfNull: false) final  String? category;
-@override@JsonKey(includeIfNull: false) final  String? comment;
-@override@JsonKey(includeIfNull: false) final  String? fromApartment;
-@override@JsonKey(includeIfNull: false) final  String? fromEntrance;
-@override@JsonKey(includeIfNull: false) final  String? fromFloor;
-@override@JsonKey(includeIfNull: false) final  double? fromLatitude;
-@override@JsonKey(includeIfNull: false) final  double? fromLongitude;
-@override@JsonKey(includeIfNull: false) final  String? toApartment;
-@override@JsonKey(includeIfNull: false) final  String? toEntrance;
-@override@JsonKey(includeIfNull: false) final  String? toFloor;
-@override@JsonKey(includeIfNull: false) final  double? toLatitude;
-@override@JsonKey(includeIfNull: false) final  double? toLongitude;
+@override final  String? category;
+@override final  String? comment;
+@override final  String? fromApartment;
+@override final  String? fromEntrance;
+@override final  String? fromFloor;
+@override final  double? fromLatitude;
+@override final  double? fromLongitude;
+@override final  String? toApartment;
+@override final  String? toEntrance;
+@override final  String? toFloor;
+@override final  double? toLatitude;
+@override final  double? toLongitude;
 
 /// Create a copy of CreateOrderRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -307,7 +307,7 @@ abstract mixin class _$CreateOrderRequestCopyWith<$Res> implements $CreateOrderR
   factory _$CreateOrderRequestCopyWith(_CreateOrderRequest value, $Res Function(_CreateOrderRequest) _then) = __$CreateOrderRequestCopyWithImpl;
 @override @useResult
 $Res call({
- bool isDefect, bool isFragile, List<String> contentPhotos, String description, String fromAddress, int fromCityId, double height, double length, List<String> photos, int tariffId, String toAddress, int toCityId, String toName, String toPhone, double weight, double width,@JsonKey(includeIfNull: false) String? category,@JsonKey(includeIfNull: false) String? comment,@JsonKey(includeIfNull: false) String? fromApartment,@JsonKey(includeIfNull: false) String? fromEntrance,@JsonKey(includeIfNull: false) String? fromFloor,@JsonKey(includeIfNull: false) double? fromLatitude,@JsonKey(includeIfNull: false) double? fromLongitude,@JsonKey(includeIfNull: false) String? toApartment,@JsonKey(includeIfNull: false) String? toEntrance,@JsonKey(includeIfNull: false) String? toFloor,@JsonKey(includeIfNull: false) double? toLatitude,@JsonKey(includeIfNull: false) double? toLongitude
+ bool isDefect, bool isFragile, List<String> contentPhotos, String description, String fromAddress, int fromCityId, double height, double length, List<String> photos, int tariffId, String toAddress, int toCityId, String toName, String toPhone, double weight, double width, String? category, String? comment, String? fromApartment, String? fromEntrance, String? fromFloor, double? fromLatitude, double? fromLongitude, String? toApartment, String? toEntrance, String? toFloor, double? toLatitude, double? toLongitude
 });
 
 
