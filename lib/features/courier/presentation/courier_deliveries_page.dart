@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/courier/models/order_model.dart';
-import 'package:go_router/go_router.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:fly_cargo/features/courier/models/order_model.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_filter_widget.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_statistics_dialog.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/delivery_card_widget.dart';
 import 'package:fly_cargo/features/courier/services/deliveries_service.dart';
+import 'package:go_router/go_router.dart';
 
 class CourierDeliveriesPage extends StatefulWidget {
   const CourierDeliveriesPage({super.key});
@@ -87,7 +87,7 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
                 ? _buildEmptyState()
                 : RefreshIndicator(
                     onRefresh: () async {
-                      _loadDeliveries();
+                      await _loadDeliveries();
                     },
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),

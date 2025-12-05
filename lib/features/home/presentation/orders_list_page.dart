@@ -50,6 +50,10 @@ class _OrdersListPageState extends State<OrdersListPage> {
             );
           }
 
+          if (state is OrdersUnauthorized) {
+            return const _UnauthorizedStateWidget();
+          }
+
           if (state is OrdersError) {
             return _ErrorStateWidget(message: state.message);
           }
@@ -125,6 +129,55 @@ class _EmptyStateWidget extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             const Text(
               'Создайте свой первый заказ\nна главной странице',
+              style: TextStyle(
+                fontSize: 16,
+                color: AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _UnauthorizedStateWidget extends StatelessWidget {
+  const _UnauthorizedStateWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.xxl),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: AppColors.surfaceVariant,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.lock_outline,
+                size: 60,
+                color: AppColors.primary,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            const Text(
+              'Требуется авторизация',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            const Text(
+              'Для просмотра заказов\nнеобходимо войти в аккаунт',
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary,

@@ -8,8 +8,8 @@ class ProfileHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fullName = '${profile.firstName} ${profile.lastName}'.trim();
-    final phoneNumber = profile.phone ?? '';
+    final fullName = profile.name?.trim() ?? '';
+    final phoneNumber = profile.phoneNumber ?? '';
 
     return Column(
       children: [

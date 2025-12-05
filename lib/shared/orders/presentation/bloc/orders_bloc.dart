@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/get_client_orders_usecase.dart';
@@ -30,7 +31,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       final result = await _createOrderUseCase.call(event.orderData);
       emit(OrderCreated(orderResult: result));
     } catch (e) {
-      emit(OrdersError(message: e.toString()));
+      if (_isUnauthorized(e)) {
+        emit(const OrdersUnauthorized());
+      } else {
+        emit(OrdersError(message: e.toString()));
+      }
     }
   }
 
@@ -47,7 +52,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       final orders = await _getClientOrdersUseCase.call();
       emit(OrdersLoaded(orders: orders));
     } catch (e) {
-      emit(OrdersError(message: e.toString()));
+      if (_isUnauthorized(e)) {
+        emit(const OrdersUnauthorized());
+      } else {
+        emit(OrdersError(message: e.toString()));
+      }
     }
   }
 
@@ -60,7 +69,19 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       final orders = await _getCourierOrdersUseCase.call();
       emit(OrdersLoaded(orders: orders));
     } catch (e) {
-      emit(OrdersError(message: e.toString()));
+      if (_isUnauthorized(e)) {
+        emit(const OrdersUnauthorized());
+      } else {
+        emit(OrdersError(message: e.toString()));
+      }
     }
+  }
+
+  bool _isUnauthorized(Object e) {
+    if (e is DioException) {
+      return e.response?.statusCode == 401;
+    }
+    return e.toString().contains('401') || 
+           e.toString().toLowerCase().contains('unauthorized');
   }
 }

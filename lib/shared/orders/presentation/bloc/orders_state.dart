@@ -35,3 +35,7 @@ class OrdersError extends OrdersState {
   @override
   List<Object?> get props => [message];
 }
+
+class OrdersUnauthorized extends OrdersState {
+  const OrdersUnauthorized();
+}

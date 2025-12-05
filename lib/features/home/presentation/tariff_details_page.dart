@@ -152,6 +152,14 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
           ),
         );
         Navigator.of(context).popUntil((route) => route.isFirst);
+      } else if (state is OrdersUnauthorized) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Для создания заказа необходимо войти в аккаунт'),
+            backgroundColor: AppColors.error,
+            duration: Duration(seconds: 3),
+          ),
+        );
       } else if (state is OrdersError) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

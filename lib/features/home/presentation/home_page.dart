@@ -339,6 +339,8 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<OrdersBloc, OrdersState>(
       listener: (context, state) {
         if (state is OrdersLoading) {
+        } else if (state is OrdersUnauthorized) {
+          _showError('Для создания заказа необходимо войти в аккаунт');
         } else if (state is OrdersError) {
           _showError(state.message);
         } else if (state is OrderCreated) {

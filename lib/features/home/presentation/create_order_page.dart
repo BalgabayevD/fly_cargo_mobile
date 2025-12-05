@@ -201,6 +201,8 @@ class _CreateOrderContentState extends State<CreateOrderContent> {
         if (state is OrderCreated) {
           _showSuccessSnackBar(state.orderResult.orderId);
           Navigator.pop(context, true);
+        } else if (state is OrdersUnauthorized) {
+          _showErrorSnackBar('Для создания заказа необходимо войти в аккаунт');
         } else if (state is OrdersError) {
           _showErrorSnackBar('Ошибка создания заказа: ${state.message}');
         }

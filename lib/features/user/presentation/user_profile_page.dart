@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:go_router/go_router.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/menu_item_widget.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/stat_item_widget.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
+import 'package:go_router/go_router.dart';
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
   @override
@@ -93,7 +93,7 @@ class UserProfilePage extends StatelessWidget {
     );
   }
   Widget _buildProfileHeader(dynamic profile) {
-    final fullName = '${profile.firstName} ${profile.lastName}'.trim();
+    final fullName = profile.name?.trim() ?? '';
     return Column(
       children: [
         Container(
@@ -104,10 +104,10 @@ class UserProfilePage extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(color: const Color(0xFFE0E0E0), width: 2),
           ),
-          child: profile.photo.isNotEmpty
+          child: (profile.image != null && profile.image!.isNotEmpty)
               ? ClipOval(
                   child: Image.network(
-                    profile.photo,
+                    profile.image!,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         _buildDefaultAvatar(),
@@ -126,7 +126,7 @@ class UserProfilePage extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          profile.phone,
+          profile.phoneNumber,
           style: const TextStyle(fontSize: 16, color: Color(0xFF666666)),
         ),
       ],
@@ -252,7 +252,7 @@ class UserProfilePage extends StatelessWidget {
           MenuItemWidget(
             icon: Icons.contact_phone,
             title: 'Поддержка',
-            subtitle: profile.phone,
+            subtitle: profile.phoneNumber,
             onTap: () => _openContactPage(context),
           ),
         ],

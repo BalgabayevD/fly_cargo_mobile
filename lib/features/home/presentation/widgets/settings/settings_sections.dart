@@ -28,13 +28,21 @@ class AuthSection extends StatelessWidget {
         initial: () {},
         loading: () {},
         loaded: (profile, _) {
-          final fullName = '${profile.firstName} ${profile.lastName}'.trim();
-          if (fullName.isNotEmpty) {
-            displayName = fullName;
-          } else if (profile.phone.isNotEmpty) {
-            displayName = profile.phone;
+          final name = profile.name.trim();
+          if (name.isNotEmpty) {
+            displayName = name.isNotEmpty
+                ? name
+                : profile.role == 'client'
+                ? 'Клиент'
+                : profile.role == 'courier'
+                ? 'Курьер'
+                : null;
+          } else if (profile.phoneNumber.isNotEmpty) {
+            displayName = profile.phoneNumber;
           }
-          userPhone = profile.phone.isNotEmpty ? profile.phone : null;
+          userPhone = profile.phoneNumber.isNotEmpty
+              ? profile.phoneNumber
+              : null;
         },
         error: (_) {},
       );

@@ -1,9 +1,9 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
+import 'package:go_router/go_router.dart';
 class UserEditProfilePage extends StatelessWidget {
   const UserEditProfilePage({super.key});
   @override
@@ -91,25 +91,19 @@ class _EditProfileContent extends StatefulWidget {
   State<_EditProfileContent> createState() => _EditProfileContentState();
 }
 class _EditProfileContentState extends State<_EditProfileContent> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
-  late TextEditingController _middleNameController;
+  late TextEditingController _nameController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController(text: widget.profile.firstName);
-    _lastNameController = TextEditingController(text: widget.profile.lastName);
-    _middleNameController = TextEditingController(text: widget.profile.middleName);
-    _phoneController = TextEditingController(text: widget.profile.phone);
+    _nameController = TextEditingController(text: widget.profile.name);
+    _phoneController = TextEditingController(text: widget.profile.phoneNumber);
     _emailController = TextEditingController(text: widget.profile.email);
   }
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _middleNameController.dispose();
+    _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
     super.dispose();
@@ -141,10 +135,10 @@ class _EditProfileContentState extends State<_EditProfileContent> {
                 shape: BoxShape.circle,
                 border: Border.all(color: const Color(0xFFE0E0E0), width: 2),
               ),
-              child: widget.profile.photo.isNotEmpty
+              child: (widget.profile.image != null && widget.profile.image!.isNotEmpty)
                   ? ClipOval(
                       child: Image.network(
-                        widget.profile.photo,
+                        widget.profile.image!,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             _buildDefaultAvatar(),
@@ -204,21 +198,9 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 20),
           _buildTextField(
-            controller: _firstNameController,
+            controller: _nameController,
             label: 'Имя',
             icon: Icons.person,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _lastNameController,
-            label: 'Фамилия',
-            icon: Icons.person_outline,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _middleNameController,
-            label: 'Отчество',
-            icon: Icons.person_outline,
           ),
           const SizedBox(height: 16),
           _buildTextField(

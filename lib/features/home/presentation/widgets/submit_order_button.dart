@@ -38,9 +38,10 @@ class SubmitOrderButton extends StatelessWidget {
                 ),
               )
             : Text(
-                price != null
-                    ? 'Отправить за ${price!.toStringAsFixed(0)} тг'
-                    : 'Отправить',
+                // price != null
+                // ? 'Отправить за ${price!.toStringAsFixed(0)} тг'
+                // :
+                'Отправить',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,

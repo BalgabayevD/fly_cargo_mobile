@@ -72,44 +72,38 @@ class SessionStatusResponse {
 
 @JsonSerializable()
 class UserProfile {
-  final int? id;
+  final String id;
+  final String name;
+  final String email;
+  final bool emailVerified;
+  final String? image;
   final String createdAt;
   final String updatedAt;
-  final String? deletedAt;
-  final String uuid;
-  final String email;
-  final String phone;
-  final String firstName;
-  final String lastName;
-  final String middleName;
-  final String birthDay;
-  final String photo;
-  final String city;
-  final String type;
-  final String iin;
-  final String bin;
-  final dynamic access;
+  final String phoneNumber;
+  final bool phoneNumberVerified;
   final String role;
+  final bool banned;
+  final String? banReason;
+  final String? banExpires;
+  final String? lang;
+
   const UserProfile({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.emailVerified,
     required this.createdAt,
     required this.updatedAt,
-    required this.uuid,
-    required this.email,
-    required this.phone,
-    required this.firstName,
-    required this.lastName,
-    required this.middleName,
-    required this.birthDay,
-    required this.photo,
-    required this.city,
-    required this.type,
-    required this.iin,
-    required this.bin,
+    required this.phoneNumber,
+    required this.phoneNumberVerified,
     required this.role,
-    this.id,
-    this.deletedAt,
-    this.access,
+    required this.banned,
+    this.image,
+    this.banReason,
+    this.banExpires,
+    this.lang,
   });
+
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);
   Map<String, dynamic> toJson() => _$UserProfileToJson(this);

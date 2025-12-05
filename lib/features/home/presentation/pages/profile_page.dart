@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
@@ -6,7 +5,7 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
-import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -48,29 +47,26 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       _ProfileField(
                         label: 'Номер телефона',
-                        value: profile.phone,
+                        value: profile.phoneNumber,
                       ),
                       const Divider(height: 1),
                       _ProfileField(
                         label: 'Имя',
-                        value: profile.firstName,
+                        value: profile.name,
                       ),
                       const Divider(height: 1),
                       _ProfileField(
-                        label: 'Фамилия',
-                        value: profile.lastName,
+                        label: 'Email',
+                        value: profile.email,
                       ),
                       const Divider(height: 1),
                       _ProfileField(
-                        label: 'Отчество',
-                        value: profile.middleName,
-                      ),
-                      const Divider(height: 1),
-                      _ProfileField(
-                        label: 'Дата рождения',
-                        value: profile.birthDay.isNotEmpty
-                            ? _formatBirthDay(profile.birthDay)
-                            : '',
+                        label: 'Роль',
+                        value: profile.role == 'client'
+                            ? 'Клиент'
+                            : profile.role == 'courier'
+                            ? 'Курьер'
+                            : profile.role,
                       ),
                     ],
                   ),
@@ -87,7 +83,9 @@ class ProfilePage extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+                              borderRadius: BorderRadius.circular(
+                                AppSpacing.radiusMD,
+                              ),
                             ),
                             elevation: 0,
                           ),
@@ -106,12 +104,16 @@ class ProfilePage extends StatelessWidget {
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Функция удаления профиля в разработке'),
+                              content: Text(
+                                'Функция удаления профиля в разработке',
+                              ),
                             ),
                           );
                         },
                         child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                          padding: EdgeInsets.symmetric(
+                            vertical: AppSpacing.sm,
+                          ),
                           child: Text(
                             'Заявка на удаление профиля',
                             style: TextStyle(
@@ -139,16 +141,6 @@ class ProfilePage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _formatBirthDay(String birthDay) {
-    try {
-      final date = DateTime.parse(birthDay);
-      final formatter = DateFormat('d MMMM yyyy', 'ru');
-      return formatter.format(date);
-    } catch (e) {
-      return birthDay;
-    }
   }
 
   void _logout(BuildContext context) {
