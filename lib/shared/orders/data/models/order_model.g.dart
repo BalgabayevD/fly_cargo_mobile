@@ -59,6 +59,8 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
           ?.map((e) => e as String)
           .toList() ??
       const [],
+  declineReason: json['decideReason'] as String? ?? '',
+  declineDescription: json['decideDescription'] as String? ?? '',
   fromCity: json['fromCity'] == null
       ? null
       : CityModel.fromJson(json['fromCity'] as Map<String, dynamic>),
@@ -73,6 +75,18 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
   qrs:
       (json['qrs'] as List<dynamic>?)
           ?.map((e) => QrModel.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  identifications:
+      (json['identifications'] as List<dynamic>?)
+          ?.map(
+            (e) => OrderIdentificationModel.fromJson(e as Map<String, dynamic>),
+          )
+          .toList() ??
+      const [],
+  histories:
+      (json['histories'] as List<dynamic>?)
+          ?.map((e) => OrderHistoryModel.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
   priceCalculations: json['priceCalculations'] == null
@@ -124,9 +138,13 @@ Map<String, dynamic> _$OrderModelToJson(_OrderModel instance) =>
       'photos': instance.photos,
       'contentPhotos': instance.contentPhotos,
       'defectPhotos': instance.defectPhotos,
+      'decideReason': instance.declineReason,
+      'decideDescription': instance.declineDescription,
       'fromCity': instance.fromCity,
       'toCity': instance.toCity,
       'participants': instance.participants,
       'qrs': instance.qrs,
+      'identifications': instance.identifications,
+      'histories': instance.histories,
       'priceCalculations': instance.priceCalculations,
     };
