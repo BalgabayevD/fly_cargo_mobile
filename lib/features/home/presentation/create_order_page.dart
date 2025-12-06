@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/core/di/service_locator.dart';
-import 'package:fly_cargo/core/entities/box_entity.dart';
-import 'package:fly_cargo/core/extensions/box_entity_extensions.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
@@ -13,10 +10,35 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_creation_form.dart';
 import 'package:fly_cargo/shared/orders/presentation/widgets/order_form_data.dart';
 
-import 'widgets/box_description_card.dart';
 import 'widgets/box_info_card.dart';
 import 'widgets/create_order_button.dart';
-import 'widgets/price_info_container.dart';
+
+// Простая модель для информации о типе посылки
+class BoxInfo {
+  final String id;
+  final String name;
+  final String dimensions;
+  final String imagePath;
+  final double height;
+  final double length;
+  final double width;
+  final double weight;
+  final int tariffId;
+
+  const BoxInfo({
+    required this.id,
+    required this.name,
+    required this.dimensions,
+    required this.imagePath,
+    required this.height,
+    required this.length,
+    required this.width,
+    required this.weight,
+    required this.tariffId,
+  });
+
+  double get volumetricWeight => length * width * height / 5000;
+}
 
 class CreateOrderPage extends StatelessWidget {
   final String boxType;
@@ -32,27 +54,63 @@ class CreateOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ServiceLocator().getBoxByTypeUseCase(boxType),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
+    // TODO: Загрузка данных о коробке с сервера
+    final box = _getBoxByType(boxType);
 
-        if (snapshot.hasError || !snapshot.hasData) {
-          return _ErrorScreen();
-        }
+    if (box == null) {
+      return _ErrorScreen();
+    }
 
-        final box = snapshot.data!;
-        return CreateOrderContent(
-          box: box,
-          fromAddress: fromAddress,
-          toAddress: toAddress,
-        );
-      },
+    return CreateOrderContent(
+      box: box,
+      fromAddress: fromAddress,
+      toAddress: toAddress,
     );
+  }
+
+  BoxInfo? _getBoxByType(String type) {
+    // TODO: Заменить на реальные данные с сервера
+    // Временная заглушка - возвращаем базовую информацию
+    switch (type) {
+      case 'small':
+        return const BoxInfo(
+          id: 'small',
+          name: 'Маленькая коробка',
+          dimensions: '15 × 10 × 20 см',
+          imagePath: 'assets/images/small.png',
+          height: 20.0,
+          length: 15.0,
+          width: 10.0,
+          weight: 0.5,
+          tariffId: 1,
+        );
+      case 'medium':
+        return const BoxInfo(
+          id: 'medium',
+          name: 'Средняя коробка',
+          dimensions: '20 × 20 × 30 см',
+          imagePath: 'assets/images/medium.png',
+          height: 30.0,
+          length: 20.0,
+          width: 20.0,
+          weight: 1.0,
+          tariffId: 2,
+        );
+      case 'big':
+        return const BoxInfo(
+          id: 'big',
+          name: 'Большая коробка',
+          dimensions: '30 × 30 × 40 см',
+          imagePath: 'assets/images/big.png',
+          height: 40.0,
+          length: 30.0,
+          width: 30.0,
+          weight: 2.0,
+          tariffId: 3,
+        );
+      default:
+        return null;
+    }
   }
 }
 
@@ -81,7 +139,7 @@ class _ErrorScreen extends StatelessWidget {
 }
 
 class CreateOrderContent extends StatefulWidget {
-  final BoxEntity box;
+  final BoxInfo box;
   final AddressModel? fromAddress;
   final AddressModel? toAddress;
 
@@ -265,7 +323,7 @@ class _CreateOrderAppBar extends StatelessWidget
 }
 
 class _CreateOrderBody extends StatelessWidget {
-  final BoxEntity box;
+  final BoxInfo box;
   final GlobalKey<FormState> formKey;
   final OrdersBloc ordersBloc;
   final Function(OrderFormData) onFormDataChanged;
@@ -287,13 +345,6 @@ class _CreateOrderBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BoxInfoCard(box: box),
-          const SizedBox(height: AppSpacing.xxl),
-          BoxDescriptionCard(description: box.description),
-          const SizedBox(height: AppSpacing.xxxl),
-          PriceInfoContainer(
-            basePrice: box.basePrice,
-            currency: box.currency,
-          ),
           const SizedBox(height: AppSpacing.xxl),
           OrderCreationForm(
             formKey: formKey,

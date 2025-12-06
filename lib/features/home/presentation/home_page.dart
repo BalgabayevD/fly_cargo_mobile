@@ -284,6 +284,18 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
+    // Проверка размеров тарифа
+    final height = _customHeight ?? _selectedTariff!.height;
+    final length = _customLength ?? _selectedTariff!.length;
+    final width = _customWidth ?? _selectedTariff!.width;
+    
+    if (height == null || height <= 0 || 
+        length == null || length <= 0 || 
+        width == null || width <= 0) {
+      _showError('Выбранный тариф не содержит корректных размеров. Пожалуйста, выберите другой тариф или укажите размеры вручную.');
+      return;
+    }
+
     final photoIds = _photos
         .map((photo) => _photoIds[photo] ?? '')
         .where((id) => id.isNotEmpty)
@@ -306,8 +318,8 @@ class _HomePageState extends State<HomePage> {
       fromFloor: _fromAddress!.floor?.isNotEmpty == true
           ? _fromAddress!.floor
           : null,
-      height: _customHeight ?? _selectedTariff!.height ?? 0.0,
-      length: _customLength ?? _selectedTariff!.length ?? 0.0,
+      height: height,
+      length: length,
       photos: photoIds,
       tariffId: _selectedTariffId!,
       toAddress: _toAddress!.fullAddress ?? _toAddress!.address,
@@ -319,7 +331,7 @@ class _HomePageState extends State<HomePage> {
       toPhone: _recipientPhone!,
       volumetricWeight: _selectedTariff!.volumetricWeight,
       weight: _selectedTariff!.weight ?? 0.0,
-      width: _customWidth ?? _selectedTariff!.width ?? 0.0,
+      width: width,
     );
 
     context.read<OrdersBloc>().add(CreateOrderEvent(orderData: orderData));

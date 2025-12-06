@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/courier/models/order_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:fly_cargo/core/router/app_router.dart';
-import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
+
 class CourierHomePage extends StatefulWidget {
   const CourierHomePage({super.key});
   @override
   State<CourierHomePage> createState() => _CourierHomePageState();
 }
+
 class _CourierHomePageState extends State<CourierHomePage> {
   List<CourierOrder> _orders = [];
   bool _isLoading = true;
@@ -17,100 +18,16 @@ class _CourierHomePageState extends State<CourierHomePage> {
     super.initState();
     _loadOrders();
   }
+
   void _loadOrders() {
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _orders = _getMockOrders();
+        _orders = [];
         _isLoading = false;
       });
     });
   }
-  List<CourierOrder> _getMockOrders() {
-    return [
-      CourierOrder(
-        id: '1',
-        orderNumber: 'FC-2024-001',
-        status: OrderStatus.assigned,
-        priority: OrderPriority.high,
-        createdAt: DateTime.now().subtract(const Duration(hours: 2)),
-        estimatedDeliveryTime: DateTime.now().add(const Duration(hours: 4)),
-        pickupAddress: const AddressModel(
-          city: 'Алматы',
-          address: 'ул. Абая, 150',
-          cityId: 'almaty',
-        ),
-        deliveryAddress: const AddressModel(
-          city: 'Алматы',
-          address: 'пр. Достык, 85',
-          cityId: 'almaty',
-        ),
-        recipientName: 'Айдар Нурланов',
-        recipientPhone: '+7 777 123 4567',
-        cargoDescription: 'Документы и подарки',
-        boxType: 'small',
-        boxName: 'Маленькая коробка',
-        boxDimensions: '20x15x10 см',
-        estimatedPrice: 2500,
-        currency: '₸',
-        courierId: 'courier_1',
-        courierName: 'Иван Петров',
-      ),
-      CourierOrder(
-        id: '2',
-        orderNumber: 'FC-2024-002',
-        status: OrderStatus.pickedUp,
-        priority: OrderPriority.medium,
-        createdAt: DateTime.now().subtract(const Duration(hours: 1)),
-        estimatedDeliveryTime: DateTime.now().add(const Duration(hours: 2)),
-        pickupAddress: const AddressModel(
-          city: 'Алматы',
-          address: 'ул. Сатпаева, 90',
-          cityId: 'almaty',
-        ),
-        deliveryAddress: const AddressModel(
-          city: 'Алматы',
-          address: 'ул. Толе би, 200',
-          cityId: 'almaty',
-        ),
-        recipientName: 'Мария Ким',
-        recipientPhone: '+7 777 234 5678',
-        cargoDescription: 'Электроника',
-        boxType: 'medium',
-        boxName: 'Средняя коробка',
-        boxDimensions: '30x25x20 см',
-        estimatedPrice: 3500,
-        currency: '₸',
-        courierId: 'courier_1',
-        courierName: 'Иван Петров',
-      ),
-      CourierOrder(
-        id: '3',
-        orderNumber: 'FC-2024-003',
-        status: OrderStatus.pending,
-        priority: OrderPriority.urgent,
-        createdAt: DateTime.now().subtract(const Duration(minutes: 30)),
-        estimatedDeliveryTime: DateTime.now().add(const Duration(hours: 1)),
-        pickupAddress: const AddressModel(
-          city: 'Алматы',
-          address: 'ул. Гоголя, 45',
-          cityId: 'almaty',
-        ),
-        deliveryAddress: const AddressModel(
-          city: 'Алматы',
-          address: 'ул. Пушкина, 120',
-          cityId: 'almaty',
-        ),
-        recipientName: 'Асылбек Ахметов',
-        recipientPhone: '+7 777 345 6789',
-        cargoDescription: 'Лекарства',
-        boxType: 'small',
-        boxName: 'Маленькая коробка',
-        boxDimensions: '20x15x10 см',
-        estimatedPrice: 1800,
-        currency: '₸',
-      ),
-    ];
-  }
+
   List<CourierOrder> get _filteredOrders {
     switch (_selectedFilter) {
       case 'pending':
@@ -133,6 +50,7 @@ class _CourierHomePageState extends State<CourierHomePage> {
         return _orders;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,6 +123,7 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     );
   }
+
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedFilter == value;
     return GestureDetector(
@@ -230,6 +149,7 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     );
   }
+
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -256,16 +176,19 @@ class _CourierHomePageState extends State<CourierHomePage> {
       ),
     );
   }
+
   void _openOrderDetails(CourierOrder order) {
     context.push(
       '${AppRoutes.courierHome}/${AppRoutes.courierOrderDetails}',
       extra: order,
     );
   }
+
   void _openProfile() {
     context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}');
   }
 }
+
 class OrderCard extends StatelessWidget {
   final CourierOrder order;
   final VoidCallback onTap;
@@ -404,6 +327,7 @@ class OrderCard extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildAddressRow({
     required IconData icon,
     required Color iconColor,
@@ -425,6 +349,7 @@ class OrderCard extends StatelessWidget {
       ],
     );
   }
+
   String _formatDateTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);

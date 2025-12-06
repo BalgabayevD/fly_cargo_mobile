@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/core/entities/box_entity.dart';
+import 'package:fly_cargo/features/home/presentation/create_order_page.dart';
 
 class BoxInfoCard extends StatelessWidget {
-  final BoxEntity box;
+  final BoxInfo box;
 
   const BoxInfoCard({
     required this.box,

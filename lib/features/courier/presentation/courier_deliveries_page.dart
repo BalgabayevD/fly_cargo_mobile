@@ -4,7 +4,6 @@ import 'package:fly_cargo/features/courier/models/order_model.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_filter_widget.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/deliveries_statistics_dialog.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/delivery_card_widget.dart';
-import 'package:fly_cargo/features/courier/services/deliveries_service.dart';
 import 'package:go_router/go_router.dart';
 
 class CourierDeliveriesPage extends StatefulWidget {
@@ -14,33 +13,38 @@ class CourierDeliveriesPage extends StatefulWidget {
 }
 
 class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
-  List<CourierOrder> _deliveries = [];
-  bool _isLoading = true;
+  final List<CourierOrder> _deliveries = [];
+  final bool _isLoading = false;
   String _selectedFilter = 'all';
-  late final DeliveriesService _deliveriesService;
+
   @override
   void initState() {
     super.initState();
-    _deliveriesService = MockDeliveriesService();
-    _loadDeliveries();
-  }
-
-  Future<void> _loadDeliveries() async {
-    try {
-      final deliveries = await _deliveriesService.getDeliveries();
-      setState(() {
-        _deliveries = deliveries;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
   }
 
   List<CourierOrder> get _filteredDeliveries {
-    return _deliveriesService.filterDeliveries(_deliveries, _selectedFilter);
+    switch (_selectedFilter) {
+      case 'delivered':
+        return _deliveries
+            .where((delivery) => delivery.status == OrderStatus.delivered)
+            .toList();
+      case 'cancelled':
+        return _deliveries
+            .where((delivery) => delivery.status == OrderStatus.cancelled)
+            .toList();
+      case 'this_week':
+        final weekAgo = DateTime.now().subtract(const Duration(days: 7));
+        return _deliveries
+            .where((delivery) => delivery.createdAt.isAfter(weekAgo))
+            .toList();
+      case 'this_month':
+        final monthAgo = DateTime.now().subtract(const Duration(days: 30));
+        return _deliveries
+            .where((delivery) => delivery.createdAt.isAfter(monthAgo))
+            .toList();
+      default:
+        return _deliveries;
+    }
   }
 
   @override
@@ -87,7 +91,7 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
                 ? _buildEmptyState()
                 : RefreshIndicator(
                     onRefresh: () async {
-                      await _loadDeliveries();
+                      // TODO: загрузка доставок с сервера
                     },
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -146,7 +150,24 @@ class _CourierDeliveriesPageState extends State<CourierDeliveriesPage> {
   }
 
   void _showStatistics() {
-    final statistics = _deliveriesService.getStatistics(_deliveries);
+    final deliveredCount = _deliveries
+        .where((d) => d.status == OrderStatus.delivered)
+        .length;
+    final cancelledCount = _deliveries
+        .where((d) => d.status == OrderStatus.cancelled)
+        .length;
+    final totalEarnings = _deliveries
+        .where((d) => d.status == OrderStatus.delivered)
+        .fold(0.0, (sum, d) => sum + d.estimatedPrice);
+    final statistics = {
+      'totalDeliveries': _deliveries.length,
+      'deliveredCount': deliveredCount,
+      'cancelledCount': cancelledCount,
+      'totalEarnings': totalEarnings,
+      'averageEarnings': deliveredCount > 0
+          ? totalEarnings / deliveredCount
+          : 0.0,
+    };
     showDialog(
       context: context,
       builder: (context) => DeliveriesStatisticsDialog(statistics: statistics),

@@ -1,12 +1,14 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/models/user_profile_model.dart';
+import 'package:go_router/go_router.dart';
+
 class UserNotificationsPage extends StatefulWidget {
   const UserNotificationsPage({super.key});
   @override
   State<UserNotificationsPage> createState() => _UserNotificationsPageState();
 }
+
 class _UserNotificationsPageState extends State<UserNotificationsPage> {
   late NotificationSettings _notificationSettings;
   @override
@@ -19,6 +21,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
       systemNotifications: false,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +70,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
       ),
     );
   }
+
   Widget _buildNotificationSection() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -141,6 +145,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
       ),
     );
   }
+
   Widget _buildNotificationItem({
     required IconData icon,
     required String title,
@@ -177,6 +182,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
       ),
     );
   }
+
   Widget _buildNotificationHistory() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -204,13 +210,24 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
             ],
           ),
           const SizedBox(height: 16),
-          ..._getMockNotifications().map(
-            (notification) => _buildNotificationHistoryItem(notification),
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                'История уведомлений будет загружена с сервера',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF999999),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
+
   Widget _buildNotificationHistoryItem(NotificationItem notification) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -264,38 +281,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
       ),
     );
   }
-  List<NotificationItem> _getMockNotifications() {
-    return [
-      NotificationItem(
-        id: '1',
-        title: 'Заказ завершен',
-        message: 'Ваш заказ #12345 успешно доставлен',
-        timestamp: DateTime.now().subtract(const Duration(minutes: 30)),
-        isRead: false,
-      ),
-      NotificationItem(
-        id: '2',
-        title: 'Новая акция',
-        message: 'Скидка 20% на доставку по городу',
-        timestamp: DateTime.now().subtract(const Duration(hours: 2)),
-        isRead: false,
-      ),
-      NotificationItem(
-        id: '3',
-        title: 'Платеж прошел',
-        message: 'С вашей карты Visa -2395 списано 2500 ₸',
-        timestamp: DateTime.now().subtract(const Duration(days: 1)),
-        isRead: true,
-      ),
-      NotificationItem(
-        id: '4',
-        title: 'Заказ в пути',
-        message: 'Ваш заказ #12344 взят курьером',
-        timestamp: DateTime.now().subtract(const Duration(days: 2)),
-        isRead: true,
-      ),
-    ];
-  }
+
   String _formatTime(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
@@ -309,6 +295,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
       return '${timestamp.day}.${timestamp.month}.${timestamp.year}';
     }
   }
+
   void _saveSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -318,6 +305,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
     );
     context.pop();
   }
+
   void _clearHistory() {
     showDialog(
       context: context,
@@ -351,6 +339,7 @@ class _UserNotificationsPageState extends State<UserNotificationsPage> {
     );
   }
 }
+
 class NotificationItem {
   final String id;
   final String title;

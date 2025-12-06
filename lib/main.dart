@@ -4,7 +4,6 @@ import 'package:flutter_better_auth/core/flutter_better_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/core/di/service_locator.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart';
@@ -15,13 +14,16 @@ import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yandex_maps_mapkit_lite/init.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting('ru', null);
+
   await initMapkit(apiKey: '58894ad5-9031-4696-9c4e-4d62ebd8e3cc');
-  ServiceLocator().init();
   await configureDependencies();
   await FlutterBetterAuth.initialize(url: 'https://authfc.maguya.kz/api/auth');
 
@@ -29,7 +31,6 @@ Future<void> main() async {
   final authStatusUseCase = getIt<AuthStatusUseCase>();
   final hasToken = await authStatusUseCase.isAuthenticated();
 
-  // Создаем инстанс AuthBloc здесь, чтобы передать один и тот же в провайдер и роутер
   final authBloc = getIt<AuthBloc>();
 
   FlutterBetterAuth.dioClient.interceptors.add(
@@ -93,7 +94,6 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    // Инициализируем роутер с правильным начальным маршрутом и authBloc
     _router = createRouter(widget.authBloc, widget.initialRoute);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

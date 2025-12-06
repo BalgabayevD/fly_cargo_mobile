@@ -1,69 +1,23 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/user/models/user_profile_model.dart';
+import 'package:go_router/go_router.dart';
+
 class UserOrderHistoryPage extends StatefulWidget {
   const UserOrderHistoryPage({super.key});
   @override
   State<UserOrderHistoryPage> createState() => _UserOrderHistoryPageState();
 }
+
 class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
   late List<Order> _orders;
   String _selectedFilter = 'all';
   @override
   void initState() {
     super.initState();
-    _orders = _getMockOrders();
+    _orders = [];
   }
-  List<Order> _getMockOrders() {
-    return [
-      Order(
-        id: 'order_1',
-        fromAddress: 'Алматы, ул. Абая 1',
-        toAddress: 'Астана, ул. Республики 10',
-        createdAt: DateTime.now().subtract(const Duration(days: 1)),
-        status: OrderStatus.completed,
-        cost: 2500.0,
-        description: 'Документы',
-      ),
-      Order(
-        id: 'order_2',
-        fromAddress: 'Алматы, ул. Достык 15',
-        toAddress: 'Алматы, ул. Сатпаева 25',
-        createdAt: DateTime.now().subtract(const Duration(days: 3)),
-        status: OrderStatus.completed,
-        cost: 1200.0,
-        description: 'Пакет',
-      ),
-      Order(
-        id: 'order_3',
-        fromAddress: 'Алматы, ул. Толе би 50',
-        toAddress: 'Алматы, ул. Назарбаева 100',
-        createdAt: DateTime.now().subtract(const Duration(days: 5)),
-        status: OrderStatus.inProgress,
-        cost: 1800.0,
-        description: 'Посылка',
-      ),
-      Order(
-        id: 'order_4',
-        fromAddress: 'Алматы, ул. Пушкина 20',
-        toAddress: 'Алматы, ул. Гоголя 30',
-        createdAt: DateTime.now().subtract(const Duration(days: 7)),
-        status: OrderStatus.cancelled,
-        cost: 900.0,
-        description: 'Документы',
-      ),
-      Order(
-        id: 'order_5',
-        fromAddress: 'Алматы, ул. Фурманова 10',
-        toAddress: 'Алматы, ул. Жамбыла 40',
-        createdAt: DateTime.now().subtract(const Duration(days: 10)),
-        status: OrderStatus.completed,
-        cost: 1500.0,
-        description: 'Пакет',
-      ),
-    ];
-  }
+
   @override
   Widget build(BuildContext context) {
     final filteredOrders = _getFilteredOrders();
@@ -110,6 +64,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   Widget _buildFilterChips() {
     return Container(
       height: 60,
@@ -128,6 +83,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedFilter == value;
     return FilterChip(
@@ -146,6 +102,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -183,6 +140,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   Widget _buildOrderCard(Order order) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -300,6 +258,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   Widget _buildAddressRow({
     required IconData icon,
     required String label,
@@ -328,6 +287,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ],
     );
   }
+
   List<Order> _getFilteredOrders() {
     switch (_selectedFilter) {
       case 'completed':
@@ -346,6 +306,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
         return _orders;
     }
   }
+
   String _formatDate(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
@@ -359,6 +320,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       return '${date.day}.${date.month}.${date.year}';
     }
   }
+
   void _showFilterDialog() {
     showModalBottomSheet(
       context: context,
@@ -402,6 +364,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   void _viewOrderDetails(Order order) {
     showModalBottomSheet(
       context: context,
@@ -441,6 +404,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   Widget _buildDetailRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -468,6 +432,7 @@ class _UserOrderHistoryPageState extends State<UserOrderHistoryPage> {
       ),
     );
   }
+
   void _repeatOrder(Order order) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

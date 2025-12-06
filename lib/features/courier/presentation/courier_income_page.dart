@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
@@ -6,36 +5,34 @@ import 'package:fly_cargo/features/courier/presentation/widgets/detailed_stats_w
 import 'package:fly_cargo/features/courier/presentation/widgets/income_stats_widget.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/period_selector_widget.dart';
 import 'package:fly_cargo/features/courier/presentation/widgets/transactions_list_widget.dart';
-import 'package:fly_cargo/features/courier/services/income_service.dart';
+import 'package:go_router/go_router.dart';
+
 class CourierIncomePage extends StatefulWidget {
   const CourierIncomePage({super.key});
   @override
   State<CourierIncomePage> createState() => _CourierIncomePageState();
 }
+
 class _CourierIncomePageState extends State<CourierIncomePage> {
   late CourierIncome _income;
   String _selectedPeriod = 'today';
-  bool _isLoading = true;
-  late final IncomeService _incomeService;
+  final bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
-    _incomeService = MockIncomeService();
-    _loadIncome();
+    _income = CourierIncome(
+      todayEarnings: 0.0,
+      weekEarnings: 0.0,
+      monthEarnings: 0.0,
+      totalEarnings: 0.0,
+      todayDeliveries: 0,
+      weekDeliveries: 0,
+      monthDeliveries: 0,
+      transactions: [],
+    );
   }
-  Future<void> _loadIncome() async {
-    try {
-      final income = await _incomeService.getIncome();
-      setState(() {
-        _income = income;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,35 +80,19 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
                   ),
                   const SizedBox(height: 20),
                   IncomeStatsWidget(
-                    earnings: _incomeService.getEarningsForPeriod(
-                      _income,
-                      _selectedPeriod,
-                    ),
-                    deliveries: _incomeService.getDeliveriesForPeriod(
-                      _income,
-                      _selectedPeriod,
-                    ),
+                    earnings: _getEarningsForPeriod(),
+                    deliveries: _getDeliveriesForPeriod(),
                   ),
                   const SizedBox(height: 20),
                   DetailedStatsWidget(
-                    deliveries: _incomeService.getDeliveriesForPeriod(
-                      _income,
-                      _selectedPeriod,
-                    ),
-                    rating: 4.8,
-                    timeOnRoad: _incomeService.getTimeOnRoadForPeriod(
-                      _selectedPeriod,
-                    ),
-                    distance: _incomeService.getDistanceForPeriod(
-                      _selectedPeriod,
-                    ),
+                    deliveries: _getDeliveriesForPeriod(),
+                    rating: 0.0,
+                    timeOnRoad: 0,
+                    distance: 0.0,
                   ),
                   const SizedBox(height: 20),
                   TransactionsListWidget(
-                    transactions: _incomeService.getTransactionsForPeriod(
-                      _income.transactions,
-                      _selectedPeriod,
-                    ),
+                    transactions: _getTransactionsForPeriod(),
                   ),
                   const SizedBox(height: 20),
                 ],
@@ -119,6 +100,64 @@ class _CourierIncomePageState extends State<CourierIncomePage> {
             ),
     );
   }
+
+  double _getEarningsForPeriod() {
+    switch (_selectedPeriod) {
+      case 'today':
+        return _income.todayEarnings;
+      case 'week':
+        return _income.weekEarnings;
+      case 'month':
+        return _income.monthEarnings;
+      case 'total':
+        return _income.totalEarnings;
+      default:
+        return 0.0;
+    }
+  }
+
+  int _getDeliveriesForPeriod() {
+    switch (_selectedPeriod) {
+      case 'today':
+        return _income.todayDeliveries;
+      case 'week':
+        return _income.weekDeliveries;
+      case 'month':
+        return _income.monthDeliveries;
+      default:
+        return 0;
+    }
+  }
+
+  List<IncomeTransaction> _getTransactionsForPeriod() {
+    final now = DateTime.now();
+    switch (_selectedPeriod) {
+      case 'today':
+        return _income.transactions
+            .where(
+              (t) =>
+                  t.date.day == now.day &&
+                  t.date.month == now.month &&
+                  t.date.year == now.year,
+            )
+            .toList();
+      case 'week':
+        final weekAgo = now.subtract(const Duration(days: 7));
+        return _income.transactions
+            .where((t) => t.date.isAfter(weekAgo))
+            .toList();
+      case 'month':
+        final monthAgo = now.subtract(const Duration(days: 30));
+        return _income.transactions
+            .where((t) => t.date.isAfter(monthAgo))
+            .toList();
+      case 'total':
+        return _income.transactions;
+      default:
+        return [];
+    }
+  }
+
   void _showPaymentMethods() {
     showModalBottomSheet(
       context: context,

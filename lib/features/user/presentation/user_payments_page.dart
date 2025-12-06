@@ -1,59 +1,22 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
+
 class UserPaymentsPage extends StatefulWidget {
   const UserPaymentsPage({super.key});
   @override
   State<UserPaymentsPage> createState() => _UserPaymentsPageState();
 }
+
 class _UserPaymentsPageState extends State<UserPaymentsPage> {
   late List<PaymentTransaction> _transactions;
   String _selectedPeriod = 'all';
   @override
   void initState() {
     super.initState();
-    _transactions = _getMockTransactions();
+    _transactions = [];
   }
-  List<PaymentTransaction> _getMockTransactions() {
-    return [
-      PaymentTransaction(
-        id: 'txn_1',
-        amount: 2500.0,
-        description: 'Оплата заказа #1',
-        type: PaymentType.outgoing,
-        status: PaymentStatus.completed,
-        timestamp: DateTime.now().subtract(const Duration(days: 1)),
-        method: 'Visa -2395',
-      ),
-      PaymentTransaction(
-        id: 'txn_2',
-        amount: 1200.0,
-        description: 'Оплата заказа #2',
-        type: PaymentType.outgoing,
-        status: PaymentStatus.completed,
-        timestamp: DateTime.now().subtract(const Duration(days: 3)),
-        method: 'Visa -2395',
-      ),
-      PaymentTransaction(
-        id: 'txn_3',
-        amount: 500.0,
-        description: 'Возврат за отмененный заказ',
-        type: PaymentType.incoming,
-        status: PaymentStatus.completed,
-        timestamp: DateTime.now().subtract(const Duration(days: 5)),
-        method: 'Visa -2395',
-      ),
-      PaymentTransaction(
-        id: 'txn_4',
-        amount: 1800.0,
-        description: 'Оплата заказа #3',
-        type: PaymentType.outgoing,
-        status: PaymentStatus.pending,
-        timestamp: DateTime.now().subtract(const Duration(days: 7)),
-        method: 'Visa -2395',
-      ),
-    ];
-  }
+
   @override
   Widget build(BuildContext context) {
     final filteredTransactions = _getFilteredTransactions();
@@ -101,6 +64,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
+
   Widget _buildStatsSection() {
     final totalSpent = _transactions
         .where(
@@ -148,6 +112,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
+
   Widget _buildStatItem(
     String label,
     String value,
@@ -174,6 +139,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ],
     );
   }
+
   Widget _buildFilterChips() {
     return Container(
       height: 60,
@@ -192,6 +158,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
+
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedPeriod == value;
     return FilterChip(
@@ -210,6 +177,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
+
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -247,6 +215,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
+
   Widget _buildTransactionCard(PaymentTransaction transaction) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -350,6 +319,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       ),
     );
   }
+
   List<PaymentTransaction> _getFilteredTransactions() {
     switch (_selectedPeriod) {
       case 'outgoing':
@@ -368,6 +338,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return _transactions;
     }
   }
+
   Color _getTransactionColor(PaymentType type) {
     switch (type) {
       case PaymentType.outgoing:
@@ -376,6 +347,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return const Color(0xFF34C759);
     }
   }
+
   IconData _getTransactionIcon(PaymentType type) {
     switch (type) {
       case PaymentType.outgoing:
@@ -384,6 +356,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return Icons.arrow_downward;
     }
   }
+
   Color _getStatusColor(PaymentStatus status) {
     switch (status) {
       case PaymentStatus.completed:
@@ -394,6 +367,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return const Color(0xFFFF3B30);
     }
   }
+
   String _getStatusText(PaymentStatus status) {
     switch (status) {
       case PaymentStatus.completed:
@@ -404,6 +378,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
         return 'Ошибка';
     }
   }
+
   String _formatTime(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
@@ -417,6 +392,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
       return '${timestamp.day}.${timestamp.month}.${timestamp.year}';
     }
   }
+
   void _showFilterDialog() {
     showModalBottomSheet(
       context: context,
@@ -461,6 +437,7 @@ class _UserPaymentsPageState extends State<UserPaymentsPage> {
     );
   }
 }
+
 class PaymentTransaction {
   final String id;
   final double amount;
@@ -479,5 +456,7 @@ class PaymentTransaction {
     required this.method,
   });
 }
+
 enum PaymentType { outgoing, incoming }
+
 enum PaymentStatus { completed, pending, failed }

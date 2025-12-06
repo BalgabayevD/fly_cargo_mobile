@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:fly_cargo/core/router/app_router.dart';
+
 class CourierProfilePage extends StatefulWidget {
   const CourierProfilePage({super.key});
   @override
   State<CourierProfilePage> createState() => _CourierProfilePageState();
 }
+
 class _CourierProfilePageState extends State<CourierProfilePage> {
   late CourierProfile _profile;
   @override
   void initState() {
     super.initState();
-    _profile = _getMockProfile();
-  }
-  CourierProfile _getMockProfile() {
-    return CourierProfile(
-      id: 'courier_1',
-      name: 'Дамир',
-      phone: '+7 777 380 6602',
-      email: 'damir@example.com',
-      joinDate: DateTime(2024, 1, 15),
-      rating: 4.8,
-      totalDeliveries: 156,
-      completedDeliveries: 148,
-      totalEarnings: 125000.0,
-      status: 'active',
-      vehicleType: 'Мотоцикл',
-      licenseNumber: 'A123456789',
-      workingAreas: ['Алматы', 'Астана'],
+    _profile = CourierProfile(
+      id: '',
+      name: '',
+      phone: '',
+      email: '',
+      joinDate: DateTime.now(),
+      rating: 0.0,
+      totalDeliveries: 0,
+      completedDeliveries: 0,
+      totalEarnings: 0.0,
+      status: 'inactive',
+      vehicleType: '',
+      licenseNumber: '',
+      workingAreas: [],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +74,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
+
   Widget _buildProfileHeader() {
     return Column(
       children: [
@@ -124,6 +125,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ],
     );
   }
+
   Widget _buildStatsSection() {
     return AppCard(
       variant: AppCardVariant.filled,
@@ -170,6 +172,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
+
   Widget _buildStatItem(
     String label,
     String value,
@@ -204,6 +207,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ],
     );
   }
+
   Widget _buildProfileMenu() {
     return AppCard(
       variant: AppCardVariant.outlined,
@@ -241,6 +245,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
+
   Widget _buildMenuItem({
     required IconData icon,
     required String title,
@@ -277,6 +282,7 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       onTap: onTap,
     );
   }
+
   void _editProfile() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -285,13 +291,22 @@ class _CourierProfilePageState extends State<CourierProfilePage> {
       ),
     );
   }
+
   void _openIncomePage() {
-    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierIncome}');
+    context.push(
+      '${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierIncome}',
+    );
   }
+
   void _openNotificationsPage() {
-    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierNotifications}');
+    context.push(
+      '${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierNotifications}',
+    );
   }
+
   void _openDeliveriesPage() {
-    context.push('${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierDeliveries}');
+    context.push(
+      '${AppRoutes.courierHome}/${AppRoutes.courierProfile}/${AppRoutes.courierDeliveries}',
+    );
   }
 }

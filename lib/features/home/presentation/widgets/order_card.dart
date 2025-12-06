@@ -14,10 +14,12 @@ class OrderCard extends StatelessWidget {
 
   String _formatDate(String dateString) {
     try {
-      final date = DateTime.parse(dateString);
+      final clean = dateString.trim().replaceAll('"', '');
+      final date = DateTime.parse(clean);
       final formatter = DateFormat('d.M.yyyy', 'ru');
-      return formatter.format(date);
+      return formatter.format(date.toLocal());
     } catch (e) {
+      print('DateFormat error: $e');
       return dateString;
     }
   }

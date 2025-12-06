@@ -1,12 +1,14 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/courier/models/courier_profile_model.dart';
+import 'package:go_router/go_router.dart';
+
 class CourierNotificationsPage extends StatefulWidget {
   const CourierNotificationsPage({super.key});
   @override
   State<CourierNotificationsPage> createState() =>
       _CourierNotificationsPageState();
 }
+
 class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
   List<CourierNotification> _notifications = [];
   bool _isLoading = true;
@@ -16,70 +18,16 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
     super.initState();
     _loadNotifications();
   }
+
   void _loadNotifications() {
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _notifications = _getMockNotifications();
+        _notifications = [];
         _isLoading = false;
       });
     });
   }
-  List<CourierNotification> _getMockNotifications() {
-    return [
-      CourierNotification(
-        id: '1',
-        title: 'Новый заказ назначен',
-        message:
-            'Вам назначен заказ FC-2024-004. Адрес: ул. Абая, 150 → пр. Достык, 85',
-        date: DateTime(2024, 1, 20, 10, 30),
-        isRead: false,
-        type: 'order',
-      ),
-      CourierNotification(
-        id: '2',
-        title: 'Заказ доставлен',
-        message: 'Заказ FC-2024-001 успешно доставлен. Заработок: 1200 ₸',
-        date: DateTime(2024, 1, 20, 9, 15),
-        isRead: true,
-        type: 'order',
-      ),
-      CourierNotification(
-        id: '3',
-        title: 'Бонус начислен',
-        message:
-            'Вам начислен бонус 500 ₸ за быструю доставку заказа FC-2024-002',
-        date: DateTime(2024, 1, 20, 8, 45),
-        isRead: true,
-        type: 'payment',
-      ),
-      CourierNotification(
-        id: '4',
-        title: 'Обновление приложения',
-        message:
-            'Доступна новая версия приложения. Обновите для улучшенной работы.',
-        date: DateTime(2024, 1, 19, 16, 20),
-        isRead: true,
-        type: 'system',
-      ),
-      CourierNotification(
-        id: '5',
-        title: 'Штраф за опоздание',
-        message: 'За опоздание на заказ FC-2024-003 с вас удержан штраф 200 ₸',
-        date: DateTime(2024, 1, 18, 15, 30),
-        isRead: true,
-        type: 'payment',
-      ),
-      CourierNotification(
-        id: '6',
-        title: 'Новый заказ в вашем районе',
-        message:
-            'В районе Алматы появился новый заказ. Проверьте список заказов.',
-        date: DateTime(2024, 1, 18, 14, 0),
-        isRead: true,
-        type: 'order',
-      ),
-    ];
-  }
+
   List<CourierNotification> get _filteredNotifications {
     switch (_selectedFilter) {
       case 'unread':
@@ -102,6 +50,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
         return _notifications;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,6 +125,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     );
   }
+
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _selectedFilter == value;
     return GestureDetector(
@@ -201,6 +151,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     );
   }
+
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -231,6 +182,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       ),
     );
   }
+
   void _markAsRead(CourierNotification notification) {
     setState(() {
       final index = _notifications.indexWhere((n) => n.id == notification.id);
@@ -246,6 +198,7 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
       }
     });
   }
+
   void _markAllAsRead() {
     setState(() {
       _notifications = _notifications
@@ -269,11 +222,14 @@ class _CourierNotificationsPageState extends State<CourierNotificationsPage> {
     );
   }
 }
+
 class NotificationCard extends StatelessWidget {
   final CourierNotification notification;
   final VoidCallback onTap;
   const NotificationCard({
-    required this.notification, required this.onTap, super.key,
+    required this.notification,
+    required this.onTap,
+    super.key,
   });
   @override
   Widget build(BuildContext context) {
@@ -390,6 +346,7 @@ class NotificationCard extends StatelessWidget {
       ),
     );
   }
+
   IconData _getNotificationIcon(String type) {
     switch (type) {
       case 'order':
@@ -402,6 +359,7 @@ class NotificationCard extends StatelessWidget {
         return Icons.notifications;
     }
   }
+
   String _formatDateTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
