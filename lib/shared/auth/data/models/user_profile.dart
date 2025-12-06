@@ -1,3 +1,4 @@
+import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_profile.g.dart';
@@ -13,7 +14,7 @@ class UserProfile {
   final String updatedAt;
   final String phoneNumber;
   final bool phoneNumberVerified;
-  final String role;
+  final UserType role;
   final bool banned;
   final String? banReason;
   final String? banExpires;
@@ -40,4 +41,3 @@ class UserProfile {
       _$UserProfileFromJson(json);
   Map<String, dynamic> toJson() => _$UserProfileToJson(this);
 }
-

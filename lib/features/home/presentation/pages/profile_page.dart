@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
@@ -62,11 +63,7 @@ class ProfilePage extends StatelessWidget {
                       const Divider(height: 1),
                       _ProfileField(
                         label: 'Роль',
-                        value: profile.role == 'client'
-                            ? 'Клиент'
-                            : profile.role == 'courier'
-                            ? 'Курьер'
-                            : profile.role,
+                        value: profile.role.displayName,
                       ),
                     ],
                   ),

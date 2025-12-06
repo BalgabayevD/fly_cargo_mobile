@@ -1,8 +1,11 @@
 enum UserType {
-  unauthorized,
-  client,
-  courier,
-  admin,
+  unauthorized('unauthorized'),
+  client('client'),
+  courier('courier'),
+  admin('admin');
+
+  final String value;
+  const UserType(this.value);
 }
 
 extension UserTypeExtension on UserType {

@@ -15,7 +15,7 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
   updatedAt: json['updatedAt'] as String,
   phoneNumber: json['phoneNumber'] as String,
   phoneNumberVerified: json['phoneNumberVerified'] as bool,
-  role: json['role'] as String,
+  role: $enumDecode(_$UserTypeEnumMap, json['role']),
   banned: json['banned'] as bool,
   image: json['image'] as String?,
   banReason: json['banReason'] as String?,
@@ -34,9 +34,16 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'updatedAt': instance.updatedAt,
       'phoneNumber': instance.phoneNumber,
       'phoneNumberVerified': instance.phoneNumberVerified,
-      'role': instance.role,
+      'role': _$UserTypeEnumMap[instance.role]!,
       'banned': instance.banned,
       'banReason': instance.banReason,
       'banExpires': instance.banExpires,
       'lang': instance.lang,
     };
+
+const _$UserTypeEnumMap = {
+  UserType.unauthorized: 'unauthorized',
+  UserType.client: 'client',
+  UserType.courier: 'courier',
+  UserType.admin: 'admin',
+};

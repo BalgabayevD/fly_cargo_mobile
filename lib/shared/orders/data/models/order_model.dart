@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'city_model.dart';
 import 'order_history_model.dart';
 import 'order_identification_model.dart';
-import 'participant_model.dart';
 import 'price_calculation_model.dart';
 import 'qr_model.dart';
 import 'tariff_model.dart';
@@ -58,7 +57,6 @@ sealed class OrderModel with _$OrderModel {
     @Default('') @JsonKey(name: 'decideDescription') String declineDescription,
     CityModel? fromCity,
     CityModel? toCity,
-    @Default([]) List<ParticipantModel> participants,
     @Default([]) List<QrModel>? qrs,
     @Default([]) List<OrderIdentificationModel> identifications,
     @Default([]) List<OrderHistoryModel> histories,

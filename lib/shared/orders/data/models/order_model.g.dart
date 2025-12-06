@@ -67,11 +67,6 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
   toCity: json['toCity'] == null
       ? null
       : CityModel.fromJson(json['toCity'] as Map<String, dynamic>),
-  participants:
-      (json['participants'] as List<dynamic>?)
-          ?.map((e) => ParticipantModel.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
   qrs:
       (json['qrs'] as List<dynamic>?)
           ?.map((e) => QrModel.fromJson(e as Map<String, dynamic>))
@@ -142,7 +137,6 @@ Map<String, dynamic> _$OrderModelToJson(_OrderModel instance) =>
       'decideDescription': instance.declineDescription,
       'fromCity': instance.fromCity,
       'toCity': instance.toCity,
-      'participants': instance.participants,
       'qrs': instance.qrs,
       'identifications': instance.identifications,
       'histories': instance.histories,

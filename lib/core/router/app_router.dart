@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
-import 'package:fly_cargo/features/courier/models/order_model.dart';
-import 'package:fly_cargo/features/courier/presentation/courier_home_page.dart';
-import 'package:fly_cargo/features/courier/presentation/courier_profile_page.dart';
-import 'package:fly_cargo/features/courier/presentation/order_details_page.dart';
 import 'package:fly_cargo/features/home/presentation/home_page.dart';
 import 'package:fly_cargo/features/home/presentation/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/home/presentation/orders_list_page.dart';
@@ -57,14 +53,6 @@ class AppRoutes {
   static const userCalculator = 'calculator';
   static const userEditProfile = 'edit';
   static const userNotifications = 'notifications';
-
-  // Courier Flow
-  static const courierHome = '/courier';
-  static const courierProfile = 'profile';
-  static const courierOrderDetails = 'order';
-  static const courierIncome = 'income';
-  static const courierNotifications = 'notifications';
-  static const courierDeliveries = 'deliveries';
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -138,25 +126,6 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
             preAuthSessionId: extra['preAuthSessionId'] as String,
           );
         },
-      ),
-
-      // Courier Mode Routes
-      GoRoute(
-        path: AppRoutes.courierHome,
-        builder: (context, state) => const CourierHomePage(),
-        routes: [
-          GoRoute(
-            path: AppRoutes.courierProfile,
-            builder: (context, state) => const CourierProfilePage(),
-          ),
-          GoRoute(
-            path: AppRoutes.courierOrderDetails,
-            builder: (context, state) {
-              final order = state.extra as CourierOrder;
-              return OrderDetailsPage(order: order);
-            },
-          ),
-        ],
       ),
 
       // User Demo Mode Routes
