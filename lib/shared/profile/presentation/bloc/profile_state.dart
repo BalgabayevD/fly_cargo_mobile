@@ -1,4 +1,4 @@
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
+import 'package:fly_cargo/shared/auth/data/models/user_profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'profile_state.freezed.dart';
 @freezed

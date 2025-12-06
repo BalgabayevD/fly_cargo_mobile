@@ -1,5 +1,10 @@
 ﻿import 'package:dio/dio.dart';
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
+import 'package:fly_cargo/shared/auth/data/models/sign_in_request.dart';
+import 'package:fly_cargo/shared/auth/data/models/sign_in_response.dart';
+import 'package:fly_cargo/shared/auth/data/models/sign_code_request.dart';
+import 'package:fly_cargo/shared/auth/data/models/sign_code_response.dart';
+import 'package:fly_cargo/shared/auth/data/models/session_status_response.dart';
+import 'package:fly_cargo/shared/auth/data/models/user_profile_response.dart';
 import 'package:retrofit/retrofit.dart';
 part 'auth_remote_source.g.dart';
 @RestApi()

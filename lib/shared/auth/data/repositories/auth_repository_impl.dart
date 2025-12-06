@@ -5,7 +5,8 @@ import 'package:flutter_better_auth/plugins/phone/models/send_otp/send_otp_respo
 import 'package:flutter_better_auth/plugins/phone/models/verify/verify_phone_body.dart';
 import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
 import 'package:fly_cargo/shared/auth/data/auth_remote_source.dart';
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
+import 'package:fly_cargo/shared/auth/data/models/sign_code_response.dart';
+import 'package:fly_cargo/shared/auth/data/models/user_profile.dart';
 import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 @LazySingleton(as: AuthRepository)
