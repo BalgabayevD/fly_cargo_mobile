@@ -3,6 +3,7 @@ export 'city_model.dart';
 export 'create_order_request.dart';
 export 'create_order_response.dart';
 export 'order_data.dart';
+export 'order_detail_response.dart';
 export 'order_history_model.dart';
 export 'order_identification_model.dart';
 export 'order_model.dart';

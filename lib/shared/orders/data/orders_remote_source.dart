@@ -25,4 +25,7 @@ abstract class OrdersRemoteSource {
 
   @GET('/api/v1/orders/courier')
   Future<OrdersResponse> getCourierOrders();
+
+  @GET('/api/v1/orders/by/id/{orderId}')
+  Future<OrderDetailResponse> getOrderById(@Path('orderId') String orderId);
 }

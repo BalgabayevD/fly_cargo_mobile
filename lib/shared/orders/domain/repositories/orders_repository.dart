@@ -13,4 +13,5 @@ abstract class OrdersRepository {
   Future<String> uploadOrderPhoto(File photoFile);
   Future<List<OrderModel>> getClientOrders();
   Future<List<OrderModel>> getCourierOrders();
+  Future<OrderModel> getOrderById(String orderId);
 }

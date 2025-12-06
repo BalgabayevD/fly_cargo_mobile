@@ -39,3 +39,10 @@ class OrdersError extends OrdersState {
 class OrdersUnauthorized extends OrdersState {
   const OrdersUnauthorized();
 }
+
+class OrderDetailLoaded extends OrdersState {
+  final OrderModel order;
+  const OrderDetailLoaded({required this.order});
+  @override
+  List<Object?> get props => [order];
+}

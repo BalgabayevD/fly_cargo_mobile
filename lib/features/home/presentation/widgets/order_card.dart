@@ -6,9 +6,11 @@ import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderModel order;
+  final VoidCallback? onTap;
 
   const OrderCard({
     required this.order,
+    this.onTap,
     super.key,
   });
 
@@ -29,21 +31,23 @@ class OrderCard extends StatelessWidget {
     final status = OrderStatusHelper.getStatus(order);
     final trackingNumber = OrderStatusHelper.getTrackingNumber(order);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: status.backgroundColor,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: status.borderColor != null
-            ? Border.all(
-                color: status.borderColor!,
-                width: 1.5,
-              )
-            : null,
-      ),
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: status.backgroundColor,
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+          border: status.borderColor != null
+              ? Border.all(
+                  color: status.borderColor!,
+                  width: 1.5,
+                )
+              : null,
+        ),
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,6 +103,7 @@ class OrderCard extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }

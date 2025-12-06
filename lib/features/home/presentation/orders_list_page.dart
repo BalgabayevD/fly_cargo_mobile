@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/features/home/presentation/pages/order_detail_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/order_card.dart';
 import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
@@ -40,33 +41,45 @@ class _OrdersListPageState extends State<OrdersListPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<OrdersBloc, OrdersState>(
-        builder: (context, state) {
-          if (state is OrdersLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
+      body: BlocListener<OrdersBloc, OrdersState>(
+        listener: (context, state) {
+          if (state is OrderDetailLoaded) {
+            // Навигация к экрану деталей заказа
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => OrderDetailPage(order: state.order),
               ),
             );
           }
-
-          if (state is OrdersUnauthorized) {
-            return const _UnauthorizedStateWidget();
-          }
-
-          if (state is OrdersError) {
-            return _ErrorStateWidget(message: state.message);
-          }
-
-          if (state is OrdersLoaded) {
-            if (state.orders.isEmpty) {
-              return const _EmptyStateWidget();
-            }
-            return _OrdersListWidget(orders: state.orders);
-          }
-
-          return const _EmptyStateWidget();
         },
+        child: BlocBuilder<OrdersBloc, OrdersState>(
+          builder: (context, state) {
+            if (state is OrdersLoading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                ),
+              );
+            }
+
+            if (state is OrdersUnauthorized) {
+              return const _UnauthorizedStateWidget();
+            }
+
+            if (state is OrdersError) {
+              return _ErrorStateWidget(message: state.message);
+            }
+
+            if (state is OrdersLoaded) {
+              if (state.orders.isEmpty) {
+                return const _EmptyStateWidget();
+              }
+              return _OrdersListWidget(orders: state.orders);
+            }
+
+            return const _EmptyStateWidget();
+          },
+        ),
       ),
     );
   }
@@ -86,7 +99,14 @@ class _OrdersListWidget extends StatelessWidget {
         final order = orders[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.md),
-          child: OrderCard(order: order),
+          child: OrderCard(
+            order: order,
+            onTap: () {
+              context.read<OrdersBloc>().add(
+                    GetOrderByIdEvent(orderId: order.id.toString()),
+                  );
+            },
+          ),
         );
       },
     );

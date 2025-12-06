@@ -76,6 +76,16 @@ class OrdersRepositoryImpl implements OrdersRepository {
       throw OrdersException('Ошибка при загрузке заказов: $e');
     }
   }
+
+  @override
+  Future<OrderModel> getOrderById(String orderId) async {
+    try {
+      final response = await _remoteSource.getOrderById(orderId);
+      return response.data;
+    } catch (e) {
+      throw OrdersException('Ошибка при загрузке заказа: $e');
+    }
+  }
 }
 
 class OrdersException implements Exception {
