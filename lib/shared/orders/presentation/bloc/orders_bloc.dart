@@ -123,7 +123,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     if (e is DioException) {
       return e.response?.statusCode == 401;
     }
-    return e.toString().contains('401') || 
-           e.toString().toLowerCase().contains('unauthorized');
+    return e.toString().contains('401') ||
+        e.toString().toLowerCase().contains('unauthorized');
   }
 }

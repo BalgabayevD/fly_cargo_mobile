@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/settings/settings_menu_items.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
 
 class AuthSection extends StatelessWidget {
   final AuthState authState;
-  final ProfileState profileState;
   final VoidCallback onProfileTap;
   final VoidCallback onAuthTap;
 
   const AuthSection({
     required this.authState,
-    required this.profileState,
     required this.onProfileTap,
     required this.onAuthTap,
     super.key,
@@ -24,28 +21,18 @@ class AuthSection extends StatelessWidget {
     String? userPhone;
 
     if (isAuthenticated) {
-      profileState.when(
-        initial: () {},
-        loading: () {},
-        loaded: (profile, _) {
-          final name = profile.name.trim();
-          if (name.isNotEmpty) {
-            displayName = name.isNotEmpty
-                ? name
-                : profile.role == 'client'
-                ? 'Клиент'
-                : profile.role == 'courier'
-                ? 'Курьер'
-                : null;
-          } else if (profile.phoneNumber.isNotEmpty) {
-            displayName = profile.phoneNumber;
-          }
-          userPhone = profile.phoneNumber.isNotEmpty
-              ? profile.phoneNumber
-              : null;
-        },
-        error: (_) {},
-      );
+      final authenticatedState = authState as AuthAuthenticated;
+      final profile = authenticatedState.profile;
+
+      if (profile != null) {
+        final name = profile.name.trim();
+        if (name.isNotEmpty) {
+          displayName = name;
+        } else if (profile.phoneNumber.isNotEmpty) {
+          displayName = profile.phoneNumber;
+        }
+        userPhone = profile.phoneNumber.isNotEmpty ? profile.phoneNumber : null;
+      }
     }
 
     return SettingsUserMenuItem(

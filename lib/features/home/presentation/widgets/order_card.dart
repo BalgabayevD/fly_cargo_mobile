@@ -48,62 +48,63 @@ class OrderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  'Заказ ${order.id}',
-                  style: AppTypography.h6.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Заказ ${order.id}',
+                    style: AppTypography.h6.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ),
-              ),
+                Text(
+                  _formatDate(order.createdAt),
+                  style: AppTypography.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            if (order.price != null && status == OrderStatus.awaitingPayment)
               Text(
-                _formatDate(order.createdAt),
-                style: AppTypography.bodySmall.copyWith(
+                'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
+                style: AppTypography.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          if (order.price != null && status == OrderStatus.awaitingPayment)
+            if (trackingNumber != null && status != OrderStatus.awaitingPayment)
+              Text(
+                'Трековый номер $trackingNumber',
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            if (order.price != null &&
+                trackingNumber == null &&
+                status != OrderStatus.awaitingPayment)
+              Text(
+                'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            const SizedBox(height: AppSpacing.sm),
             Text(
-              'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+              status.text,
+              style: AppTypography.cardTitle.copyWith(
+                color: status.statusTextColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 17,
               ),
             ),
-          if (trackingNumber != null && status != OrderStatus.awaitingPayment)
-            Text(
-              'Трековый номер $trackingNumber',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          if (order.price != null &&
-              trackingNumber == null &&
-              status != OrderStatus.awaitingPayment)
-            Text(
-              'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            status.text,
-            style: AppTypography.bodyMedium.copyWith(
-              color: status.statusTextColor,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
     );
   }
 }

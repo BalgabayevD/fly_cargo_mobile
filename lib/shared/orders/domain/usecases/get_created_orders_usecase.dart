@@ -10,4 +10,3 @@ class GetCreatedOrdersUseCase {
     return await _ordersRepository.getCreatedOrders();
   }
 }
-

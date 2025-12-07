@@ -11,7 +11,6 @@ import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
 import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -63,7 +62,6 @@ Future<void> main() async {
         BlocProvider<TariffSelectionBloc>(
           create: (_) => getIt<TariffSelectionBloc>(),
         ),
-        BlocProvider<ProfileBloc>(create: (_) => getIt<ProfileBloc>()),
         BlocProvider<OrdersBloc>(create: (_) => getIt<OrdersBloc>()),
       ],
       child: App(

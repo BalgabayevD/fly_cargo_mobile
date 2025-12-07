@@ -4,12 +4,13 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/menu_item_widget.dart';
 import 'package:fly_cargo/features/user/presentation/widgets/stat_item_widget.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_event.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
+
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,55 +38,34 @@ class UserProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            loaded: (profile, daysSinceCreated) => SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  _buildProfileHeader(profile),
-                  const SizedBox(height: 30),
-                  _buildStatsSection(daysSinceCreated),
-                  const SizedBox(height: 30),
-                  _buildUserMenuSection(context, profile),
-                  const SizedBox(height: 20),
-                  _buildServicesMenuSection(context, profile),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-            error: (message) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: Color(0xFF999999),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    message,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF666666),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<ProfileBloc>().add(
-                        const ProfileEvent.loadProfile(),
-                      );
-                    },
-                    child: const Text('Повторить'),
-                  ),
-                ],
-              ),
+          if (state is! AuthAuthenticated) {
+            return const Center(
+              child: Text('Вы не авторизованы'),
+            );
+          }
+
+          final profile = state.profile;
+          final daysSinceCreated = state.daysSinceCreated;
+
+          if (profile == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                _buildProfileHeader(profile),
+                const SizedBox(height: 30),
+                _buildStatsSection(daysSinceCreated ?? 0),
+                const SizedBox(height: 30),
+                _buildUserMenuSection(context, profile),
+                const SizedBox(height: 20),
+                _buildServicesMenuSection(context, profile),
+                const SizedBox(height: 20),
+              ],
             ),
           );
         },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AppColors {
   static const Color primary = Color(0xFFE47B35);
   static const Color primaryLight = Color(0xFFFF9A5C);
@@ -26,7 +27,9 @@ class AppColors {
   static const Color surface = Color(0xFFF8F9FA);
   static const Color surfaceVariant = Color(0xFFF5F5F5);
   static const Color textPrimary = Color(0xFF333333);
+  static const Color cargoParagraph = Color(0xFF21201F);
   static const Color textSecondary = Color(0xFF666666);
+  static const Color textSecondaryLight = Color(0xFF8F8F8E);
   static const Color textTertiary = Color(0xFF999999);
   static const Color textDisabled = Color(0xFFD0CFCE);
   static const Color border = Color(0xFFE0E0E0);
@@ -44,7 +47,7 @@ class AppColors {
   static const Color iconSecondary = Color(0xFF666666);
   static const Color iconTertiary = Color(0xFF999999);
   static const Color iconDisabled = Color(0xFFD0CFCE);
-  
+
   static const Color accentBlue = Color(0xFF2196F3);
   static const Color accentGreen = Color(0xFF34C759);
   static const Color accentOrange = Color(0xFFE47B35);
@@ -69,9 +72,11 @@ class AppColors {
   static Color withOpacity(Color color, double opacity) {
     return color.withValues(alpha: opacity);
   }
+
   static Color primaryWithOpacity(double opacity) {
     return primary.withValues(alpha: opacity);
   }
+
   static Color secondaryWithOpacity(double opacity) {
     return secondary.withValues(alpha: opacity);
   }

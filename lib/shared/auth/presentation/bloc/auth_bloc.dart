@@ -6,6 +6,7 @@ import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart';
+import 'package:fly_cargo/shared/auth/domain/usecases/get_user_profile_usecase.dart';
 import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
@@ -15,11 +16,17 @@ import 'package:injectable/injectable.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
   final AuthStatusUseCase _authStatusUseCase;
-  AuthBloc(this._signInUseCase, this._authStatusUseCase)
-    : super(const AuthInitial()) {
+  final GetUserProfileUseCase _getUserProfileUseCase;
+  
+  AuthBloc(
+    this._signInUseCase,
+    this._authStatusUseCase,
+    this._getUserProfileUseCase,
+  ) : super(const AuthInitial()) {
     on<AuthInitialized>(_onInitialized);
     on<AuthRequestOTPRequested>(_onRequestOTP);
     on<AuthVerifyCodeRequested>(_verifyCode);
+    on<AuthLoadProfile>(_onLoadProfile);
     on<AuthLogout>(_onLogout);
   }
   Future<void> _onInitialized(
@@ -31,11 +38,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (session.data?.session != null) {
       try {
         final profile = await _authStatusUseCase.getUserProfile();
+        final daysSinceCreated = _calculateDaysSinceCreated(profile.createdAt);
         emit(
           AuthAuthenticated(
             userType: profile.role,
             userId: session.data?.session.userId,
             accessToken: session.data?.session.token,
+            profile: profile,
+            daysSinceCreated: daysSinceCreated,
           ),
         );
       } catch (e) {
@@ -53,11 +63,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final profile = await _authStatusUseCase.getUserProfile();
       final token = await _authStatusUseCase.getCurrentToken();
+      final daysSinceCreated = _calculateDaysSinceCreated(profile.createdAt);
       emit(
         AuthAuthenticated(
           userType: profile.role,
           userId: profile.id.toString(),
           accessToken: token,
+          profile: profile,
+          daysSinceCreated: daysSinceCreated,
         ),
       );
     } catch (e) {
@@ -111,12 +124,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final profile = await _authStatusUseCase.getUserProfile();
         final token = await _authStatusUseCase.getCurrentToken();
+        final daysSinceCreated = _calculateDaysSinceCreated(profile.createdAt);
 
         emit(
           AuthAuthenticated(
             userType: profile.role,
             userId: profile.id.toString(),
             accessToken: token,
+            profile: profile,
+            daysSinceCreated: daysSinceCreated,
           ),
         );
       } catch (profileError) {
@@ -137,5 +153,47 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogout(AuthLogout event, Emitter<AuthState> emit) async {
     await FlutterBetterAuth.client.signOut();
     emit(const AuthInitial());
+  }
+
+  Future<void> _onLoadProfile(
+    AuthLoadProfile event,
+    Emitter<AuthState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! AuthAuthenticated) {
+      return;
+    }
+
+    // Если профиль уже загружен, не загружаем повторно
+    if (currentState.profile != null) {
+      return;
+    }
+
+    try {
+      final profile = await _getUserProfileUseCase();
+      final daysSinceCreated = _calculateDaysSinceCreated(profile.createdAt);
+      
+      emit(
+        currentState.copyWith(
+          profile: profile,
+          daysSinceCreated: daysSinceCreated,
+        ),
+      );
+    } catch (e) {
+      log('Failed to load profile: ${e.toString()}');
+      // Не меняем состояние при ошибке, просто логируем
+    }
+  }
+
+  int _calculateDaysSinceCreated(String createdAt) {
+    try {
+      final createdDate = DateTime.parse(createdAt);
+      final now = DateTime.now();
+      final difference = now.difference(createdDate);
+      return difference.inDays;
+    } catch (e) {
+      log('Failed to calculate days since created: ${e.toString()}');
+      return 0;
+    }
   }
 }

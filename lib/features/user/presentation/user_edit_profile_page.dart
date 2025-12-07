@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
+
 class UserEditProfilePage extends StatelessWidget {
   const UserEditProfilePage({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,40 +42,25 @@ class UserEditProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            loaded: (profile, daysSinceCreated) => _EditProfileContent(
-              profile: profile,
-            ),
-            error: (message) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: Color(0xFF999999),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    message,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF666666),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          );
+          if (state is! AuthAuthenticated) {
+            return const Center(
+              child: Text('Вы не авторизованы'),
+            );
+          }
+
+          final profile = state.profile;
+          if (profile == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return _EditProfileContent(profile: profile);
         },
       ),
     );
   }
+  
   void _saveProfile(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

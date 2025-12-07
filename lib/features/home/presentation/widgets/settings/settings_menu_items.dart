@@ -40,7 +40,7 @@ class SettingsMenuItem extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   fontSize: 17,
-                  color: AppColors.textPrimary,
+                  color: AppColors.cargoParagraph,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -50,7 +50,7 @@ class SettingsMenuItem extends StatelessWidget {
                 rightText!,
                 style: const TextStyle(
                   fontSize: 16,
-                  color: AppColors.textSecondary,
+                  color: AppColors.textSecondaryLight,
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
@@ -59,7 +59,7 @@ class SettingsMenuItem extends StatelessWidget {
               const HeroIcon(
                 HeroIcons.arrowTopRightOnSquare,
                 size: 20,
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondaryLight,
               ),
           ],
         ),
@@ -90,7 +90,7 @@ class SettingsUserMenuItem extends StatelessWidget {
         color: AppColors.white,
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.lg,
-          vertical: AppSpacing.md,
+          vertical: AppSpacing.paddingLG,
         ),
         child: Row(
           children: [
@@ -100,28 +100,46 @@ class SettingsUserMenuItem extends StatelessWidget {
               color: AppColors.textPrimary,
             ),
             const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: isAuthenticated && displayName != null
-                  ? Text(
-                      displayName!,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w500,
+            Column(
+              children: [
+                isAuthenticated && displayName != null
+                    ? Text(
+                        displayName!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    : const Text(
+                        'Авторизация в приложении',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
-                    )
-                  : const Text(
-                      'Авторизация в приложении',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.textPrimary,
+                isAuthenticated && displayName != null
+                    ? Text(
+                        displayName!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    : const Text(
+                        'Авторизация в приложении',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
-                    ),
+              ],
             ),
             const HeroIcon(
               HeroIcons.chevronRight,
-              size: 20,
-              color: AppColors.textSecondary,
+              size: 16,
+              color: AppColors.textSecondaryLight,
             ),
           ],
         ),

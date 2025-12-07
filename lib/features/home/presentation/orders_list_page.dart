@@ -58,8 +58,8 @@ class _OrdersListPageState extends State<OrdersListPage> {
   @override
   Widget build(BuildContext context) {
     final authState = context.watch<AuthBloc>().state;
-    final isCourier = authState is AuthAuthenticated && 
-                      authState.userType.isCourier;
+    final isCourier =
+        authState is AuthAuthenticated && authState.userType.isCourier;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -146,10 +146,12 @@ class _OrdersListPageState extends State<OrdersListPage> {
                 onTap: () => _onTabChanged(0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: _selectedTabIndex == 0 
-                        ? const Color(0xFFD97D4E) 
+                    color: _selectedTabIndex == 0
+                        ? const Color(0xFFD97D4E)
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD - 1),
+                    borderRadius: BorderRadius.circular(
+                      AppSpacing.radiusMD - 1,
+                    ),
                   ),
                   alignment: Alignment.center,
                   child: Text(
@@ -157,8 +159,8 @@ class _OrdersListPageState extends State<OrdersListPage> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: _selectedTabIndex == 0 
-                          ? AppColors.white 
+                      color: _selectedTabIndex == 0
+                          ? AppColors.white
                           : AppColors.textSecondary,
                     ),
                   ),
@@ -170,10 +172,12 @@ class _OrdersListPageState extends State<OrdersListPage> {
                 onTap: () => _onTabChanged(1),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: _selectedTabIndex == 1 
-                        ? const Color(0xFFD97D4E) 
+                    color: _selectedTabIndex == 1
+                        ? const Color(0xFFD97D4E)
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD - 1),
+                    borderRadius: BorderRadius.circular(
+                      AppSpacing.radiusMD - 1,
+                    ),
                   ),
                   alignment: Alignment.center,
                   child: Text(
@@ -181,8 +185,8 @@ class _OrdersListPageState extends State<OrdersListPage> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: _selectedTabIndex == 1 
-                          ? AppColors.white 
+                      color: _selectedTabIndex == 1
+                          ? AppColors.white
                           : AppColors.textSecondary,
                     ),
                   ),
@@ -240,8 +244,8 @@ class _OrdersListWidget extends StatelessWidget {
             order: order,
             onTap: () {
               context.read<OrdersBloc>().add(
-                    GetOrderByIdEvent(orderId: order.id.toString()),
-                  );
+                GetOrderByIdEvent(orderId: order.id.toString()),
+              );
             },
           ),
         );
