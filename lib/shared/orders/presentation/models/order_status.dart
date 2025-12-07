@@ -4,6 +4,11 @@ import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 
 enum OrderStatus {
   awaitingPayment,
+  free, // Свободный (оранжевый)
+  accepted, // Принять (оранжевый с белым фоном)
+  toWarehouse, // Увезти на склад (персиковый)
+  rejected, // Отклонил (розовый)
+  completed, // Выполнен (зеленый)
   submitted,
   inWarehouse,
   inTransit,
@@ -16,6 +21,16 @@ extension OrderStatusExtension on OrderStatus {
     switch (this) {
       case OrderStatus.awaitingPayment:
         return 'Ожидает оплаты';
+      case OrderStatus.free:
+        return 'Свободный';
+      case OrderStatus.accepted:
+        return 'Принять';
+      case OrderStatus.toWarehouse:
+        return 'Увезти на склад';
+      case OrderStatus.rejected:
+        return 'Отклонил';
+      case OrderStatus.completed:
+        return 'Выполнен';
       case OrderStatus.submitted:
         return 'На складе в Алмате';
       case OrderStatus.inWarehouse:
@@ -33,6 +48,16 @@ extension OrderStatusExtension on OrderStatus {
     switch (this) {
       case OrderStatus.awaitingPayment:
         return AppColors.white;
+      case OrderStatus.free:
+        return AppColors.white;
+      case OrderStatus.accepted:
+        return AppColors.white;
+      case OrderStatus.toWarehouse:
+        return const Color(0xFFFAE5E5); // Персиковый
+      case OrderStatus.rejected:
+        return const Color(0xFFFCE4EC); // Розовый
+      case OrderStatus.completed:
+        return const Color(0xFFE8F5E9); // Зеленый
       case OrderStatus.submitted:
         return const Color(0xFFFFF4E6);
       case OrderStatus.inWarehouse:
@@ -50,6 +75,16 @@ extension OrderStatusExtension on OrderStatus {
     switch (this) {
       case OrderStatus.awaitingPayment:
         return AppColors.primary;
+      case OrderStatus.free:
+        return const Color(0xFFD97D4E); // Оранжевый
+      case OrderStatus.accepted:
+        return const Color(0xFFD97D4E); // Оранжевый
+      case OrderStatus.toWarehouse:
+        return null;
+      case OrderStatus.rejected:
+        return null;
+      case OrderStatus.completed:
+        return null;
       case OrderStatus.submitted:
         return null;
       case OrderStatus.inWarehouse:
@@ -67,6 +102,16 @@ extension OrderStatusExtension on OrderStatus {
     switch (this) {
       case OrderStatus.awaitingPayment:
         return AppColors.primary;
+      case OrderStatus.free:
+        return const Color(0xFFD97D4E); // Оранжевый
+      case OrderStatus.accepted:
+        return const Color(0xFFD97D4E); // Оранжевый
+      case OrderStatus.toWarehouse:
+        return const Color(0xFFE74C3C); // Красный
+      case OrderStatus.rejected:
+        return const Color(0xFFE74C3C); // Красный
+      case OrderStatus.completed:
+        return const Color(0xFF4CAF50); // Зеленый
       case OrderStatus.submitted:
         return const Color(0xFFFF6F00);
       case OrderStatus.inWarehouse:
@@ -85,6 +130,21 @@ class OrderStatusHelper {
   static OrderStatus getStatus(OrderModel order) {
     if (order.status != null && order.status!.isNotEmpty) {
       switch (order.status!.toLowerCase()) {
+        case 'created':
+        case 'free':
+          return OrderStatus.free;
+        case 'accepted':
+        case 'принять':
+          return OrderStatus.accepted;
+        case 'to_warehouse':
+        case 'увезти на склад':
+          return OrderStatus.toWarehouse;
+        case 'rejected':
+        case 'отклонил':
+          return OrderStatus.rejected;
+        case 'completed':
+        case 'выполнен':
+          return OrderStatus.completed;
         case 'submitted':
           return OrderStatus.submitted;
         case 'in_warehouse':

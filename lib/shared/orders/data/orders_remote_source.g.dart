@@ -165,6 +165,33 @@ class _OrdersRemoteSource implements OrdersRemoteSource {
   }
 
   @override
+  Future<OrdersResponse> getCreatedOrders() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<OrdersResponse>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/orders/created',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late OrdersResponse _value;
+    try {
+      _value = OrdersResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<OrderDetailResponse> getOrderById(String orderId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

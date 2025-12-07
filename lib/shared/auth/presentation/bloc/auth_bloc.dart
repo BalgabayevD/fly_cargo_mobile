@@ -29,13 +29,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final session = await FlutterBetterAuth.client.getSession();
 
     if (session.data?.session != null) {
-      emit(
-        AuthAuthenticated(
-          userType: UserType.client,
-          userId: session.data?.session.userId,
-          accessToken: session.data?.session.token,
-        ),
-      );
+      try {
+        final profile = await _authStatusUseCase.getUserProfile();
+        emit(
+          AuthAuthenticated(
+            userType: profile.role,
+            userId: session.data?.session.userId,
+            accessToken: session.data?.session.token,
+          ),
+        );
+      } catch (e) {
+        emit(
+          AuthAuthenticated(
+            userType: UserType.client,
+            userId: session.data?.session.userId,
+            accessToken: session.data?.session.token,
+          ),
+        );
+      }
       return;
     }
 
@@ -44,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final token = await _authStatusUseCase.getCurrentToken();
       emit(
         AuthAuthenticated(
-          userType: UserType.client,
+          userType: profile.role,
           userId: profile.id.toString(),
           accessToken: token,
         ),
@@ -103,7 +114,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           AuthAuthenticated(
-            userType: UserType.client,
+            userType: profile.role,
             userId: profile.id.toString(),
             accessToken: token,
           ),

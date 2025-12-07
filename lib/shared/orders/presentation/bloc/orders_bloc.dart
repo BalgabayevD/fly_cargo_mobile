@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/get_client_orders_usecase.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/get_courier_orsers_usecase.dart';
+import 'package:fly_cargo/shared/orders/domain/usecases/get_created_orders_usecase.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/get_order_by_id_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
@@ -13,17 +14,20 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final CreateOrderUseCase _createOrderUseCase;
   final GetClientOrdersUseCase _getClientOrdersUseCase;
   final GetCourierOrdersUseCase _getCourierOrdersUseCase;
+  final GetCreatedOrdersUseCase _getCreatedOrdersUseCase;
   final GetOrderByIdUseCase _getOrderByIdUseCase;
   OrdersBloc(
     this._createOrderUseCase,
     this._getClientOrdersUseCase,
     this._getCourierOrdersUseCase,
+    this._getCreatedOrdersUseCase,
     this._getOrderByIdUseCase,
   ) : super(const OrdersInitial()) {
     on<CreateOrderEvent>(_onCreateOrder);
     on<ResetOrdersEvent>(_onResetOrders);
     on<GetClientOrdersEvent>(_onGetClientOrders);
     on<GetCourierOrdersEvent>(_onGetCourierOrders);
+    on<GetCreatedOrdersEvent>(_onGetCreatedOrders);
     on<GetOrderByIdEvent>(_onGetOrderById);
   }
   Future<void> _onCreateOrder(
@@ -71,6 +75,23 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     emit(const OrdersLoading());
     try {
       final orders = await _getCourierOrdersUseCase.call();
+      emit(OrdersLoaded(orders: orders));
+    } catch (e) {
+      if (_isUnauthorized(e)) {
+        emit(const OrdersUnauthorized());
+      } else {
+        emit(OrdersError(message: e.toString()));
+      }
+    }
+  }
+
+  Future<void> _onGetCreatedOrders(
+    GetCreatedOrdersEvent event,
+    Emitter<OrdersState> emit,
+  ) async {
+    emit(const OrdersLoading());
+    try {
+      final orders = await _getCreatedOrdersUseCase.call();
       emit(OrdersLoaded(orders: orders));
     } catch (e) {
       if (_isUnauthorized(e)) {

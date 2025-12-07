@@ -78,6 +78,16 @@ class OrdersRepositoryImpl implements OrdersRepository {
   }
 
   @override
+  Future<List<OrderModel>> getCreatedOrders() async {
+    try {
+      final response = await _remoteSource.getCreatedOrders();
+      return response.data;
+    } catch (e) {
+      throw OrdersException('Ошибка при загрузке заказов: $e');
+    }
+  }
+
+  @override
   Future<OrderModel> getOrderById(String orderId) async {
     try {
       final response = await _remoteSource.getOrderById(orderId);

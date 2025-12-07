@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/home/presentation/pages/order_detail_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/order_card.dart';
+import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
@@ -16,16 +19,47 @@ class OrdersListPage extends StatefulWidget {
 }
 
 class _OrdersListPageState extends State<OrdersListPage> {
+  int _selectedTabIndex = 0;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<OrdersBloc>().add(const GetClientOrdersEvent());
+      _loadOrders();
     });
+  }
+
+  void _loadOrders() {
+    final authState = context.read<AuthBloc>().state;
+    if (authState is! AuthAuthenticated) {
+      context.read<OrdersBloc>().add(const GetClientOrdersEvent());
+      return;
+    }
+
+    final userType = authState.userType;
+    if (userType.isCourier) {
+      if (_selectedTabIndex == 0) {
+        context.read<OrdersBloc>().add(const GetCourierOrdersEvent());
+      } else {
+        context.read<OrdersBloc>().add(const GetCreatedOrdersEvent());
+      }
+    } else {
+      context.read<OrdersBloc>().add(const GetClientOrdersEvent());
+    }
+  }
+
+  void _onTabChanged(int index) {
+    setState(() {
+      _selectedTabIndex = index;
+    });
+    _loadOrders();
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.watch<AuthBloc>().state;
+    final isCourier = authState is AuthAuthenticated && 
+                      authState.userType.isCourier;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -41,44 +75,147 @@ class _OrdersListPageState extends State<OrdersListPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocListener<OrdersBloc, OrdersState>(
-        listener: (context, state) {
-          if (state is OrderDetailLoaded) {
-            // Навигация к экрану деталей заказа
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => OrderDetailPage(order: state.order),
+      body: Column(
+        children: [
+          if (isCourier) _buildTabs(),
+          Expanded(
+            child: BlocListener<OrdersBloc, OrdersState>(
+              listener: (context, state) {
+                if (state is OrderDetailLoaded) {
+                  // Навигация к экрану деталей заказа
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => OrderDetailPage(order: state.order),
+                    ),
+                  );
+                }
+              },
+              child: BlocBuilder<OrdersBloc, OrdersState>(
+                builder: (context, state) {
+                  if (state is OrdersLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    );
+                  }
+
+                  if (state is OrdersUnauthorized) {
+                    return const _UnauthorizedStateWidget();
+                  }
+
+                  if (state is OrdersError) {
+                    return _ErrorStateWidget(message: state.message);
+                  }
+
+                  if (state is OrdersLoaded) {
+                    if (state.orders.isEmpty) {
+                      return const _EmptyStateWidget();
+                    }
+                    return _OrdersListWidget(orders: state.orders);
+                  }
+
+                  return const _EmptyStateWidget();
+                },
               ),
-            );
-          }
-        },
-        child: BlocBuilder<OrdersBloc, OrdersState>(
-          builder: (context, state) {
-            if (state is OrdersLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabs() {
+    return Container(
+      color: AppColors.white,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+          border: Border.all(
+            color: const Color(0xFFE0E0E0),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () => _onTabChanged(0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: _selectedTabIndex == 0 
+                        ? const Color(0xFFD97D4E) 
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD - 1),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Новые',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: _selectedTabIndex == 0 
+                          ? AppColors.white 
+                          : AppColors.textSecondary,
+                    ),
+                  ),
                 ),
-              );
-            }
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => _onTabChanged(1),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: _selectedTabIndex == 1 
+                        ? const Color(0xFFD97D4E) 
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD - 1),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Мои',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: _selectedTabIndex == 1 
+                          ? AppColors.white 
+                          : AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-            if (state is OrdersUnauthorized) {
-              return const _UnauthorizedStateWidget();
-            }
-
-            if (state is OrdersError) {
-              return _ErrorStateWidget(message: state.message);
-            }
-
-            if (state is OrdersLoaded) {
-              if (state.orders.isEmpty) {
-                return const _EmptyStateWidget();
-              }
-              return _OrdersListWidget(orders: state.orders);
-            }
-
-            return const _EmptyStateWidget();
-          },
+  Widget _buildTabButton(String label, int index, bool isSelected) {
+    return GestureDetector(
+      onTap: () => _onTabChanged(index),
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFD97D4E) : AppColors.white,
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+          border: Border.all(
+            color: isSelected ? const Color(0xFFD97D4E) : AppColors.border,
+            width: 1,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: isSelected ? AppColors.white : AppColors.textSecondary,
+          ),
         ),
       ),
     );

@@ -26,6 +26,10 @@ class GetCourierOrdersEvent extends OrdersEvent {
   const GetCourierOrdersEvent();
 }
 
+class GetCreatedOrdersEvent extends OrdersEvent {
+  const GetCreatedOrdersEvent();
+}
+
 class GetOrderByIdEvent extends OrdersEvent {
   final String orderId;
   const GetOrderByIdEvent({required this.orderId});
