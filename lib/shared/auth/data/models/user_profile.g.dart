@@ -43,7 +43,7 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
 
 const _$UserTypeEnumMap = {
   UserType.unauthorized: 'unauthorized',
-  UserType.client: 'client',
+  UserType.user: 'user',
   UserType.courier: 'courier',
   UserType.admin: 'admin',
 };

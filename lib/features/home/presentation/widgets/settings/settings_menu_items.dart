@@ -93,39 +93,38 @@ class SettingsUserMenuItem extends StatelessWidget {
           vertical: AppSpacing.paddingLG,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const HeroIcon(
-              HeroIcons.userCircle,
-              size: 24,
-              color: AppColors.textPrimary,
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Column(
+            Row(
               children: [
-                isAuthenticated && displayName != null
-                    ? Text(
-                        displayName!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )
-                    : const Text(
-                        'Авторизация в приложении',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                isAuthenticated && displayName != null
-                    ? Text(
-                        displayName!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
+                const HeroIcon(
+                  HeroIcons.userCircle,
+                  size: 24,
+                  color: AppColors.textPrimary,
+                ),
+                const SizedBox(width: AppSpacing.md),
+                isAuthenticated
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            displayName!,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+
+                          Text(
+                            userPhone!,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       )
                     : const Text(
                         'Авторизация в приложении',

@@ -1,6 +1,6 @@
 enum UserType {
   unauthorized('unauthorized'),
-  client('client'),
+  user('user'),
   courier('courier'),
   admin('admin');
 
@@ -13,8 +13,8 @@ extension UserTypeExtension on UserType {
     switch (this) {
       case UserType.unauthorized:
         return 'Неавторизован';
-      case UserType.client:
-        return 'Клиент';
+      case UserType.user:
+        return 'Пользователь';
       case UserType.courier:
         return 'Курьер';
       case UserType.admin:
@@ -26,8 +26,8 @@ extension UserTypeExtension on UserType {
     switch (this) {
       case UserType.unauthorized:
         return 'unauthorized';
-      case UserType.client:
-        return 'client';
+      case UserType.user:
+        return 'user';
       case UserType.courier:
         return 'courier';
       case UserType.admin:
@@ -36,7 +36,7 @@ extension UserTypeExtension on UserType {
   }
 
   bool get isAuthenticated => this != UserType.unauthorized;
-  bool get isClient => this == UserType.client;
+  bool get isUser => this == UserType.user;
   bool get isCourier => this == UserType.courier;
   bool get isAdmin => this == UserType.admin;
 }

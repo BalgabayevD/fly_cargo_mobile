@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
   final AuthStatusUseCase _authStatusUseCase;
   final GetUserProfileUseCase _getUserProfileUseCase;
-  
+
   AuthBloc(
     this._signInUseCase,
     this._authStatusUseCase,
@@ -34,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final session = await FlutterBetterAuth.client.getSession();
+    print('session: ${session.data?.session}');
 
     if (session.data?.session != null) {
       try {
@@ -51,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         emit(
           AuthAuthenticated(
-            userType: UserType.client,
+            userType: UserType.user,
             userId: session.data?.session.userId,
             accessToken: session.data?.session.token,
           ),
@@ -139,7 +140,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final token = await _authStatusUseCase.getCurrentToken();
         emit(
           AuthAuthenticated(
-            userType: UserType.client,
+            userType: UserType.user,
             userId: sessionStatus!.session.userId,
             accessToken: token,
           ),
@@ -172,7 +173,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final profile = await _getUserProfileUseCase();
       final daysSinceCreated = _calculateDaysSinceCreated(profile.createdAt);
-      
+
       emit(
         currentState.copyWith(
           profile: profile,
