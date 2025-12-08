@@ -39,9 +39,9 @@ class _OrdersListPageState extends State<OrdersListPage> {
     final userType = authState.userType;
     if (userType.isCourier) {
       if (_selectedTabIndex == 0) {
-        context.read<OrdersBloc>().add(const GetCourierOrdersEvent());
-      } else {
         context.read<OrdersBloc>().add(const GetCreatedOrdersEvent());
+      } else {
+        context.read<OrdersBloc>().add(const GetCourierOrdersEvent());
       }
     } else {
       context.read<OrdersBloc>().add(const GetClientOrdersEvent());
@@ -82,10 +82,14 @@ class _OrdersListPageState extends State<OrdersListPage> {
             child: BlocListener<OrdersBloc, OrdersState>(
               listener: (context, state) {
                 if (state is OrderDetailLoaded) {
-                  // Навигация к экрану деталей заказа
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => OrderDetailPage(order: state.order),
+                      builder: (context) => OrderDetailPage(
+                        order: state.order,
+                        userType: authState is AuthAuthenticated
+                            ? authState.userType
+                            : UserType.user,
+                      ),
                     ),
                   );
                 }

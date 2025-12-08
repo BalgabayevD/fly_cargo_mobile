@@ -184,7 +184,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.sm),
             child: Row(
               children: [
                 Expanded(
@@ -205,10 +205,9 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
               ],
             ),
           ),
-          const Divider(height: 1),
           Flexible(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.lg),
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

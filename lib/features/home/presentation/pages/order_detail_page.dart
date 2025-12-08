@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
@@ -8,9 +9,10 @@ import 'package:intl/intl.dart';
 
 class OrderDetailPage extends StatelessWidget {
   final OrderModel order;
-
+  final UserType userType;
   const OrderDetailPage({
     required this.order,
+    required this.userType,
     super.key,
   });
 
@@ -86,7 +88,10 @@ class OrderDetailPage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.share_outlined, color: AppColors.textPrimary),
+            icon: const Icon(
+              Icons.share_outlined,
+              color: AppColors.textPrimary,
+            ),
             onPressed: () {
               // TODO: Implement share
             },
@@ -137,7 +142,9 @@ class OrderDetailPage extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Оплатить ${price.toStringAsFixed(0)} тг',
+                    userType.isUser
+                        ? 'Оплатить ${price.toStringAsFixed(0)} тг'
+                        : 'Привязать штрихкод',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -254,9 +261,7 @@ class OrderDetailPage extends StatelessWidget {
       height: 56,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive
-            ? const Color(0xFFD97D4E)
-            : const Color(0xFFFFE5D9),
+        color: isActive ? const Color(0xFFD97D4E) : const Color(0xFFFFE5D9),
       ),
       child: Icon(
         icon,
@@ -270,9 +275,7 @@ class OrderDetailPage extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 2,
-        color: isActive
-            ? const Color(0xFFD97D4E)
-            : const Color(0xFFFFE5D9),
+        color: isActive ? const Color(0xFFD97D4E) : const Color(0xFFFFE5D9),
       ),
     );
   }
@@ -301,4 +304,3 @@ class OrderDetailPage extends StatelessWidget {
     );
   }
 }
-

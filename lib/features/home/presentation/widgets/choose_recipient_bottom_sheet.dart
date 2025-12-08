@@ -63,7 +63,7 @@ class _ChooseRecipientBottomSheetState
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
+              padding: const EdgeInsets.all(AppSpacing.sm),
               child: Row(
                 children: [
                   Expanded(
@@ -84,7 +84,6 @@ class _ChooseRecipientBottomSheetState
                 ],
               ),
             ),
-            const Divider(height: 1),
             Flexible(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(AppSpacing.lg),
@@ -97,24 +96,27 @@ class _ChooseRecipientBottomSheetState
                         labelText: 'Имя',
                         hintText: 'Введите имя',
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: AppColors.primary,
                             width: AppSpacing.borderWidthThick,
@@ -150,24 +152,27 @@ class _ChooseRecipientBottomSheetState
                         labelText: 'Номер телефона',
                         hintText: '+7 (XXX) XXX-XX-XX',
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: AppColors.primary,
                             width: AppSpacing.borderWidthThick,
@@ -185,7 +190,10 @@ class _ChooseRecipientBottomSheetState
                         if (value == null || value.trim().isEmpty) {
                           return 'Введите номер телефона';
                         }
-                        final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
+                        final digitsOnly = value.replaceAll(
+                          RegExp(r'[^\d]'),
+                          '',
+                        );
                         if (digitsOnly.length < 10) {
                           return 'Введите корректный номер телефона';
                         }

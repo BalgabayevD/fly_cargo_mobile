@@ -102,7 +102,7 @@ class _SpecifyDimensionsBottomSheetState
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.sm),
             child: Row(
               children: [
                 IconButton(
@@ -124,7 +124,6 @@ class _SpecifyDimensionsBottomSheetState
               ],
             ),
           ),
-          const Divider(height: 1),
           Flexible(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppSpacing.lg),

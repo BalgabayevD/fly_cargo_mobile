@@ -75,7 +75,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.sm),
             child: Row(
               children: [
                 Expanded(
@@ -96,7 +96,6 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
               ],
             ),
           ),
-          const Divider(height: 1),
           Flexible(
             child: BlocBuilder<TariffSelectionBloc, TariffSelectionState>(
               builder: (context, state) {

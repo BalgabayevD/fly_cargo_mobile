@@ -51,22 +51,35 @@ class TariffItem extends StatelessWidget {
                   : null,
             ),
             const SizedBox(width: AppSpacing.md),
-            if (tariff.image.isNotEmpty)
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.inbox,
-                    size: 32,
-                    color: AppColors.textSecondary,
+            tariff.image.isNotEmpty
+                ? Image.network(
+                    tariff.image,
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.inbox,
+                        size: 48,
+                        color: AppColors.textSecondary,
+                      );
+                    },
+                  )
+                : Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.inbox,
+                        size: 32,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
                   ),
-                ),
-              ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Column(
