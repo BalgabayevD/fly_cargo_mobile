@@ -24,7 +24,7 @@ class CityRadioOption extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           border: Border.all(
-            color: selected ? AppColors.primary : AppColors.borderLight,
+            color: selected ? AppColors.primary : AppColors.surface2,
             width: selected ? 2 : 1,
           ),
         ),
@@ -36,10 +36,10 @@ class CityRadioOption extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: selected ? AppColors.primary : AppColors.borderDark,
+                  color: selected ? AppColors.primary : AppColors.border,
                   width: 2,
                 ),
-                color: selected ? AppColors.white : AppColors.transparent,
+                color: selected ? AppColors.white : AppColors.none,
               ),
               child: selected
                   ? Center(
@@ -61,8 +61,8 @@ class CityRadioOption extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   color: selected
-                      ? AppColors.textPrimary
-                      : AppColors.textSecondary,
+                      ? AppColors.surface5
+                      : AppColors.surface4,
                   fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),

@@ -30,7 +30,7 @@ class _TariffCategoryDropdownState extends State<TariffCategoryDropdown> {
         if (state is TariffsError) {
           return Text(
             'Ошибка загрузки категорий: ${state.message}',
-            style: AppTypography.bodyMedium.copyWith(color: AppColors.error),
+            style: AppTypography.bodyMedium.copyWith(color: AppColors.danger),
           );
         }
         if (state is TariffsLoaded) {
@@ -56,18 +56,18 @@ class _TariffCategoryDropdownState extends State<TariffCategoryDropdown> {
               labelText: 'Выберите категорию',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.surface2),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: AppColors.borderLight),
+                borderSide: BorderSide(color: AppColors.surface2),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(color: AppColors.primary, width: 2),
               ),
               filled: true,
-              fillColor: AppColors.surfaceVariant,
+              fillColor: AppColors.surface2,
             ),
             items: categories,
             onChanged: widget.onCategoryChanged,

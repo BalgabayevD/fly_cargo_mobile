@@ -37,7 +37,7 @@ class _AddressAutocompleteEmpty extends StatelessWidget {
       child: Text(
         'Адреса не найдены',
         style: AppTypography.bodyMedium.copyWith(
-          color: AppColors.textSecondary,
+          color: AppColors.surface4,
         ),
         textAlign: TextAlign.center,
       ),
@@ -68,10 +68,10 @@ class _AddressAutocompleteItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const HeroIcon(
+            HeroIcon(
               HeroIcons.mapPin,
               size: 20,
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(

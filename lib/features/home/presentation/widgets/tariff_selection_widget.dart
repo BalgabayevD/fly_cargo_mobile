@@ -20,7 +20,7 @@ class TariffSelectionWidget extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.gray50,
+                color: AppColors.surface1,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.border),
               ),
@@ -28,7 +28,7 @@ class TariffSelectionWidget extends StatelessWidget {
                 child: Text(
                   'Нет доступных категорий тарифов',
                   style: AppTypography.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: AppColors.surface4,
                   ),
                 ),
               ),
@@ -68,7 +68,7 @@ class TariffSelectionWidget extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppColors.primaryWithOpacity(0.1)
+                                ? AppColors.primary.withValues(alpha: 0.1)
                                 : AppColors.white,
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(
@@ -85,7 +85,7 @@ class TariffSelectionWidget extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: isSelected
                                   ? AppColors.primary
-                                  : AppColors.textPrimary,
+                                  : AppColors.surface5,
                             ),
                           ),
                         ),
@@ -123,7 +123,7 @@ class TariffSelectionWidget extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.gray50,
+          color: AppColors.surface1,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.border),
         ),
@@ -131,7 +131,7 @@ class TariffSelectionWidget extends StatelessWidget {
           child: Text(
             'В данной категории пока нет доступных тарифов',
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
           ),
         ),
@@ -176,7 +176,7 @@ class TariffOptionWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primaryWithOpacity(0.1)
+              ? AppColors.primary.withValues(alpha: 0.1)
               : AppColors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
@@ -203,7 +203,7 @@ class TariffOptionWidget extends StatelessWidget {
                           return Icon(
                             Icons.local_shipping,
                             size: 30,
-                            color: AppColors.textSecondary,
+                            color: AppColors.surface4,
                           );
                         },
                         loadingBuilder: (context, child, loadingProgress) {
@@ -211,14 +211,14 @@ class TariffOptionWidget extends StatelessWidget {
                           return Icon(
                             Icons.local_shipping,
                             size: 30,
-                            color: AppColors.textSecondary,
+                            color: AppColors.surface4,
                           );
                         },
                       )
                     : Icon(
                         Icons.local_shipping,
                         size: 30,
-                        color: AppColors.textSecondary,
+                        color: AppColors.surface4,
                       ),
               ),
             ),
@@ -228,7 +228,7 @@ class TariffOptionWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                color: isSelected ? AppColors.primary : AppColors.surface5,
               ),
               textAlign: TextAlign.center,
               maxLines: 2,
@@ -239,7 +239,7 @@ class TariffOptionWidget extends StatelessWidget {
               '${tariff.weight ?? 0} кг',
               style: TextStyle(
                 fontSize: 10,
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                color: isSelected ? AppColors.primary : AppColors.surface4,
               ),
             ),
           ],

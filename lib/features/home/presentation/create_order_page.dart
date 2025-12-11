@@ -124,17 +124,17 @@ class _ErrorScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+            icon: Icon(
             Icons.arrow_back_ios,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Text('Ошибка загрузки информации о коробке'),
       ),
-    );
+    );  
   }
 }
 
@@ -237,7 +237,7 @@ class _CreateOrderContentState extends State<CreateOrderContent> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: AppColors.error,
+        backgroundColor: AppColors.danger,
       ),
     );
   }
@@ -266,7 +266,7 @@ class _CreateOrderContentState extends State<CreateOrderContent> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.surface1,
         appBar: _CreateOrderAppBar(boxName: widget.box.name),
         body: _CreateOrderBody(
           box: widget.box,
@@ -293,16 +293,16 @@ class _CreateOrderAppBar extends StatelessWidget
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       leading: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.arrow_back_ios,
-          color: AppColors.textPrimary,
+          color: AppColors.surface5,
         ),
         onPressed: () => Navigator.pop(context),
       ),
       title: Text(
         boxName,
         style: AppTypography.h5.copyWith(
-          color: AppColors.textPrimary,
+          color: AppColors.surface5,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -311,7 +311,7 @@ class _CreateOrderAppBar extends StatelessWidget
         preferredSize: const Size.fromHeight(AppSpacing.dividerHeight),
         child: Container(
           height: AppSpacing.dividerHeight,
-          color: AppColors.borderLight,
+              color: AppColors.surface3,
         ),
       ),
     );

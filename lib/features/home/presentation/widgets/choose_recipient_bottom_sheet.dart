@@ -51,7 +51,7 @@ class _ChooseRecipientBottomSheetState
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppSpacing.radiusXL),
@@ -74,10 +74,10 @@ class _ChooseRecipientBottomSheetState
                     ),
                   ),
                   IconButton(
-                    icon: const HeroIcon(
+                    icon: HeroIcon(
                       HeroIcons.xMark,
                       size: 24,
-                      color: AppColors.textSecondary,
+                      color: AppColors.surface4,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -99,7 +99,7 @@ class _ChooseRecipientBottomSheetState
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusMD,
                           ),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
@@ -108,7 +108,7 @@ class _ChooseRecipientBottomSheetState
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusMD,
                           ),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
@@ -117,14 +117,14 @@ class _ChooseRecipientBottomSheetState
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusMD,
                           ),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppColors.primary,
                             width: AppSpacing.borderWidthThick,
                           ),
                         ),
                         filled: true,
                         fillColor: AppColors.surface,
-                        contentPadding: const EdgeInsets.symmetric(
+                        contentPadding: EdgeInsets.symmetric(
                           horizontal: AppSpacing.lg,
                           vertical: AppSpacing.md,
                         ),
@@ -155,7 +155,7 @@ class _ChooseRecipientBottomSheetState
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusMD,
                           ),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),
@@ -164,7 +164,7 @@ class _ChooseRecipientBottomSheetState
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusMD,
                           ),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppColors.border,
                             width: AppSpacing.borderWidth,
                           ),

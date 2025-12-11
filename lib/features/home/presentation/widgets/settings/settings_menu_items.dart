@@ -31,16 +31,16 @@ class SettingsMenuItem extends StatelessWidget {
         child: Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 24, color: AppColors.textPrimary),
+              Icon(icon, size: 24, color: AppColors.surface5),
               const SizedBox(width: AppSpacing.md),
             ] else
               const SizedBox(width: 0),
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
-                  color: AppColors.cargoParagraph,
+                  color: AppColors.surface5,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -48,18 +48,18 @@ class SettingsMenuItem extends StatelessWidget {
             if (rightText != null) ...[
               Text(
                 rightText!,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: AppColors.textSecondaryLight,
+                  color: AppColors.surface5,
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
             ],
             if (showExternalLink)
-              const HeroIcon(
+              HeroIcon(
                 HeroIcons.arrowTopRightOnSquare,
                 size: 20,
-                color: AppColors.textSecondaryLight,
+                color: AppColors.surface5,
               ),
           ],
         ),
@@ -97,10 +97,10 @@ class SettingsUserMenuItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                const HeroIcon(
+                HeroIcon(
                   HeroIcons.userCircle,
                   size: 24,
-                  color: AppColors.textPrimary,
+                  color: AppColors.surface5,
                 ),
                 const SizedBox(width: AppSpacing.md),
                 isAuthenticated
@@ -109,36 +109,36 @@ class SettingsUserMenuItem extends StatelessWidget {
                         children: [
                           Text(
                             displayName!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
-                              color: AppColors.textPrimary,
+                              color: AppColors.surface5,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
 
                           Text(
                             userPhone!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
-                              color: AppColors.textPrimary,
+                              color: AppColors.surface5,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       )
-                    : const Text(
+                    : Text(
                         'Авторизация в приложении',
                         style: TextStyle(
                           fontSize: 16,
-                          color: AppColors.textPrimary,
+                          color: AppColors.surface5,
                         ),
                       ),
               ],
             ),
-            const HeroIcon(
+            HeroIcon(
               HeroIcons.chevronRight,
               size: 16,
-              color: AppColors.textSecondaryLight,
+              color: AppColors.surface5,
             ),
           ],
         ),
@@ -161,9 +161,9 @@ class SettingsFooter extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Text(
         'Sapsano 2025 год. Версия $appVersion',
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
-          color: AppColors.textTertiary,
+          color: AppColors.surface5,
         ),
         textAlign: TextAlign.center,
       ),

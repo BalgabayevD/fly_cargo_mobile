@@ -63,7 +63,7 @@ class _BoxName extends StatelessWidget {
     return Text(
       name,
       style: AppTypography.h4.copyWith(
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         fontWeight: FontWeight.w700,
       ),
       textAlign: TextAlign.center,

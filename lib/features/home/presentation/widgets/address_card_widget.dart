@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 mixin AddressCardStyling {
   static const double iconContainerSize = 48.0;
@@ -37,7 +38,7 @@ class AddressCardWidget extends StatelessWidget with AddressCardStyling {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: AddressCardStyling.shadowAlpha),
+              color: AppColors.surface5.withValues(alpha: AddressCardStyling.shadowAlpha),
               blurRadius: AddressCardStyling.shadowBlur,
               offset: const Offset(0, AddressCardStyling.shadowOffset),
             ),

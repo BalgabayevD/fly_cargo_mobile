@@ -5,6 +5,7 @@ import 'package:fly_cargo/features/home/presentation/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/home/presentation/orders_list_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/description_form_page.dart';
+import 'package:fly_cargo/features/home/presentation/pages/order_detail_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/recipient_form_page.dart';
 import 'package:fly_cargo/features/home/presentation/recipient_page.dart';
@@ -18,10 +19,12 @@ import 'package:fly_cargo/features/user/presentation/user_order_history_page.dar
 import 'package:fly_cargo/features/user/presentation/user_payment_cards_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_payments_page.dart';
 import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
+import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/code_input_page.dart';
 import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
+import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -38,6 +41,9 @@ class AppRoutes {
   static const descriptionForm = 'description-form';
   static const recipientForm = 'recipient-form'; // Or recipient page?
   static const recipientPage = 'recipient';
+
+  // Orders Sub-pages
+  static const orderDetail = 'order-detail';
 
   // Settings Sub-pages
   static const profile = 'profile';
@@ -206,6 +212,25 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
               GoRoute(
                 path: AppRoutes.orders,
                 builder: (context, state) => const OrdersListPage(),
+                routes: [
+                  GoRoute(
+                    path: AppRoutes.orderDetail,
+                    builder: (context, state) {
+                      final extra = state.extra as Map<String, dynamic>?;
+                      if (extra == null) {
+                        return const Scaffold(
+                          body: Center(
+                            child: Text('Ошибка: отсутствуют данные заказа'),
+                          ),
+                        );
+                      }
+                      return OrderDetailPage(
+                        order: extra['order'] as OrderModel,
+                        userType: extra['userType'] as UserType,
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),

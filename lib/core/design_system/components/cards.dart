@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 import 'package:fly_cargo/core/design_system/typography.dart';
+
 enum AppCardVariant { elevated, outlined, filled }
+
 class AppCard extends StatelessWidget {
   final Widget child;
   final AppCardVariant variant;
@@ -13,7 +15,8 @@ class AppCard extends StatelessWidget {
   final double? elevation;
   final BorderRadius? borderRadius;
   const AppCard({
-    required this.child, super.key,
+    required this.child,
+    super.key,
     this.variant = AppCardVariant.elevated,
     this.padding,
     this.margin,
@@ -45,6 +48,7 @@ class AppCard extends StatelessWidget {
     }
     return cardChild;
   }
+
   BoxDecoration _getDecoration() {
     switch (variant) {
       case AppCardVariant.elevated:
@@ -54,7 +58,7 @@ class AppCard extends StatelessWidget {
               borderRadius ?? BorderRadius.circular(AppSpacing.radiusMD),
           boxShadow: [
             BoxShadow(
-              color: AppColors.shadow,
+              color: AppColors.surface5.withValues(alpha: 0.1),
               blurRadius: AppSpacing.shadowBlurRadius,
               offset: Offset(0, AppSpacing.shadowOffset),
             ),
@@ -72,13 +76,14 @@ class AppCard extends StatelessWidget {
         );
       case AppCardVariant.filled:
         return BoxDecoration(
-          color: backgroundColor ?? AppColors.surface,
+          color: backgroundColor ?? AppColors.surface1,
           borderRadius:
               borderRadius ?? BorderRadius.circular(AppSpacing.radiusMD),
         );
     }
   }
 }
+
 class AppCardWithTitle extends StatelessWidget {
   final String title;
   final Widget child;
@@ -89,7 +94,9 @@ class AppCardWithTitle extends StatelessWidget {
   final Widget? titleAction;
   final TextStyle? titleStyle;
   const AppCardWithTitle({
-    required this.title, required this.child, super.key,
+    required this.title,
+    required this.child,
+    super.key,
     this.variant = AppCardVariant.elevated,
     this.padding,
     this.margin,
@@ -126,6 +133,7 @@ class AppCardWithTitle extends StatelessWidget {
     );
   }
 }
+
 class AppIconCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -135,7 +143,9 @@ class AppIconCard extends StatelessWidget {
   final Color? iconColor;
   final Color? iconBackgroundColor;
   const AppIconCard({
-    required this.icon, required this.title, super.key,
+    required this.icon,
+    required this.title,
+    super.key,
     this.subtitle,
     this.onTap,
     this.variant = AppCardVariant.elevated,
@@ -153,7 +163,9 @@ class AppIconCard extends StatelessWidget {
             width: AppSpacing.avatarSizeMD,
             height: AppSpacing.avatarSizeMD,
             decoration: BoxDecoration(
-              color: iconBackgroundColor ?? AppColors.primaryWithOpacity(0.1),
+              color:
+                  iconBackgroundColor ??
+                  AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
             ),
             child: Icon(
@@ -178,13 +190,14 @@ class AppIconCard extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios,
             size: AppSpacing.iconSizeSM,
-            color: AppColors.iconTertiary,
+            color: AppColors.surface5,
           ),
         ],
       ),
     );
   }
 }
+
 class AppSelectionCard extends StatelessWidget {
   final Widget child;
   final bool isSelected;
@@ -192,7 +205,8 @@ class AppSelectionCard extends StatelessWidget {
   final Color? selectedColor;
   final Color? unselectedColor;
   const AppSelectionCard({
-    required this.child, super.key,
+    required this.child,
+    super.key,
     this.isSelected = false,
     this.onTap,
     this.selectedColor,
@@ -204,7 +218,7 @@ class AppSelectionCard extends StatelessWidget {
       variant: AppCardVariant.outlined,
       onTap: onTap,
       backgroundColor: isSelected
-          ? (selectedColor ?? AppColors.primaryWithOpacity(0.1))
+          ? (selectedColor ?? AppColors.primary.withValues(alpha: 0.1))
           : (unselectedColor ?? AppColors.white),
       borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
       child: Container(
@@ -224,6 +238,7 @@ class AppSelectionCard extends StatelessWidget {
     );
   }
 }
+
 class AppPriceCard extends StatelessWidget {
   final String title;
   final String price;
@@ -233,7 +248,9 @@ class AppPriceCard extends StatelessWidget {
   final AppCardVariant variant;
   final bool isFullWidth;
   const AppPriceCard({
-    required this.title, required this.price, super.key,
+    required this.title,
+    required this.price,
+    super.key,
     this.subtitle,
     this.child,
     this.onTap,
@@ -245,14 +262,14 @@ class AppPriceCard extends StatelessWidget {
     Widget cardContent = AppCard(
       variant: variant,
       onTap: onTap,
-      backgroundColor: AppColors.primaryWithOpacity(0.1),
+      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
       child: Container(
         padding: EdgeInsets.all(AppSpacing.paddingLG),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           border: Border.all(
-            color: AppColors.primaryWithOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             width: AppSpacing.borderWidth,
           ),
         ),

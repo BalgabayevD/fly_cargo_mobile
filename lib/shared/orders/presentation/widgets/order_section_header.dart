@@ -27,14 +27,14 @@ class OrderSectionHeader extends StatelessWidget {
               Text(
                 title,
                 style: AppTypography.h5.copyWith(
-                  color: AppColors.textPrimary,
+                  color: AppColors.surface5,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 subtitle,
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
               ),
             ],

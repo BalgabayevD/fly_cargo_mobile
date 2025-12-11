@@ -36,14 +36,14 @@ class OrderOptionTile extends StatelessWidget {
                     title,
                     style: AppTypography.subtitleLarge.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: AppColors.surface5,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
                     style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: AppColors.surface4,
                     ),
                   ),
                 ],

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/design_system/spacing.dart';
 import 'package:fly_cargo/core/design_system/typography.dart';
+
 enum AppButtonSize { small, medium, large, extraLarge }
+
 enum AppButtonVariant { primary, secondary, outline, ghost, danger }
+
 class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -14,7 +17,8 @@ class AppButton extends StatelessWidget {
   final IconData? icon;
   final Widget? child;
   const AppButton({
-    required this.text, super.key,
+    required this.text,
+    super.key,
     this.onPressed,
     this.size = AppButtonSize.medium,
     this.variant = AppButtonVariant.primary,
@@ -42,6 +46,7 @@ class AppButton extends StatelessWidget {
       child: buttonChild,
     );
   }
+
   Widget _buildButtonChild(TextStyle textStyle) {
     if (isLoading) {
       return Center(
@@ -81,6 +86,7 @@ class AppButton extends StatelessWidget {
       child: Text(text, style: textStyle, textAlign: TextAlign.center),
     );
   }
+
   ButtonStyle _getButtonStyle() {
     return ElevatedButton.styleFrom(
       backgroundColor: _getBackgroundColor(),
@@ -94,6 +100,7 @@ class AppButton extends StatelessWidget {
       minimumSize: Size(0, _getHeight()),
     );
   }
+
   TextStyle _getTextStyle() {
     switch (size) {
       case AppButtonSize.small:
@@ -106,6 +113,7 @@ class AppButton extends StatelessWidget {
         return AppTypography.buttonLarge.copyWith(color: _getTextColor());
     }
   }
+
   double _getHeight() {
     switch (size) {
       case AppButtonSize.small:
@@ -118,9 +126,11 @@ class AppButton extends StatelessWidget {
         return AppSpacing.buttonHeightXL;
     }
   }
+
   double _getBorderRadius() {
     return AppSpacing.radiusLG;
   }
+
   double _getIconSize() {
     switch (size) {
       case AppButtonSize.small:
@@ -133,20 +143,22 @@ class AppButton extends StatelessWidget {
         return AppSpacing.iconSizeLG;
     }
   }
+
   Color _getBackgroundColor() {
     switch (variant) {
       case AppButtonVariant.primary:
         return AppColors.primary;
       case AppButtonVariant.secondary:
-        return AppColors.secondary;
+        return AppColors.warning;
       case AppButtonVariant.outline:
-        return AppColors.transparent;
+        return AppColors.none;
       case AppButtonVariant.ghost:
-        return AppColors.transparent;
+        return AppColors.none;
       case AppButtonVariant.danger:
-        return AppColors.error;
+        return AppColors.danger;
     }
   }
+
   Color _getTextColor() {
     switch (variant) {
       case AppButtonVariant.primary:
@@ -161,6 +173,7 @@ class AppButton extends StatelessWidget {
         return AppColors.white;
     }
   }
+
   double _getElevation() {
     switch (variant) {
       case AppButtonVariant.primary:
@@ -172,9 +185,11 @@ class AppButton extends StatelessWidget {
         return 0.0;
     }
   }
+
   Color _getShadowColor() {
-    return AppColors.shadow;
+    return AppColors.surface5.withValues(alpha: 0.1);
   }
+
   BorderSide _getBorderSide() {
     switch (variant) {
       case AppButtonVariant.outline:
@@ -189,6 +204,7 @@ class AppButton extends StatelessWidget {
     }
   }
 }
+
 class AppIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
@@ -196,7 +212,8 @@ class AppIconButton extends StatelessWidget {
   final AppButtonVariant variant;
   final bool isLoading;
   const AppIconButton({
-    required this.icon, super.key,
+    required this.icon,
+    super.key,
     this.onPressed,
     this.size = AppButtonSize.medium,
     this.variant = AppButtonVariant.ghost,
@@ -218,6 +235,7 @@ class AppIconButton extends StatelessWidget {
       ),
     );
   }
+
   double _getSize() {
     switch (size) {
       case AppButtonSize.small:
@@ -230,6 +248,7 @@ class AppIconButton extends StatelessWidget {
         return AppSpacing.avatarSizeXL;
     }
   }
+
   double _getIconSize() {
     switch (size) {
       case AppButtonSize.small:
@@ -243,6 +262,7 @@ class AppIconButton extends StatelessWidget {
     }
   }
 }
+
 class AppLoadingButton extends StatefulWidget {
   final String text;
   final Future<void> Function()? onPressed;
@@ -251,7 +271,8 @@ class AppLoadingButton extends StatefulWidget {
   final bool isFullWidth;
   final IconData? icon;
   const AppLoadingButton({
-    required this.text, super.key,
+    required this.text,
+    super.key,
     this.onPressed,
     this.size = AppButtonSize.medium,
     this.variant = AppButtonVariant.primary,
@@ -261,6 +282,7 @@ class AppLoadingButton extends StatefulWidget {
   @override
   State<AppLoadingButton> createState() => _AppLoadingButtonState();
 }
+
 class _AppLoadingButtonState extends State<AppLoadingButton> {
   bool _isLoading = false;
   @override
@@ -275,6 +297,7 @@ class _AppLoadingButtonState extends State<AppLoadingButton> {
       icon: widget.icon,
     );
   }
+
   Future<void> _handlePress() async {
     if (widget.onPressed == null) return;
     setState(() {

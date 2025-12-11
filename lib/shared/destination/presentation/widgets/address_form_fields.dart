@@ -22,7 +22,7 @@ class ReadOnlyAddressField extends StatelessWidget {
         Text(
           label,
           style: AppTypography.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -49,10 +49,10 @@ class ReadOnlyAddressField extends StatelessWidget {
               ),
               if (onTap != null) ...[
                 const SizedBox(width: AppSpacing.sm),
-                const HeroIcon(
+                HeroIcon(
                   HeroIcons.chevronRight,
                   size: 20,
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
               ],
             ],
@@ -95,7 +95,7 @@ class AddressTextField extends StatelessWidget {
         Text(
           label,
           style: AppTypography.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -105,27 +105,27 @@ class AddressTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textTertiary,
+              color: AppColors.surface5,
             ),
             filled: true,
             fillColor: AppColors.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppColors.border,
                 width: AppSpacing.borderWidth,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppColors.border,
                 width: AppSpacing.borderWidth,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppColors.primary,
                 width: AppSpacing.borderWidthThick,
               ),

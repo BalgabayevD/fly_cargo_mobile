@@ -24,7 +24,7 @@ class RadioOptionCard extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           border: Border.all(
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
             width: 1,
           ),
         ),
@@ -36,7 +36,7 @@ class RadioOptionCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: selected ? AppColors.primary : AppColors.borderDark,
+                  color: selected ? AppColors.primary : AppColors.border,
                   width: 2,
                 ),
               ),
@@ -59,7 +59,7 @@ class RadioOptionCard extends StatelessWidget {
                 label,
                 style: TextStyle(
                   fontSize: 16,
-                  color: selected ? AppColors.textPrimary : AppColors.textSecondary,
+                  color: selected ? AppColors.surface5 : AppColors.surface4,
                   fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),

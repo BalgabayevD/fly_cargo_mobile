@@ -1,16 +1,21 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:image_picker/image_picker.dart';
+
 class PhotoUploadWidget extends StatefulWidget {
   final List<File> photos;
   final ValueChanged<List<File>> onPhotosChanged;
   const PhotoUploadWidget({
-    required this.photos, required this.onPhotosChanged, super.key,
+    required this.photos,
+    required this.onPhotosChanged,
+    super.key,
   });
   @override
   State<PhotoUploadWidget> createState() => _PhotoUploadWidgetState();
 }
+
 class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
   final ImagePicker _picker = ImagePicker();
   Future<void> _pickImage() async {
@@ -30,11 +35,12 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Ошибка при выборе фото: $e'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
     }
   }
+
   Future<void> _pickImageFromGallery() async {
     try {
       final XFile? image = await _picker.pickImage(
@@ -52,16 +58,18 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Ошибка при выборе фото: $e'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
     }
   }
+
   void _removePhoto(int index) {
     final updatedPhotos = List<File>.from(widget.photos);
     updatedPhotos.removeAt(index);
     widget.onPhotosChanged(updatedPhotos);
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -112,7 +120,7 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
           Text(
             'Выбранные фото (${widget.photos.length})',
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
           ),
           const SizedBox(height: 8),
@@ -151,8 +159,8 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
                       onTap: () => _removePhoto(index),
                       child: Container(
                         padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
+                        decoration: BoxDecoration(
+                          color: AppColors.danger,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(

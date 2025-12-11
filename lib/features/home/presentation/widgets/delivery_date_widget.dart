@@ -24,9 +24,9 @@ class DeliveryDateWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
         child: Text(
           'Примерная дата доставки: $formattedDate года',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
             fontWeight: FontWeight.w400,
           ),
           textAlign: TextAlign.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/home/presentation/pages/order_detail_page.dart';
+import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/order_card.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
@@ -10,6 +10,7 @@ import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
+import 'package:go_router/go_router.dart';
 
 class OrdersListPage extends StatefulWidget {
   const OrdersListPage({super.key});
@@ -61,16 +62,16 @@ class _OrdersListPageState extends State<OrdersListPage> {
     final isCourier =
         authState is AuthAuthenticated && authState.userType.isCourier;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Заказы',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,
@@ -79,49 +80,51 @@ class _OrdersListPageState extends State<OrdersListPage> {
         children: [
           if (isCourier) _buildTabs(),
           Expanded(
-            child: BlocListener<OrdersBloc, OrdersState>(
-              listener: (context, state) {
-                if (state is OrderDetailLoaded) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => OrderDetailPage(
-                        order: state.order,
-                        userType: authState is AuthAuthenticated
-                            ? authState.userType
-                            : UserType.user,
-                      ),
+            child: BlocBuilder<OrdersBloc, OrdersState>(
+              builder: (context, state) {
+                if (state is OrdersLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primary,
                     ),
                   );
                 }
+
+                if (state is OrdersUnauthorized) {
+                  return const _UnauthorizedStateWidget();
+                }
+
+                if (state is OrdersError) {
+                  return _ErrorStateWidget(message: state.message);
+                }
+
+                if (state is OrdersLoaded) {
+                  if (state.orders.isEmpty) {
+                    return const _EmptyStateWidget();
+                  }
+                  return _OrdersListWidget(
+                    orders: state.orders,
+                    onOrderTap: (order) {
+                      context
+                          .push(
+                            '${AppRoutes.orders}/${AppRoutes.orderDetail}',
+                            extra: {
+                              'order': order,
+                              'userType': authState is AuthAuthenticated
+                                  ? authState.userType
+                                  : UserType.user,
+                            },
+                          )
+                          .then((_) {
+                            // Перезагружаем список заказов после возврата
+                            _loadOrders();
+                          });
+                    },
+                  );
+                }
+
+                return const _EmptyStateWidget();
               },
-              child: BlocBuilder<OrdersBloc, OrdersState>(
-                builder: (context, state) {
-                  if (state is OrdersLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                      ),
-                    );
-                  }
-
-                  if (state is OrdersUnauthorized) {
-                    return const _UnauthorizedStateWidget();
-                  }
-
-                  if (state is OrdersError) {
-                    return _ErrorStateWidget(message: state.message);
-                  }
-
-                  if (state is OrdersLoaded) {
-                    if (state.orders.isEmpty) {
-                      return const _EmptyStateWidget();
-                    }
-                    return _OrdersListWidget(orders: state.orders);
-                  }
-
-                  return const _EmptyStateWidget();
-                },
-              ),
             ),
           ),
         ],
@@ -165,7 +168,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
                       fontWeight: FontWeight.w600,
                       color: _selectedTabIndex == 0
                           ? AppColors.white
-                          : AppColors.textSecondary,
+                          : AppColors.surface4,
                     ),
                   ),
                 ),
@@ -191,7 +194,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
                       fontWeight: FontWeight.w600,
                       color: _selectedTabIndex == 1
                           ? AppColors.white
-                          : AppColors.textSecondary,
+                          : AppColors.surface4,
                     ),
                   ),
                 ),
@@ -202,38 +205,16 @@ class _OrdersListPageState extends State<OrdersListPage> {
       ),
     );
   }
-
-  Widget _buildTabButton(String label, int index, bool isSelected) {
-    return GestureDetector(
-      onTap: () => _onTabChanged(index),
-      child: Container(
-        height: 48,
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFD97D4E) : AppColors.white,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-          border: Border.all(
-            color: isSelected ? const Color(0xFFD97D4E) : AppColors.border,
-            width: 1,
-          ),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: isSelected ? AppColors.white : AppColors.textSecondary,
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class _OrdersListWidget extends StatelessWidget {
   final List<OrderModel> orders;
+  final void Function(OrderModel order) onOrderTap;
 
-  const _OrdersListWidget({required this.orders});
+  const _OrdersListWidget({
+    required this.orders,
+    required this.onOrderTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -246,11 +227,7 @@ class _OrdersListWidget extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: AppSpacing.md),
           child: OrderCard(
             order: order,
-            onTap: () {
-              context.read<OrdersBloc>().add(
-                GetOrderByIdEvent(orderId: order.id.toString()),
-              );
-            },
+            onTap: () => onOrderTap(order),
           ),
         );
       },
@@ -273,30 +250,30 @@ class _EmptyStateWidget extends StatelessWidget {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: AppColors.surface2,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.inbox_outlined,
                 size: 60,
-                color: AppColors.textTertiary,
+                color: AppColors.surface5,
               ),
             ),
             const SizedBox(height: AppSpacing.xl),
-            const Text(
+            Text(
               'У вас пока нет заказов',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: AppColors.surface5,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            const Text(
+            Text(
               'Создайте свой первый заказ\nна главной странице',
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
               textAlign: TextAlign.center,
             ),
@@ -322,30 +299,30 @@ class _UnauthorizedStateWidget extends StatelessWidget {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: AppColors.surface2,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.lock_outline,
                 size: 60,
                 color: AppColors.primary,
               ),
             ),
             const SizedBox(height: AppSpacing.xl),
-            const Text(
+            Text(
               'Требуется авторизация',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: AppColors.surface5,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            const Text(
+            Text(
               'Для просмотра заказов\nнеобходимо войти в аккаунт',
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
               textAlign: TextAlign.center,
             ),
@@ -369,26 +346,26 @@ class _ErrorStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline,
               size: 60,
-              color: AppColors.error,
+              color: AppColors.danger,
             ),
             const SizedBox(height: AppSpacing.lg),
-            const Text(
+            Text(
               'Произошла ошибка',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: AppColors.surface5,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
               message,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
               textAlign: TextAlign.center,
             ),

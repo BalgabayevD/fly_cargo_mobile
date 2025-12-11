@@ -17,17 +17,17 @@ class LogoutButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onLogout,
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: AppColors.error, width: 2),
+          side: BorderSide(color: AppColors.danger, width: 2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           ),
         ),
-        child: const Text(
+        child: Text(
           'Выйти',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: AppColors.error,
+            color: AppColors.danger,
           ),
         ),
       ),
@@ -48,17 +48,17 @@ class ErrorStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline,
               size: 64,
-              color: AppColors.textTertiary,
+              color: AppColors.surface5,
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
               message,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
               textAlign: TextAlign.center,
             ),

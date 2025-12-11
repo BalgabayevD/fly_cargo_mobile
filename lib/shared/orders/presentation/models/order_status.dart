@@ -76,9 +76,9 @@ extension OrderStatusExtension on OrderStatus {
       case OrderStatus.awaitingPayment:
         return AppColors.primary;
       case OrderStatus.free:
-        return const Color(0xFFD97D4E); // Оранжевый
+        return AppColors.primary; // Оранжевый
       case OrderStatus.accepted:
-        return const Color(0xFFD97D4E); // Оранжевый
+        return AppColors.primary; // Оранжевый
       case OrderStatus.toWarehouse:
         return null;
       case OrderStatus.rejected:
@@ -103,17 +103,17 @@ extension OrderStatusExtension on OrderStatus {
       case OrderStatus.awaitingPayment:
         return AppColors.primary;
       case OrderStatus.free:
-        return const Color(0xFFD97D4E); // Оранжевый
+        return AppColors.primary; // Оранжевый
       case OrderStatus.accepted:
-        return const Color(0xFFD97D4E); // Оранжевый
+        return AppColors.primary; // Оранжевый
       case OrderStatus.toWarehouse:
-        return const Color(0xFFE74C3C); // Красный
+        return AppColors.danger; // Красный
       case OrderStatus.rejected:
-        return const Color(0xFFE74C3C); // Красный
+        return AppColors.danger; // Красный
       case OrderStatus.completed:
-        return const Color(0xFF4CAF50); // Зеленый
+        return AppColors.success; // Зеленый
       case OrderStatus.submitted:
-        return const Color(0xFFFF6F00);
+        return AppColors.warning;
       case OrderStatus.inWarehouse:
         return const Color(0xFFD32F2F);
       case OrderStatus.inTransit:

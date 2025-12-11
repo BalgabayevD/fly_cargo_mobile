@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
+
 class OrderConfirmationPage extends StatelessWidget {
   final dynamic box;
   final AddressModel fromAddress;
@@ -9,7 +10,10 @@ class OrderConfirmationPage extends StatelessWidget {
   final String? cargoDescription;
   final List<String>? photos;
   const OrderConfirmationPage({
-    required this.box, required this.fromAddress, required this.toAddress, super.key,
+    required this.box,
+    required this.fromAddress,
+    required this.toAddress,
+    super.key,
     this.recipientData,
     this.cargoDescription,
     this.photos,
@@ -69,7 +73,7 @@ class OrderConfirmationPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
+                              color: AppColors.surface5.withValues(alpha: 0.1),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
                             ),
@@ -240,6 +244,7 @@ class OrderConfirmationPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildAddressItem({
     required IconData icon,
     required Color iconColor,
@@ -291,6 +296,7 @@ class OrderConfirmationPage extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -317,6 +323,7 @@ class OrderConfirmationPage extends StatelessWidget {
       ],
     );
   }
+
   void _showCancelDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -350,6 +357,7 @@ class OrderConfirmationPage extends StatelessWidget {
       ),
     );
   }
+
   void _confirmOrder(BuildContext context) {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(

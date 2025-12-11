@@ -22,22 +22,22 @@ class OrderTextField extends StatelessWidget {
         labelText: label,
         hintText: hintText,
         prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, size: 20, color: AppColors.textSecondary)
+            ? Icon(prefixIcon, size: 20, color: AppColors.surface4)
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.borderLight),
+          borderSide: BorderSide(color: AppColors.surface2),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.borderLight),
+          borderSide: BorderSide(color: AppColors.surface2),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColors.primary, width: 2),
         ),
         filled: true,
-        fillColor: AppColors.surfaceVariant,
+        fillColor: AppColors.surface2,
         alignLabelWithHint: maxLines > 1,
       ),
       maxLines: maxLines,

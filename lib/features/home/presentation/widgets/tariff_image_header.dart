@@ -14,7 +14,7 @@ class TariffImageHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 200,
-      color: AppColors.gray50,
+      color: AppColors.surface1,
       child: imageUrl.isNotEmpty
           ? Image.network(
               imageUrl,
@@ -37,11 +37,11 @@ class _PlaceholderIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Icon(
         Icons.local_shipping,
         size: 60,
-        color: AppColors.textSecondary,
+        color: AppColors.surface4,
       ),
     );
   }

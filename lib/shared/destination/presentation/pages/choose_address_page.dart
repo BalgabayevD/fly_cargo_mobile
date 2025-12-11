@@ -1,16 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_event.dart';
 import 'package:fly_cargo/shared/destination/presentation/bloc/destination_state.dart';
+
 class ChooseAddressPage extends StatefulWidget {
   final String city;
   const ChooseAddressPage({required this.city, super.key});
   @override
   State<ChooseAddressPage> createState() => _ChooseAddressPageState();
 }
+
 class _ChooseAddressPageState extends State<ChooseAddressPage> {
   final TextEditingController _searchController = TextEditingController();
   late final DestinationBloc _destinationBloc;
@@ -21,12 +25,14 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
     _destinationBloc = getIt<DestinationBloc>();
     _searchController.addListener(_onSearchChanged);
   }
+
   @override
   void dispose() {
     _debounceTimer?.cancel();
     _searchController.dispose();
     super.dispose();
   }
+
   void _onSearchChanged() {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 500), () {
@@ -38,6 +44,7 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +53,13 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: AppColors.surface5),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Адрес в ${widget.city}',
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: AppColors.surface5,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),

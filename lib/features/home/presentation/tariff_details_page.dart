@@ -78,14 +78,14 @@ class _TariffNotFoundScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: const Center(child: Text('Тариф не найден')),
+      body: Center(child: Text('Тариф не найден')),
     );
   }
 }
@@ -102,9 +102,9 @@ class _TariffErrorScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -145,7 +145,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
     _ordersBloc.stream.listen((state) {
       if (state is OrderCreated) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Заказ успешно создан!'),
             backgroundColor: AppColors.success,
             duration: Duration(seconds: 2),
@@ -154,9 +154,9 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         Navigator.of(context).popUntil((route) => route.isFirst);
       } else if (state is OrdersUnauthorized) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Для создания заказа необходимо войти в аккаунт'),
-            backgroundColor: AppColors.error,
+            backgroundColor: AppColors.danger,
             duration: Duration(seconds: 3),
           ),
         );
@@ -164,8 +164,8 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Ошибка создания заказа: ${state.message}'),
-            backgroundColor: AppColors.error,
-            duration: const Duration(seconds: 3),
+            backgroundColor: AppColors.danger,
+            duration: Duration(seconds: 3),
           ),
         );
       }
@@ -205,9 +205,9 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
     if (_formData == null) return;
     if (_formKey.currentState?.validate() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Заполните все обязательные поля'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -232,7 +232,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
         fromLongitude: 0.0,
         height: widget.tariff.height ?? 0.0,
         length: widget.tariff.length ?? 0.0,
-        photos: const [],
+        photos: [],
         tariffId: widget.tariff.id,
         toAddress: widget.toAddress?.fullAddress ?? '',
         toApartment: _formData!.toApartment,
@@ -254,7 +254,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Ошибка загрузки фотографий: $e'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
     }
@@ -304,20 +304,20 @@ class _TariffDetailsAppBar extends StatelessWidget
       backgroundColor: AppColors.white,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+        icon: Icon(Icons.arrow_back_ios, color: AppColors.surface5),
         onPressed: () => Navigator.pop(context),
       ),
       title: Text(
         tariffName,
         style: AppTypography.h5.copyWith(
-          color: AppColors.textPrimary,
+          color: AppColors.surface5,
           fontWeight: FontWeight.w600,
         ),
       ),
       centerTitle: true,
       actions: [
         IconButton(
-          icon: const Icon(Icons.add, color: AppColors.textPrimary),
+          icon: Icon(Icons.add, color: AppColors.surface5),
           onPressed: onCreateTariffPressed,
           tooltip: 'Создать тариф',
         ),
@@ -426,7 +426,7 @@ class _TariffDescription extends StatelessWidget {
     return Text(
       description,
       style: AppTypography.bodyMedium.copyWith(
-        color: AppColors.textSecondary,
+        color: AppColors.surface4,
       ),
     );
   }
@@ -475,7 +475,7 @@ class _LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: AppSpacing.iconSizeMD,
       width: AppSpacing.iconSizeMD,
       child: CircularProgressIndicator(
@@ -533,7 +533,7 @@ class _PriceCalculationWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.gray50,
+        color: AppColors.surface1,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
         border: Border.all(color: AppColors.border),
       ),
@@ -552,7 +552,7 @@ class _PriceCalculationWidget extends StatelessWidget {
           Text(
             'Расчет стоимости...',
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
           ),
         ],
@@ -588,7 +588,7 @@ class _PriceCalculationWidget extends StatelessWidget {
                 'Стоимость доставки',
                 style: AppTypography.h6.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: AppColors.surface5,
                 ),
               ),
               Container(
@@ -637,7 +637,7 @@ class _PriceCalculationWidget extends StatelessWidget {
           if (priceCalculation.netProfit != null &&
               priceCalculation.netProfit! > 0) ...[
             const SizedBox(height: AppSpacing.sm),
-            const Divider(color: AppColors.border),
+            Divider(color: AppColors.border),
             const SizedBox(height: AppSpacing.sm),
             _buildPriceDetailRow(
               'Маржинальность',
@@ -666,14 +666,14 @@ class _PriceCalculationWidget extends StatelessWidget {
         Text(
           label,
           style: AppTypography.bodySmall.copyWith(
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
         Text(
           value,
           style: AppTypography.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: isPositive ? AppColors.success : AppColors.textPrimary,
+            color: isPositive ? AppColors.success : AppColors.surface5,
           ),
         ),
       ],
@@ -684,15 +684,15 @@ class _PriceCalculationWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.1),
+        color: AppColors.danger.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+        border: Border.all(color: AppColors.danger.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Icon(
             Icons.error_outline,
-            color: AppColors.error,
+            color: AppColors.danger,
             size: AppSpacing.iconSizeMD,
           ),
           const SizedBox(width: AppSpacing.md),
@@ -704,14 +704,14 @@ class _PriceCalculationWidget extends StatelessWidget {
                   'Ошибка расчета',
                   style: AppTypography.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.error,
+                    color: AppColors.danger,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   message,
                   style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: AppColors.surface4,
                   ),
                 ),
               ],

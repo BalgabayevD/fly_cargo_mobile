@@ -22,7 +22,7 @@ class TariffCharacteristicsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.gray50,
+        color: AppColors.surface1,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
         border: Border.all(color: AppColors.border),
       ),
@@ -71,7 +71,7 @@ class _CharacteristicRow extends StatelessWidget {
           Text(
             label,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
           ),
           Text(

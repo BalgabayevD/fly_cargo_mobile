@@ -135,7 +135,7 @@ class _CompactPriceWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.gray50,
+        color: AppColors.surface1,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.border),
       ),
@@ -154,7 +154,7 @@ class _CompactPriceWidget extends StatelessWidget {
           Text(
             'Расчет стоимости...',
             style: AppTypography.bodySmall.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
           ),
         ],
@@ -186,7 +186,7 @@ class _CompactPriceWidget extends StatelessWidget {
               Text(
                 'Стоимость доставки',
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                   fontWeight: FontWeight.w500,
                 ),
               ),

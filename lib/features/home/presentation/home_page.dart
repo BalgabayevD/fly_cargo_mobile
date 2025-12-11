@@ -88,9 +88,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> _openToAddressSelection() async {
     if (_fromAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Сначала выберите город отправки'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -243,7 +243,7 @@ class _HomePageState extends State<HomePage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Ошибка при загрузке фото: $e'),
-              backgroundColor: AppColors.error,
+              backgroundColor: AppColors.danger,
             ),
           );
         }
@@ -341,7 +341,7 @@ class _HomePageState extends State<HomePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: AppColors.error,
+        backgroundColor: AppColors.danger,
       ),
     );
   }
@@ -389,29 +389,29 @@ class _HomePageState extends State<HomePage> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.white,
         appBar: AppBar(
           backgroundColor: AppColors.white,
           elevation: 0,
-          title: const Text(
+          title: Text(
             'Главная',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: AppColors.surface5,
             ),
           ),
           centerTitle: true,
           actions: [
             IconButton(
-              icon: const HeroIcon(
+              icon: HeroIcon(
                 HeroIcons.questionMarkCircle,
                 size: 24,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text('Справка в разработке'),
                   ),
                 );

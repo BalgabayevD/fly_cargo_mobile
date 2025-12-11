@@ -23,14 +23,14 @@ class ProfileHeaderWidget extends StatelessWidget {
               end: Alignment.bottomRight,
               colors: [
                 AppColors.primary,
-                AppColors.primaryDark,
+                AppColors.primary,
               ],
             ),
           ),
           child: Center(
             child: Text(
               fullName.isNotEmpty ? fullName[0].toUpperCase() : 'У',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.w600,
                 color: AppColors.white,
@@ -41,18 +41,18 @@ class ProfileHeaderWidget extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         Text(
           fullName.isNotEmpty ? fullName : 'Пользователь',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
           phoneNumber,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
       ],

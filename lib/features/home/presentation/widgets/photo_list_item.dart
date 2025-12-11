@@ -21,34 +21,34 @@ class PhotoListItem extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
         border: Border.all(
-          color: AppColors.borderLight,
+          color: AppColors.surface2,
           width: 1,
         ),
       ),
       child: Row(
         children: [
-          const HeroIcon(
+          HeroIcon(
             HeroIcons.photo,
             size: 20,
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
               photoName,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
-                color: AppColors.textPrimary,
+                color: AppColors.surface5,
                 fontWeight: FontWeight.w400,
               ),
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
           IconButton(
-            icon: const HeroIcon(
+            icon: HeroIcon(
               HeroIcons.xMark,
               size: 20,
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
             onPressed: onDelete,
             padding: EdgeInsets.zero,

@@ -1,6 +1,6 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactsPage extends StatelessWidget {
@@ -14,15 +14,15 @@ class ContactsPage extends StatelessWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back_ios, color: AppColors.surface5),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
+        title: Text(
           'Контакты',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,
@@ -69,7 +69,7 @@ class ContactsPage extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   'Позвонить',
                   style: TextStyle(
                     fontSize: 16,
@@ -86,13 +86,13 @@ class ContactsPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => _openWhatsApp('+77772312412'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF25D366),
+                  backgroundColor: Color(0xFF25D366),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   'Написать в Whatsapp',
                   style: TextStyle(
                     fontSize: 16,
@@ -140,17 +140,17 @@ class _ContactItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
             fontWeight: FontWeight.w500,
           ),
         ),

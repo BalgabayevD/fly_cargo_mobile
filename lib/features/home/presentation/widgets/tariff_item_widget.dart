@@ -43,7 +43,7 @@ class TariffItem extends StatelessWidget {
                 color: isSelected ? AppColors.primary : Colors.transparent,
               ),
               child: isSelected
-                  ? const Icon(
+                  ? Icon(
                       Icons.circle,
                       size: 12,
                       color: AppColors.white,
@@ -58,10 +58,10 @@ class TariffItem extends StatelessWidget {
                     height: 48,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return const Icon(
+                      return Icon(
                         Icons.inbox,
                         size: 48,
-                        color: AppColors.textSecondary,
+                        color: AppColors.surface4,
                       );
                     },
                   )
@@ -72,11 +72,11 @@ class TariffItem extends StatelessWidget {
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Icons.inbox,
                         size: 32,
-                        color: AppColors.textSecondary,
+                        color: AppColors.surface4,
                       ),
                     ),
                   ),
@@ -89,7 +89,7 @@ class TariffItem extends StatelessWidget {
                     tariff.name,
                     style: AppTypography.bodyLarge.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: AppColors.surface5,
                     ),
                   ),
                   if (tariff.description.isNotEmpty) ...[
@@ -97,7 +97,7 @@ class TariffItem extends StatelessWidget {
                     Text(
                       tariff.description,
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: AppColors.surface4,
                       ),
                     ),
                   ],
@@ -130,7 +130,7 @@ class CustomSizesButton extends StatelessWidget {
           horizontal: AppSpacing.lg,
         ),
         decoration: BoxDecoration(
-          color: AppColors.secondary,
+          color: AppColors.warning,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
         ),
         child: Center(

@@ -22,14 +22,14 @@ class SubmitOrderButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          disabledBackgroundColor: AppColors.disabled,
+          disabledBackgroundColor: AppColors.surface3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           ),
           elevation: 0,
         ),
         child: isLoading
-            ? const SizedBox(
+            ? SizedBox(
                 width: 24,
                 height: 24,
                 child: CircularProgressIndicator(
@@ -42,7 +42,7 @@ class SubmitOrderButton extends StatelessWidget {
                 // ? 'Отправить за ${price!.toStringAsFixed(0)} тг'
                 // :
                 'Отправить',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: AppColors.white,

@@ -57,14 +57,14 @@ class OrderCard extends StatelessWidget {
                     'Заказ ${order.id}',
                     style: AppTypography.h6.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: AppColors.surface5,
                     ),
                   ),
                 ),
                 Text(
                   _formatDate(order.createdAt),
                   style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: AppColors.surface4,
                   ),
                 ),
               ],
@@ -74,14 +74,14 @@ class OrderCard extends StatelessWidget {
               Text(
                 'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
               ),
             if (trackingNumber != null && status != OrderStatus.awaitingPayment)
               Text(
                 'Трековый номер $trackingNumber',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
               ),
             if (order.price != null &&
@@ -90,7 +90,7 @@ class OrderCard extends StatelessWidget {
               Text(
                 'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
               ),
             const SizedBox(height: AppSpacing.sm),

@@ -19,7 +19,7 @@ class OptionsListWidget extends StatelessWidget {
           ),
           Divider(
             height: AppSpacing.dividerHeight,
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
           ),
           AppIconCard(
             icon: Icons.inventory_2,
@@ -29,7 +29,7 @@ class OptionsListWidget extends StatelessWidget {
           ),
           Divider(
             height: AppSpacing.dividerHeight,
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
           ),
           AppIconCard(
             icon: Icons.person,
@@ -39,7 +39,7 @@ class OptionsListWidget extends StatelessWidget {
           ),
           Divider(
             height: AppSpacing.dividerHeight,
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
           ),
           AppIconCard(
             icon: Icons.description,
@@ -49,7 +49,7 @@ class OptionsListWidget extends StatelessWidget {
           ),
           Divider(
             height: AppSpacing.dividerHeight,
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
           ),
           AppIconCard(
             icon: Icons.security,

@@ -4,11 +4,13 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
 import 'package:fly_cargo/shared/tariffs/domain/usecases/create_tariff_usecase.dart';
 import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart';
+
 class CreateTariffPage extends StatefulWidget {
   const CreateTariffPage({super.key});
   @override
   State<CreateTariffPage> createState() => _CreateTariffPageState();
 }
+
 class _CreateTariffPageState extends State<CreateTariffPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -37,6 +39,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
     _iconController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,15 +206,17 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       ),
     );
   }
+
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
       style: AppTypography.h5.copyWith(
         fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
       ),
     );
   }
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -230,27 +235,30 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
         hintText: hint,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.surface3),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.surface3),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+          borderSide: BorderSide(color: AppColors.primary, width: 2),
         ),
         filled: true,
-        fillColor: AppColors.gray50,
+        fillColor: AppColors.surface1,
       ),
     );
   }
+
   Widget _buildCategoryDropdown() {
     return FutureBuilder<List<TariffCategoryModel>>(
       future: getIt<GetTariffCategoriesUseCase>()(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator(
+            color: AppColors.primary,
+          );
         }
         if (snapshot.hasError || !snapshot.hasData) {
           return const Text('Ошибка загрузки категорий');
@@ -262,18 +270,18 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
             labelText: 'Категория тарифа',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: AppColors.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: AppColors.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: BorderSide(color: AppColors.primary, width: 2),
             ),
             filled: true,
-            fillColor: AppColors.gray50,
+            fillColor: AppColors.surface1,
           ),
           items: categories.map((category) {
             return DropdownMenuItem<int>(
@@ -291,6 +299,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       },
     );
   }
+
   Widget _buildPackageDropdown() {
     return DropdownButtonFormField<int>(
       value: _selectedPackageId,
@@ -298,18 +307,18 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
         labelText: 'Пакет',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+          borderSide: BorderSide(color: AppColors.primary, width: 2),
         ),
         filled: true,
-        fillColor: AppColors.gray50,
+        fillColor: AppColors.surface1,
       ),
       items: const [
         DropdownMenuItem<int>(value: 1, child: Text('Стандартный пакет')),
@@ -322,6 +331,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
       validator: (value) => value == null ? 'Выберите пакет' : null,
     );
   }
+
   Future<void> _createTariff() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() {
@@ -354,7 +364,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
             content: Text(response.message),
             backgroundColor: response.success
                 ? AppColors.success
-                : AppColors.error,
+                : AppColors.danger,
           ),
         );
         if (response.success) {
@@ -366,7 +376,7 @@ class _CreateTariffPageState extends State<CreateTariffPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Ошибка создания тарифа: $e'),
-            backgroundColor: AppColors.error,
+            backgroundColor: AppColors.danger,
           ),
         );
       }

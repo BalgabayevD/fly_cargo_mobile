@@ -41,85 +41,85 @@ class AppTypography {
   static TextStyle get h1 => _montserrat(
         fontSize: fontSize32,
         fontWeight: fontWeightBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightTight,
       );
   static TextStyle get h2 => _montserrat(
         fontSize: fontSize28,
         fontWeight: fontWeightBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightTight,
       );
   static TextStyle get h3 => _montserrat(
         fontSize: fontSize24,
         fontWeight: fontWeightSemiBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get h4 => _montserrat(
         fontSize: fontSize20,
         fontWeight: fontWeightSemiBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get h5 => _montserrat(
         fontSize: fontSize18,
         fontWeight: fontWeightSemiBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get h6 => _montserrat(
         fontSize: fontSize16,
         fontWeight: fontWeightSemiBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get bodyLarge => _montserrat(
         fontSize: fontSize16,
         fontWeight: fontWeightRegular,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightRelaxed,
       );
   static TextStyle get bodyMedium => _montserrat(
         fontSize: fontSize14,
         fontWeight: fontWeightRegular,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightRelaxed,
       );
   static TextStyle get bodySmall => _montserrat(
         fontSize: fontSize12,
         fontWeight: fontWeightRegular,
-        color: AppColors.textSecondary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get cardTitle => _montserrat(
         fontSize: fontSize16,
         fontWeight: fontWeightSemiBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get sectionTitle => _montserrat(
         fontSize: fontSize18,
         fontWeight: fontWeightSemiBold,
-        color: AppColors.textPrimary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get subtitleLarge => _montserrat(
         fontSize: fontSize16,
         fontWeight: fontWeightMedium,
-        color: AppColors.textSecondary,
+          color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get subtitleMedium => _montserrat(
         fontSize: fontSize14,
         fontWeight: fontWeightMedium,
-        color: AppColors.textSecondary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get subtitleSmall => _montserrat(
         fontSize: fontSize12,
         fontWeight: fontWeightMedium,
-        color: AppColors.textSecondary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get buttonLarge => _montserrat(
@@ -161,13 +161,13 @@ class AppTypography {
   static TextStyle get caption => _montserrat(
         fontSize: fontSize12,
         fontWeight: fontWeightRegular,
-        color: AppColors.textTertiary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       );
   static TextStyle get overline => _montserrat(
         fontSize: fontSize10,
         fontWeight: fontWeightMedium,
-        color: AppColors.textTertiary,
+        color: AppColors.surface5,
         height: lineHeightNormal,
       ).copyWith(letterSpacing: 1.5);
   static TextStyle get priceLarge => _montserrat(
@@ -203,7 +203,7 @@ class AppTypography {
   static TextStyle get error => _montserrat(
         fontSize: fontSize14,
         fontWeight: fontWeightMedium,
-        color: AppColors.error,
+        color: AppColors.danger,
         height: lineHeightNormal,
       );
   static TextStyle get info => _montserrat(

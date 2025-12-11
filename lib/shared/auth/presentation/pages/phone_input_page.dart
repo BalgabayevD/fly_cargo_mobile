@@ -142,9 +142,9 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: AppIconButton(
           icon: Icons.arrow_back_ios,
@@ -160,7 +160,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: AppColors.error,
+                backgroundColor: AppColors.danger,
                 behavior: SnackBarBehavior.floating,
               ),
             );
@@ -192,7 +192,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                   Text(
                     'Поможет создавать и отслеживать\nваши заказы',
                     style: AppTypography.bodyMedium.copyWith(
-                      color: AppColors.textSecondary,
+                      color: AppColors.surface4,
                     ),
                   ),
                   SizedBox(height: AppSpacing.xxl),
@@ -215,7 +215,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                     decoration: InputDecoration(
                       hintText: '+7 (777) 123-45-65',
                       hintStyle: AppTypography.bodyLarge.copyWith(
-                        color: AppColors.textTertiary,
+                        color: AppColors.surface5,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -242,14 +242,14 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                         borderRadius: BorderRadius.circular(
                           AppSpacing.radiusMD,
                         ),
-                        borderSide: BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: AppColors.danger),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                           AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(
-                          color: AppColors.error,
+                          color: AppColors.danger,
                           width: 2,
                         ),
                       ),

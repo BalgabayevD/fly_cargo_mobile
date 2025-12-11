@@ -54,9 +54,9 @@ class _SpecifyDimensionsBottomSheetState
 
     if (length == null || length <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Укажите корректную длину'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -64,9 +64,9 @@ class _SpecifyDimensionsBottomSheetState
 
     if (width == null || width <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Укажите корректную ширину'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -74,9 +74,9 @@ class _SpecifyDimensionsBottomSheetState
 
     if (height == null || height <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Укажите корректную высоту'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -92,7 +92,7 @@ class _SpecifyDimensionsBottomSheetState
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppSpacing.radiusXL),
@@ -106,10 +106,10 @@ class _SpecifyDimensionsBottomSheetState
             child: Row(
               children: [
                 IconButton(
-                  icon: const HeroIcon(
+                  icon: HeroIcon(
                     HeroIcons.chevronLeft,
                     size: 24,
-                    color: AppColors.textPrimary,
+                    color: AppColors.surface5,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
@@ -197,7 +197,7 @@ class _DimensionField extends StatelessWidget {
         Text(
           label,
           style: AppTypography.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -207,20 +207,20 @@ class _DimensionField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: controller.text.isEmpty ? '0' : null,
             hintStyle: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textTertiary,
+              color: AppColors.surface4,
             ),
             filled: true,
             fillColor: AppColors.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppColors.border,
                 width: AppSpacing.borderWidth,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: AppColors.border,
                 width: AppSpacing.borderWidth,
               ),

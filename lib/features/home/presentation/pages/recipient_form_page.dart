@@ -48,21 +48,21 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Получатель',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: AppColors.textPrimary),
+          icon: Icon(Icons.close, color: AppColors.surface5),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -76,25 +76,25 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
               decoration: InputDecoration(
                 labelText: 'Имя получателя *',
                 hintText: 'Введите имя получателя',
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.person,
                   size: 20,
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.borderLight),
+                  borderSide: BorderSide(color: AppColors.surface2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.borderLight),
+                  borderSide: BorderSide(color: AppColors.surface2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: BorderSide(color: AppColors.primary, width: 2),
                 ),
                 filled: true,
-                fillColor: AppColors.surfaceVariant,
+                fillColor: AppColors.surface2,
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -117,25 +117,25 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
               decoration: InputDecoration(
                 labelText: 'Телефон получателя *',
                 hintText: '+7 (XXX) XXX-XX-XX',
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.phone,
                   size: 20,
-                  color: AppColors.textSecondary,
+                  color: AppColors.surface4,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.borderLight),
+                  borderSide: BorderSide(color: AppColors.surface2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.borderLight),
+                  borderSide: BorderSide(color: AppColors.surface2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: BorderSide(color: AppColors.primary, width: 2),
                 ),
                 filled: true,
-                fillColor: AppColors.surfaceVariant,
+                fillColor: AppColors.surface2,
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -161,7 +161,7 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   'Сохранить',
                   style: TextStyle(
                     fontSize: 16,

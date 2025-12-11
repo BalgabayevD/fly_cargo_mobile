@@ -36,7 +36,7 @@ class HomeBottomSheetContent extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             blurRadius: AppSpacing.shadowBlurRadius,
-            color: AppColors.black.withValues(alpha: 0.26),
+            color: AppColors.surface5.withValues(alpha: 0.26),
           ),
         ],
       ),
@@ -57,8 +57,8 @@ class HomeBottomSheetContent extends StatelessWidget {
           if (fromAddress == null || toAddress == null) ...[
             const SizedBox(height: AppSpacing.lg),
             const PlaceholderItemWidget(),
-            const Divider(
-              color: AppColors.borderDark,
+            Divider(
+              color: AppColors.border,
               height: AppSpacing.dividerHeight,
             ),
           ],
@@ -109,11 +109,11 @@ class _AddressesContent extends StatelessWidget {
         AddressCardWidget(
           address: fromAddress,
           label: 'Откуда забрать',
-          gradientColors: const [AppColors.primary, AppColors.primaryDark],
+          gradientColors: const [AppColors.primary, AppColors.primary],
           onTap: onAddressSelectionTap,
         ),
         const SizedBox(height: AppSpacing.md),
-        const Divider(
+        Divider(
           height: AppSpacing.dividerHeight,
           color: AppColors.border,
         ),
@@ -121,7 +121,7 @@ class _AddressesContent extends StatelessWidget {
         AddressCardWidget(
           address: toAddress,
           label: 'Куда доставить',
-          gradientColors: const [AppColors.secondary, AppColors.secondaryDark],
+          gradientColors: [AppColors.warning, AppColors.warning],
           onTap: onAddressSelectionTap,
         ),
         const SizedBox(height: AppSpacing.xxl),

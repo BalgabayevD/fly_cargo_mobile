@@ -65,7 +65,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.8,
       ),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppSpacing.radiusXL),
@@ -86,10 +86,10 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
                   ),
                 ),
                 IconButton(
-                  icon: const HeroIcon(
+                  icon: HeroIcon(
                     HeroIcons.xMark,
                     size: 24,
-                    color: AppColors.textSecondary,
+                    color: AppColors.surface4,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
@@ -113,7 +113,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
                       child: Text(
                         state.message,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: AppColors.error,
+                          color: AppColors.danger,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -151,7 +151,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
                 onPressed: _selectedTariff != null ? _onConfirm : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  disabledBackgroundColor: AppColors.disabled,
+                  disabledBackgroundColor: AppColors.surface3,
                   padding: const EdgeInsets.symmetric(
                     vertical: AppSpacing.lg,
                   ),

@@ -43,7 +43,7 @@ class MainScaffoldShell extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           backgroundColor: AppColors.white,
           selectedItemColor: AppColors.primary,
-          unselectedItemColor: AppColors.textSecondary,
+          unselectedItemColor: AppColors.surface4,
           selectedFontSize: 12,
           unselectedFontSize: 12,
           selectedLabelStyle: const TextStyle(

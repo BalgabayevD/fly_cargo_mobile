@@ -27,7 +27,7 @@ class OrderFieldCard extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           border: Border.all(
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
             width: 1,
           ),
         ),
@@ -39,18 +39,18 @@ class OrderFieldCard extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.textSecondary,
+                      color: AppColors.surface4,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
                     value ?? '',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
-                      color: AppColors.textPrimary,
+                      color: AppColors.surface5,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -59,10 +59,10 @@ class OrderFieldCard extends StatelessWidget {
             ),
             if (showChevron && onTap != null) ...[
               const SizedBox(width: AppSpacing.sm),
-              const HeroIcon(
+              HeroIcon(
                 HeroIcons.chevronRight,
                 size: 20,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
             ],
           ],

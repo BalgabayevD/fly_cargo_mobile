@@ -18,15 +18,15 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back_ios, color: AppColors.surface5),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
+        title: Text(
           'Профиль',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,
@@ -34,17 +34,17 @@ class ProfilePage extends StatelessWidget {
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is! AuthAuthenticated) {
-            return const Center(
+            return Center(
               child: Text(
                 'Вы не авторизованы',
-                style: TextStyle(color: AppColors.textSecondary),
+                style: TextStyle(color: AppColors.danger),
               ),
             );
           }
 
           final profile = state.profile;
           if (profile == null) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(color: AppColors.primary),
             );
           }
@@ -92,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
+                        child: Text(
                           'Выйти из профиля',
                           style: TextStyle(
                             fontSize: 16,
@@ -106,14 +106,14 @@ class ProfilePage extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
                               'Функция удаления профиля в разработке',
                             ),
                           ),
                         );
                       },
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
                         ),
@@ -156,9 +156,9 @@ class ProfilePage extends StatelessWidget {
               context.pop();
               context.pop();
             },
-            child: const Text(
+            child: Text(
               'Выйти',
-              style: TextStyle(color: AppColors.error),
+              style: TextStyle(color: AppColors.danger),
             ),
           ),
         ],
@@ -187,9 +187,9 @@ class _ProfileField extends StatelessWidget {
       ),
       child: TextField(
         controller: TextEditingController(text: value),
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
-          color: AppColors.textPrimary,
+          color: AppColors.surface5,
           fontWeight: FontWeight.w500,
         ),
         enabled: isEditable,

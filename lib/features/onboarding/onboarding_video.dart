@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
 import 'package:go_router/go_router.dart';
@@ -54,9 +55,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Colors.black.withValues(alpha: 0.35),
-                      Colors.black.withValues(alpha: 0.45),
-                      Colors.black.withValues(alpha: 0.35),
+                      AppColors.surface5.withValues(alpha: 0.35),
+                      AppColors.surface5.withValues(alpha: 0.45),
+                      AppColors.surface5.withValues(alpha: 0.35),
                     ],
                     stops: const [0.0, 0.45, 1.0],
                   ),
@@ -79,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         TextButton(
                           onPressed: () => context.go(AppRoutes.home),
                           style: TextButton.styleFrom(
-                            backgroundColor: Colors.black.withValues(
+                            backgroundColor: AppColors.surface5.withValues(
                               alpha: 0.4,
                             ),
                             foregroundColor: Colors.white,
@@ -148,10 +149,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                               elevation: 2,
                             ),
-                            child: const Text(
+                            child: Text(
                               'Авторизоваться',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: AppColors.surface5,
                                 fontSize: 16,
                               ),
                             ),
@@ -193,7 +194,9 @@ class _VideoBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!isInitialized) {
-      return const SizedBox.expand(child: ColoredBox(color: Colors.black));
+      return SizedBox.expand(
+        child: ColoredBox(color: AppColors.surface5),
+      );
     }
 
     final size = controller.value.size;

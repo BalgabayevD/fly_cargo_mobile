@@ -49,7 +49,7 @@ class _LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: AppDimensions.progressIndicatorMedium,
       height: AppDimensions.progressIndicatorMedium,
       child: CircularProgressIndicator(
@@ -68,7 +68,7 @@ class _ButtonContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(
+        Icon(
           Icons.check_circle_outline,
           color: AppColors.white,
           size: AppSpacing.iconSizeMD,

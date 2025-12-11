@@ -34,10 +34,10 @@ class CityErrorState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.error_outline,
             size: 48,
-            color: AppColors.error,
+            color: AppColors.danger,
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
@@ -69,14 +69,14 @@ class CityEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.all(AppSpacing.xxxl),
       child: Center(
         child: Text(
           'Города не найдены',
           style: TextStyle(
             fontSize: 16,
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
       ),

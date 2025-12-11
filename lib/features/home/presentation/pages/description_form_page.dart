@@ -1,6 +1,6 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:go_router/go_router.dart';
 
 class DescriptionFormPage extends StatefulWidget {
   final String? initialDescription;
@@ -21,7 +21,9 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
   @override
   void initState() {
     super.initState();
-    _descriptionController = TextEditingController(text: widget.initialDescription);
+    _descriptionController = TextEditingController(
+      text: widget.initialDescription,
+    );
   }
 
   @override
@@ -39,21 +41,21 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Описание',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: AppColors.textPrimary),
+          icon: Icon(Icons.close, color: AppColors.surface5),
           onPressed: () => context.pop(),
         ),
       ),
@@ -71,18 +73,18 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.borderLight),
+                  borderSide: BorderSide(color: AppColors.surface2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.borderLight),
+                  borderSide: BorderSide(color: AppColors.surface2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: BorderSide(color: AppColors.primary, width: 2),
                 ),
                 filled: true,
-                fillColor: AppColors.surfaceVariant,
+                fillColor: AppColors.surface2,
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -104,7 +106,7 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   'Сохранить',
                   style: TextStyle(
                     fontSize: 16,

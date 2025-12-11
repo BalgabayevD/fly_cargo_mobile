@@ -58,7 +58,7 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
     return BlocProvider.value(
       value: _destinationBloc,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(AppSpacing.radiusXL),
@@ -79,10 +79,10 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
                     ),
                   ),
                   IconButton(
-                    icon: const HeroIcon(
+                    icon: HeroIcon(
                       HeroIcons.xMark,
                       size: 24,
-                      color: AppColors.textSecondary,
+                      color: AppColors.surface4,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -160,7 +160,7 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    disabledBackgroundColor: AppColors.disabled,
+                    disabledBackgroundColor: AppColors.surface3,
                     padding: const EdgeInsets.symmetric(
                       vertical: AppSpacing.lg,
                     ),

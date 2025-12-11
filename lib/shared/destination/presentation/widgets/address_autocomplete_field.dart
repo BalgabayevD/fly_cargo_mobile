@@ -156,27 +156,27 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
     return InputDecoration(
       hintText: widget.hintText,
       hintStyle: AppTypography.bodyMedium.copyWith(
-        color: AppColors.textTertiary,
+        color: AppColors.surface5,
       ),
       filled: true,
       fillColor: AppColors.surface,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: AppColors.border,
           width: AppSpacing.borderWidth,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: AppColors.border,
           width: AppSpacing.borderWidth,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: AppColors.primary,
           width: AppSpacing.borderWidthThick,
         ),
@@ -187,10 +187,10 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
       ),
       suffixIcon: widget.controller.text.isNotEmpty
           ? IconButton(
-              icon: const HeroIcon(
+              icon: HeroIcon(
                 HeroIcons.xMark,
                 size: 20,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
               onPressed: () {
                 widget.controller.clear();
@@ -211,7 +211,7 @@ class _AddressAutocompleteFieldState extends State<AddressAutocompleteField> {
           Text(
             widget.label,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.surface4,
             ),
           ),
           const SizedBox(height: AppSpacing.xs),

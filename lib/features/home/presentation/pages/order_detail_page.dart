@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:intl/intl.dart';
 
 class OrderDetailPage extends StatelessWidget {
@@ -71,26 +68,25 @@ class OrderDetailPage extends StatelessWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back, color: AppColors.surface),
           onPressed: () {
             Navigator.of(context).pop();
-            context.read<OrdersBloc>().add(const GetClientOrdersEvent());
           },
         ),
         title: Text(
           'Заказ ${order.id}',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.share_outlined,
-              color: AppColors.textPrimary,
+              color: AppColors.surface5,
             ),
             onPressed: () {
               // TODO: Implement share
@@ -106,10 +102,10 @@ class OrderDetailPage extends StatelessWidget {
             // Статус
             Text(
               _getStatusText(order.status),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: AppColors.surface5,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -117,7 +113,7 @@ class OrderDetailPage extends StatelessWidget {
               'Курьер приедит за посылкой после оплаты',
               style: TextStyle(
                 fontSize: 14,
-                color: AppColors.textSecondary,
+                color: AppColors.surface4,
               ),
             ),
             const SizedBox(height: AppSpacing.xl),
@@ -128,55 +124,26 @@ class OrderDetailPage extends StatelessWidget {
 
             // Кнопки оплаты и отмены
             if (!order.isPaid) ...[
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Implement payment
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD97D4E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                    ),
-                  ),
-                  child: Text(
-                    userType.isUser
-                        ? 'Оплатить ${price.toStringAsFixed(0)} тг'
-                        : 'Привязать штрихкод',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              AppButton(
+                text: userType.isUser
+                    ? 'Оплатить ${price.toStringAsFixed(0)} тг'
+                    : 'Привязать штрихкод',
+                onPressed: () {
+                  // TODO: Implement payment
+                },
+                size: AppButtonSize.large,
+                variant: AppButtonVariant.primary,
+                isFullWidth: true,
               ),
               const SizedBox(height: AppSpacing.md),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Implement cancel
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFAE5E5),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                    ),
-                  ),
-                  child: const Text(
-                    'Отменить',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFE74C3C),
-                    ),
-                  ),
-                ),
+              AppButton(
+                text: 'Отменить',
+                onPressed: () {
+                  // TODO: Implement cancel
+                },
+                size: AppButtonSize.large,
+                variant: AppButtonVariant.danger,
+                isFullWidth: true,
               ),
               const SizedBox(height: AppSpacing.xxl),
             ],
@@ -261,11 +228,13 @@ class OrderDetailPage extends StatelessWidget {
       height: 56,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive ? const Color(0xFFD97D4E) : const Color(0xFFFFE5D9),
+        color: isActive
+            ? AppColors.primary
+            : AppColors.primary.withValues(alpha: 0.2),
       ),
       child: Icon(
         icon,
-        color: isActive ? Colors.white : const Color(0xFFD97D4E),
+        color: isActive ? AppColors.white : AppColors.primary,
         size: 28,
       ),
     );
@@ -275,7 +244,9 @@ class OrderDetailPage extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 2,
-        color: isActive ? const Color(0xFFD97D4E) : const Color(0xFFFFE5D9),
+        color: isActive
+            ? AppColors.primary
+            : AppColors.primary.withValues(alpha: 0.2),
       ),
     );
   }
@@ -288,16 +259,16 @@ class OrderDetailPage extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 14,
-            color: AppColors.textSecondary,
+            color: AppColors.surface4,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
       ],

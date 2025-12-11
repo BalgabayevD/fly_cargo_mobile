@@ -105,7 +105,7 @@ class _OrderCreationFormState extends State<OrderCreationForm> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Ошибка при загрузке фото: $e'),
-              backgroundColor: AppColors.error,
+              backgroundColor: AppColors.danger,
             ),
           );
         }
@@ -191,21 +191,21 @@ class _OrderCreationFormState extends State<OrderCreationForm> {
                 decoration: InputDecoration(
                   labelText: 'Имя получателя *',
                   hintText: 'Введите имя получателя',
-                  prefixIcon: Icon(Icons.person, size: 20, color: AppColors.textSecondary),
+                  prefixIcon: Icon(Icons.person, size: 20, color: AppColors.surface4),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.borderLight),
+                    borderSide: BorderSide(color: AppColors.surface2),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.borderLight),
+                    borderSide: BorderSide(color: AppColors.surface2),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(color: AppColors.primary, width: 2),
                   ),
                   filled: true,
-                  fillColor: AppColors.surfaceVariant,
+                  fillColor: AppColors.surface2,
                 ),
                 onChanged: (_) => _notifyDataChanged(),
               ),
@@ -230,21 +230,21 @@ class _OrderCreationFormState extends State<OrderCreationForm> {
                 decoration: InputDecoration(
                   labelText: 'Телефон получателя *',
                   hintText: '+7 (XXX) XXX-XX-XX',
-                  prefixIcon: Icon(Icons.phone, size: 20, color: AppColors.textSecondary),
+                  prefixIcon: Icon(Icons.phone, size: 20, color: AppColors.surface4),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.borderLight),
+                    borderSide: BorderSide(color: AppColors.surface2),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.borderLight),
+                    borderSide: BorderSide(color: AppColors.surface2),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(color: AppColors.primary, width: 2),
                   ),
                   filled: true,
-                  fillColor: AppColors.surfaceVariant,
+                  fillColor: AppColors.surface2,
                 ),
                 onChanged: (_) => _notifyDataChanged(),
               ),

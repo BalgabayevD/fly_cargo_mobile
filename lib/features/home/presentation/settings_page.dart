@@ -46,12 +46,12 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: AppColors.surface,
       appBar: AppBar(
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Настройки',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.surface5,
           ),
         ),
         centerTitle: true,

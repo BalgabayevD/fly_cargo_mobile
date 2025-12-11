@@ -23,7 +23,7 @@ class PhotoUploadCard extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
           border: Border.all(
-            color: AppColors.borderLight,
+            color: AppColors.surface2,
             width: 1,
           ),
         ),
@@ -38,9 +38,9 @@ class PhotoUploadCard extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: AppColors.textPrimary,
+                  color: AppColors.surface5,
                   fontWeight: FontWeight.w500,
                 ),
               ),

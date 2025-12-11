@@ -79,9 +79,9 @@ class _CodeInputPageState extends State<CodeInputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: AppIconButton(
           icon: Icons.arrow_back_ios,
@@ -109,13 +109,13 @@ class _CodeInputPageState extends State<CodeInputPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
-                  backgroundColor: AppColors.error,
+                  backgroundColor: AppColors.danger,
                   behavior: SnackBarBehavior.floating,
                 ),
               );
             } else if (state is AuthCodeSent) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text('Код отправлен повторно'),
                   backgroundColor: AppColors.success,
                   behavior: SnackBarBehavior.floating,
@@ -140,7 +140,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                   Text(
                     'Мы отправили 6 значный код по смс\nна номер ${widget.phoneNumber}',
                     style: AppTypography.bodyMedium.copyWith(
-                      color: AppColors.textSecondary,
+                      color: AppColors.surface4,
                     ),
                   ),
                   SizedBox(height: AppSpacing.xxl),
@@ -163,7 +163,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     decoration: InputDecoration(
                       hintText: '144 356',
                       hintStyle: AppTypography.h5.copyWith(
-                        color: AppColors.textTertiary,
+                        color: AppColors.surface5,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -190,14 +190,14 @@ class _CodeInputPageState extends State<CodeInputPage> {
                         borderRadius: BorderRadius.circular(
                           AppSpacing.radiusMD,
                         ),
-                        borderSide: BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: AppColors.danger),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                           AppSpacing.radiusMD,
                         ),
                         borderSide: BorderSide(
-                          color: AppColors.error,
+                          color: AppColors.danger,
                           width: 2,
                         ),
                       ),
@@ -241,7 +241,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     child: Text(
                       'Повторный код через $_resendTimer сек',
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: AppColors.surface4,
                       ),
                     ),
                   ),
@@ -297,7 +297,7 @@ class _CheckboxWithText extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textPrimary,
+                  color: AppColors.surface5,
                 ),
                 children: [
                   const TextSpan(text: 'Я ознакомился и согласен с '),

@@ -118,9 +118,9 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
   void _onSave() {
     if (_selectedCity == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+             SnackBar(
           content: Text('Выберите город'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -129,9 +129,9 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
     final address = _addressController.text.trim();
     if (address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Введите адрес'),
-          backgroundColor: AppColors.error,
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -174,7 +174,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppSpacing.radiusXL),
@@ -195,10 +195,10 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                   ),
                 ),
                 IconButton(
-                  icon: const HeroIcon(
+                  icon: HeroIcon(
                     HeroIcons.xMark,
                     size: 24,
-                    color: AppColors.textSecondary,
+                    color: AppColors.surface4,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
