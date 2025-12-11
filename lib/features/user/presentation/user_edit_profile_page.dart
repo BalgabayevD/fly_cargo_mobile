@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_bloc.dart';
-import 'package:fly_cargo/shared/profile/presentation/bloc/profile_state.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
+import 'package:go_router/go_router.dart';
+
 class UserEditProfilePage extends StatelessWidget {
   const UserEditProfilePage({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +17,7 @@ class UserEditProfilePage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: const Text(
           'Мой профиль',
@@ -39,40 +42,25 @@ class UserEditProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            loaded: (profile, daysSinceCreated) => _EditProfileContent(
-              profile: profile,
-            ),
-            error: (message) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: Color(0xFF999999),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    message,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF666666),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          );
+          if (state is! AuthAuthenticated) {
+            return const Center(
+              child: Text('Вы не авторизованы'),
+            );
+          }
+
+          final profile = state.profile;
+          if (profile == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return _EditProfileContent(profile: profile);
         },
       ),
     );
   }
+  
   void _saveProfile(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -80,7 +68,7 @@ class UserEditProfilePage extends StatelessWidget {
         backgroundColor: Color(0xFF34C759),
       ),
     );
-    Navigator.pop(context);
+    context.pop();
   }
 }
 class _EditProfileContent extends StatefulWidget {
@@ -90,25 +78,19 @@ class _EditProfileContent extends StatefulWidget {
   State<_EditProfileContent> createState() => _EditProfileContentState();
 }
 class _EditProfileContentState extends State<_EditProfileContent> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
-  late TextEditingController _middleNameController;
+  late TextEditingController _nameController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController(text: widget.profile.firstName);
-    _lastNameController = TextEditingController(text: widget.profile.lastName);
-    _middleNameController = TextEditingController(text: widget.profile.middleName);
-    _phoneController = TextEditingController(text: widget.profile.phone);
+    _nameController = TextEditingController(text: widget.profile.name);
+    _phoneController = TextEditingController(text: widget.profile.phoneNumber);
     _emailController = TextEditingController(text: widget.profile.email);
   }
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _middleNameController.dispose();
+    _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
     super.dispose();
@@ -140,10 +122,10 @@ class _EditProfileContentState extends State<_EditProfileContent> {
                 shape: BoxShape.circle,
                 border: Border.all(color: const Color(0xFFE0E0E0), width: 2),
               ),
-              child: widget.profile.photo.isNotEmpty
+              child: (widget.profile.image != null && widget.profile.image!.isNotEmpty)
                   ? ClipOval(
                       child: Image.network(
-                        widget.profile.photo,
+                        widget.profile.image!,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             _buildDefaultAvatar(),
@@ -203,21 +185,9 @@ class _EditProfileContentState extends State<_EditProfileContent> {
           ),
           const SizedBox(height: 20),
           _buildTextField(
-            controller: _firstNameController,
+            controller: _nameController,
             label: 'Имя',
             icon: Icons.person,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _lastNameController,
-            label: 'Фамилия',
-            icon: Icons.person_outline,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _middleNameController,
-            label: 'Отчество',
-            icon: Icons.person_outline,
           ),
           const SizedBox(height: 16),
           _buildTextField(
@@ -287,7 +257,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
               leading: const Icon(Icons.camera_alt, color: Color(0xFF007AFF)),
               title: const Text('Сделать фото'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
                 _takePhoto(context);
               },
             ),
@@ -298,7 +268,7 @@ class _EditProfileContentState extends State<_EditProfileContent> {
               ),
               title: const Text('Выбрать из галереи'),
               onTap: () {
-                Navigator.pop(context);
+                context.pop();
                 _selectFromGallery(context);
               },
             ),

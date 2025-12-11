@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 
-/// Заголовок с изображением тарифа
 class TariffImageHeader extends StatelessWidget {
   final String imageUrl;
 
@@ -33,7 +32,6 @@ class TariffImageHeader extends StatelessWidget {
   }
 }
 
-/// Иконка-заглушка для изображения
 class _PlaceholderIcon extends StatelessWidget {
   const _PlaceholderIcon();
 
@@ -48,4 +46,3 @@ class _PlaceholderIcon extends StatelessWidget {
     );
   }
 }
-

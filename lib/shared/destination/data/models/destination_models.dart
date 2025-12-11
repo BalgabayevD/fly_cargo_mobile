@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'destination_models.g.dart';
+
 @JsonSerializable()
 class CitiesFromResponse {
   final List<ApiCityModel> data;
@@ -8,6 +10,7 @@ class CitiesFromResponse {
       _$CitiesFromResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CitiesFromResponseToJson(this);
 }
+
 @JsonSerializable()
 class CitiesToResponse {
   final List<ApiCityModel> data;
@@ -16,6 +19,7 @@ class CitiesToResponse {
       _$CitiesToResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CitiesToResponseToJson(this);
 }
+
 @JsonSerializable()
 class ApiCityModel {
   @JsonKey(fromJson: _idFromJson)
@@ -32,10 +36,12 @@ class ApiCityModel {
     }
     return value.toString();
   }
+
   CityModel toCityModel() {
     return CityModel(id: id, name: name, region: region);
   }
 }
+
 @JsonSerializable()
 class AddressSuggestionsResponse {
   final List<AddressSuggestionModel>? data;
@@ -44,6 +50,7 @@ class AddressSuggestionsResponse {
       _$AddressSuggestionsResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AddressSuggestionsResponseToJson(this);
 }
+
 @JsonSerializable()
 class AddressSuggestionModel {
   final String title;
@@ -60,6 +67,7 @@ class AddressSuggestionModel {
     );
   }
 }
+
 class CityModel {
   final String id;
   final String name;
@@ -71,6 +79,7 @@ class CityModel {
     }
     return name;
   }
+
   CityModel copyWith({String? id, String? name, String? region}) {
     return CityModel(
       id: id ?? this.id,
@@ -78,6 +87,7 @@ class CityModel {
       region: region ?? this.region,
     );
   }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -86,6 +96,7 @@ class CityModel {
         other.name == name &&
         other.region == region;
   }
+
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ region.hashCode;
   @override
@@ -93,16 +104,23 @@ class CityModel {
     return 'CityModel(id: $id, name: $name, region: $region)';
   }
 }
+
 class AddressModel {
   final String city;
   final String address;
   final String? fullAddress;
   final String cityId;
+  final String? apartment;
+  final String? entrance;
+  final String? floor;
   const AddressModel({
     required this.city,
     required this.address,
     required this.cityId,
     this.fullAddress,
+    this.apartment,
+    this.entrance,
+    this.floor,
   });
   String get displayText {
     if (fullAddress != null) {
@@ -110,19 +128,27 @@ class AddressModel {
     }
     return '$city, $address';
   }
+
   AddressModel copyWith({
     String? city,
     String? address,
     String? cityId,
     String? fullAddress,
+    String? apartment,
+    String? entrance,
+    String? floor,
   }) {
     return AddressModel(
       city: city ?? this.city,
       address: address ?? this.address,
       cityId: cityId ?? this.cityId,
       fullAddress: fullAddress ?? this.fullAddress,
+      apartment: apartment ?? this.apartment,
+      entrance: entrance ?? this.entrance,
+      floor: floor ?? this.floor,
     );
   }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -130,11 +156,21 @@ class AddressModel {
         other.city == city &&
         other.address == address &&
         other.cityId == cityId &&
-        other.fullAddress == fullAddress;
+        other.fullAddress == fullAddress &&
+        other.apartment == apartment &&
+        other.entrance == entrance &&
+        other.floor == floor;
   }
+
   @override
   int get hashCode =>
-      city.hashCode ^ address.hashCode ^ cityId.hashCode ^ fullAddress.hashCode;
+      city.hashCode ^
+      address.hashCode ^
+      cityId.hashCode ^
+      fullAddress.hashCode ^
+      apartment.hashCode ^
+      entrance.hashCode ^
+      floor.hashCode;
   @override
   String toString() {
     return 'AddressModel(city: $city, address: $address, cityId: $cityId, fullAddress: $fullAddress)';

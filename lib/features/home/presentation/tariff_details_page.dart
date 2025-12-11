@@ -68,7 +68,6 @@ class TariffDetailsPage extends StatelessWidget {
   }
 }
 
-/// Экран "Тариф не найден"
 class _TariffNotFoundScreen extends StatelessWidget {
   const _TariffNotFoundScreen();
 
@@ -91,7 +90,6 @@ class _TariffNotFoundScreen extends StatelessWidget {
   }
 }
 
-/// Экран ошибки загрузки тарифа
 class _TariffErrorScreen extends StatelessWidget {
   final String message;
 
@@ -116,7 +114,6 @@ class _TariffErrorScreen extends StatelessWidget {
   }
 }
 
-/// Контент страницы деталей тарифа
 class TariffDetailsContent extends StatefulWidget {
   final dynamic tariff;
   final AddressModel? fromAddress;
@@ -155,6 +152,14 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
           ),
         );
         Navigator.of(context).popUntil((route) => route.isFirst);
+      } else if (state is OrdersUnauthorized) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Для создания заказа необходимо войти в аккаунт'),
+            backgroundColor: AppColors.error,
+            duration: Duration(seconds: 3),
+          ),
+        );
       } else if (state is OrdersError) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -166,7 +171,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       }
     });
 
-    // Запускаем расчет цены для выбранного тарифа если есть адреса
     if (widget.fromAddress != null && widget.toAddress != null) {
       final fromCityId = int.tryParse(widget.fromAddress!.cityId);
       final toCityId = int.tryParse(widget.toAddress!.cityId);
@@ -177,7 +181,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
             tariffId: widget.tariff.id,
             fromCityId: fromCityId,
             toCityId: toCityId,
-            toPhone: '+77777777777', // Временный номер
+            toPhone: '+77777777777',
           ),
         );
       }
@@ -284,7 +288,6 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
   }
 }
 
-/// AppBar для страницы деталей тарифа
 class _TariffDetailsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final String tariffName;
@@ -326,7 +329,6 @@ class _TariffDetailsAppBar extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-/// Тело страницы деталей тарифа
 class _TariffDetailsBody extends StatelessWidget {
   final dynamic tariff;
   final GlobalKey<FormState> formKey;
@@ -398,7 +400,6 @@ class _TariffDetailsBody extends StatelessWidget {
   }
 }
 
-/// Название тарифа
 class _TariffTitle extends StatelessWidget {
   final String name;
 
@@ -415,7 +416,6 @@ class _TariffTitle extends StatelessWidget {
   }
 }
 
-/// Описание тарифа
 class _TariffDescription extends StatelessWidget {
   final String description;
 
@@ -432,7 +432,6 @@ class _TariffDescription extends StatelessWidget {
   }
 }
 
-/// Кнопка создания заказа
 class _CreateOrderButton extends StatelessWidget {
   final OrdersBloc ordersBloc;
   final bool isEnabled;
@@ -471,7 +470,6 @@ class _CreateOrderButton extends StatelessWidget {
   }
 }
 
-/// Индикатор загрузки в кнопке
 class _LoadingIndicator extends StatelessWidget {
   const _LoadingIndicator();
 
@@ -488,7 +486,6 @@ class _LoadingIndicator extends StatelessWidget {
   }
 }
 
-/// Текст кнопки
 class _ButtonLabel extends StatelessWidget {
   const _ButtonLabel();
 
@@ -503,7 +500,6 @@ class _ButtonLabel extends StatelessWidget {
   }
 }
 
-/// Виджет для отображения рассчитанной стоимости заказа
 class _PriceCalculationWidget extends StatelessWidget {
   final PriceCalculationBloc priceCalculationBloc;
 
@@ -570,14 +566,17 @@ class _PriceCalculationWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.primary.withOpacity(0.1),
-            AppColors.primary.withOpacity(0.05),
+            AppColors.primary.withValues(alpha: 0.1),
+            AppColors.primary.withValues(alpha: 0.05),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 2),
+        border: Border.all(
+          color: AppColors.primary.withValues(alpha: 0.3),
+          width: 2,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -598,7 +597,7 @@ class _PriceCalculationWidget extends StatelessWidget {
                   vertical: AppSpacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
+                  color: AppColors.success.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppSpacing.radiusSM),
                 ),
                 child: Text(
@@ -685,9 +684,9 @@ class _PriceCalculationWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.error.withOpacity(0.1),
+        color: AppColors.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-        border: Border.all(color: AppColors.error.withOpacity(0.3)),
+        border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [

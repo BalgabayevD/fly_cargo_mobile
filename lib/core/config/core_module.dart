@@ -12,6 +12,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 abstract class CoreModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+  
   @Named('log-interceptor')
   @lazySingleton
   Interceptor logInterceptor(Talker talker) {

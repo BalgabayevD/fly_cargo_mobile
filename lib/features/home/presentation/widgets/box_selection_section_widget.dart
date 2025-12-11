@@ -107,7 +107,6 @@ class BoxSelectionSectionWidget extends StatelessWidget
   }
 }
 
-/// Компактный виджет для отображения цены на главной странице
 class _CompactPriceWidget extends StatelessWidget {
   const _CompactPriceWidget();
 
@@ -169,14 +168,14 @@ class _CompactPriceWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.primary.withOpacity(0.1),
-            AppColors.primary.withOpacity(0.05),
+            AppColors.primary.withValues(alpha: 0.1),
+            AppColors.primary.withValues(alpha: 0.05),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 2),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 2),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,7 +222,7 @@ class _CompactPriceWidget extends StatelessWidget {
               vertical: 6,
             ),
             decoration: BoxDecoration(
-              color: AppColors.success.withOpacity(0.1),
+              color: AppColors.success.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

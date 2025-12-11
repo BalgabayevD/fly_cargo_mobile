@@ -4,4 +4,6 @@ export 'components/cards.dart';
 export 'components/icons.dart';
 export 'dimensions.dart';
 export 'spacing.dart';
+export 'theme.dart';
 export 'typography.dart';
+export 'utils.dart';

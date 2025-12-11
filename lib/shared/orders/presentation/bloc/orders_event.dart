@@ -25,3 +25,14 @@ class GetClientOrdersEvent extends OrdersEvent {
 class GetCourierOrdersEvent extends OrdersEvent {
   const GetCourierOrdersEvent();
 }
+
+class GetCreatedOrdersEvent extends OrdersEvent {
+  const GetCreatedOrdersEvent();
+}
+
+class GetOrderByIdEvent extends OrdersEvent {
+  final String orderId;
+  const GetOrderByIdEvent({required this.orderId});
+  @override
+  List<Object?> get props => [orderId];
+}

@@ -6,9 +6,9 @@ part 'price_calculation_model.g.dart';
 @freezed
 sealed class PriceCalculationModel with _$PriceCalculationModel {
   const factory PriceCalculationModel({
-    int? id,
     required String createdAt,
     required String updatedAt,
+    int? id,
     String? deletedAt,
     double? length,
     double? height,
@@ -39,4 +39,3 @@ sealed class PriceCalculationModel with _$PriceCalculationModel {
   factory PriceCalculationModel.fromJson(Map<String, dynamic> json) =>
       _$PriceCalculationModelFromJson(json);
 }
-

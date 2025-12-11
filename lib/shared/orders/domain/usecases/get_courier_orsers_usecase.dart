@@ -7,11 +7,6 @@ class GetCourierOrdersUseCase {
   final OrdersRepository _ordersRepository;
   GetCourierOrdersUseCase(this._ordersRepository);
   Future<List<OrderModel>> call() async {
-    try {
-      return await _ordersRepository.getCourierOrders();
-    } catch (e) {
-      // throw OrdersUseCaseException('Ошибка при загрузке заказов: $e');
-      return [];
-    }
+    return await _ordersRepository.getCourierOrders();
   }
 }

@@ -3,7 +3,6 @@ import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/calculate_order_price_usecase.dart';
 import 'package:injectable/injectable.dart';
 
-// События
 abstract class PriceCalculationEvent {}
 
 class CalculatePriceEvent extends PriceCalculationEvent {
@@ -22,7 +21,6 @@ class CalculatePriceEvent extends PriceCalculationEvent {
 
 class ResetPriceCalculationEvent extends PriceCalculationEvent {}
 
-// Состояния
 abstract class PriceCalculationState {}
 
 class PriceCalculationInitial extends PriceCalculationState {}
@@ -41,7 +39,6 @@ class PriceCalculationError extends PriceCalculationState {
   PriceCalculationError(this.message);
 }
 
-// Bloc
 @injectable
 class PriceCalculationBloc
     extends Bloc<PriceCalculationEvent, PriceCalculationState> {

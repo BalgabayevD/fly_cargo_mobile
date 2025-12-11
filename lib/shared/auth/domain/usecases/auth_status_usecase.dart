@@ -1,5 +1,5 @@
 import 'package:flutter_better_auth/core/api/models/session/session_response.dart';
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
+import 'package:fly_cargo/shared/auth/data/models/user_profile.dart';
 import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 @injectable

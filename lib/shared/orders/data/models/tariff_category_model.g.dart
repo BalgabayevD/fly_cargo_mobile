@@ -8,14 +8,14 @@ part of 'tariff_category_model.dart';
 
 _TariffCategoryModel _$TariffCategoryModelFromJson(Map<String, dynamic> json) =>
     _TariffCategoryModel(
-      id: (json['id'] as num?)?.toInt(),
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
-      deletedAt: json['deletedAt'] as String?,
       name: json['name'] as String,
       key: json['key'] as String,
-      sortIndex: (json['sortIndex'] as num?)?.toInt(),
       active: json['active'] as bool,
+      id: (json['id'] as num?)?.toInt(),
+      deletedAt: json['deletedAt'] as String?,
+      sortIndex: (json['sort_index'] as num?)?.toInt(),
       tariffs: (json['tariffs'] as List<dynamic>?)
           ?.map((e) => TariffModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,13 +24,13 @@ _TariffCategoryModel _$TariffCategoryModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TariffCategoryModelToJson(
   _TariffCategoryModel instance,
 ) => <String, dynamic>{
-  'id': instance.id,
   'createdAt': instance.createdAt,
   'updatedAt': instance.updatedAt,
-  'deletedAt': instance.deletedAt,
   'name': instance.name,
   'key': instance.key,
-  'sortIndex': instance.sortIndex,
   'active': instance.active,
+  'id': instance.id,
+  'deletedAt': instance.deletedAt,
+  'sort_index': instance.sortIndex,
   'tariffs': instance.tariffs,
 };

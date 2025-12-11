@@ -5,9 +5,11 @@ import 'package:flutter_better_auth/plugins/phone/models/send_otp/send_otp_respo
 import 'package:flutter_better_auth/plugins/phone/models/verify/verify_phone_body.dart';
 import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
 import 'package:fly_cargo/shared/auth/data/auth_remote_source.dart';
-import 'package:fly_cargo/shared/auth/data/models/auth_models.dart';
+import 'package:fly_cargo/shared/auth/data/models/sign_code_response.dart';
+import 'package:fly_cargo/shared/auth/data/models/user_profile.dart';
 import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
+
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteSource _remoteSource;
@@ -23,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw AuthException('Ошибка при отправке кода: $e');
     }
   }
+
   @override
   Future<SignUpResponse?> signCode({
     required String phoneNumber,
@@ -37,6 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw AuthException('Ошибка при подтверждении кода: $e');
     }
   }
+
   @override
   Future<SessionResponse?> getSessionStatus() async {
     try {
@@ -46,6 +50,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw AuthException('Ошибка при проверке сессии: $e');
     }
   }
+
   @override
   Future<void> signOut() async {
     try {
@@ -54,6 +59,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw AuthException('Ошибка при выходе из системы: $e');
     }
   }
+
   @override
   Future<bool> isAuthenticated() async {
     try {
@@ -63,6 +69,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return false;
     }
   }
+
   @override
   Future<String?> getCurrentToken() async {
     try {
@@ -72,10 +79,12 @@ class AuthRepositoryImpl implements AuthRepository {
       throw AuthException('Ошибка при получении токена: $e');
     }
   }
+
   @override
   Future<SignCodeResponse> refreshToken() {
     throw UnimplementedError();
   }
+
   @override
   Future<UserProfile> getUserProfile() async {
     try {
@@ -86,6 +95,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 }
+
 class AuthException implements Exception {
   final String message;
   const AuthException(this.message);
