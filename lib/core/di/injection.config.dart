@@ -226,6 +226,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i189.GetCourierOrdersUseCase>(
       () => _i189.GetCourierOrdersUseCase(gh<_i919.OrdersRepository>()),
     );
+    gh.factory<_i177.GetOrderByIdUseCase>(
+      () => _i177.GetOrderByIdUseCase(gh<_i919.OrdersRepository>()),
+    );
     gh.factory<_i426.CalculateOrderPriceUseCase>(
       () => _i426.CalculateOrderPriceUseCase(gh<_i919.OrdersRepository>()),
     );
@@ -234,9 +237,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i49.CreateOrderUseCase>(
       () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
-    );
-    gh.factory<_i177.GetOrderByIdUseCase>(
-      () => _i177.GetOrderByIdUseCase(gh<_i919.OrdersRepository>()),
     );
     gh.factory<_i1011.GetCreatedOrdersUseCase>(
       () => _i1011.GetCreatedOrdersUseCase(gh<_i919.OrdersRepository>()),

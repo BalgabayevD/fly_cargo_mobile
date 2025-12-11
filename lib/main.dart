@@ -6,7 +6,6 @@ import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
@@ -27,8 +26,10 @@ Future<void> main() async {
   await FlutterBetterAuth.initialize(url: 'https://authfc.maguya.kz/api/auth');
 
   final prefs = await SharedPreferences.getInstance();
-  final authStatusUseCase = getIt<AuthStatusUseCase>();
-  final hasToken = await authStatusUseCase.isAuthenticated();
+
+  // Проверяем наличие токена напрямую из SharedPreferences
+  final storedToken = prefs.getString('auth-token');
+  final hasToken = storedToken != null && storedToken.isNotEmpty;
 
   final authBloc = getIt<AuthBloc>();
 
