@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/client/create_order/create_order_page_v2.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
-import 'package:fly_cargo/features/home/presentation/home_page.dart';
+import 'package:fly_cargo/client/create_order/create_order_page.dart';
 import 'package:fly_cargo/features/home/presentation/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/home/presentation/orders_list_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/contacts_page.dart';
@@ -11,14 +12,6 @@ import 'package:fly_cargo/features/home/presentation/pages/recipient_form_page.d
 import 'package:fly_cargo/features/home/presentation/recipient_page.dart';
 import 'package:fly_cargo/features/home/presentation/settings_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
-import 'package:fly_cargo/features/user/presentation/user_cost_calculator_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_demo_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_edit_profile_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_notifications_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_order_history_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_payment_cards_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_payments_page.dart';
-import 'package:fly_cargo/features/user/presentation/user_profile_page.dart';
 import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
@@ -134,44 +127,6 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
         },
       ),
 
-      // User Demo Mode Routes
-      GoRoute(
-        path: AppRoutes.userDemo,
-        builder: (context, state) => const UserDemoPage(),
-        routes: [
-          GoRoute(
-            path: AppRoutes.userProfile,
-            builder: (context, state) => const UserProfilePage(),
-            routes: [
-              GoRoute(
-                path: AppRoutes.userPayments,
-                builder: (context, state) => const UserPaymentsPage(),
-              ),
-              GoRoute(
-                path: AppRoutes.userCards,
-                builder: (context, state) => const UserPaymentCardsPage(),
-              ),
-              GoRoute(
-                path: AppRoutes.userHistory,
-                builder: (context, state) => const UserOrderHistoryPage(),
-              ),
-              GoRoute(
-                path: AppRoutes.userCalculator,
-                builder: (context, state) => const UserCostCalculatorPage(),
-              ),
-              GoRoute(
-                path: AppRoutes.userEditProfile,
-                builder: (context, state) => const UserEditProfilePage(),
-              ),
-              GoRoute(
-                path: AppRoutes.userNotifications,
-                builder: (context, state) => const UserNotificationsPage(),
-              ),
-            ],
-          ),
-        ],
-      ),
-
       // Main App Shell
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -183,7 +138,8 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
             routes: [
               GoRoute(
                 path: AppRoutes.home,
-                builder: (context, state) => const HomePage(),
+                builder: (context, state) => const CreateOrderPageV2(),
+                // CreateOrderPage(),
                 routes: [
                   GoRoute(
                     path: AppRoutes.descriptionForm,
@@ -248,10 +204,6 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                   GoRoute(
                     path: AppRoutes.contacts,
                     builder: (context, state) => const ContactsPage(),
-                  ),
-                  GoRoute(
-                    path: AppRoutes.notifications,
-                    builder: (context, state) => const UserNotificationsPage(),
                   ),
                 ],
               ),

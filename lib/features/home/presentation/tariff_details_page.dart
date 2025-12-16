@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/create_tariff_page.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/tariff_characteristics_card.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/tariff_image_header.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
@@ -266,14 +265,7 @@ class _TariffDetailsContentState extends State<TariffDetailsContent> {
       backgroundColor: AppColors.white,
       appBar: _TariffDetailsAppBar(
         tariffName: widget.tariff.name,
-        onCreateTariffPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CreateTariffPage(),
-            ),
-          );
-        },
+        onCreateTariffPressed: () {},
       ),
       body: _TariffDetailsBody(
         tariff: widget.tariff,

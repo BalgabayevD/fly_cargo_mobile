@@ -24,14 +24,14 @@ import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CreateOrderPageV2 extends StatefulWidget {
+  const CreateOrderPageV2({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CreateOrderPageV2> createState() => _CreateOrderPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CreateOrderPageState extends State<CreateOrderPageV2> {
   @override
   void initState() {
     super.initState();
