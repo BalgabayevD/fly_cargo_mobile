@@ -230,8 +230,9 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
           _photoIds[photoFile] = photoId;
         });
         
-        // Автоматически запускаем анализ при добавлении 3-й фотографии
-        if (_photos.length == 3 && !_isAnalyzing) {
+        // Автоматически запускаем анализ при добавлении КАЖДОЙ фотографии
+        // начиная с первой (чтобы получить данные как можно раньше)
+        if (!_isAnalyzing) {
           _startAutoAnalysis();
         }
       } catch (e) {
@@ -258,7 +259,8 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   }
 
   Future<void> _startAutoAnalysis() async {
-    if (_photos.length < 3) {
+    // Вызываем анализ при наличии хотя бы 1 фотографии
+    if (_photos.isEmpty) {
       return;
     }
 
@@ -266,6 +268,8 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
       _isAnalyzing = true;
     });
 
+    print('🚀 Запускаем анализ с ${_photos.length} фото');
+    
     context.read<OrdersBloc>().add(
       PreCreateOrderEvent(images: _photos),
     );

@@ -19,6 +19,7 @@ import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart'
     as _i856;
 import 'package:fly_cargo/core/network/domain/interceptors/auth_interceptor.dart'
     as _i411;
+import 'package:fly_cargo/core/network/pre_order_dio_client.dart' as _i515;
 import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart'
     as _i1019;
 import 'package:fly_cargo/shared/auth/config/auth_module.dart' as _i522;
@@ -121,6 +122,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i993.Talker>(() => coreModule.talker);
     gh.singleton<_i469.ApiConfig>(() => _i469.ApiConfig());
+    gh.lazySingleton<_i515.PreOrderDioClient>(() => _i515.PreOrderDioClient());
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
       () => _i5.FlutterBetterAuthSessionBehavior(),
       instanceName: 'flutter-better-auth-session-behavior',
@@ -191,6 +193,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i583.GetAllCitiesUseCase>(),
       ),
     );
+    gh.lazySingleton<_i919.OrdersRepository>(
+      () => _i157.OrdersRepositoryImpl(
+        gh<_i642.OrdersRemoteSource>(),
+        gh<_i515.PreOrderDioClient>(),
+      ),
+    );
     gh.factory<_i618.TariffsRemoteSourceImpl>(
       () => _i618.TariffsRemoteSourceImpl(gh<_i1059.TariffsRemoteSource>()),
     );
@@ -199,9 +207,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i214.AuthRepository>(
       () => _i505.AuthRepositoryImpl(gh<_i764.AuthRemoteSource>()),
-    );
-    gh.lazySingleton<_i919.OrdersRepository>(
-      () => _i157.OrdersRepositoryImpl(gh<_i642.OrdersRemoteSource>()),
     );
     gh.factory<_i439.GetUserProfileUseCase>(
       () => _i439.GetUserProfileUseCase(gh<_i214.AuthRepository>()),
