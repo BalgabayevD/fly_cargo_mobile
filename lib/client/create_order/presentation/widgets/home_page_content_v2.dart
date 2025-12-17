@@ -134,30 +134,7 @@ class HomePageContentV2 extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           if (isAnalyzing)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.primary,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Text(
-                  'Анализируем фото...',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.surface4,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            )
+            _AIAnalysisIndicator()
           else if (!isAnalysisCompleted && photos.isEmpty)
             Text(
               'Сфотографируйте содержимое посылки',
@@ -206,6 +183,95 @@ class HomePageContentV2 extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _AIAnalysisIndicator extends StatefulWidget {
+  const _AIAnalysisIndicator();
+
+  @override
+  State<_AIAnalysisIndicator> createState() => _AIAnalysisIndicatorState();
+}
+
+class _AIAnalysisIndicatorState extends State<_AIAnalysisIndicator>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _progressAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 20),
+      vsync: this,
+    );
+
+    _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _progressAnimation,
+      builder: (context, child) {
+        return Row(
+          children: [
+            // AI иконка с пульсацией слева
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                final scale = 1.0 + (0.1 * (_controller.value * 4 % 1));
+                return Transform.scale(
+                  scale: scale,
+                  child: Icon(
+                    Icons.auto_awesome,
+                    size: 24,
+                    color: AppColors.primary,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(width: AppSpacing.md),
+            // Деления прогресс бара справа
+            Expanded(
+              child: Row(
+                children: List.generate(20, (index) {
+                  final isActive = _progressAnimation.value >= (index + 1) / 20;
+                  return Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: index == 0 ? 0 : 2,
+                        right: index == 19 ? 0 : 2,
+                      ),
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: isActive
+                            ? AppColors.primary
+                            : AppColors.surface2,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
