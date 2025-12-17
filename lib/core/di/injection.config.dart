@@ -122,7 +122,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i993.Talker>(() => coreModule.talker);
     gh.singleton<_i469.ApiConfig>(() => _i469.ApiConfig());
-    gh.lazySingleton<_i515.PreOrderDioClient>(() => _i515.PreOrderDioClient());
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
       () => _i5.FlutterBetterAuthSessionBehavior(),
       instanceName: 'flutter-better-auth-session-behavior',
@@ -138,6 +137,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Interceptor>(
       () => coreModule.logInterceptor(gh<_i993.Talker>()),
       instanceName: 'log-interceptor',
+    );
+    gh.lazySingleton<_i515.PreOrderDioClient>(
+      () => _i515.PreOrderDioClient(
+        gh<_i361.Interceptor>(instanceName: 'log-interceptor'),
+        gh<_i361.Interceptor>(instanceName: 'auth-interceptor'),
+      ),
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.getPrivateDio(

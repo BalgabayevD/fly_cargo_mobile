@@ -1,17 +1,43 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fly_cargo/core/network/api_config.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-/// Минималистичный HTTP клиент только для вызова /api/v1/orders/client/pre
+/// HTTP клиент для вызова /api/v1/orders/client/pre с логированием
 @lazySingleton
 class PreOrderDioClient {
+  late final Dio _dio;
+
+  PreOrderDioClient(
+    @Named('log-interceptor') Interceptor logInterceptor,
+    @Named('auth-interceptor') Interceptor authInterceptor,
+  ) {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: ApiConfig.baseUrl,
+        connectTimeout: const Duration(seconds: 420),
+        receiveTimeout: const Duration(seconds: 420),
+        sendTimeout: const Duration(seconds: 420),
+      ),
+    );
+
+    // Добавляем interceptors: сначала auth, потом log
+    _dio.interceptors.addAll([authInterceptor, logInterceptor]);
+
+    // Настройка для игнорирования сертификатов (только для разработки)
+    _dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        final client = HttpClient();
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      },
+    );
+  }
+
   /// Конвертирует изображение в JPEG с сжатием
   Future<File> _convertToJpeg(File originalFile) async {
     try {
@@ -51,109 +77,62 @@ class PreOrderDioClient {
   /// Выполняет POST запрос на /api/v1/orders/client/pre
   /// Принимает список файлов вместо FormData
   Future<Map<String, dynamic>> postPreOrder(List<File> files) async {
-    // Получаем токен из SharedPreferences
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('auth-token');
-
-    print('🔑 Token присутствует: ${token != null && token.isNotEmpty}');
-
-    // Создаем HttpClient с настройками для тестирования
-    final httpClient = HttpClient()
-      ..badCertificateCallback = (cert, host, port) {
-        print('⚠️ Ignoring bad certificate for $host:$port');
-        return true; // ВРЕМЕННО игнорируем проблемы с сертификатом
-      }
-      ..connectionTimeout = const Duration(seconds: 420);
-
-    final ioClient = IOClient(httpClient);
-
     try {
-      // Создаем multipart request
-      final uri = Uri.parse('${ApiConfig.baseUrl}/api/v1/orders/client/pre');
-      final request = http.MultipartRequest('POST', uri);
-
-      // Добавляем ТОЛЬКО Authorization header (минимум)
-      if (token != null && token.isNotEmpty) {
-        request.headers['Authorization'] = 'Bearer $token';
-      }
-
-      print('🔍 Минимальные заголовки - только Authorization');
+      // Создаем FormData для multipart/form-data запроса
+      final formData = FormData();
 
       // Конвертируем и добавляем файлы
       for (var file in files) {
         // Конвертируем изображение в JPEG
         final jpegFile = await _convertToJpeg(file);
         final fileName = jpegFile.uri.pathSegments.last;
-        final fileBytes = await jpegFile.readAsBytes();
 
-        request.files.add(
-          http.MultipartFile.fromBytes(
-            'file',
-            fileBytes,
-            filename: fileName.endsWith('.jpg') || fileName.endsWith('.jpeg')
-                ? fileName
-                : '${fileName.split('.').first}.jpg',
-            // Автоматически определится как image/jpeg
-          ),
+        final multipartFile = await MultipartFile.fromFile(
+          jpegFile.path,
+          filename: fileName.endsWith('.jpg') || fileName.endsWith('.jpeg')
+              ? fileName
+              : '${fileName.split('.').first}.jpg',
         );
 
-        print('  📎 Добавлен файл: $fileName (${fileBytes.length} bytes)');
+        formData.files.add(MapEntry('file', multipartFile));
+
+        print('  📎 Добавлен файл: $fileName');
       }
 
       print('📤 Отправка POST /api/v1/orders/client/pre');
-      print('🔍 Headers: ${request.headers}');
-      print('🔍 Files count: ${request.files.length}');
-      for (var file in request.files) {
-        print(
-          '   - ${file.field}: ${file.filename} (${file.length} bytes, ${file.contentType})',
-        );
-      }
-      print('🔍 Content-Type будет установлен автоматически с boundary');
 
-      // Отправляем запрос через IOClient
-      final streamedResponse = await ioClient
-          .send(request)
-          .timeout(
-            const Duration(seconds: 420),
-          );
+      // Отправляем запрос через Dio (логирование будет автоматическим)
+      final response = await _dio.post<Map<String, dynamic>>(
+        '/api/v1/orders/client/pre',
+        data: formData,
+      );
 
-      // Получаем ответ
-      final response = await http.Response.fromStream(streamedResponse);
-
-      print('📊 Статус: ${response.statusCode}');
-      print('📥 Response Headers: ${response.headers}');
-      print('📄 Response Body: ${response.body}');
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.data != null) {
         print('✨ Успех!');
-        final jsonData = json.decode(response.body) as Map<String, dynamic>;
-        return jsonData;
+        return response.data!;
       } else {
-        print('❌ Ошибка HTTP: ${response.statusCode}');
-
-        // Пытаемся распарсить JSON для детальной ошибки
-        try {
-          final errorData = json.decode(response.body) as Map<String, dynamic>;
-          print('🔍 Детали ошибки: $errorData');
-          final code = errorData['code'];
-          final description = errorData['description'] ?? 'Unknown error';
-          final success = errorData['success'];
-          print('   Code: $code');
-          print('   Description: $description');
-          print('   Success: $success');
-
-          throw Exception(
-            'Ошибка сервера (${response.statusCode}): $description',
-          );
-        } catch (e) {
-          print('⚠️ Не удалось распарсить ошибку: $e');
-          throw Exception(
-            'Ошибка сервера: ${response.statusCode}, body: ${response.body}',
-          );
-        }
+        throw Exception('Неожиданный ответ сервера: ${response.statusCode}');
       }
-    } finally {
-      ioClient.close();
+    } on DioException catch (e) {
+      print('❌ Ошибка Dio: ${e.type}');
+
+      if (e.response != null) {
+        final statusCode = e.response!.statusCode;
+        final responseData = e.response!.data;
+
+        print('🔍 Статус: $statusCode');
+        print('🔍 Данные: $responseData');
+
+        // Пытаемся извлечь детали ошибки
+        if (responseData is Map<String, dynamic>) {
+          final description = responseData['description'] ?? 'Unknown error';
+          throw Exception('Ошибка сервера ($statusCode): $description');
+        }
+
+        throw Exception('Ошибка сервера: $statusCode');
+      }
+
+      throw Exception('Ошибка сети: ${e.message}');
     }
   }
 }
