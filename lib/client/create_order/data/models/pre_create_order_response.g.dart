@@ -29,7 +29,7 @@ Map<String, dynamic> _$PreCreateOrderDataToJson(_PreCreateOrderData instance) =>
 _PreCreateOrderResult _$PreCreateOrderResultFromJson(
   Map<String, dynamic> json,
 ) => _PreCreateOrderResult(
-  status: json['status'] as String,
+  status: $enumDecode(_$AnalysisStatusEnumMap, json['status']),
   success: json['success'] as bool,
   result: PreCreateOrderData.fromJson(json['result'] as Map<String, dynamic>),
 );
@@ -37,9 +37,15 @@ _PreCreateOrderResult _$PreCreateOrderResultFromJson(
 Map<String, dynamic> _$PreCreateOrderResultToJson(
   _PreCreateOrderResult instance,
 ) => <String, dynamic>{
-  'status': instance.status,
+  'status': _$AnalysisStatusEnumMap[instance.status]!,
   'success': instance.success,
   'result': instance.result,
+};
+
+const _$AnalysisStatusEnumMap = {
+  AnalysisStatus.none: 'NONE',
+  AnalysisStatus.morePhotoInside: 'MORE_PHOTO_INSIDE',
+  AnalysisStatus.morePhotoOutside: 'MORE_PHOTO_OUTSIDE',
 };
 
 _PreCreateOrderResponse _$PreCreateOrderResponseFromJson(

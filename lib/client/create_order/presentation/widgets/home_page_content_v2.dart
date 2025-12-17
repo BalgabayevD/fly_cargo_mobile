@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/client/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/client/create_order/presentation/widgets/order_field_card_v2.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
@@ -21,6 +22,8 @@ class HomePageContentV2 extends StatelessWidget {
   final Function(File) onRemovePhoto;
   final VoidCallback? onWeightTap;
   final bool isAnalyzing;
+  final bool isAnalysisCompleted;
+  final AnalysisStatus? analysisStatus;
 
   const HomePageContentV2({
     required this.fromAddress,
@@ -38,8 +41,56 @@ class HomePageContentV2 extends StatelessWidget {
     required this.onRemovePhoto,
     this.onWeightTap,
     this.isAnalyzing = false,
+    this.isAnalysisCompleted = false,
+    this.analysisStatus,
     super.key,
   });
+
+  Widget _buildAnalysisStatusMessage(AnalysisStatus status) {
+    switch (status) {
+      case AnalysisStatus.none:
+        // Достаточно фото - показываем успех
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check_circle,
+              size: 20,
+              color: AppColors.success,
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            Text(
+              'Анализ завершен',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.success,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
+      case AnalysisStatus.morePhotoInside:
+        // Нужно больше фото содержимого
+        return Text(
+          'Сфотографируйте содержимое посылки',
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.danger,
+            fontWeight: FontWeight.w400,
+          ),
+        );
+      case AnalysisStatus.morePhotoOutside:
+        // Нужно больше фото снаружи
+        return Text(
+          'Сфотографируйте посылку снаружи',
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.danger,
+            fontWeight: FontWeight.w400,
+          ),
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +149,7 @@ class HomePageContentV2 extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  'Загружаем фото',
+                  'Анализируем фото...',
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.surface4,
@@ -107,7 +158,7 @@ class HomePageContentV2 extends StatelessWidget {
                 ),
               ],
             )
-          else
+          else if (!isAnalysisCompleted && photos.isEmpty)
             Text(
               'Сфотографируйте содержимое посылки',
               style: TextStyle(
@@ -115,7 +166,9 @@ class HomePageContentV2 extends StatelessWidget {
                 color: AppColors.danger,
                 fontWeight: FontWeight.w400,
               ),
-            ),
+            )
+          else if (isAnalysisCompleted && analysisStatus != null)
+            _buildAnalysisStatusMessage(analysisStatus!),
           const SizedBox(height: AppSpacing.lg),
           OrderFieldCardV2(
             label: 'Откуда',
@@ -142,12 +195,14 @@ class HomePageContentV2 extends StatelessWidget {
             value: tariffWeight?.toStringAsFixed(1),
             showChevron: onWeightTap != null,
             onTap: onWeightTap,
+            isEnabled: isAnalysisCompleted && !isAnalyzing,
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCardV2(
             label: 'Описание',
             value: description,
             onTap: onDescriptionForm,
+            isEnabled: isAnalysisCompleted && !isAnalyzing,
           ),
         ],
       ),

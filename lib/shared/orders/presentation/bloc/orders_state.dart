@@ -50,7 +50,11 @@ class OrderDetailLoaded extends OrdersState {
 
 class PreOrderAnalyzed extends OrdersState {
   final PreCreateOrderData preOrderData;
-  const PreOrderAnalyzed({required this.preOrderData});
+  final AnalysisStatus analysisStatus;
+  const PreOrderAnalyzed({
+    required this.preOrderData,
+    required this.analysisStatus,
+  });
   @override
-  List<Object?> get props => [preOrderData];
+  List<Object?> get props => [preOrderData, analysisStatus];
 }

@@ -58,7 +58,10 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     emit(const OrdersLoading());
     try {
       final result = await _preCreateOrderUseCase.call(event.images);
-      emit(PreOrderAnalyzed(preOrderData: result));
+      emit(PreOrderAnalyzed(
+        preOrderData: result.result,
+        analysisStatus: result.status,
+      ));
     } catch (e) {
       if (_isUnauthorized(e)) {
         emit(const OrdersUnauthorized());

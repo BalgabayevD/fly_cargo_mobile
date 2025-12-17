@@ -7,24 +7,28 @@ class OrderFieldCardV2 extends StatelessWidget {
   final String? value;
   final VoidCallback? onTap;
   final bool showChevron;
+  final bool isEnabled;
 
   const OrderFieldCardV2({
     required this.label,
     this.value,
     this.onTap,
     this.showChevron = true,
+    this.isEnabled = true,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    final bool isDisabled = !isEnabled;
+    
     return InkWell(
-      onTap: onTap,
+      onTap: isDisabled ? null : onTap,
       borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: isDisabled ? AppColors.surface2 : AppColors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
         ),
         child: Row(
@@ -37,7 +41,7 @@ class OrderFieldCardV2 extends StatelessWidget {
                     label,
                     style: TextStyle(
                       fontSize: 13,
-                      color: AppColors.surface4,
+                      color: isDisabled ? AppColors.surface3 : AppColors.surface4,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -47,7 +51,7 @@ class OrderFieldCardV2 extends StatelessWidget {
                       value!,
                       style: TextStyle(
                         fontSize: 16,
-                        color: AppColors.surface5,
+                        color: isDisabled ? AppColors.surface3 : AppColors.surface5,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -60,7 +64,7 @@ class OrderFieldCardV2 extends StatelessWidget {
               HeroIcon(
                 HeroIcons.chevronRight,
                 size: 20,
-                color: AppColors.surface4,
+                color: isDisabled ? AppColors.surface3 : AppColors.surface4,
               ),
             ],
           ],

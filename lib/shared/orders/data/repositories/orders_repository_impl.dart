@@ -26,7 +26,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   }
 
   @override
-  Future<PreCreateOrderData> preCreateOrder(List<File> images) async {
+  Future<PreCreateOrderResult> preCreateOrder(List<File> images) async {
     try {
       print('🔍 Подготовка ${images.length} фото для анализа');
 
@@ -39,8 +39,8 @@ class OrdersRepositoryImpl implements OrdersRepository {
         throw OrdersException('Сервер вернул пустые данные');
       }
 
-      print('✨ Pre-order создан успешно');
-      return preCreateResponse.data!.result;
+      print('✨ Pre-order создан успешно, статус: ${preCreateResponse.data!.status}');
+      return preCreateResponse.data!;
     } catch (e, stackTrace) {
       print('❌ Ошибка при preCreateOrder: $e');
       print('📍 Stack trace: $stackTrace');

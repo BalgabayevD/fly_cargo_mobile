@@ -287,7 +287,7 @@ as int,
 /// @nodoc
 mixin _$PreCreateOrderResult {
 
- String get status; bool get success; PreCreateOrderData get result;
+ AnalysisStatus get status; bool get success; PreCreateOrderData get result;
 /// Create a copy of PreCreateOrderResult
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -320,7 +320,7 @@ abstract mixin class $PreCreateOrderResultCopyWith<$Res>  {
   factory $PreCreateOrderResultCopyWith(PreCreateOrderResult value, $Res Function(PreCreateOrderResult) _then) = _$PreCreateOrderResultCopyWithImpl;
 @useResult
 $Res call({
- String status, bool success, PreCreateOrderData result
+ AnalysisStatus status, bool success, PreCreateOrderData result
 });
 
 
@@ -340,7 +340,7 @@ class _$PreCreateOrderResultCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? success = null,Object? result = null,}) {
   return _then(_self.copyWith(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as AnalysisStatus,success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
 as bool,result: null == result ? _self.result : result // ignore: cast_nullable_to_non_nullable
 as PreCreateOrderData,
   ));
@@ -433,7 +433,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String status,  bool success,  PreCreateOrderData result)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AnalysisStatus status,  bool success,  PreCreateOrderData result)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PreCreateOrderResult() when $default != null:
 return $default(_that.status,_that.success,_that.result);case _:
@@ -454,7 +454,7 @@ return $default(_that.status,_that.success,_that.result);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String status,  bool success,  PreCreateOrderData result)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AnalysisStatus status,  bool success,  PreCreateOrderData result)  $default,) {final _that = this;
 switch (_that) {
 case _PreCreateOrderResult():
 return $default(_that.status,_that.success,_that.result);}
@@ -471,7 +471,7 @@ return $default(_that.status,_that.success,_that.result);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String status,  bool success,  PreCreateOrderData result)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AnalysisStatus status,  bool success,  PreCreateOrderData result)?  $default,) {final _that = this;
 switch (_that) {
 case _PreCreateOrderResult() when $default != null:
 return $default(_that.status,_that.success,_that.result);case _:
@@ -489,7 +489,7 @@ class _PreCreateOrderResult implements PreCreateOrderResult {
   const _PreCreateOrderResult({required this.status, required this.success, required this.result});
   factory _PreCreateOrderResult.fromJson(Map<String, dynamic> json) => _$PreCreateOrderResultFromJson(json);
 
-@override final  String status;
+@override final  AnalysisStatus status;
 @override final  bool success;
 @override final  PreCreateOrderData result;
 
@@ -526,7 +526,7 @@ abstract mixin class _$PreCreateOrderResultCopyWith<$Res> implements $PreCreateO
   factory _$PreCreateOrderResultCopyWith(_PreCreateOrderResult value, $Res Function(_PreCreateOrderResult) _then) = __$PreCreateOrderResultCopyWithImpl;
 @override @useResult
 $Res call({
- String status, bool success, PreCreateOrderData result
+ AnalysisStatus status, bool success, PreCreateOrderData result
 });
 
 
@@ -546,7 +546,7 @@ class __$PreCreateOrderResultCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? success = null,Object? result = null,}) {
   return _then(_PreCreateOrderResult(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as AnalysisStatus,success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
 as bool,result: null == result ? _self.result : result // ignore: cast_nullable_to_non_nullable
 as PreCreateOrderData,
   ));

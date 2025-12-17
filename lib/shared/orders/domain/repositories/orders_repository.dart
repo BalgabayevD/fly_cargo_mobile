@@ -5,7 +5,7 @@ import 'package:fly_cargo/shared/orders/data/models/models.dart';
 
 abstract class OrdersRepository {
   Future<OrderResult> createOrder(OrderData orderData);
-  Future<PreCreateOrderData> preCreateOrder(List<File> images);
+  Future<PreCreateOrderResult> preCreateOrder(List<File> images);
   Future<PriceCalculationModel> calculateOrderPrice({
     required int tariffId,
     required int fromCityId,

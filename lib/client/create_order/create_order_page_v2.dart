@@ -64,6 +64,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
   // ignore: unused_field
   PreCreateOrderData? _preOrderData;
+  AnalysisStatus? _analysisStatus;
   bool _isAnalyzing = false;
 
   Future<void> _openFromAddressSelection() async {
@@ -375,6 +376,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
           setState(() {
             _isAnalyzing = false;
             _preOrderData = state.preOrderData;
+            _analysisStatus = state.analysisStatus;
             _description = state.preOrderData.description;
             _selectedTariffId = state.preOrderData.tariffId;
             _customLength = state.preOrderData.length.toDouble();
@@ -382,12 +384,16 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
             _customHeight = state.preOrderData.height.toDouble();
             _tariffWeight = state.preOrderData.weight;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Анализ завершен! Данные заполнены автоматически'),
-              backgroundColor: AppColors.success,
-            ),
-          );
+          
+          // Показываем сообщение только если статус NONE (достаточно фото)
+          if (state.analysisStatus == AnalysisStatus.none) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Анализ завершен! Данные заполнены автоматически'),
+                backgroundColor: AppColors.success,
+              ),
+            );
+          }
         } else if (state is OrderCreated) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -417,6 +423,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
             _deliveryDate = null;
             _calculatedPrice = null;
             _preOrderData = null;
+            _analysisStatus = null;
             _isAnalyzing = false;
           });
         }
@@ -468,6 +475,8 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
           onRemovePhoto: _removePhoto,
           onWeightTap: _openTariffSelection,
           isAnalyzing: _isAnalyzing,
+          isAnalysisCompleted: _preOrderData != null,
+          analysisStatus: _analysisStatus,
         ),
       ),
     );

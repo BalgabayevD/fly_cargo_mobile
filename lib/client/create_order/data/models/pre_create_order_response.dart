@@ -3,6 +3,18 @@
 part 'pre_create_order_response.freezed.dart';
 part 'pre_create_order_response.g.dart';
 
+/// Статус анализа фотографий
+enum AnalysisStatus {
+  @JsonValue('NONE')
+  none, // Достаточно фото
+  
+  @JsonValue('MORE_PHOTO_INSIDE')
+  morePhotoInside, // Нужно больше фото содержимого
+  
+  @JsonValue('MORE_PHOTO_OUTSIDE')
+  morePhotoOutside, // Нужно больше фото снаружи
+}
+
 @freezed
 sealed class PreCreateOrderData with _$PreCreateOrderData {
   const factory PreCreateOrderData({
@@ -21,7 +33,7 @@ sealed class PreCreateOrderData with _$PreCreateOrderData {
 @freezed
 sealed class PreCreateOrderResult with _$PreCreateOrderResult {
   const factory PreCreateOrderResult({
-    required String status,
+    required AnalysisStatus status,
     required bool success,
     required PreCreateOrderData result,
   }) = _PreCreateOrderResult;

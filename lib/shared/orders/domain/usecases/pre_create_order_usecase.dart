@@ -10,7 +10,7 @@ class PreCreateOrderUseCase {
 
   PreCreateOrderUseCase(this._repository);
 
-  Future<PreCreateOrderData> call(List<File> images) async {
+  Future<PreCreateOrderResult> call(List<File> images) async {
     if (images.isEmpty) {
       throw Exception('Необходимо загрузить хотя бы одно изображение');
     }
