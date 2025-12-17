@@ -20,7 +20,6 @@ class HomePageContentV2 extends StatelessWidget {
   final VoidCallback onPickPhoto;
   final Function(File) onRemovePhoto;
   final VoidCallback? onWeightTap;
-  final VoidCallback? onAnalyzePhotos;
   final bool isAnalyzing;
 
   const HomePageContentV2({
@@ -38,7 +37,6 @@ class HomePageContentV2 extends StatelessWidget {
     required this.onPickPhoto,
     required this.onRemovePhoto,
     this.onWeightTap,
-    this.onAnalyzePhotos,
     this.isAnalyzing = false,
     super.key,
   });
@@ -83,42 +81,41 @@ class HomePageContentV2 extends StatelessWidget {
               ),
             ],
           ),
-          if (onAnalyzePhotos != null && photos.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.md),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: isAnalyzing ? null : onAnalyzePhotos,
-                icon: isAnalyzing
-                    ? SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.white,
-                          ),
-                        ),
-                      )
-                    : Icon(Icons.auto_awesome, color: AppColors.white),
-                label: Text(
-                  isAnalyzing ? 'Анализ...' : 'Анализировать с помощью AI',
+          const SizedBox(height: AppSpacing.md),
+          if (isAnalyzing)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.primary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Text(
+                  'Загружаем фото',
                   style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: AppColors.surface4,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  ),
-                ),
+              ],
+            )
+          else
+            Text(
+              'Сфотографируйте содержимое посылки',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.danger,
+                fontWeight: FontWeight.w400,
               ),
             ),
-          ],
           const SizedBox(height: AppSpacing.lg),
           OrderFieldCardV2(
             label: 'Откуда',

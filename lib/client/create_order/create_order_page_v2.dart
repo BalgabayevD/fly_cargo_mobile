@@ -229,6 +229,11 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
         setState(() {
           _photoIds[photoFile] = photoId;
         });
+        
+        // Автоматически запускаем анализ при добавлении 3-й фотографии
+        if (_photos.length == 3 && !_isAnalyzing) {
+          _startAutoAnalysis();
+        }
       } catch (e) {
         setState(() {
           _photos.remove(photoFile);
@@ -252,9 +257,8 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
     });
   }
 
-  Future<void> _analyzePhotosWithGPT() async {
-    if (_photos.isEmpty) {
-      _showError('Добавьте фотографии для анализа');
+  Future<void> _startAutoAnalysis() async {
+    if (_photos.length < 3) {
       return;
     }
 
@@ -459,7 +463,6 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
           onPickPhoto: _pickPhoto,
           onRemovePhoto: _removePhoto,
           onWeightTap: _openTariffSelection,
-          onAnalyzePhotos: _analyzePhotosWithGPT,
           isAnalyzing: _isAnalyzing,
         ),
       ),

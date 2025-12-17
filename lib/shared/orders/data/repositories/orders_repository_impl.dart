@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:fly_cargo/client/create_order/data/models/pre_create_order_response.dart';
+import 'package:fly_cargo/core/network/api_config.dart';
 import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/data/orders_remote_source.dart';
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @LazySingleton(as: OrdersRepository)
 class OrdersRepositoryImpl implements OrdersRepository {
   final OrdersRemoteSource _remoteSource;
+
   OrdersRepositoryImpl(this._remoteSource);
   @override
   Future<OrderResult> createOrder(OrderData orderData) async {
@@ -25,19 +28,60 @@ class OrdersRepositoryImpl implements OrdersRepository {
   @override
   Future<PreCreateOrderData> preCreateOrder(List<File> images) async {
     try {
-      final List<MultipartFile> files = [];
-      
-      for (var image in images) {
-        final fileName = image.uri.pathSegments.last;
-        final multipartFile = await MultipartFile.fromFile(
-          image.path,
-          filename: fileName,
-        );
-        files.add(multipartFile);
+      // ТЕСТ: Берем только первое изображение
+      final testImage = images.first;
+
+      // Создаем FormData с одним файлом
+      final formData = FormData();
+      final fileName = testImage.uri.pathSegments.last;
+      final multipartFile = await MultipartFile.fromFile(
+        testImage.path,
+        filename: fileName,
+      );
+      formData.files.add(MapEntry('file', multipartFile));
+
+      // Создаем чистый Dio клиент без FlutterBetterAuth
+      final cleanDio = Dio(
+        BaseOptions(
+          baseUrl: ApiConfig.baseUrl,
+          connectTimeout: const Duration(seconds: 420),
+          receiveTimeout: const Duration(seconds: 420),
+          sendTimeout: const Duration(seconds: 420),
+        ),
+      );
+
+      // Получаем токен из SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth-token');
+
+      final authHeaders = <String, dynamic>{};
+      if (token != null && token.isNotEmpty) {
+        authHeaders['Authorization'] = 'Bearer $token';
       }
-      
-      final response = await _remoteSource.createOrderPre(files);
-      return response.result;
+
+      final response = await cleanDio.post<Map<String, dynamic>>(
+        '/api/v1/orders/client/pre',
+        data: formData,
+        options: Options(
+          headers: authHeaders,
+        ),
+      );
+
+      if (response.data == null) {
+        throw OrdersException('Сервер вернул пустой ответ');
+      }
+
+      final preCreateResponse = PreCreateOrderResponse.fromJson(response.data!);
+
+      if (preCreateResponse.data == null) {
+        throw OrdersException('Сервер вернул пустые данные');
+      }
+
+      return preCreateResponse.data!.result;
+    } on DioException catch (e) {
+      throw OrdersException(
+        'Ошибка при анализе изображений: ${e.error ?? e.message ?? "Unknown error"}',
+      );
     } catch (e) {
       throw OrdersException('Ошибка при анализе изображений: $e');
     }
