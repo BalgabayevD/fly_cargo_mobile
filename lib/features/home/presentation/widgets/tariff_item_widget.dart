@@ -130,7 +130,7 @@ class CustomSizesButton extends StatelessWidget {
           horizontal: AppSpacing.lg,
         ),
         decoration: BoxDecoration(
-          color: AppColors.warning,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
         ),
         child: Center(

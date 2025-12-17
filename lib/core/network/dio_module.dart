@@ -1,6 +1,7 @@
 ﻿import 'package:dio/dio.dart';
 import 'package:flutter_better_auth/flutter_better_auth.dart';
 import 'package:injectable/injectable.dart';
+
 @module
 abstract class DioModule {
   @Named('private-dio')
@@ -9,7 +10,14 @@ abstract class DioModule {
     @Named('log-interceptor') Interceptor logInterceptor,
     @Named('auth-interceptor') Interceptor authInterceptor,
   ) {
-    final dio = Dio(FlutterBetterAuth.dioClient.options);
+    final dio = Dio(
+      FlutterBetterAuth.dioClient.options.copyWith(
+        receiveTimeout: const Duration(seconds: 420),
+        sendTimeout: const Duration(
+          seconds: 420,
+        ),
+      ),
+    );
     dio.interceptors.addAll([logInterceptor, authInterceptor]);
     return dio;
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:fly_cargo/shared/orders/data/models/models.dart';
 
@@ -12,6 +14,13 @@ class CreateOrderEvent extends OrdersEvent {
   const CreateOrderEvent({required this.orderData});
   @override
   List<Object?> get props => [orderData];
+}
+
+class PreCreateOrderEvent extends OrdersEvent {
+  final List<File> images;
+  const PreCreateOrderEvent({required this.images});
+  @override
+  List<Object?> get props => [images];
 }
 
 class ResetOrdersEvent extends OrdersEvent {

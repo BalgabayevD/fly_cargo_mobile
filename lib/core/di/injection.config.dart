@@ -74,6 +74,8 @@ import 'package:fly_cargo/shared/orders/domain/usecases/get_created_orders_useca
     as _i1011;
 import 'package:fly_cargo/shared/orders/domain/usecases/get_order_by_id_usecase.dart'
     as _i177;
+import 'package:fly_cargo/shared/orders/domain/usecases/pre_create_order_usecase.dart'
+    as _i401;
 import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart'
     as _i910;
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
@@ -249,17 +251,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i369.CreateTariffUseCase>(
       () => _i369.CreateTariffUseCase(gh<_i528.TariffsRepository>()),
     );
+    gh.factory<_i401.PreCreateOrderUseCase>(
+      () => _i401.PreCreateOrderUseCase(gh<_i919.OrdersRepository>()),
+    );
     gh.factory<_i133.GetTariffCategoriesUseCase>(
       () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
-    );
-    gh.factory<_i837.OrdersBloc>(
-      () => _i837.OrdersBloc(
-        gh<_i49.CreateOrderUseCase>(),
-        gh<_i33.GetClientOrdersUseCase>(),
-        gh<_i189.GetCourierOrdersUseCase>(),
-        gh<_i1011.GetCreatedOrdersUseCase>(),
-        gh<_i177.GetOrderByIdUseCase>(),
-      ),
     );
     gh.factory<_i1019.TariffSelectionBloc>(
       () => _i1019.TariffSelectionBloc(
@@ -268,6 +264,16 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i545.TariffsBloc>(
       () => _i545.TariffsBloc(gh<_i133.GetTariffCategoriesUseCase>()),
+    );
+    gh.factory<_i837.OrdersBloc>(
+      () => _i837.OrdersBloc(
+        gh<_i49.CreateOrderUseCase>(),
+        gh<_i401.PreCreateOrderUseCase>(),
+        gh<_i33.GetClientOrdersUseCase>(),
+        gh<_i189.GetCourierOrdersUseCase>(),
+        gh<_i1011.GetCreatedOrdersUseCase>(),
+        gh<_i177.GetOrderByIdUseCase>(),
+      ),
     );
     return this;
   }

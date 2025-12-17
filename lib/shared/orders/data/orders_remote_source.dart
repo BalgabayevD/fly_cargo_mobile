@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fly_cargo/client/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/shared/orders/data/models/file_upload_models.dart';
 import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:retrofit/retrofit.dart';
@@ -10,6 +11,12 @@ abstract class OrdersRemoteSource {
   factory OrdersRemoteSource(Dio dio, {String baseUrl}) = _OrdersRemoteSource;
   @POST('/api/v1/orders')
   Future<CreateOrderResponse> createOrder(@Body() CreateOrderRequest request);
+
+  @POST('/api/v1/orders/client/pre')
+  @MultiPart()
+  Future<PreCreateOrderResult> createOrderPre(
+    @Part(name: 'file') List<MultipartFile> files,
+  );
 
   @POST('/api/v1/orders/price')
   Future<CalculateOrderPriceResponse> calculateOrderPrice(

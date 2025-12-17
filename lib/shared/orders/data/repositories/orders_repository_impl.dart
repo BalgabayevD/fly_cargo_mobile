@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:fly_cargo/client/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/data/orders_remote_source.dart';
 import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart';
@@ -18,6 +19,27 @@ class OrdersRepositoryImpl implements OrdersRepository {
       return OrderResult.fromOrderModel(response.data);
     } catch (e) {
       throw OrdersException('Ошибка при создании заказа: $e');
+    }
+  }
+
+  @override
+  Future<PreCreateOrderData> preCreateOrder(List<File> images) async {
+    try {
+      final List<MultipartFile> files = [];
+      
+      for (var image in images) {
+        final fileName = image.uri.pathSegments.last;
+        final multipartFile = await MultipartFile.fromFile(
+          image.path,
+          filename: fileName,
+        );
+        files.add(multipartFile);
+      }
+      
+      final response = await _remoteSource.createOrderPre(files);
+      return response.result;
+    } catch (e) {
+      throw OrdersException('Ошибка при анализе изображений: $e');
     }
   }
 

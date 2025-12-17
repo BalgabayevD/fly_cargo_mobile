@@ -48,6 +48,39 @@ class _OrdersRemoteSource implements OrdersRemoteSource {
   }
 
   @override
+  Future<PreCreateOrderResult> createOrderPre(List<MultipartFile> files) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.addAll(files.map((i) => MapEntry('file', i)));
+    final _options = _setStreamType<PreCreateOrderResult>(
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            '/api/v1/orders/client/pre',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PreCreateOrderResult _value;
+    try {
+      _value = PreCreateOrderResult.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<CalculateOrderPriceResponse> calculateOrderPrice(
     Map<String, dynamic> body,
   ) async {

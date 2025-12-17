@@ -5,6 +5,7 @@ import 'package:fly_cargo/shared/orders/domain/usecases/get_client_orders_usecas
 import 'package:fly_cargo/shared/orders/domain/usecases/get_courier_orsers_usecase.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/get_created_orders_usecase.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/get_order_by_id_usecase.dart';
+import 'package:fly_cargo/shared/orders/domain/usecases/pre_create_order_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
 import 'package:injectable/injectable.dart';
@@ -12,18 +13,21 @@ import 'package:injectable/injectable.dart';
 @injectable
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final CreateOrderUseCase _createOrderUseCase;
+  final PreCreateOrderUseCase _preCreateOrderUseCase;
   final GetClientOrdersUseCase _getClientOrdersUseCase;
   final GetCourierOrdersUseCase _getCourierOrdersUseCase;
   final GetCreatedOrdersUseCase _getCreatedOrdersUseCase;
   final GetOrderByIdUseCase _getOrderByIdUseCase;
   OrdersBloc(
     this._createOrderUseCase,
+    this._preCreateOrderUseCase,
     this._getClientOrdersUseCase,
     this._getCourierOrdersUseCase,
     this._getCreatedOrdersUseCase,
     this._getOrderByIdUseCase,
   ) : super(const OrdersInitial()) {
     on<CreateOrderEvent>(_onCreateOrder);
+    on<PreCreateOrderEvent>(_onPreCreateOrder);
     on<ResetOrdersEvent>(_onResetOrders);
     on<GetClientOrdersEvent>(_onGetClientOrders);
     on<GetCourierOrdersEvent>(_onGetCourierOrders);
@@ -38,6 +42,23 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     try {
       final result = await _createOrderUseCase.call(event.orderData);
       emit(OrderCreated(orderResult: result));
+    } catch (e) {
+      if (_isUnauthorized(e)) {
+        emit(const OrdersUnauthorized());
+      } else {
+        emit(OrdersError(message: e.toString()));
+      }
+    }
+  }
+
+  Future<void> _onPreCreateOrder(
+    PreCreateOrderEvent event,
+    Emitter<OrdersState> emit,
+  ) async {
+    emit(const OrdersLoading());
+    try {
+      final result = await _preCreateOrderUseCase.call(event.images);
+      emit(PreOrderAnalyzed(preOrderData: result));
     } catch (e) {
       if (_isUnauthorized(e)) {
         emit(const OrdersUnauthorized());
