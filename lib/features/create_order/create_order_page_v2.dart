@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/client/create_order/data/models/pre_create_order_response.dart';
-import 'package:fly_cargo/client/create_order/presentation/widgets/home_page_content_v2.dart';
+import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/home_page_content_v2.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/router/app_router.dart';

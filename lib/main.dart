@@ -27,7 +27,6 @@ Future<void> main() async {
 
   final prefs = await SharedPreferences.getInstance();
 
-  // Проверяем наличие токена напрямую из SharedPreferences
   final storedToken = prefs.getString('auth-token');
   final hasToken = storedToken != null && storedToken.isNotEmpty;
 
