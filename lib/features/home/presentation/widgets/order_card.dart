@@ -21,7 +21,6 @@ class OrderCard extends StatelessWidget {
       final formatter = DateFormat('d.M.yyyy', 'ru');
       return formatter.format(date.toLocal());
     } catch (e) {
-      print('DateFormat error: $e');
       return dateString;
     }
   }

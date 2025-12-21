@@ -28,9 +28,6 @@ class OrdersRepositoryImpl implements OrdersRepository {
   @override
   Future<PreCreateOrderResult> preCreateOrder(List<File> images) async {
     try {
-      print('🔍 Подготовка ${images.length} фото для анализа');
-
-      // Используем HTTP клиент напрямую с файлами
       final responseData = await _preOrderClient.postPreOrder(images);
 
       final preCreateResponse = PreCreateOrderResponse.fromJson(responseData);
@@ -39,11 +36,8 @@ class OrdersRepositoryImpl implements OrdersRepository {
         throw OrdersException('Сервер вернул пустые данные');
       }
 
-      print('✨ Pre-order создан успешно, статус: ${preCreateResponse.data!.status}');
       return preCreateResponse.data!;
     } catch (e, stackTrace) {
-      print('❌ Ошибка при preCreateOrder: $e');
-      print('📍 Stack trace: $stackTrace');
       throw OrdersException('Ошибка при анализе изображений: $e');
     }
   }

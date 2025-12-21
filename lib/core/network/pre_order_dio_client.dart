@@ -7,7 +7,6 @@ import 'package:fly_cargo/core/network/api_config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 
-/// HTTP клиент для вызова /api/v1/orders/client/pre с логированием
 @lazySingleton
 class PreOrderDioClient {
   late final Dio _dio;
@@ -45,9 +44,6 @@ class PreOrderDioClient {
       final fileName = originalFile.uri.pathSegments.last.split('.').first;
       final targetPath = '${tempDir.path}/${fileName}_compressed.jpg';
 
-      print('  🔄 Конвертация в JPEG: ${originalFile.path}');
-      print('     Исходный размер: ${await originalFile.length()} bytes');
-
       // Конвертируем и сжимаем до JPEG с качеством 85%
       final result = await FlutterImageCompress.compressAndGetFile(
         originalFile.path,
@@ -57,19 +53,11 @@ class PreOrderDioClient {
       );
 
       if (result != null) {
-        final compressedFile = File(result.path);
-        final compressedSize = await compressedFile.length();
-        print('     Сжатый размер: $compressedSize bytes');
-        print(
-          '     Экономия: ${((1 - compressedSize / await originalFile.length()) * 100).toStringAsFixed(1)}%',
-        );
-        return compressedFile;
+        return File(result.path);
       } else {
-        print('     ⚠️ Конвертация не удалась, используем оригинал');
         return originalFile;
       }
     } catch (e) {
-      print('     ⚠️ Ошибка конвертации: $e, используем оригинал');
       return originalFile;
     }
   }
@@ -95,11 +83,7 @@ class PreOrderDioClient {
         );
 
         formData.files.add(MapEntry('file', multipartFile));
-
-        print('  📎 Добавлен файл: $fileName');
       }
-
-      print('📤 Отправка POST /api/v1/orders/client/pre');
 
       // Отправляем запрос через Dio (логирование будет автоматическим)
       final response = await _dio.post<Map<String, dynamic>>(
@@ -108,20 +92,14 @@ class PreOrderDioClient {
       );
 
       if (response.statusCode == 200 && response.data != null) {
-        print('✨ Успех!');
         return response.data!;
       } else {
         throw Exception('Неожиданный ответ сервера: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      print('❌ Ошибка Dio: ${e.type}');
-
       if (e.response != null) {
         final statusCode = e.response!.statusCode;
         final responseData = e.response!.data;
-
-        print('🔍 Статус: $statusCode');
-        print('🔍 Данные: $responseData');
 
         // Пытаемся извлечь детали ошибки
         if (responseData is Map<String, dynamic>) {

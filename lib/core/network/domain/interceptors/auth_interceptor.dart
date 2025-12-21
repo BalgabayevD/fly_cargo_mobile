@@ -28,7 +28,6 @@ class AuthInterceptor extends Interceptor {
         // FlutterBetterAuth не вернул действующую сессию.
         final store = await SharedPreferences.getInstance();
         final storedToken = store.getString('auth-token');
-        print('storedToken: $storedToken');
         if (storedToken != null && storedToken.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $storedToken';
         }

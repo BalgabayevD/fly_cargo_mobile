@@ -209,8 +209,50 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   }
 
   Future<void> _pickPhoto({bool isContent = false}) async {
+    // Показываем диалог выбора источника
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                'Выберите источник',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.surface5,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              ListTile(
+                leading: Icon(Icons.camera_alt, color: AppColors.primary),
+                title: Text('Камера'),
+                onTap: () => Navigator.pop(context, ImageSource.camera),
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library, color: AppColors.primary),
+                title: Text('Галерея'),
+                onTap: () => Navigator.pop(context, ImageSource.gallery),
+              ),
+              const SizedBox(height: AppSpacing.md),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (source == null) return;
+
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(source: source);
 
     if (image != null) {
       final photoFile = File(image.path);

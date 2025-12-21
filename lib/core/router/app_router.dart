@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/client/create_order/create_order_page_v2.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
-import 'package:fly_cargo/client/create_order/create_order_page.dart';
 import 'package:fly_cargo/features/home/presentation/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/home/presentation/orders_list_page.dart';
 import 'package:fly_cargo/features/home/presentation/pages/contacts_page.dart';

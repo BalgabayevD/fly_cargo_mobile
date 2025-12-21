@@ -216,8 +216,50 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   }
 
   Future<void> _pickPhoto() async {
+    // Показываем диалог выбора источника
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                'Выберите источник',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.surface5,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              ListTile(
+                leading: Icon(Icons.camera_alt, color: AppColors.primary),
+                title: Text('Камера'),
+                onTap: () => Navigator.pop(context, ImageSource.camera),
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library, color: AppColors.primary),
+                title: Text('Галерея'),
+                onTap: () => Navigator.pop(context, ImageSource.gallery),
+              ),
+              const SizedBox(height: AppSpacing.md),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (source == null) return;
+
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(source: source);
 
     if (image != null) {
       final photoFile = File(image.path);
@@ -230,7 +272,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
         setState(() {
           _photoIds[photoFile] = photoId;
         });
-        
+
         // Автоматически запускаем анализ при добавлении КАЖДОЙ фотографии
         // начиная с первой (чтобы получить данные как можно раньше)
         if (!_isAnalyzing) {
@@ -270,7 +312,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
     });
 
     print('🚀 Запускаем анализ с ${_photos.length} фото');
-    
+
     context.read<OrdersBloc>().add(
       PreCreateOrderEvent(images: _photos),
     );
@@ -384,12 +426,14 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
             _customHeight = state.preOrderData.height.toDouble();
             _tariffWeight = state.preOrderData.weight;
           });
-          
+
           // Показываем сообщение только если статус NONE (достаточно фото)
           if (state.analysisStatus == AnalysisStatus.none) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Анализ завершен! Данные заполнены автоматически'),
+                content: Text(
+                  'Анализ завершен! Данные заполнены автоматически',
+                ),
                 backgroundColor: AppColors.success,
               ),
             );
