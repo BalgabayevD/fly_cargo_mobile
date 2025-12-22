@@ -108,7 +108,7 @@ class SettingsUserMenuItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            displayName!,
+                            displayName ?? '',
                             style: TextStyle(
                               fontSize: 16,
                               color: AppColors.surface5,
@@ -117,7 +117,7 @@ class SettingsUserMenuItem extends StatelessWidget {
                           ),
 
                           Text(
-                            userPhone!,
+                            userPhone ?? '',
                             style: TextStyle(
                               fontSize: 16,
                               color: AppColors.surface5,

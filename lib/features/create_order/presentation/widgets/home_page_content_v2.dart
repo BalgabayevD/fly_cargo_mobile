@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_field_card_v2.dart';
-import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
 
 class HomePageContentV2 extends StatelessWidget {
@@ -136,14 +136,7 @@ class HomePageContentV2 extends StatelessWidget {
           if (isAnalyzing)
             _AIAnalysisIndicator()
           else if (!isAnalysisCompleted && photos.isEmpty)
-            Text(
-              'Сфотографируйте содержимое посылки',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.danger,
-                fontWeight: FontWeight.w400,
-              ),
-            )
+            SizedBox.shrink()
           else if (isAnalysisCompleted && analysisStatus != null)
             _buildAnalysisStatusMessage(analysisStatus!),
           const SizedBox(height: AppSpacing.lg),

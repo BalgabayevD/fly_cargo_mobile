@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/home_page_content_v2.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/home_page_content_v2.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/choose_recipient_bottom_sheet.dart';
 import 'package:fly_cargo/features/home/presentation/widgets/choose_tariff_bottom_sheet.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart'
@@ -273,8 +273,6 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
           _photoIds[photoFile] = photoId;
         });
 
-        // Автоматически запускаем анализ при добавлении КАЖДОЙ фотографии
-        // начиная с первой (чтобы получить данные как можно раньше)
         if (!_isAnalyzing) {
           _startAutoAnalysis();
         }
@@ -302,7 +300,6 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   }
 
   Future<void> _startAutoAnalysis() async {
-    // Вызываем анализ при наличии хотя бы 1 фотографии
     if (_photos.isEmpty) {
       return;
     }
@@ -318,7 +315,6 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
     );
   }
 
-  // ignore: unused_element
   void _submitOrder() {
     if (_fromAddress == null || _toAddress == null) {
       _showError('Укажите адреса отправки и доставки');
