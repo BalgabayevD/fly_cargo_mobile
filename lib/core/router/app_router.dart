@@ -11,12 +11,12 @@ import 'package:fly_cargo/features/create_order/presentation/pages/recipient_for
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
-import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/auth/presentation/pages/code_input_page.dart';
-import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
-import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/code_input_page.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/phone_input_page.dart';
+import 'package:fly_cargo/features/orders/data/models/order_model.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {

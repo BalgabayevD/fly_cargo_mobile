@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_card.dart';
-import 'package:fly_cargo/shared/auth/domain/entities/user_type.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_state.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/features/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_bloc.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_event.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_state.dart';
 import 'package:go_router/go_router.dart';
 
 class OrdersListPage extends StatefulWidget {

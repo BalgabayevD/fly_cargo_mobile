@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
-import 'package:fly_cargo/shared/auth/presentation/router/auth_router.dart';
+import 'package:fly_cargo/features/auth/presentation/router/auth_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 

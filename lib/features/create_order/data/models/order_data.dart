@@ -1,4 +1,4 @@
-import 'package:fly_cargo/shared/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
 class OrderData {
   final dynamic box;
   final AddressModel fromAddress;

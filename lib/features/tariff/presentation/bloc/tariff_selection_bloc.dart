@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
-import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart';
+import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart';
+import 'package:fly_cargo/features/tariffs/domain/usecases/get_tariff_categories_usecase.dart';
 import 'package:injectable/injectable.dart';
 abstract class TariffSelectionEvent {}
 class LoadTariffCategoriesEvent extends TariffSelectionEvent {}

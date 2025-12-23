@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/shared/orders/data/models/order_model.dart';
-import 'package:fly_cargo/shared/orders/presentation/models/order_status.dart';
+import 'package:fly_cargo/features/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/orders/presentation/models/order_status.dart';
 import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {

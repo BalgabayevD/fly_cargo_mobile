@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
+import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart';
 
 class TariffItem extends StatelessWidget {
   final TariffModel tariff;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/shared/auth/presentation/pages/phone_input_page.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/phone_input_page.dart';
 import 'package:heroicons/heroicons.dart';
 
 class ChooseRecipientBottomSheet extends StatefulWidget {

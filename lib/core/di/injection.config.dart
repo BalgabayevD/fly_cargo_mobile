@@ -20,84 +20,85 @@ import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart'
 import 'package:fly_cargo/core/network/domain/interceptors/auth_interceptor.dart'
     as _i411;
 import 'package:fly_cargo/core/network/pre_order_dio_client.dart' as _i515;
+import 'package:fly_cargo/features/auth/config/auth_module.dart' as _i800;
+import 'package:fly_cargo/features/auth/data/auth_remote_source.dart' as _i489;
+import 'package:fly_cargo/features/auth/data/repositories/auth_repository_impl.dart'
+    as _i351;
+import 'package:fly_cargo/features/auth/domain/repositories/auth_repository.dart'
+    as _i793;
+import 'package:fly_cargo/features/auth/domain/usecases/auth_status_usecase.dart'
+    as _i856;
+import 'package:fly_cargo/features/auth/domain/usecases/get_user_profile_usecase.dart'
+    as _i349;
+import 'package:fly_cargo/features/auth/domain/usecases/sign_code_usecase.dart'
+    as _i441;
+import 'package:fly_cargo/features/auth/domain/usecases/sign_in_usecase.dart'
+    as _i885;
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart'
+    as _i505;
+import 'package:fly_cargo/features/destination/config/destination_module.dart'
+    as _i1065;
+import 'package:fly_cargo/features/destination/data/destination_remote_source.dart'
+    as _i117;
+import 'package:fly_cargo/features/destination/data/repositories/destination_repository_impl.dart'
+    as _i624;
+import 'package:fly_cargo/features/destination/domain/repositories/destination_repository.dart'
+    as _i933;
+import 'package:fly_cargo/features/destination/domain/usecases/get_all_cities_usecase.dart'
+    as _i55;
+import 'package:fly_cargo/features/destination/domain/usecases/get_cities_from_usecase.dart'
+    as _i331;
+import 'package:fly_cargo/features/destination/domain/usecases/get_cities_to_usecase.dart'
+    as _i760;
+import 'package:fly_cargo/features/destination/domain/usecases/search_addresses_usecase.dart'
+    as _i801;
+import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart'
+    as _i577;
+import 'package:fly_cargo/features/orders/config/orders_module.dart' as _i142;
+import 'package:fly_cargo/features/orders/data/orders_remote_source.dart'
+    as _i180;
+import 'package:fly_cargo/features/orders/data/repositories/orders_repository_impl.dart'
+    as _i554;
+import 'package:fly_cargo/features/orders/domain/repositories/orders_repository.dart'
+    as _i27;
+import 'package:fly_cargo/features/orders/domain/usecases/calculate_order_price_usecase.dart'
+    as _i662;
+import 'package:fly_cargo/features/orders/domain/usecases/create_order_usecase.dart'
+    as _i977;
+import 'package:fly_cargo/features/orders/domain/usecases/get_client_orders_usecase.dart'
+    as _i899;
+import 'package:fly_cargo/features/orders/domain/usecases/get_courier_orsers_usecase.dart'
+    as _i918;
+import 'package:fly_cargo/features/orders/domain/usecases/get_created_orders_usecase.dart'
+    as _i698;
+import 'package:fly_cargo/features/orders/domain/usecases/get_order_by_id_usecase.dart'
+    as _i1009;
+import 'package:fly_cargo/features/orders/domain/usecases/pre_create_order_usecase.dart'
+    as _i511;
+import 'package:fly_cargo/features/orders/domain/usecases/upload_order_photo_usecase.dart'
+    as _i329;
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_bloc.dart'
+    as _i648;
+import 'package:fly_cargo/features/orders/presentation/bloc/price_calculation_bloc.dart'
+    as _i132;
 import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart'
     as _i521;
-import 'package:fly_cargo/shared/auth/config/auth_module.dart' as _i522;
-import 'package:fly_cargo/shared/auth/data/auth_remote_source.dart' as _i764;
-import 'package:fly_cargo/shared/auth/data/repositories/auth_repository_impl.dart'
-    as _i505;
-import 'package:fly_cargo/shared/auth/domain/repositories/auth_repository.dart'
-    as _i214;
-import 'package:fly_cargo/shared/auth/domain/usecases/auth_status_usecase.dart'
-    as _i215;
-import 'package:fly_cargo/shared/auth/domain/usecases/get_user_profile_usecase.dart'
-    as _i439;
-import 'package:fly_cargo/shared/auth/domain/usecases/sign_code_usecase.dart'
-    as _i166;
-import 'package:fly_cargo/shared/auth/domain/usecases/sign_in_usecase.dart'
-    as _i919;
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart'
-    as _i138;
-import 'package:fly_cargo/shared/destination/config/destination_module.dart'
-    as _i993;
-import 'package:fly_cargo/shared/destination/data/destination_remote_source.dart'
-    as _i472;
-import 'package:fly_cargo/shared/destination/data/repositories/destination_repository_impl.dart'
-    as _i67;
-import 'package:fly_cargo/shared/destination/domain/repositories/destination_repository.dart'
-    as _i405;
-import 'package:fly_cargo/shared/destination/domain/usecases/get_all_cities_usecase.dart'
-    as _i583;
-import 'package:fly_cargo/shared/destination/domain/usecases/get_cities_from_usecase.dart'
-    as _i281;
-import 'package:fly_cargo/shared/destination/domain/usecases/get_cities_to_usecase.dart'
-    as _i292;
-import 'package:fly_cargo/shared/destination/domain/usecases/search_addresses_usecase.dart'
-    as _i576;
-import 'package:fly_cargo/shared/destination/presentation/bloc/destination_bloc.dart'
-    as _i436;
-import 'package:fly_cargo/shared/orders/config/orders_module.dart' as _i561;
-import 'package:fly_cargo/shared/orders/data/orders_remote_source.dart'
-    as _i642;
-import 'package:fly_cargo/shared/orders/data/repositories/orders_repository_impl.dart'
-    as _i157;
-import 'package:fly_cargo/shared/orders/domain/repositories/orders_repository.dart'
-    as _i919;
-import 'package:fly_cargo/shared/orders/domain/usecases/calculate_order_price_usecase.dart'
-    as _i426;
-import 'package:fly_cargo/shared/orders/domain/usecases/create_order_usecase.dart'
-    as _i49;
-import 'package:fly_cargo/shared/orders/domain/usecases/get_client_orders_usecase.dart'
-    as _i33;
-import 'package:fly_cargo/shared/orders/domain/usecases/get_courier_orsers_usecase.dart'
-    as _i189;
-import 'package:fly_cargo/shared/orders/domain/usecases/get_created_orders_usecase.dart'
-    as _i1011;
-import 'package:fly_cargo/shared/orders/domain/usecases/get_order_by_id_usecase.dart'
-    as _i177;
-import 'package:fly_cargo/shared/orders/domain/usecases/pre_create_order_usecase.dart'
-    as _i401;
-import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart'
-    as _i910;
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart'
-    as _i837;
-import 'package:fly_cargo/shared/orders/presentation/bloc/price_calculation_bloc.dart'
-    as _i635;
-import 'package:fly_cargo/shared/tariffs/config/tariffs_module.dart' as _i584;
-import 'package:fly_cargo/shared/tariffs/data/repositories/tariffs_repository_impl.dart'
-    as _i711;
-import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source.dart'
-    as _i1059;
-import 'package:fly_cargo/shared/tariffs/data/tariffs_remote_source_impl.dart'
-    as _i618;
-import 'package:fly_cargo/shared/tariffs/domain/repositories/tariffs_repository.dart'
-    as _i528;
-import 'package:fly_cargo/shared/tariffs/domain/usecases/create_tariff_usecase.dart'
-    as _i369;
-import 'package:fly_cargo/shared/tariffs/domain/usecases/get_tariff_categories_usecase.dart'
-    as _i133;
-import 'package:fly_cargo/shared/tariffs/presentation/bloc/tariffs_bloc.dart'
-    as _i545;
+import 'package:fly_cargo/features/tariffs/config/tariffs_module.dart'
+    as _i1017;
+import 'package:fly_cargo/features/tariffs/data/repositories/tariffs_repository_impl.dart'
+    as _i720;
+import 'package:fly_cargo/features/tariffs/data/tariffs_remote_source.dart'
+    as _i384;
+import 'package:fly_cargo/features/tariffs/data/tariffs_remote_source_impl.dart'
+    as _i1062;
+import 'package:fly_cargo/features/tariffs/domain/repositories/tariffs_repository.dart'
+    as _i170;
+import 'package:fly_cargo/features/tariffs/domain/usecases/create_tariff_usecase.dart'
+    as _i113;
+import 'package:fly_cargo/features/tariffs/domain/usecases/get_tariff_categories_usecase.dart'
+    as _i217;
+import 'package:fly_cargo/features/tariffs/presentation/bloc/tariffs_bloc.dart'
+    as _i563;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -112,10 +113,10 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final coreModule = _$CoreModule();
     final dioModule = _$DioModule();
-    final tariffsModule = _$TariffsModule();
     final authModule = _$AuthModule();
     final destinationModule = _$DestinationModule();
     final ordersModule = _$OrdersModule();
+    final tariffsModule = _$TariffsModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => coreModule.prefs,
       preResolve: true,
@@ -151,139 +152,140 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       instanceName: 'private-dio',
     );
-    gh.factory<_i1059.TariffsRemoteSource>(
-      () => tariffsModule.provideTariffsRemoteSource(
-        gh<_i361.Dio>(instanceName: 'private-dio'),
-        gh<_i469.ApiConfig>(),
-      ),
-    );
-    gh.factory<_i764.AuthRemoteSource>(
+    gh.factory<_i489.AuthRemoteSource>(
       () => authModule.provideAuthRemoteSource(
         gh<_i361.Dio>(instanceName: 'private-dio'),
         gh<_i469.ApiConfig>(),
       ),
     );
-    gh.factory<_i472.DestinationRemoteSource>(
+    gh.factory<_i117.DestinationRemoteSource>(
       () => destinationModule.provideDestinationRemoteSource(
         gh<_i361.Dio>(instanceName: 'private-dio'),
         gh<_i469.ApiConfig>(),
       ),
     );
-    gh.factory<_i642.OrdersRemoteSource>(
+    gh.factory<_i180.OrdersRemoteSource>(
       () => ordersModule.provideOrdersRemoteSource(
         gh<_i361.Dio>(instanceName: 'private-dio'),
         gh<_i469.ApiConfig>(),
       ),
     );
-    gh.lazySingleton<_i405.DestinationRepository>(
-      () => _i67.DestinationRepositoryImpl(gh<_i472.DestinationRemoteSource>()),
-    );
-    gh.factory<_i292.GetCitiesToUseCase>(
-      () => _i292.GetCitiesToUseCase(gh<_i405.DestinationRepository>()),
-    );
-    gh.factory<_i576.SearchAddressesUseCase>(
-      () => _i576.SearchAddressesUseCase(gh<_i405.DestinationRepository>()),
-    );
-    gh.factory<_i583.GetAllCitiesUseCase>(
-      () => _i583.GetAllCitiesUseCase(gh<_i405.DestinationRepository>()),
-    );
-    gh.factory<_i281.GetCitiesFromUseCase>(
-      () => _i281.GetCitiesFromUseCase(gh<_i405.DestinationRepository>()),
-    );
-    gh.factory<_i436.DestinationBloc>(
-      () => _i436.DestinationBloc(
-        gh<_i281.GetCitiesFromUseCase>(),
-        gh<_i292.GetCitiesToUseCase>(),
-        gh<_i576.SearchAddressesUseCase>(),
-        gh<_i583.GetAllCitiesUseCase>(),
+    gh.factory<_i384.TariffsRemoteSource>(
+      () => tariffsModule.provideTariffsRemoteSource(
+        gh<_i361.Dio>(instanceName: 'private-dio'),
+        gh<_i469.ApiConfig>(),
       ),
     );
-    gh.lazySingleton<_i919.OrdersRepository>(
-      () => _i157.OrdersRepositoryImpl(
-        gh<_i642.OrdersRemoteSource>(),
+    gh.lazySingleton<_i793.AuthRepository>(
+      () => _i351.AuthRepositoryImpl(gh<_i489.AuthRemoteSource>()),
+    );
+    gh.lazySingleton<_i933.DestinationRepository>(
+      () =>
+          _i624.DestinationRepositoryImpl(gh<_i117.DestinationRemoteSource>()),
+    );
+    gh.factory<_i349.GetUserProfileUseCase>(
+      () => _i349.GetUserProfileUseCase(gh<_i793.AuthRepository>()),
+    );
+    gh.factory<_i441.SignCodeUseCase>(
+      () => _i441.SignCodeUseCase(gh<_i793.AuthRepository>()),
+    );
+    gh.factory<_i885.SignInUseCase>(
+      () => _i885.SignInUseCase(gh<_i793.AuthRepository>()),
+    );
+    gh.factory<_i856.AuthStatusUseCase>(
+      () => _i856.AuthStatusUseCase(gh<_i793.AuthRepository>()),
+    );
+    gh.lazySingleton<_i27.OrdersRepository>(
+      () => _i554.OrdersRepositoryImpl(
+        gh<_i180.OrdersRemoteSource>(),
         gh<_i515.PreOrderDioClient>(),
       ),
     );
-    gh.factory<_i618.TariffsRemoteSourceImpl>(
-      () => _i618.TariffsRemoteSourceImpl(gh<_i1059.TariffsRemoteSource>()),
-    );
-    gh.factory<_i528.TariffsRepository>(
-      () => _i711.TariffsRepositoryImpl(gh<_i618.TariffsRemoteSourceImpl>()),
-    );
-    gh.lazySingleton<_i214.AuthRepository>(
-      () => _i505.AuthRepositoryImpl(gh<_i764.AuthRemoteSource>()),
-    );
-    gh.factory<_i439.GetUserProfileUseCase>(
-      () => _i439.GetUserProfileUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i166.SignCodeUseCase>(
-      () => _i166.SignCodeUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i919.SignInUseCase>(
-      () => _i919.SignInUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i215.AuthStatusUseCase>(
-      () => _i215.AuthStatusUseCase(gh<_i214.AuthRepository>()),
-    );
-    gh.factory<_i138.AuthBloc>(
-      () => _i138.AuthBloc(
-        gh<_i919.SignInUseCase>(),
-        gh<_i215.AuthStatusUseCase>(),
-        gh<_i439.GetUserProfileUseCase>(),
+    gh.factory<_i505.AuthBloc>(
+      () => _i505.AuthBloc(
+        gh<_i885.SignInUseCase>(),
+        gh<_i856.AuthStatusUseCase>(),
+        gh<_i349.GetUserProfileUseCase>(),
       ),
     );
-    gh.factory<_i910.UploadOrderPhotoUseCase>(
-      () => _i910.UploadOrderPhotoUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i329.UploadOrderPhotoUseCase>(
+      () => _i329.UploadOrderPhotoUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i189.GetCourierOrdersUseCase>(
-      () => _i189.GetCourierOrdersUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i918.GetCourierOrdersUseCase>(
+      () => _i918.GetCourierOrdersUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i177.GetOrderByIdUseCase>(
-      () => _i177.GetOrderByIdUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i1009.GetOrderByIdUseCase>(
+      () => _i1009.GetOrderByIdUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i426.CalculateOrderPriceUseCase>(
-      () => _i426.CalculateOrderPriceUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i662.CalculateOrderPriceUseCase>(
+      () => _i662.CalculateOrderPriceUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i33.GetClientOrdersUseCase>(
-      () => _i33.GetClientOrdersUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i899.GetClientOrdersUseCase>(
+      () => _i899.GetClientOrdersUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i49.CreateOrderUseCase>(
-      () => _i49.CreateOrderUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i977.CreateOrderUseCase>(
+      () => _i977.CreateOrderUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i1011.GetCreatedOrdersUseCase>(
-      () => _i1011.GetCreatedOrdersUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i698.GetCreatedOrdersUseCase>(
+      () => _i698.GetCreatedOrdersUseCase(gh<_i27.OrdersRepository>()),
     );
-    gh.factory<_i635.PriceCalculationBloc>(
-      () => _i635.PriceCalculationBloc(
-        calculateOrderPriceUseCase: gh<_i426.CalculateOrderPriceUseCase>(),
+    gh.factory<_i511.PreCreateOrderUseCase>(
+      () => _i511.PreCreateOrderUseCase(gh<_i27.OrdersRepository>()),
+    );
+    gh.factory<_i132.PriceCalculationBloc>(
+      () => _i132.PriceCalculationBloc(
+        calculateOrderPriceUseCase: gh<_i662.CalculateOrderPriceUseCase>(),
       ),
     );
-    gh.factory<_i369.CreateTariffUseCase>(
-      () => _i369.CreateTariffUseCase(gh<_i528.TariffsRepository>()),
+    gh.factory<_i760.GetCitiesToUseCase>(
+      () => _i760.GetCitiesToUseCase(gh<_i933.DestinationRepository>()),
     );
-    gh.factory<_i401.PreCreateOrderUseCase>(
-      () => _i401.PreCreateOrderUseCase(gh<_i919.OrdersRepository>()),
+    gh.factory<_i801.SearchAddressesUseCase>(
+      () => _i801.SearchAddressesUseCase(gh<_i933.DestinationRepository>()),
     );
-    gh.factory<_i133.GetTariffCategoriesUseCase>(
-      () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
+    gh.factory<_i55.GetAllCitiesUseCase>(
+      () => _i55.GetAllCitiesUseCase(gh<_i933.DestinationRepository>()),
+    );
+    gh.factory<_i331.GetCitiesFromUseCase>(
+      () => _i331.GetCitiesFromUseCase(gh<_i933.DestinationRepository>()),
+    );
+    gh.factory<_i1062.TariffsRemoteSourceImpl>(
+      () => _i1062.TariffsRemoteSourceImpl(gh<_i384.TariffsRemoteSource>()),
+    );
+    gh.factory<_i170.TariffsRepository>(
+      () => _i720.TariffsRepositoryImpl(gh<_i1062.TariffsRemoteSourceImpl>()),
+    );
+    gh.factory<_i577.DestinationBloc>(
+      () => _i577.DestinationBloc(
+        gh<_i331.GetCitiesFromUseCase>(),
+        gh<_i760.GetCitiesToUseCase>(),
+        gh<_i801.SearchAddressesUseCase>(),
+        gh<_i55.GetAllCitiesUseCase>(),
+      ),
+    );
+    gh.factory<_i217.GetTariffCategoriesUseCase>(
+      () => _i217.GetTariffCategoriesUseCase(gh<_i170.TariffsRepository>()),
+    );
+    gh.factory<_i648.OrdersBloc>(
+      () => _i648.OrdersBloc(
+        gh<_i977.CreateOrderUseCase>(),
+        gh<_i511.PreCreateOrderUseCase>(),
+        gh<_i899.GetClientOrdersUseCase>(),
+        gh<_i918.GetCourierOrdersUseCase>(),
+        gh<_i698.GetCreatedOrdersUseCase>(),
+        gh<_i1009.GetOrderByIdUseCase>(),
+      ),
+    );
+    gh.factory<_i113.CreateTariffUseCase>(
+      () => _i113.CreateTariffUseCase(gh<_i170.TariffsRepository>()),
     );
     gh.factory<_i521.TariffSelectionBloc>(
       () => _i521.TariffSelectionBloc(
-        getTariffCategoriesUseCase: gh<_i133.GetTariffCategoriesUseCase>(),
+        getTariffCategoriesUseCase: gh<_i217.GetTariffCategoriesUseCase>(),
       ),
     );
-    gh.factory<_i545.TariffsBloc>(
-      () => _i545.TariffsBloc(gh<_i133.GetTariffCategoriesUseCase>()),
-    );
-    gh.factory<_i837.OrdersBloc>(
-      () => _i837.OrdersBloc(
-        gh<_i49.CreateOrderUseCase>(),
-        gh<_i401.PreCreateOrderUseCase>(),
-        gh<_i33.GetClientOrdersUseCase>(),
-        gh<_i189.GetCourierOrdersUseCase>(),
-        gh<_i1011.GetCreatedOrdersUseCase>(),
-        gh<_i177.GetOrderByIdUseCase>(),
-      ),
+    gh.factory<_i563.TariffsBloc>(
+      () => _i563.TariffsBloc(gh<_i217.GetTariffCategoriesUseCase>()),
     );
     return this;
   }
@@ -293,10 +295,10 @@ class _$CoreModule extends _i624.CoreModule {}
 
 class _$DioModule extends _i794.DioModule {}
 
-class _$TariffsModule extends _i584.TariffsModule {}
+class _$AuthModule extends _i800.AuthModule {}
 
-class _$AuthModule extends _i522.AuthModule {}
+class _$DestinationModule extends _i1065.DestinationModule {}
 
-class _$DestinationModule extends _i993.DestinationModule {}
+class _$OrdersModule extends _i142.OrdersModule {}
 
-class _$OrdersModule extends _i561.OrdersModule {}
+class _$TariffsModule extends _i1017.TariffsModule {}

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_event.dart';
-import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
-import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_bloc.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_event.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 
