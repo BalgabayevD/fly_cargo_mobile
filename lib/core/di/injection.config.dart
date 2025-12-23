@@ -20,8 +20,8 @@ import 'package:fly_cargo/core/network/domain/behaviors/get_sid_behavior.dart'
 import 'package:fly_cargo/core/network/domain/interceptors/auth_interceptor.dart'
     as _i411;
 import 'package:fly_cargo/core/network/pre_order_dio_client.dart' as _i515;
-import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart'
-    as _i1019;
+import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart'
+    as _i521;
 import 'package:fly_cargo/shared/auth/config/auth_module.dart' as _i522;
 import 'package:fly_cargo/shared/auth/data/auth_remote_source.dart' as _i764;
 import 'package:fly_cargo/shared/auth/data/repositories/auth_repository_impl.dart'
@@ -267,8 +267,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i133.GetTariffCategoriesUseCase>(
       () => _i133.GetTariffCategoriesUseCase(gh<_i528.TariffsRepository>()),
     );
-    gh.factory<_i1019.TariffSelectionBloc>(
-      () => _i1019.TariffSelectionBloc(
+    gh.factory<_i521.TariffSelectionBloc>(
+      () => _i521.TariffSelectionBloc(
         getTariffCategoriesUseCase: gh<_i133.GetTariffCategoriesUseCase>(),
       ),
     );

@@ -5,14 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/choose_recipient_bottom_sheet.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/choose_tariff_bottom_sheet.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/home_page_content.dart';
+import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/home_page_content_v2.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/choose_recipient_bottom_sheet.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/choose_tariff_bottom_sheet.dart';
 import 'package:fly_cargo/shared/destination/data/models/destination_models.dart'
     as destination;
 import 'package:fly_cargo/shared/destination/presentation/models/city_type.dart';
 import 'package:fly_cargo/shared/destination/presentation/widgets/choose_address_bottom_sheet.dart';
-import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
@@ -24,14 +24,14 @@ import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CreateOrderPage extends StatefulWidget {
-  const CreateOrderPage({super.key});
+class CreateOrderPageV2 extends StatefulWidget {
+  const CreateOrderPageV2({super.key});
 
   @override
-  State<CreateOrderPage> createState() => _CreateOrderPageState();
+  State<CreateOrderPageV2> createState() => _CreateOrderPageState();
 }
 
-class _CreateOrderPageState extends State<CreateOrderPage> {
+class _CreateOrderPageState extends State<CreateOrderPageV2> {
   @override
   void initState() {
     super.initState();
@@ -43,22 +43,28 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   String? _recipientName;
   String? _recipientPhone;
   int? _selectedTariffId;
+  // ignore: unused_field
   String? _tariffName;
   double? _tariffWeight;
   tariffs.TariffModel? _selectedTariff;
   String? _description;
+  // ignore: unused_field
   bool _isExpressDelivery = false;
   bool _isFragile = false;
   double? _customLength;
   double? _customWidth;
   double? _customHeight;
   final List<File> _photos = [];
-  final List<File> _contentPhotos = [];
   final Map<File, String> _photoIds = {};
-  final Map<File, String> _contentPhotoIds = {};
+  // ignore: unused_field
   DateTime? _deliveryDate;
+  // ignore: unused_field
   double? _calculatedPrice;
   late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
+  // ignore: unused_field
+  PreCreateOrderData? _preOrderData;
+  AnalysisStatus? _analysisStatus;
+  bool _isAnalyzing = false;
 
   Future<void> _openFromAddressSelection() async {
     final address = await showModalBottomSheet<destination.AddressModel>(
@@ -208,7 +214,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     }
   }
 
-  Future<void> _pickPhoto({bool isContent = false}) async {
+  Future<void> _pickPhoto() async {
     // Показываем диалог выбора источника
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
@@ -257,29 +263,21 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     if (image != null) {
       final photoFile = File(image.path);
       setState(() {
-        if (isContent) {
-          _contentPhotos.add(photoFile);
-        } else {
-          _photos.add(photoFile);
-        }
+        _photos.add(photoFile);
       });
 
       try {
         final photoId = await _uploadOrderPhotoUseCase(photoFile);
         setState(() {
-          if (isContent) {
-            _contentPhotoIds[photoFile] = photoId;
-          } else {
-            _photoIds[photoFile] = photoId;
-          }
+          _photoIds[photoFile] = photoId;
         });
+
+        if (!_isAnalyzing) {
+          _startAutoAnalysis();
+        }
       } catch (e) {
         setState(() {
-          if (isContent) {
-            _contentPhotos.remove(photoFile);
-          } else {
-            _photos.remove(photoFile);
-          }
+          _photos.remove(photoFile);
         });
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -293,90 +291,47 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     }
   }
 
-  void _removePhoto(File photo, {bool isContent = false}) {
+  void _removePhoto(File photo) {
     setState(() {
-      if (isContent) {
-        _contentPhotos.remove(photo);
-        _contentPhotoIds.remove(photo);
-      } else {
-        _photos.remove(photo);
-        _photoIds.remove(photo);
-      }
+      _photos.remove(photo);
+      _photoIds.remove(photo);
     });
   }
 
-  void _submitOrder() {
-    if (_fromAddress == null || _toAddress == null) {
-      _showError('Укажите адреса отправки и доставки');
+  Future<void> _startAutoAnalysis() async {
+    if (_photos.isEmpty) {
       return;
     }
 
-    if (_recipientName == null || _recipientPhone == null) {
-      _showError('Укажите данные получателя');
-      return;
-    }
+    setState(() {
+      _isAnalyzing = true;
+    });
 
-    if (_selectedTariffId == null || _selectedTariff == null) {
-      _showError('Выберите тариф');
-      return;
-    }
+    print('🚀 Запускаем анализ с ${_photos.length} фото');
 
-    if (_description == null || _description!.isEmpty) {
-      _showError('Укажите описание посылки');
-      return;
-    }
-
-    // Проверка размеров тарифа
-    // final height = _customHeight ?? _selectedTariff!.height;
-    final length = _customLength ?? _selectedTariff!.length;
-    final width = _customWidth ?? _selectedTariff!.width;
-
-    // if (height == null || height <= 0 ||
-    //     length == null || length <= 0 ||
-    //     width == null || width <= 0) {
-    //   _showError('Выбранный тариф не содержит корректных размеров. Пожалуйста, выберите другой тариф или укажите размеры вручную.');
-    //   return;
-    // }
-
-    final photoIds = _photos
-        .map((photo) => _photoIds[photo] ?? '')
-        .where((id) => id.isNotEmpty)
-        .toList();
-    final contentPhotoIds = _contentPhotos
-        .map((photo) => _contentPhotoIds[photo] ?? '')
-        .where((id) => id.isNotEmpty)
-        .toList();
-
-    final orderData = OrderData(
-      isDefect: false,
-      isFragile: _isFragile,
-      comment: '',
-      contentPhotos: contentPhotoIds,
-      description: _description!,
-      fromAddress: _fromAddress!.fullAddress ?? _fromAddress!.address,
-      fromApartment: _fromAddress!.apartment ?? '',
-      fromCityId: int.tryParse(_fromAddress!.cityId) ?? 0,
-      fromEntrance: _fromAddress!.entrance ?? '',
-      fromFloor: _fromAddress!.floor?.isNotEmpty == true
-          ? _fromAddress!.floor
-          : null,
-      height: _customHeight ?? _selectedTariff!.height ?? 0.0,
-      length: length ?? 0.0,
-      photos: photoIds,
-      tariffId: _selectedTariffId!,
-      toAddress: _toAddress!.fullAddress ?? _toAddress!.address,
-      toApartment: _toAddress!.apartment ?? '',
-      toCityId: int.tryParse(_toAddress!.cityId) ?? 0,
-      toEntrance: _toAddress!.entrance ?? '',
-      toFloor: _toAddress!.floor?.isNotEmpty == true ? _toAddress!.floor : null,
-      toName: _recipientName!,
-      toPhone: _recipientPhone!,
-      volumetricWeight: _selectedTariff!.volumetricWeight,
-      weight: _selectedTariff!.weight ?? 0.0,
-      width: width ?? 0.0,
+    context.read<OrdersBloc>().add(
+      PreCreateOrderEvent(images: _photos),
     );
+  }
 
-    context.read<OrdersBloc>().add(CreateOrderEvent(orderData: orderData));
+  void _submitOrder() {
+    context.read<OrdersBloc>().add(
+      SubmitOrderEvent(
+        fromAddress: _fromAddress,
+        toAddress: _toAddress,
+        recipientName: _recipientName,
+        recipientPhone: _recipientPhone,
+        selectedTariffId: _selectedTariffId,
+        selectedTariff: _selectedTariff,
+        description: _description,
+        isFragile: _isFragile,
+        customLength: _customLength,
+        customWidth: _customWidth,
+        customHeight: _customHeight,
+        photos: _photos,
+        photoIds: _photoIds,
+      ),
+    );
   }
 
   void _showError(String message) {
@@ -393,10 +348,43 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     return BlocListener<OrdersBloc, OrdersState>(
       listener: (context, state) {
         if (state is OrdersLoading) {
+          // Показываем индикатор загрузки
         } else if (state is OrdersUnauthorized) {
+          setState(() {
+            _isAnalyzing = false;
+          });
           _showError('Для создания заказа необходимо войти в аккаунт');
-        } else if (state is OrdersError) {
+        } else if (state is OrderValidationError) {
           _showError(state.message);
+        } else if (state is OrdersError) {
+          setState(() {
+            _isAnalyzing = false;
+          });
+          _showError(state.message);
+        } else if (state is PreOrderAnalyzed) {
+          setState(() {
+            _isAnalyzing = false;
+            _preOrderData = state.preOrderData;
+            _analysisStatus = state.analysisStatus;
+            _description = state.preOrderData.description;
+            _selectedTariffId = state.preOrderData.tariffId;
+            _customLength = state.preOrderData.length.toDouble();
+            _customWidth = state.preOrderData.width.toDouble();
+            _customHeight = state.preOrderData.height.toDouble();
+            _tariffWeight = state.preOrderData.weight;
+          });
+
+          // Показываем сообщение только если статус NONE (достаточно фото)
+          if (state.analysisStatus == AnalysisStatus.none) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Анализ завершен! Данные заполнены автоматически',
+                ),
+                backgroundColor: AppColors.success,
+              ),
+            );
+          }
         } else if (state is OrderCreated) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -419,14 +407,15 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
             _isExpressDelivery = false;
             _isFragile = false;
             _photos.clear();
-            _contentPhotos.clear();
             _photoIds.clear();
-            _contentPhotoIds.clear();
             _customLength = null;
             _customWidth = null;
             _customHeight = null;
             _deliveryDate = null;
             _calculatedPrice = null;
+            _preOrderData = null;
+            _analysisStatus = null;
+            _isAnalyzing = false;
           });
         }
       },
@@ -461,47 +450,25 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
             ),
           ],
         ),
-        body: HomePageContent(
+        body: HomePageContentV2(
           fromAddress: _fromAddress,
           toAddress: _toAddress,
           recipientName: _recipientName,
           recipientPhone: _recipientPhone,
-          tariffName: _tariffName,
           tariffWeight: _tariffWeight,
           description: _description,
-          isExpressDelivery: _isExpressDelivery,
-          isFragile: _isFragile,
           photos: _photos,
-          contentPhotos: _contentPhotos,
-          deliveryDate: _deliveryDate,
-          calculatedPrice: _calculatedPrice,
           onFromAddressSelection: _openFromAddressSelection,
           onToAddressSelection: _openToAddressSelection,
           onRecipientForm: _openRecipientForm,
-          onTariffSelection: _openTariffSelection,
           onDescriptionForm: _openDescriptionForm,
-          onToggleExpress: () {
-            setState(() {
-              _isExpressDelivery = !_isExpressDelivery;
-            });
-          },
-          onToggleFragile: () {
-            setState(() {
-              _isFragile = !_isFragile;
-            });
-          },
-          onPickPhoto: () => _pickPhoto(isContent: false),
-          onPickContentPhoto: () => _pickPhoto(isContent: true),
-          onRemovePhoto: (photo) => _removePhoto(photo, isContent: false),
-          onRemoveContentPhoto: (photo) => _removePhoto(photo, isContent: true),
+          onPickPhoto: _pickPhoto,
+          onRemovePhoto: _removePhoto,
+          onWeightTap: _openTariffSelection,
           onSubmitOrder: _submitOrder,
-          onInfoLink: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Информация о товарах в разработке'),
-              ),
-            );
-          },
+          isAnalyzing: _isAnalyzing,
+          isAnalysisCompleted: _preOrderData != null,
+          analysisStatus: _analysisStatus,
         ),
       ),
     );

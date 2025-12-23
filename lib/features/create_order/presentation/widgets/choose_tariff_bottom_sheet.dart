@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/home/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/specify_dimensions_bottom_sheet.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/tariff_item_widget.dart';
+import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/specify_dimensions_bottom_sheet.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/tariff_item_widget.dart';
 import 'package:fly_cargo/shared/tariffs/data/models/tariff_models.dart';
 import 'package:heroicons/heroicons.dart';
 

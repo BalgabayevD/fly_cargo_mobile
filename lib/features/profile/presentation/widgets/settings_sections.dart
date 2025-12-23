@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/home/presentation/widgets/settings/settings_menu_items.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
 import 'package:fly_cargo/shared/auth/presentation/bloc/auth_state.dart';
 
 class AuthSection extends StatelessWidget {
