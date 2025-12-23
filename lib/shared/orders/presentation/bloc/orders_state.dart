@@ -58,3 +58,10 @@ class PreOrderAnalyzed extends OrdersState {
   @override
   List<Object?> get props => [preOrderData, analysisStatus];
 }
+
+class OrderValidationError extends OrdersState {
+  final String message;
+  const OrderValidationError({required this.message});
+  @override
+  List<Object?> get props => [message];
+}

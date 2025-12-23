@@ -21,6 +21,7 @@ class HomePageContentV2 extends StatelessWidget {
   final VoidCallback onPickPhoto;
   final Function(File) onRemovePhoto;
   final VoidCallback? onWeightTap;
+  final VoidCallback? onSubmitOrder;
   final bool isAnalyzing;
   final bool isAnalysisCompleted;
   final AnalysisStatus? analysisStatus;
@@ -40,6 +41,7 @@ class HomePageContentV2 extends StatelessWidget {
     required this.onPickPhoto,
     required this.onRemovePhoto,
     this.onWeightTap,
+    this.onSubmitOrder,
     this.isAnalyzing = false,
     this.isAnalysisCompleted = false,
     this.analysisStatus,
@@ -174,6 +176,31 @@ class HomePageContentV2 extends StatelessWidget {
             onTap: onDescriptionForm,
             isEnabled: isAnalysisCompleted && !isAnalyzing,
           ),
+          if (onSubmitOrder != null) ...[
+            const SizedBox(height: AppSpacing.xl),
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: ElevatedButton(
+                onPressed: onSubmitOrder,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+                  ),
+                ),
+                child: Text(
+                  'Создать заказ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

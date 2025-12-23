@@ -13,7 +13,6 @@ import 'package:fly_cargo/shared/destination/data/models/destination_models.dart
     as destination;
 import 'package:fly_cargo/shared/destination/presentation/models/city_type.dart';
 import 'package:fly_cargo/shared/destination/presentation/widgets/choose_address_bottom_sheet.dart';
-import 'package:fly_cargo/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/shared/orders/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_bloc.dart';
 import 'package:fly_cargo/shared/orders/presentation/bloc/orders_event.dart';
@@ -316,73 +315,23 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   }
 
   void _submitOrder() {
-    if (_fromAddress == null || _toAddress == null) {
-      _showError('Укажите адреса отправки и доставки');
-      return;
-    }
-
-    if (_recipientName == null || _recipientPhone == null) {
-      _showError('Укажите данные получателя');
-      return;
-    }
-
-    if (_selectedTariffId == null || _selectedTariff == null) {
-      _showError('Выберите тариф');
-      return;
-    }
-
-    if (_description == null || _description!.isEmpty) {
-      _showError('Укажите описание посылки');
-      return;
-    }
-
-    // Проверка размеров тарифа
-    // final height = _customHeight ?? _selectedTariff!.height;
-    final length = _customLength ?? _selectedTariff!.length;
-    final width = _customWidth ?? _selectedTariff!.width;
-
-    // if (height == null || height <= 0 ||
-    //     length == null || length <= 0 ||
-    //     width == null || width <= 0) {
-    //   _showError('Выбранный тариф не содержит корректных размеров. Пожалуйста, выберите другой тариф или укажите размеры вручную.');
-    //   return;
-    // }
-
-    final photoIds = _photos
-        .map((photo) => _photoIds[photo] ?? '')
-        .where((id) => id.isNotEmpty)
-        .toList();
-
-    final orderData = OrderData(
-      isDefect: false,
-      isFragile: _isFragile,
-      comment: '',
-      contentPhotos: [],
-      description: _description!,
-      fromAddress: _fromAddress!.fullAddress ?? _fromAddress!.address,
-      fromApartment: _fromAddress!.apartment ?? '',
-      fromCityId: int.tryParse(_fromAddress!.cityId) ?? 0,
-      fromEntrance: _fromAddress!.entrance ?? '',
-      fromFloor: _fromAddress!.floor?.isNotEmpty == true
-          ? _fromAddress!.floor
-          : null,
-      height: _customHeight ?? _selectedTariff!.height ?? 0.0,
-      length: length ?? 0.0,
-      photos: photoIds,
-      tariffId: _selectedTariffId!,
-      toAddress: _toAddress!.fullAddress ?? _toAddress!.address,
-      toApartment: _toAddress!.apartment ?? '',
-      toCityId: int.tryParse(_toAddress!.cityId) ?? 0,
-      toEntrance: _toAddress!.entrance ?? '',
-      toFloor: _toAddress!.floor?.isNotEmpty == true ? _toAddress!.floor : null,
-      toName: _recipientName!,
-      toPhone: _recipientPhone!,
-      volumetricWeight: _selectedTariff!.volumetricWeight,
-      weight: _selectedTariff!.weight ?? 0.0,
-      width: width ?? 0.0,
+    context.read<OrdersBloc>().add(
+      SubmitOrderEvent(
+        fromAddress: _fromAddress,
+        toAddress: _toAddress,
+        recipientName: _recipientName,
+        recipientPhone: _recipientPhone,
+        selectedTariffId: _selectedTariffId,
+        selectedTariff: _selectedTariff,
+        description: _description,
+        isFragile: _isFragile,
+        customLength: _customLength,
+        customWidth: _customWidth,
+        customHeight: _customHeight,
+        photos: _photos,
+        photoIds: _photoIds,
+      ),
     );
-
-    context.read<OrdersBloc>().add(CreateOrderEvent(orderData: orderData));
   }
 
   void _showError(String message) {
@@ -405,6 +354,8 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
             _isAnalyzing = false;
           });
           _showError('Для создания заказа необходимо войти в аккаунт');
+        } else if (state is OrderValidationError) {
+          _showError(state.message);
         } else if (state is OrdersError) {
           setState(() {
             _isAnalyzing = false;
@@ -514,6 +465,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
           onPickPhoto: _pickPhoto,
           onRemovePhoto: _removePhoto,
           onWeightTap: _openTariffSelection,
+          onSubmitOrder: _submitOrder,
           isAnalyzing: _isAnalyzing,
           isAnalysisCompleted: _preOrderData != null,
           analysisStatus: _analysisStatus,
