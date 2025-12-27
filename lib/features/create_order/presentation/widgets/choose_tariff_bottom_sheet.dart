@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/specify_dimensions_bottom_sheet.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/tariff_item_widget.dart';
+import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -41,6 +41,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
   void _onCustomSizesTap() {
     showModalBottomSheet<Map<String, double>>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => const SpecifyDimensionsBottomSheet(),

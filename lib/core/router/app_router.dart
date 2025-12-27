@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page_v2.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
 import 'package:fly_cargo/core/router/main_scaffold_shell.dart';
-import 'package:fly_cargo/features/order/presentation/pages/orders_list_page.dart';
-import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/description_form_page.dart';
-import 'package:fly_cargo/features/order/presentation/pages/order_detail_page.dart';
-import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/recipient_form_page.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/recipient_page.dart';
-import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
-import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/code_input_page.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/phone_input_page.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page_v2.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/description_form_page.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/recipient_form_page.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/recipient_page.dart';
+import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
+import 'package:fly_cargo/features/order/presentation/pages/order_detail_page.dart';
+import 'package:fly_cargo/features/order/presentation/pages/orders_list_page.dart';
 import 'package:fly_cargo/features/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -142,6 +142,7 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                 routes: [
                   GoRoute(
                     path: AppRoutes.descriptionForm,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) {
                       final initialDescription = state.extra as String?;
                       return DescriptionFormPage(
@@ -151,10 +152,12 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                   ),
                   GoRoute(
                     path: AppRoutes.recipientPage,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const RecipientPage(),
                   ),
                   GoRoute(
                     path: AppRoutes.recipientForm,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const RecipientFormPage(),
                   ),
                 ],
@@ -170,6 +173,7 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                 routes: [
                   GoRoute(
                     path: AppRoutes.orderDetail,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) {
                       final extra = state.extra as Map<String, dynamic>?;
                       if (extra == null) {
@@ -198,10 +202,12 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                 routes: [
                   GoRoute(
                     path: AppRoutes.profile,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const ProfilePage(),
                   ),
                   GoRoute(
                     path: AppRoutes.contacts,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const ContactsPage(),
                   ),
                 ],

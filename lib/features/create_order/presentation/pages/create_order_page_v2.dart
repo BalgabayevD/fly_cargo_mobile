@@ -69,6 +69,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   Future<void> _openFromAddressSelection() async {
     final address = await showModalBottomSheet<destination.AddressModel>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => ChooseAddressBottomSheet(
@@ -103,6 +104,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
     }
     final address = await showModalBottomSheet<destination.AddressModel>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => ChooseAddressBottomSheet(
@@ -149,6 +151,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
   Future<void> _openRecipientForm() async {
     final result = await showModalBottomSheet<Map<String, String>>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => ChooseRecipientBottomSheet(
@@ -184,6 +187,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
 
     final result = await showModalBottomSheet<dynamic>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => ChooseTariffBottomSheet(
@@ -218,6 +222,7 @@ class _CreateOrderPageState extends State<CreateOrderPageV2> {
     // Показываем диалог выбора источника
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: BoxDecoration(

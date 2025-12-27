@@ -100,6 +100,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
   Future<void> _selectCity() async {
     final city = await showModalBottomSheet<CityModel>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => ChooseCityBottomSheet(

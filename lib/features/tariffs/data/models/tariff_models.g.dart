@@ -45,7 +45,6 @@ TariffModel _$TariffModelFromJson(Map<String, dynamic> json) => TariffModel(
   deletedAt: json['deletedAt'] as String?,
   fields: (json['fields'] as List<dynamic>?)?.map((e) => e as String).toList(),
   height: (json['height'] as num?)?.toDouble(),
-  icon: (json['icon'] as num?)?.toInt(),
   invoiceWeight: (json['invoiceWeight'] as num?)?.toDouble(),
   length: (json['length'] as num?)?.toDouble(),
   package: json['package'] == null
@@ -73,7 +72,6 @@ Map<String, dynamic> _$TariffModelToJson(TariffModel instance) =>
       'description': instance.description,
       'fields': instance.fields,
       'height': instance.height,
-      'icon': instance.icon,
       'id': instance.id,
       'image': instance.image,
       'invoiceWeight': instance.invoiceWeight,

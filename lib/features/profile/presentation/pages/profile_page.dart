@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/logout_dialog.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/logout_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -75,7 +75,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
+                padding: const EdgeInsets.all(AppSpacing.cardPadding),
                 child: Column(
                   children: [
                     SizedBox(
