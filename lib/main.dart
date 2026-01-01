@@ -8,8 +8,9 @@ import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_bloc.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/price_calculation_bloc.dart';
+import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
+import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
 import 'package:fly_cargo/features/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -62,7 +63,8 @@ Future<void> main() async {
         BlocProvider<TariffSelectionBloc>(
           create: (_) => getIt<TariffSelectionBloc>(),
         ),
-        BlocProvider<OrdersBloc>(create: (_) => getIt<OrdersBloc>()),
+        BlocProvider<CreateOrderBloc>(create: (_) => getIt<CreateOrderBloc>()),
+        BlocProvider<OrdersListBloc>(create: (_) => getIt<OrdersListBloc>()),
       ],
       child: App(
         authBloc: authBloc,

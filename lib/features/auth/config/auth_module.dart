@@ -9,6 +9,6 @@ abstract class AuthModule {
     @Named('private-dio') Dio privateDio,
     ApiConfig dataSourceConfig,
   ) {
-    return AuthRemoteSource(privateDio, baseUrl: ApiConfig.baseUrl);
+    return AuthRemoteSource(privateDio, baseUrl: dataSourceConfig.baseUrl);
   }
 }

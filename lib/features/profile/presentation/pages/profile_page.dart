@@ -5,6 +5,7 @@ import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/logout_dialog.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/profile_field.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -54,20 +55,20 @@ class ProfilePage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    _ProfileField(
+                    ProfileField(
                       label: 'Номер телефона',
                       value: profile.phoneNumber,
                       isEditable: false,
                     ),
-                    _ProfileField(
+                    ProfileField(
                       label: 'Имя',
                       value: profile.name,
                     ),
-                    _ProfileField(
+                    ProfileField(
                       label: 'Email',
                       value: profile.email,
                     ),
-                    _ProfileField(
+                    ProfileField(
                       label: 'Роль',
                       value: profile.role.displayName,
                     ),
@@ -135,40 +136,6 @@ class ProfilePage extends StatelessWidget {
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-class _ProfileField extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool isEditable;
-
-  const _ProfileField({
-    required this.label,
-    required this.value,
-    this.isEditable = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.md,
-      ),
-      child: TextField(
-        controller: TextEditingController(text: value),
-        style: TextStyle(
-          fontSize: 16,
-          color: AppColors.surface5,
-          fontWeight: FontWeight.w500,
-        ),
-        enabled: isEditable,
-        decoration: InputDecoration(
-          labelText: label,
-        ),
       ),
     );
   }

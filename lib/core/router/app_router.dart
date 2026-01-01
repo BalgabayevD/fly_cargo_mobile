@@ -6,14 +6,14 @@ import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/code_input_page.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/phone_input_page.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page_v2.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/description_form_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_form_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
-import 'package:fly_cargo/features/order/presentation/pages/order_detail_page.dart';
-import 'package:fly_cargo/features/order/presentation/pages/orders_list_page.dart';
-import 'package:fly_cargo/features/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/order_detail_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.dart';
+import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
@@ -137,7 +137,7 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
             routes: [
               GoRoute(
                 path: AppRoutes.home,
-                builder: (context, state) => const CreateOrderPageV2(),
+                builder: (context, state) => const CreateOrderPage(),
                 // CreateOrderPage(),
                 routes: [
                   GoRoute(

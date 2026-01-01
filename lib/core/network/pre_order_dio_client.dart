@@ -14,10 +14,11 @@ class PreOrderDioClient {
   PreOrderDioClient(
     @Named('log-interceptor') Interceptor logInterceptor,
     @Named('auth-interceptor') Interceptor authInterceptor,
+    ApiConfig apiConfig,
   ) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: ApiConfig.baseUrl,
+        baseUrl: apiConfig.baseUrl,
         connectTimeout: const Duration(seconds: 420),
         receiveTimeout: const Duration(seconds: 420),
         sendTimeout: const Duration(seconds: 420),

@@ -4,8 +4,8 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_bloc.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_event.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -23,7 +23,7 @@ class MainScaffoldShell extends StatelessWidget {
       initialLocation: index == navigationShell.currentIndex,
     );
     if (index == 1) {
-      context.read<OrdersBloc>().add(const GetClientOrdersEvent());
+      context.read<OrdersListBloc>().add(const GetClientOrdersListEvent());
     }
   }
 

@@ -9,6 +9,6 @@ abstract class DestinationModule {
     @Named('private-dio') Dio privateDio,
     ApiConfig dataSourceConfig,
   ) {
-    return DestinationRemoteSource(privateDio, baseUrl: ApiConfig.baseUrl);
+    return DestinationRemoteSource(privateDio, baseUrl: dataSourceConfig.baseUrl);
   }
 }

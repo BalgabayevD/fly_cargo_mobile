@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
-import 'package:fly_cargo/features/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 
 enum OrderStatus {
   awaitingPayment,

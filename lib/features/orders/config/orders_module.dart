@@ -1,14 +1,37 @@
-import 'package:dio/dio.dart';
-import 'package:fly_cargo/core/network/api_config.dart';
-import 'package:fly_cargo/features/orders/data/orders_remote_source.dart';
+import 'package:fly_cargo/features/orders/domain/usecases/get_client_orders_usecase.dart';
+import 'package:fly_cargo/features/orders/domain/usecases/get_courier_orsers_usecase.dart';
+import 'package:fly_cargo/features/orders/domain/usecases/get_created_orders_usecase.dart';
+import 'package:fly_cargo/features/orders/domain/usecases/get_order_by_id_usecase.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
+import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
+
 @module
 abstract class OrdersModule {
-  @factoryMethod
-  OrdersRemoteSource provideOrdersRemoteSource(
-    @Named('private-dio') Dio privateDio,
-    ApiConfig dataSourceConfig,
-  ) {
-    return OrdersRemoteSource(privateDio, baseUrl: ApiConfig.baseUrl);
-  }
+  GetClientOrdersUseCase getClientOrdersUseCase(OrdersRepository repository) =>
+      GetClientOrdersUseCase(repository);
+
+  GetCourierOrdersUseCase getCourierOrdersUseCase(
+          OrdersRepository repository) =>
+      GetCourierOrdersUseCase(repository);
+
+  GetCreatedOrdersUseCase getCreatedOrdersUseCase(
+          OrdersRepository repository) =>
+      GetCreatedOrdersUseCase(repository);
+
+  GetOrderByIdUseCase getOrderByIdUseCase(OrdersRepository repository) =>
+      GetOrderByIdUseCase(repository);
+
+  OrdersListBloc ordersListBloc(
+    GetClientOrdersUseCase getClientOrdersUseCase,
+    GetCourierOrdersUseCase getCourierOrdersUseCase,
+    GetCreatedOrdersUseCase getCreatedOrdersUseCase,
+    GetOrderByIdUseCase getOrderByIdUseCase,
+  ) =>
+      OrdersListBloc(
+        getClientOrdersUseCase,
+        getCourierOrdersUseCase,
+        getCreatedOrdersUseCase,
+        getOrderByIdUseCase,
+      );
 }

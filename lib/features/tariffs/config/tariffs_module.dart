@@ -9,6 +9,6 @@ abstract class TariffsModule {
     @Named('private-dio') Dio privateDio,
     ApiConfig dataSourceConfig,
   ) {
-    return TariffsRemoteSource(privateDio, baseUrl: ApiConfig.baseUrl);
+    return TariffsRemoteSource(privateDio, baseUrl: dataSourceConfig.baseUrl);
   }
 }

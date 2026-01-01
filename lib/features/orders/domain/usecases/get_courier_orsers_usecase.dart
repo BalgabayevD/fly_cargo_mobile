@@ -1,8 +1,6 @@
-﻿import 'package:fly_cargo/features/orders/data/models/models.dart';
-import 'package:fly_cargo/features/orders/domain/repositories/orders_repository.dart';
-import 'package:injectable/injectable.dart';
+﻿import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
+import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 
-@injectable
 class GetCourierOrdersUseCase {
   final OrdersRepository _ordersRepository;
   GetCourierOrdersUseCase(this._ordersRepository);

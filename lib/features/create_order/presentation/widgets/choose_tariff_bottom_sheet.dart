@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/specify_dimensions_bottom_sheet.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/tariff_item_widget.dart';
 import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart';
 import 'package:heroicons/heroicons.dart';
@@ -195,7 +194,7 @@ class _TariffsList extends StatelessWidget {
           ...tariffs.map(
             (tariff) => Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
-              child: TariffItem(
+              child: _TariffItem(
                 tariff: tariff,
                 isSelected: selectedTariff?.id == tariff.id,
                 onTap: () => onTariffSelected(tariff),
@@ -203,8 +202,90 @@ class _TariffsList extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          CustomSizesButton(onTap: onCustomSizesTap),
+          _CustomSizesButton(onTap: onCustomSizesTap),
         ],
+      ),
+    );
+  }
+}
+
+class _TariffItem extends StatelessWidget {
+  final TariffModel tariff;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _TariffItem({
+    required this.tariff,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.white,
+          border: Border.all(
+            color: isSelected ? AppColors.primary : Colors.grey.shade300,
+            width: isSelected ? 2 : 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              tariff.name,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: isSelected ? AppColors.primary : Colors.black,
+              ),
+            ),
+            if (tariff.description.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                tariff.description,
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CustomSizesButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _CustomSizesButton({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.straighten, color: AppColors.primary),
+            const SizedBox(width: AppSpacing.sm),
+            Text(
+              'Указать нестандартные размеры',
+              style: const TextStyle(fontSize: 15, color: AppColors.primary),
+            ),
+          ],
+        ),
       ),
     );
   }
