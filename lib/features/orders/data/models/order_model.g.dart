@@ -19,7 +19,6 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
   toLongitude: (json['toLongitude'] as num).toDouble(),
   toAddress: json['toAddress'] as String,
   tariffId: (json['tariffId'] as num).toInt(),
-  isPaid: json['isPaid'] as bool,
   isFragile: json['isFragile'] as bool,
   isDefect: json['isDefect'] as bool,
   volumetricWeight: (json['volumetricWeight'] as num).toDouble(),
@@ -28,6 +27,7 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
   length: (json['length'] as num).toDouble(),
   height: (json['height'] as num).toDouble(),
   calculationId: (json['calculationId'] as num).toInt(),
+  isPaid: json['isPaid'] as bool?,
   deletedAt: json['deletedAt'] as String?,
   status: json['status'] as String?,
   fromApartment: json['fromApartment'] as String? ?? '',
@@ -59,8 +59,8 @@ _OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => _OrderModel(
           ?.map((e) => e as String)
           .toList() ??
       const [],
-  declineReason: json['decideReason'] as String? ?? '',
-  declineDescription: json['decideDescription'] as String? ?? '',
+  decideReason: json['decideReason'] as String? ?? '',
+  decideDescription: json['decideDescription'] as String? ?? '',
   fromCity: json['fromCity'] == null
       ? null
       : CityModel.fromJson(json['fromCity'] as Map<String, dynamic>),
@@ -105,7 +105,6 @@ Map<String, dynamic> _$OrderModelToJson(_OrderModel instance) =>
       'toLongitude': instance.toLongitude,
       'toAddress': instance.toAddress,
       'tariffId': instance.tariffId,
-      'isPaid': instance.isPaid,
       'isFragile': instance.isFragile,
       'isDefect': instance.isDefect,
       'volumetricWeight': instance.volumetricWeight,
@@ -114,6 +113,7 @@ Map<String, dynamic> _$OrderModelToJson(_OrderModel instance) =>
       'length': instance.length,
       'height': instance.height,
       'calculationId': instance.calculationId,
+      'isPaid': instance.isPaid,
       'deletedAt': instance.deletedAt,
       'status': instance.status,
       'fromApartment': instance.fromApartment,
@@ -133,8 +133,8 @@ Map<String, dynamic> _$OrderModelToJson(_OrderModel instance) =>
       'photos': instance.photos,
       'contentPhotos': instance.contentPhotos,
       'defectPhotos': instance.defectPhotos,
-      'decideReason': instance.declineReason,
-      'decideDescription': instance.declineDescription,
+      'decideReason': instance.decideReason,
+      'decideDescription': instance.decideDescription,
       'fromCity': instance.fromCity,
       'toCity': instance.toCity,
       'qrs': instance.qrs,

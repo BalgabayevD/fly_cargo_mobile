@@ -160,7 +160,7 @@ class OrderStatusHelper {
       }
     }
 
-    if (!order.isPaid) {
+    if (order.isPaid != null && !order.isPaid!) {
       return OrderStatus.awaitingPayment;
     }
 
