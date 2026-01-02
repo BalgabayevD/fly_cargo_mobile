@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/features/orders/presentation/models/order_status.dart';
+import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
@@ -36,12 +36,10 @@ class OrderCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: status.backgroundColor,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-          border: status.borderColor != null
-              ? Border.all(
-                  color: status.borderColor!,
-                  width: 1.5,
-                )
-              : null,
+          border: Border.all(
+            color: status.borderColor,
+            width: 1.5,
+          ),
         ),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
@@ -69,23 +67,14 @@ class OrderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.md),
-            if (order.price != null && status == OrderStatus.awaitingPayment)
-              Text(
-                'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.surface4,
-                ),
-              ),
-            if (trackingNumber != null && status != OrderStatus.awaitingPayment)
+            if (trackingNumber != null)
               Text(
                 'Трековый номер $trackingNumber',
                 style: AppTypography.bodyMedium.copyWith(
                   color: AppColors.surface4,
                 ),
               ),
-            if (order.price != null &&
-                trackingNumber == null &&
-                status != OrderStatus.awaitingPayment)
+            if (order.price != null && trackingNumber == null)
               Text(
                 'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
                 style: AppTypography.bodyMedium.copyWith(

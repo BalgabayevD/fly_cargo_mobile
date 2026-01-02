@@ -64,7 +64,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
     final authState = context.read<AuthBloc>().state;
     context
         .push(
-          '${AppRoutes.orders}/${AppRoutes.orderDetail}',
+          '${AppRoutes.orders}/${AppRoutes.orderDetail}/${order.id}',
           extra: {
             'order': order,
             'userType': authState is AuthAuthenticated

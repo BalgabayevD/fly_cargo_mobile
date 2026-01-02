@@ -11,12 +11,14 @@ import 'package:fly_cargo/features/create_order/presentation/pages/description_f
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_form_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/order_detail_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_loader_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_order_detail_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
+import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -172,21 +174,46 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                 builder: (context, state) => const OrdersListPage(),
                 routes: [
                   GoRoute(
-                    path: AppRoutes.orderDetail,
+                    path: '${AppRoutes.orderDetail}/:orderId',
                     parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) {
+                      final orderIdStr = state.pathParameters['orderId'];
+
+                      // Попытка получить order из extra (при переходе из списка)
                       final extra = state.extra as Map<String, dynamic>?;
-                      if (extra == null) {
+
+                      if (extra != null && extra.containsKey('order')) {
+                        // Переход из списка с передачей полного объекта
+                        final userType = extra['userType'] as UserType;
+                        final order = extra['order'] as OrderModel;
+
+                        // Проверяем тип пользователя и показываем соответствующую страницу
+                        if (userType.isCourier) {
+                          return CourierOrderDetailPage(
+                            order: order,
+                            userType: userType,
+                          );
+                        } else {
+                          return ClientOrderDetailPage(
+                            order: order,
+                            userType: userType,
+                          );
+                        }
+                      }
+
+                      // Если нет extra (DevTools, deep link, etc.) - загружаем заказ по ID
+                      if (orderIdStr == null || orderIdStr.isEmpty) {
                         return const Scaffold(
                           body: Center(
-                            child: Text('Ошибка: отсутствуют данные заказа'),
+                            child: Text('Ошибка: не указан ID заказа'),
                           ),
                         );
                       }
-                      return OrderDetailPage(
-                        order: extra['order'] as OrderModel,
-                        userType: extra['userType'] as UserType,
-                      );
+
+                      // Определяем тип пользователя для загрузчика
+                      // TODO: Получить из контекста AuthBloc
+                      // Пока используем клиентский загрузчик по умолчанию
+                      return OrderDetailLoaderPage(orderId: orderIdStr);
                     },
                   ),
                 ],

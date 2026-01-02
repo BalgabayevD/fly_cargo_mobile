@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/cancel_order_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/copy_payment_link_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_description_section.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_info_section.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_payment_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_timeline.dart';
+import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:intl/intl.dart';
 
-class OrderDetailPage extends StatelessWidget {
+class ClientOrderDetailPage extends StatelessWidget {
   final OrderModel order;
   final UserType userType;
 
-  const OrderDetailPage({
+  const ClientOrderDetailPage({
     required this.order,
     required this.userType,
     super.key,
@@ -55,18 +55,18 @@ class OrderDetailPage extends StatelessWidget {
       TimelineStep(
         title: 'Доставка в ${order.toCity?.name ?? 'г. Астана'}',
         date: _formatDate(
-          DateTime.parse(order.createdAt)
-              .add(Duration(days: 1))
-              .toIso8601String(),
+          DateTime.parse(
+            order.createdAt,
+          ).add(Duration(days: 1)).toIso8601String(),
         ),
         isCompleted: false,
       ),
       TimelineStep(
         title: 'Передано курьеру',
         date: _formatDate(
-          DateTime.parse(order.createdAt)
-              .add(Duration(days: 1))
-              .toIso8601String(),
+          DateTime.parse(
+            order.createdAt,
+          ).add(Duration(days: 1)).toIso8601String(),
         ),
         isCompleted: false,
       ),
