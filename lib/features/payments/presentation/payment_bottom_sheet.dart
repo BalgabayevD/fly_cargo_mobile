@@ -14,6 +14,7 @@ import 'package:fly_cargo/features/payments/presentation/widgets/empty_cards_wid
 import 'package:fly_cargo/features/payments/presentation/widgets/payment_error_widget.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/payment_processing_widget.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/payment_success_widget.dart';
+import 'package:heroicons/heroicons.dart';
 
 class PaymentBottomSheet extends StatefulWidget {
   final int orderId;
@@ -89,22 +90,14 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.close, color: AppColors.surface5),
-            onPressed: () => Navigator.pop(context),
-          ),
           Expanded(
             child: BlocBuilder<PaymentFlowCubit, PaymentStep>(
               builder: (context, step) {
                 String title = 'Оплата заказа №${widget.orderId}';
                 if (step == PaymentStep.addCard) {
                   title = 'Добавление карты';
-                } else if (step == PaymentStep.processing) {
-                  title = 'Обработка платежа';
-                } else if (step == PaymentStep.success) {
-                  title = 'Успешно';
-                } else if (step == PaymentStep.error) {
-                  title = 'Ошибка';
+                } else {
+                  title = '';
                 }
 
                 return Text(
@@ -119,7 +112,15 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
               },
             ),
           ),
-          const SizedBox(width: 48), // Для симметрии
+          IconButton(
+            icon: HeroIcon(
+              HeroIcons.xMark,
+              size: 24,
+              color: AppColors.surface4,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          const SizedBox(width: 26),
         ],
       ),
     );
@@ -137,7 +138,6 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
           },
         );
       case PaymentStep.addCard:
-        // Этот кейс больше не используется, т.к. WebView открывается отдельно
         return const EmptyCardsWidget();
       case PaymentStep.processing:
         return const PaymentProcessingWidget();
@@ -167,7 +167,7 @@ Future<bool?> showPaymentBottomSheet(
         BlocProvider(create: (_) => getIt<EpaymentPayBloc>()),
       ],
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.9,
+        height: MediaQuery.of(context).size.height * 0.7,
         child: PaymentBottomSheet(
           orderId: orderId,
           price: price,

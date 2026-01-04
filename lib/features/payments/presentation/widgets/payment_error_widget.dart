@@ -4,6 +4,7 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/payments/presentation/epayment_pay/bloc/epayment_pay_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/epayment_pay/bloc/epayment_pay_event.dart';
 import 'package:fly_cargo/features/payments/presentation/payment_flow_cubit.dart';
+import 'package:heroicons/heroicons.dart';
 
 class PaymentErrorWidget extends StatelessWidget {
   const PaymentErrorWidget({super.key});
@@ -16,18 +17,11 @@ class PaymentErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFEBEE),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.info_outline,
-                size: 60,
-                color: Color(0xFFE53935),
-              ),
+            HeroIcon(
+              HeroIcons.informationCircle,
+              style: HeroIconStyle.outline,
+              size: 120,
+              color: AppColors.primary,
             ),
             const SizedBox(height: 32),
             Text(

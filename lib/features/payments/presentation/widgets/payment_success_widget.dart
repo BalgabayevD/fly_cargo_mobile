@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:heroicons/heroicons.dart';
 
 class PaymentSuccessWidget extends StatelessWidget {
   const PaymentSuccessWidget({super.key});
@@ -12,20 +13,13 @@ class PaymentSuccessWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8F5E9),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.check,
-                size: 60,
-                color: Color(0xFF4CAF50),
-              ),
+            HeroIcon(
+              HeroIcons.checkBadge,
+              style: HeroIconStyle.outline,
+              size: 120,
+              color: AppColors.success,
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             Text(
               'Успех',
               style: TextStyle(
@@ -72,4 +66,3 @@ class PaymentSuccessWidget extends StatelessWidget {
     );
   }
 }
-

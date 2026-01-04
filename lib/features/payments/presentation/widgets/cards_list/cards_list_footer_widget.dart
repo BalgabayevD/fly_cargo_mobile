@@ -9,7 +9,7 @@ import 'package:fly_cargo/features/payments/presentation/widgets/cards_list/paym
 class CardsListFooterWidget extends StatelessWidget {
   final int orderId;
   final int? selectedCardId;
-  
+
   const CardsListFooterWidget({
     required this.orderId,
     required this.selectedCardId,
@@ -49,7 +49,9 @@ class CardsListFooterWidget extends StatelessWidget {
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
-        onPressed: selectedCardId != null ? () => _onPaymentPressed(context) : null,
+        onPressed: selectedCardId != null
+            ? () => _onPaymentPressed(context)
+            : null,
         style: _buildPaymentButtonStyle(context),
         child: Text(
           'Оплатить',
@@ -93,4 +95,3 @@ class CardsListFooterWidget extends StatelessWidget {
     );
   }
 }
-
