@@ -44,12 +44,7 @@ class CityErrorState extends StatelessWidget {
             'Ошибка загрузки',
             style: AppTypography.h6,
           ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            message,
-            style: AppTypography.bodySmall,
-            textAlign: TextAlign.center,
-          ),
+
           const SizedBox(height: AppSpacing.lg),
           ElevatedButton(
             onPressed: onRetry,

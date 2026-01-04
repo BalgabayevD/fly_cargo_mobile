@@ -7,6 +7,7 @@ import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/orde
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_info_section.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_payment_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_timeline.dart';
+import 'package:fly_cargo/features/payments/presentation/payment_bottom_sheet.dart';
 import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:intl/intl.dart';
 
@@ -73,6 +74,26 @@ class ClientOrderDetailPage extends StatelessWidget {
     ];
   }
 
+  Future<void> _handlePayment(BuildContext context, double price) async {
+    final result = await showPaymentBottomSheet(
+      context,
+      orderId: order.id,
+      price: price,
+    );
+
+    if (result == true && context.mounted) {
+      // Оплата прошла успешно, можно обновить UI или перейти к списку заказов
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Оплата прошла успешно!'),
+          backgroundColor: const Color(0xFF4CAF50),
+        ),
+      );
+      // Можно добавить навигацию или обновление заказа
+      Navigator.of(context).pop(); // Возврат к списку заказов
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final price = order.priceCalculations?.sellingPrice ?? order.price ?? 0;
@@ -121,13 +142,13 @@ class ClientOrderDetailPage extends StatelessWidget {
             SizedBox(height: 24),
             OrderTimeline(steps: _buildTimelineSteps()),
             SizedBox(height: 24),
-            if (order.isPaid != null && !order.isPaid!) ...[
+            if (!(order.isPaid ?? false)) ...[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: OrderPaymentButton(
                   price: price,
                   userType: userType,
-                  onPressed: () {},
+                  onPressed: () => _handlePayment(context, price),
                 ),
               ),
               SizedBox(height: 32),
