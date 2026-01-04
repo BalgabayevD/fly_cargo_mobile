@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.8
   yandex_maps_mapkit_lite: ^4.19.0-beta
   flutter_bloc: ^9.1.1
@@ -32,7 +34,7 @@ dependencies:
   flutter_image_compress: ^2.3.0
   freezed_annotation: ^3.0.0
   heroicons: ^0.11.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   package_info_plus: ^8.0.0
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
@@ -52,6 +54,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/images/

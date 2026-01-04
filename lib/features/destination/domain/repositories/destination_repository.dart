@@ -1,10 +1,12 @@
-import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/features/destination/domain/entities/address_entity.dart';
+import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
+
 abstract class DestinationRepository {
-  Future<List<CityModel>> getCitiesFrom();
-  Future<List<CityModel>> getCitiesTo({required String fromCityId});
-  Future<List<AddressModel>> searchAddresses({
+  Future<List<CityEntity>> getCitiesFrom();
+  Future<List<CityEntity>> getCitiesTo({required String fromCityId});
+  Future<List<AddressEntity>> searchAddresses({
     required String city,
     required String address,
   });
-  Future<List<CityModel>> getAllCities({String? fromCityId});
+  Future<List<CityEntity>> getAllCities({String? fromCityId});
 }

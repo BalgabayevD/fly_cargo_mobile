@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:fly_cargo/features/auth/data/models/user_profile.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_profile_entity.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
+
   @override
   List<Object?> get props => [];
 }
@@ -20,9 +21,9 @@ class AuthAuthenticated extends AuthState {
   final UserType userType;
   final String? userId;
   final String? accessToken;
-  final UserProfile? profile;
+  final UserProfileEntity? profile;
   final int? daysSinceCreated;
-  
+
   const AuthAuthenticated({
     required this.userType,
     this.userId,
@@ -30,15 +31,15 @@ class AuthAuthenticated extends AuthState {
     this.profile,
     this.daysSinceCreated,
   });
-  
+
   @override
   List<Object?> get props => [userType, userId, accessToken, profile, daysSinceCreated];
-  
+
   AuthAuthenticated copyWith({
     UserType? userType,
     String? userId,
     String? accessToken,
-    UserProfile? profile,
+    UserProfileEntity? profile,
     int? daysSinceCreated,
   }) {
     return AuthAuthenticated(

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/features/destination/domain/entities/address_entity.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_event.dart';
 import 'package:fly_cargo/features/destination/presentation/widgets/address_autocomplete_overlay.dart';
@@ -14,7 +14,7 @@ class AddressAutocompleteField extends StatefulWidget {
   final TextEditingController controller;
   final String? hintText;
   final String? cityName;
-  final Function(AddressModel)? onAddressSelected;
+  final Function(AddressEntity)? onAddressSelected;
 
   const AddressAutocompleteField({
     required this.label,

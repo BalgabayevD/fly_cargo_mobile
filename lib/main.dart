@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_better_auth/core/flutter_better_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
@@ -108,6 +110,14 @@ class _AppState extends State<App> {
       title: 'Sapsano',
       theme: AppTheme.lightTheme,
       routerConfig: _router,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: L10n.supportedLocales,
+      locale: L10n.fallbackLocale,
     );
   }
 }

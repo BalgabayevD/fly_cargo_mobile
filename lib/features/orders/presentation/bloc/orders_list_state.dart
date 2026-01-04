@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 
 abstract class OrdersListState extends Equatable {
   const OrdersListState();
@@ -16,7 +16,7 @@ class OrdersListLoading extends OrdersListState {
 }
 
 class OrdersListLoaded extends OrdersListState {
-  final List<OrderModel> orders;
+  final List<OrderEntity> orders;
   const OrdersListLoaded({required this.orders});
   @override
   List<Object?> get props => [orders];
@@ -34,7 +34,7 @@ class OrdersListUnauthorized extends OrdersListState {
 }
 
 class OrderDetailLoaded extends OrdersListState {
-  final OrderModel order;
+  final OrderEntity order;
   const OrderDetailLoaded({required this.order});
   @override
   List<Object?> get props => [order];

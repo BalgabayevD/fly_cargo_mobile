@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 
 enum OrderStatus {
   // Клиентские статусы
@@ -60,24 +60,24 @@ extension OrderStatusExtension on OrderStatus {
       case OrderStatus.created:
         return AppColors.white;
       case OrderStatus.cancelled:
-        return const Color(0xFFFFF5F5); // Светло-красный для отмененных
+        return AppColors.errorLight;
       case OrderStatus.decided:
-        return const Color(0xFFFFF5F5); // Светло-красный для отклоненных
+        return AppColors.errorLight;
       case OrderStatus.accepted:
         return AppColors.white;
       case OrderStatus.submitted:
       case OrderStatus.accounted:
       case OrderStatus.checked:
       case OrderStatus.revision:
-        return const Color(0xFFFFFBF0); // Светло-желтый для обработки на складе
+        return AppColors.warningBackground;
       case OrderStatus.dispatched:
       case OrderStatus.transit:
-        return const Color(0xFFF0F7FF); // Светло-синий для доставки
+        return AppColors.infoBackground;
       case OrderStatus.arrived:
       case OrderStatus.deliversRecipient:
         return AppColors.white;
       case OrderStatus.completed:
-        return const Color(0xFFF0FFF4); // Светло-зеленый для доставлен
+        return AppColors.successBackground;
     }
   }
 
@@ -87,10 +87,10 @@ extension OrderStatusExtension on OrderStatus {
       case OrderStatus.accepted:
       case OrderStatus.arrived:
       case OrderStatus.deliversRecipient:
-        return const Color(0xFFE0E0E0); // Серая рамка для обычных
+        return AppColors.borderLight;
       case OrderStatus.cancelled:
       case OrderStatus.decided:
-        return const Color(0xFFFF4444); // Красная рамка
+        return AppColors.errorBorder;
       case OrderStatus.submitted:
       case OrderStatus.accounted:
       case OrderStatus.checked:
@@ -98,7 +98,7 @@ extension OrderStatusExtension on OrderStatus {
       case OrderStatus.dispatched:
       case OrderStatus.transit:
       case OrderStatus.completed:
-        return const Color(0xFFE0E0E0); // Серая рамка
+        return AppColors.borderLight;
     }
   }
 
@@ -107,30 +107,30 @@ extension OrderStatusExtension on OrderStatus {
       case OrderStatus.created:
         return AppColors.surface5;
       case OrderStatus.cancelled:
-        return const Color(0xFFFF4444); // Красный
+        return AppColors.errorText;
       case OrderStatus.decided:
-        return const Color(0xFFFF4444); // Красный
+        return AppColors.errorText;
       case OrderStatus.accepted:
         return AppColors.surface5;
       case OrderStatus.submitted:
       case OrderStatus.accounted:
       case OrderStatus.checked:
       case OrderStatus.revision:
-        return const Color(0xFFFFB800); // Желтый/оранжевый
+        return AppColors.warningText;
       case OrderStatus.dispatched:
       case OrderStatus.transit:
-        return const Color(0xFF0066FF); // Синий
+        return AppColors.infoText;
       case OrderStatus.arrived:
       case OrderStatus.deliversRecipient:
         return AppColors.surface5;
       case OrderStatus.completed:
-        return const Color(0xFF00B341); // Зеленый
+        return AppColors.successText;
     }
   }
 }
 
 class OrderStatusHelper {
-  static OrderStatus getStatus(OrderModel order) {
+  static OrderStatus getStatus(OrderEntity order) {
     if (order.status != null && order.status!.isNotEmpty) {
       switch (order.status!.toLowerCase()) {
         case 'created':
@@ -169,7 +169,7 @@ class OrderStatusHelper {
     return OrderStatus.created;
   }
 
-  static String? getTrackingNumber(OrderModel order) {
+  static String? getTrackingNumber(OrderEntity order) {
     if (order.qrs != null && order.qrs!.isNotEmpty) {
       final qr = order.qrs!.first;
       if (qr.uuid != null && qr.uuid!.isNotEmpty) {

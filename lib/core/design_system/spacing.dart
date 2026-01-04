@@ -45,11 +45,13 @@ class AppSpacing {
   static const double buttonHeightMD = 40.0;
   static const double buttonHeightLG = 47.0;
   static const double buttonHeightXL = 50.0;
+  static const double buttonHeightXXL = 56.0;
   static const double iconSizeXS = 12.0;
   static const double iconSizeSM = 16.0;
   static const double iconSizeMD = 20.0;
   static const double iconSizeLG = 24.0;
   static const double iconSizeXL = 32.0;
+  static const double iconSizeXXL = 120.0;
   static const double avatarSizeSM = 32.0;
   static const double avatarSizeMD = 40.0;
   static const double avatarSizeLG = 48.0;

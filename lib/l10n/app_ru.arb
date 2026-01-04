@@ -1,0 +1,505 @@
+{
+  "@@locale": "ru",
+
+  "appTitle": "Sapsano",
+  "@appTitle": {
+    "description": "Application title"
+  },
+
+  "success": "Успех",
+  "@success": {
+    "description": "Success message title"
+  },
+
+  "error": "Ошибка",
+  "@error": {
+    "description": "Error message title"
+  },
+
+  "loading": "Загрузка...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+
+  "retry": "Повторить",
+  "@retry": {
+    "description": "Retry button text"
+  },
+
+  "cancel": "Отменить",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "save": "Сохранить",
+  "@save": {
+    "description": "Save button text"
+  },
+
+  "delete": "Удалить",
+  "@delete": {
+    "description": "Delete button text"
+  },
+
+  "back": "Назад",
+  "@back": {
+    "description": "Back button text"
+  },
+
+  "next": "Далее",
+  "@next": {
+    "description": "Next button text"
+  },
+
+  "done": "Готово",
+  "@done": {
+    "description": "Done button text"
+  },
+
+  "close": "Закрыть",
+  "@close": {
+    "description": "Close button text"
+  },
+
+  "phoneInputHint": "+7 (XXX) XXX-XX-XX",
+  "@phoneInputHint": {
+    "description": "Phone number input hint"
+  },
+
+  "enterPhoneNumber": "Введите номер телефона",
+  "@enterPhoneNumber": {
+    "description": "Enter phone number prompt"
+  },
+
+  "enterCode": "Введите код",
+  "@enterCode": {
+    "description": "Enter verification code prompt"
+  },
+
+  "codeSentTo": "Код отправлен на номер {phone}",
+  "@codeSentTo": {
+    "description": "Code sent message",
+    "placeholders": {
+      "phone": {
+        "type": "String",
+        "example": "+7 (999) 123-45-67"
+      }
+    }
+  },
+
+  "resendCode": "Отправить код повторно",
+  "@resendCode": {
+    "description": "Resend code button text"
+  },
+
+  "resendCodeIn": "Повторный код через {seconds} сек",
+  "@resendCodeIn": {
+    "description": "Resend code countdown",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "60"
+      }
+    }
+  },
+
+  "orderCreated": "Ваша заявка на отправку создана",
+  "@orderCreated": {
+    "description": "Order created success message"
+  },
+
+  "goToOrders": "Перейти в заказы",
+  "@goToOrders": {
+    "description": "Go to orders button text"
+  },
+
+  "paymentError": "Ошибка оплаты",
+  "@paymentError": {
+    "description": "Payment error title"
+  },
+
+  "paymentErrorMessage": "Произошла ошибка при оплате. Попробуйте снова.",
+  "@paymentErrorMessage": {
+    "description": "Payment error description"
+  },
+
+  "pay": "Оплатить",
+  "@pay": {
+    "description": "Pay button text"
+  },
+
+  "payAmount": "Оплатить {amount}",
+  "@payAmount": {
+    "description": "Pay with amount button text",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "1000 ₸"
+      }
+    }
+  },
+
+  "addCard": "Добавить карту",
+  "@addCard": {
+    "description": "Add card button text"
+  },
+
+  "selectCard": "Выберите карту",
+  "@selectCard": {
+    "description": "Select card prompt"
+  },
+
+  "noCards": "Нет сохранённых карт",
+  "@noCards": {
+    "description": "No saved cards message"
+  },
+
+  "packageDescription": "Описание посылки",
+  "@packageDescription": {
+    "description": "Package description title"
+  },
+
+  "describePackageContents": "Опишите содержимое посылки",
+  "@describePackageContents": {
+    "description": "Package description hint"
+  },
+
+  "enterPackageDescription": "Введите описание посылки",
+  "@enterPackageDescription": {
+    "description": "Package description input label"
+  },
+
+  "sender": "Отправитель",
+  "@sender": {
+    "description": "Sender label"
+  },
+
+  "recipient": "Получатель",
+  "@recipient": {
+    "description": "Recipient label"
+  },
+
+  "recipientName": "Имя получателя",
+  "@recipientName": {
+    "description": "Recipient name label"
+  },
+
+  "recipientPhone": "Телефон получателя",
+  "@recipientPhone": {
+    "description": "Recipient phone label"
+  },
+
+  "enterRecipientName": "Введите имя получателя",
+  "@enterRecipientName": {
+    "description": "Recipient name input hint"
+  },
+
+  "enterRecipientPhone": "Введите телефон получателя",
+  "@enterRecipientPhone": {
+    "description": "Recipient phone input hint"
+  },
+
+  "from": "Откуда",
+  "@from": {
+    "description": "From location label"
+  },
+
+  "to": "Куда",
+  "@to": {
+    "description": "To location label"
+  },
+
+  "selectCity": "Выберите город",
+  "@selectCity": {
+    "description": "Select city prompt"
+  },
+
+  "selectAddress": "Выберите адрес",
+  "@selectAddress": {
+    "description": "Select address prompt"
+  },
+
+  "searchAddress": "Поиск адреса",
+  "@searchAddress": {
+    "description": "Address search label"
+  },
+
+  "noAddressFound": "Адрес не найден",
+  "@noAddressFound": {
+    "description": "No address found message"
+  },
+
+  "selectTariff": "Выберите тариф",
+  "@selectTariff": {
+    "description": "Select tariff prompt"
+  },
+
+  "dimensions": "Габариты",
+  "@dimensions": {
+    "description": "Dimensions label"
+  },
+
+  "weight": "Вес",
+  "@weight": {
+    "description": "Weight label"
+  },
+
+  "weightKg": "{weight} кг",
+  "@weightKg": {
+    "description": "Weight in kg",
+    "placeholders": {
+      "weight": {
+        "type": "String",
+        "example": "5"
+      }
+    }
+  },
+
+  "length": "Длина",
+  "@length": {
+    "description": "Length label"
+  },
+
+  "width": "Ширина",
+  "@width": {
+    "description": "Width label"
+  },
+
+  "height": "Высота",
+  "@height": {
+    "description": "Height label"
+  },
+
+  "cm": "см",
+  "@cm": {
+    "description": "Centimeters unit"
+  },
+
+  "kg": "кг",
+  "@kg": {
+    "description": "Kilograms unit"
+  },
+
+  "createOrder": "Создать заказ",
+  "@createOrder": {
+    "description": "Create order button text"
+  },
+
+  "orders": "Заказы",
+  "@orders": {
+    "description": "Orders tab title"
+  },
+
+  "myOrders": "Мои заказы",
+  "@myOrders": {
+    "description": "My orders title"
+  },
+
+  "noOrders": "Нет заказов",
+  "@noOrders": {
+    "description": "No orders message"
+  },
+
+  "orderNumber": "Заказ №{number}",
+  "@orderNumber": {
+    "description": "Order number",
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "example": "12345"
+      }
+    }
+  },
+
+  "orderStatus": "Статус заказа",
+  "@orderStatus": {
+    "description": "Order status label"
+  },
+
+  "statusPending": "Ожидает",
+  "@statusPending": {
+    "description": "Pending status"
+  },
+
+  "statusProcessing": "В обработке",
+  "@statusProcessing": {
+    "description": "Processing status"
+  },
+
+  "statusInTransit": "В пути",
+  "@statusInTransit": {
+    "description": "In transit status"
+  },
+
+  "statusDelivered": "Доставлен",
+  "@statusDelivered": {
+    "description": "Delivered status"
+  },
+
+  "statusCancelled": "Отменён",
+  "@statusCancelled": {
+    "description": "Cancelled status"
+  },
+
+  "deliveryDate": "Дата доставки",
+  "@deliveryDate": {
+    "description": "Delivery date label"
+  },
+
+  "expectedDelivery": "Ожидаемая доставка: {date}",
+  "@expectedDelivery": {
+    "description": "Expected delivery message",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "15 января"
+      }
+    }
+  },
+
+  "profile": "Профиль",
+  "@profile": {
+    "description": "Profile tab title"
+  },
+
+  "settings": "Настройки",
+  "@settings": {
+    "description": "Settings title"
+  },
+
+  "logout": "Выйти",
+  "@logout": {
+    "description": "Logout button text"
+  },
+
+  "deleteAccount": "Удалить аккаунт",
+  "@deleteAccount": {
+    "description": "Delete account button text"
+  },
+
+  "deleteAccountConfirm": "Вы уверены, что хотите удалить аккаунт?",
+  "@deleteAccountConfirm": {
+    "description": "Delete account confirmation message"
+  },
+
+  "featureInDevelopment": "Функция в разработке",
+  "@featureInDevelopment": {
+    "description": "Feature in development message"
+  },
+
+  "share": "Поделиться",
+  "@share": {
+    "description": "Share button text"
+  },
+
+  "openInMaps": "Открыть в картах",
+  "@openInMaps": {
+    "description": "Open in maps button text"
+  },
+
+  "accept": "Принять",
+  "@accept": {
+    "description": "Accept button text"
+  },
+
+  "decline": "Отклонить",
+  "@decline": {
+    "description": "Decline button text"
+  },
+
+  "home": "Главная",
+  "@home": {
+    "description": "Home tab title"
+  },
+
+  "total": "Итого",
+  "@total": {
+    "description": "Total label"
+  },
+
+  "price": "Цена",
+  "@price": {
+    "description": "Price label"
+  },
+
+  "priceAmount": "{amount} ₸",
+  "@priceAmount": {
+    "description": "Price with currency",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "5000"
+      }
+    }
+  },
+
+  "continue_": "Продолжить",
+  "@continue_": {
+    "description": "Continue button text"
+  },
+
+  "confirm": "Подтвердить",
+  "@confirm": {
+    "description": "Confirm button text"
+  },
+
+  "enterComment": "Введите комментарий",
+  "@enterComment": {
+    "description": "Enter comment hint"
+  },
+
+  "comment": "Комментарий",
+  "@comment": {
+    "description": "Comment label"
+  },
+
+  "optional": "Необязательно",
+  "@optional": {
+    "description": "Optional field indicator"
+  },
+
+  "required": "Обязательно",
+  "@required": {
+    "description": "Required field indicator"
+  },
+
+  "fieldRequired": "Это поле обязательно",
+  "@fieldRequired": {
+    "description": "Field required error message"
+  },
+
+  "invalidPhoneNumber": "Неверный номер телефона",
+  "@invalidPhoneNumber": {
+    "description": "Invalid phone number error"
+  },
+
+  "somethingWentWrong": "Что-то пошло не так",
+  "@somethingWentWrong": {
+    "description": "Generic error message"
+  },
+
+  "tryAgain": "Попробуйте снова",
+  "@tryAgain": {
+    "description": "Try again message"
+  },
+
+  "noInternetConnection": "Нет подключения к интернету",
+  "@noInternetConnection": {
+    "description": "No internet connection message"
+  },
+
+  "serverError": "Ошибка сервера",
+  "@serverError": {
+    "description": "Server error message"
+  },
+
+  "paymentFailed": "Оплата не прошла",
+  "@paymentFailed": {
+    "description": "Payment failed title"
+  },
+
+  "openKaspi": "Открыть Kaspi.kz",
+  "@openKaspi": {
+    "description": "Open Kaspi button text"
+  }
+}

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_card.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 
 class OrdersList extends StatelessWidget {
-  final List<OrderModel> orders;
-  final void Function(OrderModel order) onOrderTap;
+  final List<OrderEntity> orders;
+  final void Function(OrderEntity order) onOrderTap;
 
   const OrdersList({
     required this.orders,

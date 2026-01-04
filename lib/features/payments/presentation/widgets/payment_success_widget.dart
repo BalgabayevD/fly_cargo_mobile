@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 
 class PaymentSuccessWidget extends StatelessWidget {
@@ -9,51 +11,51 @@ class PaymentSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppSpacing.xxl),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             HeroIcon(
               HeroIcons.checkBadge,
               style: HeroIconStyle.outline,
-              size: 120,
+              size: AppSpacing.iconSizeXXL,
               color: AppColors.success,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
             Text(
-              'Успех',
+              context.l10n.success,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
                 color: AppColors.surface5,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
-              'Ваша заявка на отправку создана',
+              context.l10n.orderCreated,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.surface4,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: AppSpacing.space12),
             SizedBox(
               width: double.infinity,
-              height: 56,
+              height: AppSpacing.buttonHeightXXL,
               child: ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () => context.pop(true),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5C3A31),
+                  backgroundColor: AppColors.primaryDark,
                   foregroundColor: AppColors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
                   ),
                 ),
-                child: const Text(
-                  'Перейти в заказы',
-                  style: TextStyle(
+                child: Text(
+                  context.l10n.goToOrders,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

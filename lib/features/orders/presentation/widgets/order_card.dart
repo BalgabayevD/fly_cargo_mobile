@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/orders/presentation/models/order_status.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
   final VoidCallback? onTap;
 
   const OrderCard({

@@ -1,4 +1,4 @@
-import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 
 class CalculateOrderPriceUseCase {
@@ -6,7 +6,7 @@ class CalculateOrderPriceUseCase {
 
   CalculateOrderPriceUseCase(this._ordersRepository);
 
-  Future<PriceCalculationModel> call({
+  Future<PriceCalculationEntity> call({
     required int tariffId,
     required int fromCityId,
     required int toCityId,

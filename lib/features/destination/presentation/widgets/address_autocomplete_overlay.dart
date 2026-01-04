@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/features/destination/domain/entities/address_entity.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_state.dart';
 import 'package:heroicons/heroicons.dart';
@@ -46,7 +46,7 @@ class _AddressAutocompleteEmpty extends StatelessWidget {
 }
 
 class _AddressAutocompleteItem extends StatelessWidget {
-  final AddressModel address;
+  final AddressEntity address;
   final VoidCallback onTap;
 
   const _AddressAutocompleteItem({
@@ -88,8 +88,8 @@ class _AddressAutocompleteItem extends StatelessWidget {
 }
 
 class _AddressAutocompleteList extends StatelessWidget {
-  final List<AddressModel> addresses;
-  final Function(AddressModel) onAddressSelected;
+  final List<AddressEntity> addresses;
+  final Function(AddressEntity) onAddressSelected;
 
   const _AddressAutocompleteList({
     required this.addresses,
@@ -116,7 +116,7 @@ class _AddressAutocompleteList extends StatelessWidget {
 
 class AddressAutocompleteOverlayContent extends StatelessWidget {
   final DestinationBloc destinationBloc;
-  final Function(AddressModel) onAddressSelected;
+  final Function(AddressEntity) onAddressSelected;
 
   const AddressAutocompleteOverlayContent({
     required this.destinationBloc,

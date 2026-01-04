@@ -5,14 +5,16 @@ import 'package:flutter_better_auth/plugins/phone/models/send_otp/send_otp_respo
 import 'package:flutter_better_auth/plugins/phone/models/verify/verify_phone_body.dart';
 import 'package:flutter_better_auth/plugins/phone/phone_extension.dart';
 import 'package:fly_cargo/features/auth/data/auth_remote_source.dart';
-import 'package:fly_cargo/features/auth/data/models/sign_code_response.dart';
-import 'package:fly_cargo/features/auth/data/models/user_profile.dart';
+import 'package:fly_cargo/features/auth/data/mappers/auth_mapper.dart';
+import 'package:fly_cargo/features/auth/domain/entities/sign_code_result_entity.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_profile_entity.dart';
 import 'package:fly_cargo/features/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteSource _remoteSource;
+
   AuthRepositoryImpl(this._remoteSource);
   @override
   Future<SendOTPResponse?> signIn(String phoneNumber) async {
@@ -81,15 +83,15 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<SignCodeResponse> refreshToken() {
+  Future<SignCodeResultEntity> refreshToken() {
     throw UnimplementedError();
   }
 
   @override
-  Future<UserProfile> getUserProfile() async {
+  Future<UserProfileEntity> getUserProfile() async {
     try {
       final response = await _remoteSource.getUserProfile();
-      return response.data;
+      return response.data.toEntity();
     } catch (e) {
       throw AuthException('Ошибка при получении профиля: $e');
     }

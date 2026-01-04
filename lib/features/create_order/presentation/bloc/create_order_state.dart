@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 
 abstract class CreateOrderState extends Equatable {
   const CreateOrderState();
@@ -17,7 +17,7 @@ class CreateOrderLoading extends CreateOrderState {
 }
 
 class OrderCreated extends CreateOrderState {
-  final OrderResult orderResult;
+  final OrderResultEntity orderResult;
   const OrderCreated({required this.orderResult});
   @override
   List<Object?> get props => [orderResult];

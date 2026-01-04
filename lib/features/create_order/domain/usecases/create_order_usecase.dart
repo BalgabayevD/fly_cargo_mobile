@@ -1,11 +1,12 @@
-import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
 import 'package:fly_cargo/features/create_order/data/models/order_data.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 
 class CreateOrderUseCase {
   final OrdersRepository _ordersRepository;
   CreateOrderUseCase(this._ordersRepository);
-  Future<OrderResult> call(OrderData orderData) async {
+
+  Future<OrderResultEntity> call(OrderData orderData) async {
     try {
       _validateOrderData(orderData);
       return await _ordersRepository.createOrder(orderData);

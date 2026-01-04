@@ -102,7 +102,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/yandex_maps_mapkit_lite/ios"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_image_compress_common: 1697a328fd72bfb335507c6bca1a65fa5ad87df1
   flutter_web_auth_2: c35a99b4799ad94b0dc140880f406cf59a4af866
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a

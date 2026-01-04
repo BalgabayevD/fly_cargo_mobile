@@ -20,4 +20,24 @@ class AppColors {
 
   static Color border = surface3;
   static Color surface = surface1;
+
+  static const Color primaryDark = Color(0xFF5C3A31);
+  static const Color textPrimary = Color(0xFF333333);
+  static const Color textSecondary = Color(0xFF666666);
+
+  // Status colors
+  static const Color errorLight = Color(0xFFFFF5F5);
+  static const Color errorBorder = Color(0xFFFF4444);
+  static const Color errorText = Color(0xFFFF4444);
+
+  static const Color warningBackground = Color(0xFFFFFBF0);
+  static const Color warningText = Color(0xFFFFB800);
+
+  static const Color infoBackground = Color(0xFFF0F7FF);
+  static const Color infoText = Color(0xFF0066FF);
+
+  static const Color successBackground = Color(0xFFF0FFF4);
+  static const Color successText = Color(0xFF00B341);
+
+  static const Color borderLight = Color(0xFFE0E0E0);
 }

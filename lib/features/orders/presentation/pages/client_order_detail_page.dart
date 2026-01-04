@@ -8,11 +8,11 @@ import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/orde
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_payment_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/order_timeline.dart';
 import 'package:fly_cargo/features/payments/presentation/payment_bottom_sheet.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:intl/intl.dart';
 
 class ClientOrderDetailPage extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
   final UserType userType;
 
   const ClientOrderDetailPage({

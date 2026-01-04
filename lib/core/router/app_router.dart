@@ -18,7 +18,7 @@ import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.da
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -185,7 +185,7 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                       if (extra != null && extra.containsKey('order')) {
                         // Переход из списка с передачей полного объекта
                         final userType = extra['userType'] as UserType;
-                        final order = extra['order'] as OrderModel;
+                        final order = extra['order'] as OrderEntity;
 
                         // Проверяем тип пользователя и показываем соответствующую страницу
                         if (userType.isCourier) {

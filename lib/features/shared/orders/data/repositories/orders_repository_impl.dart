@@ -4,8 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:fly_cargo/features/create_order/data/models/order_data.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/core/network/pre_order_dio_client.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
+import 'package:fly_cargo/features/shared/orders/data/mappers/order_mapper.dart';
 import 'package:fly_cargo/features/shared/orders/data/orders_remote_source.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 
 class OrdersRepositoryImpl implements OrdersRepository {
@@ -13,12 +14,17 @@ class OrdersRepositoryImpl implements OrdersRepository {
   final PreOrderDioClient _preOrderClient;
 
   OrdersRepositoryImpl(this._remoteSource, this._preOrderClient);
+
   @override
-  Future<OrderResult> createOrder(OrderData orderData) async {
+  Future<OrderResultEntity> createOrder(OrderData orderData) async {
     try {
       final request = orderData.toCreateOrderRequest();
       final response = await _remoteSource.createOrder(request);
-      return OrderResult.fromOrderModel(response.data);
+      return OrderResultEntity(
+        orderId: response.data.id,
+        status: 'created',
+        message: 'Заказ успешно создан',
+      );
     } catch (e) {
       throw OrdersException('Ошибка при создании заказа: $e');
     }
@@ -28,7 +34,6 @@ class OrdersRepositoryImpl implements OrdersRepository {
   Future<PreCreateOrderResult> preCreateOrder(List<File> images) async {
     try {
       final responseData = await _preOrderClient.postPreOrder(images);
-
       final preCreateResponse = PreCreateOrderResponse.fromJson(responseData);
 
       if (preCreateResponse.data == null) {
@@ -42,7 +47,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   }
 
   @override
-  Future<PriceCalculationModel> calculateOrderPrice({
+  Future<PriceCalculationEntity> calculateOrderPrice({
     required int tariffId,
     required int fromCityId,
     required int toCityId,
@@ -56,7 +61,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
         'toPhone': toPhone,
       };
       final response = await _remoteSource.calculateOrderPrice(body);
-      return response;
+      return response.toEntity();
     } catch (e) {
       throw OrdersException('Ошибка при расчете стоимости заказа: $e');
     }
@@ -78,40 +83,40 @@ class OrdersRepositoryImpl implements OrdersRepository {
   }
 
   @override
-  Future<List<OrderModel>> getClientOrders() async {
+  Future<List<OrderEntity>> getClientOrders() async {
     try {
       final response = await _remoteSource.getClientOrders();
-      return response.data;
+      return response.data.map((model) => model.toEntity()).toList();
     } catch (e) {
       throw OrdersException('Ошибка при загрузке заказов: $e');
     }
   }
 
   @override
-  Future<List<OrderModel>> getCourierOrders() async {
+  Future<List<OrderEntity>> getCourierOrders() async {
     try {
       final response = await _remoteSource.getCourierOrders();
-      return response.data;
+      return response.data.map((model) => model.toEntity()).toList();
     } catch (e) {
       throw OrdersException('Ошибка при загрузке заказов: $e');
     }
   }
 
   @override
-  Future<List<OrderModel>> getCreatedOrders() async {
+  Future<List<OrderEntity>> getCreatedOrders() async {
     try {
       final response = await _remoteSource.getCreatedOrders();
-      return response.data;
+      return response.data.map((model) => model.toEntity()).toList();
     } catch (e) {
       throw OrdersException('Ошибка при загрузке заказов: $e');
     }
   }
 
   @override
-  Future<OrderModel> getOrderById(String orderId) async {
+  Future<OrderEntity> getOrderById(String orderId) async {
     try {
       final response = await _remoteSource.getOrderById(orderId);
-      return response.data;
+      return response.data.toEntity();
     } catch (e) {
       throw OrdersException('Ошибка при загрузке заказа: $e');
     }

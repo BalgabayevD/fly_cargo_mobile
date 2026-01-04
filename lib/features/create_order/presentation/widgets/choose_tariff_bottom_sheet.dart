@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/specify_dimensions_bottom_sheet.dart';
 import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart';
+import 'package:fly_cargo/features/tariffs/domain/entities/tariff_entity.dart';
 import 'package:heroicons/heroicons.dart';
 
 class ChooseTariffBottomSheet extends StatefulWidget {
-  final TariffModel? initialTariff;
+  final TariffEntity? initialTariff;
 
   const ChooseTariffBottomSheet({
     this.initialTariff,
@@ -20,7 +20,7 @@ class ChooseTariffBottomSheet extends StatefulWidget {
 }
 
 class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
-  TariffModel? _selectedTariff;
+  TariffEntity? _selectedTariff;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
     });
   }
 
-  void _onTariffSelected(TariffModel tariff) {
+  void _onTariffSelected(TariffEntity tariff) {
     setState(() {
       _selectedTariff = tariff;
     });
@@ -121,7 +121,7 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
                   );
                 }
                 if (state is TariffSelectionLoaded) {
-                  final allTariffs = <TariffModel>[];
+                  final allTariffs = <TariffEntity>[];
                   for (final category in state.categories) {
                     if (category.tariffs != null) {
                       allTariffs.addAll(category.tariffs!);
@@ -173,9 +173,9 @@ class _ChooseTariffBottomSheetState extends State<ChooseTariffBottomSheet> {
 }
 
 class _TariffsList extends StatelessWidget {
-  final List<TariffModel> tariffs;
-  final TariffModel? selectedTariff;
-  final Function(TariffModel) onTariffSelected;
+  final List<TariffEntity> tariffs;
+  final TariffEntity? selectedTariff;
+  final Function(TariffEntity) onTariffSelected;
   final VoidCallback onCustomSizesTap;
 
   const _TariffsList({
@@ -210,7 +210,7 @@ class _TariffsList extends StatelessWidget {
 }
 
 class _TariffItem extends StatelessWidget {
-  final TariffModel tariff;
+  final TariffEntity tariff;
   final bool isSelected;
   final VoidCallback onTap;
 

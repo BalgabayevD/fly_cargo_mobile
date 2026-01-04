@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_event.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_state.dart';
@@ -29,7 +29,7 @@ class ChooseCityBottomSheet extends StatefulWidget {
 
 class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
   late final DestinationBloc _destinationBloc;
-  CityModel? _selectedCity;
+  CityEntity? _selectedCity;
 
   @override
   void initState() {
@@ -105,7 +105,7 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
                     );
                   }
 
-                  List<CityModel> cities = [];
+                  List<CityEntity> cities = [];
                   if (state is CitiesFromLoaded) {
                     cities = state.cities;
                   } else if (state is CitiesToLoaded) {

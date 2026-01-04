@@ -4,12 +4,12 @@ import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/orders/presentation/models/order_status.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/courier_action_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/courier_info_row.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CourierOrderDetailPage extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
   final UserType userType;
 
   const CourierOrderDetailPage({

@@ -5,7 +5,6 @@ import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/features/shared/orders/data/models/order_model.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
@@ -14,6 +13,7 @@ import 'package:fly_cargo/features/orders/presentation/widgets/orders_list/empty
 import 'package:fly_cargo/features/orders/presentation/widgets/orders_list/error_orders_state.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/orders_list/orders_list.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/orders_list/unauthorized_orders_state.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:go_router/go_router.dart';
 
 class OrdersListPage extends StatefulWidget {
@@ -60,7 +60,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
     _loadOrders();
   }
 
-  void _onOrderTap(OrderModel order) {
+  void _onOrderTap(OrderEntity order) {
     final authState = context.read<AuthBloc>().state;
     context
         .push(

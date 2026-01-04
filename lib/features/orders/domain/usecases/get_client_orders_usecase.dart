@@ -1,10 +1,12 @@
-﻿import 'package:fly_cargo/features/shared/orders/data/models/models.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 
 class GetClientOrdersUseCase {
   final OrdersRepository _ordersRepository;
+
   GetClientOrdersUseCase(this._ordersRepository);
-  Future<List<OrderModel>> call() async {
+
+  Future<List<OrderEntity>> call() async {
     return await _ordersRepository.getClientOrders();
   }
 }
