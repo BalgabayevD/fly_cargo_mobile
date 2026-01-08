@@ -1139,5 +1139,30 @@
   "orderStatusCompleted": "Доставлен",
   "@orderStatusCompleted": {
     "description": "Order status: completed/delivered"
+  },
+
+  "learnAllowedProducts": "Узнать какие товары разрешены?",
+  "@learnAllowedProducts": {
+    "description": "Learn allowed products link text"
+  },
+
+  "dangerousGoods": "Опасные грузы",
+  "@dangerousGoods": {
+    "description": "Dangerous goods bottom sheet title"
+  },
+
+  "explosiveMaterials": "Взрывчатые материалы,\nфейерверки",
+  "@explosiveMaterials": {
+    "description": "Explosive materials and fireworks"
+  },
+
+  "compressedGases": "Сжатые газы",
+  "@compressedGases": {
+    "description": "Compressed gases"
+  },
+
+  "oxidizingSubstances": "Окисляющие вещества",
+  "@oxidizingSubstances": {
+    "description": "Oxidizing substances"
   }
 }

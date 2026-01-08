@@ -667,4 +667,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get orderStatusCompleted => 'Delivered';
+
+  @override
+  String get learnAllowedProducts => 'Learn which products are allowed?';
+
+  @override
+  String get dangerousGoods => 'Dangerous Goods';
+
+  @override
+  String get explosiveMaterials => 'Explosive materials,\nfireworks';
+
+  @override
+  String get compressedGases => 'Compressed gases';
+
+  @override
+  String get oxidizingSubstances => 'Oxidizing substances';
 }

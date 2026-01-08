@@ -668,4 +668,19 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get orderStatusCompleted => 'Жеткізілді';
+
+  @override
+  String get learnAllowedProducts => 'Рұқсат етілген тауарларды білу керек пе?';
+
+  @override
+  String get dangerousGoods => 'Қауіпті жүктер';
+
+  @override
+  String get explosiveMaterials => 'Жарылғыш материалдар,\nотшашқылар';
+
+  @override
+  String get compressedGases => 'Сығылған газдар';
+
+  @override
+  String get oxidizingSubstances => 'Тотықтырғыш заттар';
 }

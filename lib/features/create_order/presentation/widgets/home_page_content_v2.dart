@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
-import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/ai_analysis_indicator.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/analysis_status_message.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/dangerous_cargo_bottom_sheet.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_field_card_v2.dart';
+import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
 
 class HomePageContentV2 extends StatelessWidget {
   final AddressModel? fromAddress;
@@ -130,6 +131,20 @@ class HomePageContentV2 extends StatelessWidget {
               ),
             ),
           ],
+          SizedBox(height: AppSpacing.buttonHeightSM),
+          GestureDetector(
+            onTap: () => DangerousCargoBottomSheet.show(context),
+            child: Text(
+              context.l10n.learnAllowedProducts,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: AppColors.surface4,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(height: AppSpacing.buttonHeightXL),
         ],
       ),
     );

@@ -230,5 +230,11 @@
   "orderStatusProcessing": "Қоймада өңделуде",
   "orderStatusDeliveryToCity": "Астанаға жеткізу",
   "orderStatusHandedToCourierShort": "Курьерге берілді",
-  "orderStatusCompleted": "Жеткізілді"
+  "orderStatusCompleted": "Жеткізілді",
+
+  "learnAllowedProducts": "Рұқсат етілген тауарларды білу керек пе?",
+  "dangerousGoods": "Қауіпті жүктер",
+  "explosiveMaterials": "Жарылғыш материалдар,\nотшашқылар",
+  "compressedGases": "Сығылған газдар",
+  "oxidizingSubstances": "Тотықтырғыш заттар"
 }

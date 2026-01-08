@@ -230,5 +230,11 @@
   "orderStatusProcessing": "Processing at warehouse",
   "orderStatusDeliveryToCity": "Delivery to Astana",
   "orderStatusHandedToCourierShort": "Handed to courier",
-  "orderStatusCompleted": "Delivered"
+  "orderStatusCompleted": "Delivered",
+
+  "learnAllowedProducts": "Learn which products are allowed?",
+  "dangerousGoods": "Dangerous Goods",
+  "explosiveMaterials": "Explosive materials,\nfireworks",
+  "compressedGases": "Compressed gases",
+  "oxidizingSubstances": "Oxidizing substances"
 }

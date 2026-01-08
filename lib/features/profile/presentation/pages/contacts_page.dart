@@ -64,7 +64,7 @@ class ContactsPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => _makeCall('+7727123456'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppColors.warningLight,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
                   ),
@@ -75,7 +75,7 @@ class ContactsPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.white,
+                    color: AppColors.warning,
                   ),
                 ),
               ),
@@ -87,7 +87,7 @@ class ContactsPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => _openWhatsApp('+77772312412'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF25D366),
+                  backgroundColor: AppColors.successLight,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
                   ),
@@ -98,7 +98,7 @@ class ContactsPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.white,
+                    color: AppColors.success,
                   ),
                 ),
               ),

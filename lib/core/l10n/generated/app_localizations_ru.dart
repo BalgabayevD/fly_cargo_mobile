@@ -669,4 +669,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get orderStatusCompleted => 'Доставлен';
+
+  @override
+  String get learnAllowedProducts => 'Узнать какие товары разрешены?';
+
+  @override
+  String get dangerousGoods => 'Опасные грузы';
+
+  @override
+  String get explosiveMaterials => 'Взрывчатые материалы,\nфейерверки';
+
+  @override
+  String get compressedGases => 'Сжатые газы';
+
+  @override
+  String get oxidizingSubstances => 'Окисляющие вещества';
 }

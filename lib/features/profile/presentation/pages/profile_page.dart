@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
-import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/logout_dialog.dart';
@@ -65,14 +64,6 @@ class ProfilePage extends StatelessWidget {
                       label: context.l10n.name,
                       value: profile.name,
                     ),
-                    ProfileField(
-                      label: context.l10n.email,
-                      value: profile.email,
-                    ),
-                    ProfileField(
-                      label: context.l10n.role,
-                      value: profile.role.displayName,
-                    ),
                   ],
                 ),
               ),
@@ -86,7 +77,7 @@ class ProfilePage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => logoutDialog(context),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
+                          backgroundColor: AppColors.warningLight,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                               AppSpacing.radiusMD,
@@ -99,7 +90,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.white,
+                            color: AppColors.warning,
                           ),
                         ),
                       ),
@@ -123,14 +114,15 @@ class ProfilePage extends StatelessWidget {
                           context.l10n.deleteProfileRequest,
                           style: TextStyle(
                             fontSize: 14,
-                            color: AppColors.primary,
+                            color: AppColors.danger,
                             decoration: TextDecoration.underline,
-                            decorationColor: AppColors.primary,
+                            decorationColor: AppColors.danger,
                           ),
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
+                    SizedBox(height: AppSpacing.buttonHeightXXL),
                   ],
                 ),
               ),

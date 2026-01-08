@@ -1347,6 +1347,36 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Доставлен'**
   String get orderStatusCompleted;
+
+  /// Learn allowed products link text
+  ///
+  /// In ru, this message translates to:
+  /// **'Узнать какие товары разрешены?'**
+  String get learnAllowedProducts;
+
+  /// Dangerous goods bottom sheet title
+  ///
+  /// In ru, this message translates to:
+  /// **'Опасные грузы'**
+  String get dangerousGoods;
+
+  /// Explosive materials and fireworks
+  ///
+  /// In ru, this message translates to:
+  /// **'Взрывчатые материалы,\nфейерверки'**
+  String get explosiveMaterials;
+
+  /// Compressed gases
+  ///
+  /// In ru, this message translates to:
+  /// **'Сжатые газы'**
+  String get compressedGases;
+
+  /// Oxidizing substances
+  ///
+  /// In ru, this message translates to:
+  /// **'Окисляющие вещества'**
+  String get oxidizingSubstances;
 }
 
 class _AppLocalizationsDelegate
