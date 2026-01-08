@@ -56,32 +56,22 @@ class _TimelineStepWidget extends StatelessWidget {
           Column(
             children: [
               Container(
-                width: 32,
-                height: 32,
+                width: 24,
+                height: 24,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: step.isCompleted ? Color(0xFF5C3A31) : AppColors.white,
+                  color: step.isCompleted ? Color(0xFF571B23) : AppColors.white,
                   border: Border.all(
-                    color: step.isCompleted
-                        ? Color(0xFF5C3A31)
-                        : Color(0xFFE0E0E0),
+                    color: Color(0xFF571B23),
                     width: 2,
                   ),
                 ),
-                child: step.isCompleted
-                    ? Icon(
-                        Icons.check,
-                        color: AppColors.white,
-                        size: 18,
-                      )
-                    : null,
               ),
               if (!isLast)
                 Expanded(
                   child: Container(
                     width: 2,
-                    margin: EdgeInsets.symmetric(vertical: 4),
-                    color: Color(0xFFE0E0E0),
+                    color: Color(0xFF571B23),
                   ),
                 ),
             ],
@@ -96,7 +86,7 @@ class _TimelineStepWidget extends StatelessWidget {
                   Text(
                     step.title,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 17,
                       fontWeight: FontWeight.w500,
                       color: AppColors.surface5,
                     ),
@@ -118,4 +108,3 @@ class _TimelineStepWidget extends StatelessWidget {
     );
   }
 }
-

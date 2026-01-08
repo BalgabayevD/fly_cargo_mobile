@@ -42,35 +42,48 @@ class ClientOrderDetailPage extends StatelessWidget {
     }
   }
 
+  OrderHistoryEntity? _findHistoryByStatus(String status) {
+    try {
+      return order.histories.firstWhere((h) => h.status == status);
+    } catch (e) {
+      return null;
+    }
+  }
+
   List<TimelineStep> _buildTimelineSteps(BuildContext context) {
+    final submittedHistory = _findHistoryByStatus('submitted');
+    final accountedHistory = _findHistoryByStatus('accounted');
+    final dispatchedHistory = _findHistoryByStatus('dispatched');
+    final arrivedHistory = _findHistoryByStatus('arrived');
+
     return [
       TimelineStep(
         title: context.l10n.parcelSent,
-        date: _formatDate(order.createdAt),
-        isCompleted: true,
+        date: submittedHistory?.createdAt != null
+            ? _formatDate(submittedHistory!.createdAt!)
+            : '',
+        isCompleted: submittedHistory != null,
       ),
       TimelineStep(
         title: context.l10n.processedAtWarehouse,
-        date: _formatDate(order.createdAt),
-        isCompleted: false,
+        date: accountedHistory?.createdAt != null
+            ? _formatDate(accountedHistory!.createdAt!)
+            : '',
+        isCompleted: accountedHistory != null,
       ),
       TimelineStep(
         title: context.l10n.deliveryToCity(order.toCity?.name ?? 'г. Астана'),
-        date: _formatDate(
-          DateTime.parse(
-            order.createdAt,
-          ).add(Duration(days: 1)).toIso8601String(),
-        ),
-        isCompleted: false,
+        date: dispatchedHistory?.createdAt != null
+            ? _formatDate(dispatchedHistory!.createdAt!)
+            : '',
+        isCompleted: dispatchedHistory != null,
       ),
       TimelineStep(
         title: context.l10n.handedToCourier,
-        date: _formatDate(
-          DateTime.parse(
-            order.createdAt,
-          ).add(Duration(days: 1)).toIso8601String(),
-        ),
-        isCompleted: false,
+        date: arrivedHistory?.createdAt != null
+            ? _formatDate(arrivedHistory!.createdAt!)
+            : '',
+        isCompleted: arrivedHistory != null,
       ),
     ];
   }
@@ -83,21 +96,19 @@ class ClientOrderDetailPage extends StatelessWidget {
     );
 
     if (result == true && context.mounted) {
-      // Оплата прошла успешно, можно обновить UI или перейти к списку заказов
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.paymentSuccessful),
           backgroundColor: const Color(0xFF4CAF50),
         ),
       );
-      // Можно добавить навигацию или обновление заказа
-      Navigator.of(context).pop(); // Возврат к списку заказов
+      Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final price = order.priceCalculations?.sellingPrice ?? order.price ?? 0;
+    final price = order.payAmount ?? 0;
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -167,7 +178,7 @@ class ClientOrderDetailPage extends StatelessWidget {
             if (order.description.isNotEmpty) ...[
               OrderDescriptionSection(
                 description: order.description,
-                photos: order.contentPhotos,
+                photos: order.photos,
               ),
               SizedBox(height: 24),
             ],
