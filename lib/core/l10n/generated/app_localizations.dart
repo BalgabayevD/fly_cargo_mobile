@@ -651,6 +651,702 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Открыть Kaspi.kz'**
   String get openKaspi;
+
+  /// Authorization page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Авторизация'**
+  String get authorization;
+
+  /// Phone number label
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер телефона'**
+  String get phoneNumber;
+
+  /// Phone number help text
+  ///
+  /// In ru, this message translates to:
+  /// **'Поможет создавать и отслеживать\nваши заказы'**
+  String get phoneNumberHelpText;
+
+  /// Phone number input placeholder
+  ///
+  /// In ru, this message translates to:
+  /// **'+7 (777) 123-45-65'**
+  String get phoneNumberHint;
+
+  /// Enter phone number error
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите номер телефона'**
+  String get enterPhoneNumberError;
+
+  /// Enter valid phone number error
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите корректный номер телефона'**
+  String get enterValidPhoneNumber;
+
+  /// Get verification code button
+  ///
+  /// In ru, this message translates to:
+  /// **'Получить код'**
+  String get getCode;
+
+  /// Confirm code page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить'**
+  String get confirmCode;
+
+  /// SMS code title
+  ///
+  /// In ru, this message translates to:
+  /// **'СМС код'**
+  String get smsCode;
+
+  /// SMS code help text
+  ///
+  /// In ru, this message translates to:
+  /// **'Мы отправили 6 значный код по смс\nна номер {phone}'**
+  String smsCodeHelpText(String phone);
+
+  /// SMS code input label
+  ///
+  /// In ru, this message translates to:
+  /// **'Код'**
+  String get smsCodeLabel;
+
+  /// SMS code input placeholder
+  ///
+  /// In ru, this message translates to:
+  /// **'144 356'**
+  String get smsCodeHint;
+
+  /// Send button text
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправить'**
+  String get send;
+
+  /// Code sent again message
+  ///
+  /// In ru, this message translates to:
+  /// **'Код отправлен повторно'**
+  String get codeSentAgain;
+
+  /// Agreement prefix text
+  ///
+  /// In ru, this message translates to:
+  /// **'Я ознакомился и согласен с'**
+  String get iAgreeWith;
+
+  /// Privacy policy link text
+  ///
+  /// In ru, this message translates to:
+  /// **'политикой использования'**
+  String get privacyPolicy;
+
+  /// Conjunction 'and'
+  ///
+  /// In ru, this message translates to:
+  /// **'и'**
+  String get and;
+
+  /// Terms of service link text
+  ///
+  /// In ru, this message translates to:
+  /// **'условиями оферты'**
+  String get termsOfService;
+
+  /// Order label
+  ///
+  /// In ru, this message translates to:
+  /// **'Заказ'**
+  String get order;
+
+  /// Order detail title
+  ///
+  /// In ru, this message translates to:
+  /// **'Заказ {orderId}'**
+  String orderDetail(String orderId);
+
+  /// Delivery label
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставка'**
+  String get delivery;
+
+  /// Delivery date message
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставка в {date}'**
+  String deliveryOn(String date);
+
+  /// Parcel sent timeline step
+  ///
+  /// In ru, this message translates to:
+  /// **'Посылка отправлена'**
+  String get parcelSent;
+
+  /// Processed at warehouse timeline step
+  ///
+  /// In ru, this message translates to:
+  /// **'Обработан на складе'**
+  String get processedAtWarehouse;
+
+  /// Delivery to city timeline step
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставка в {city}'**
+  String deliveryToCity(String city);
+
+  /// Handed to courier timeline step
+  ///
+  /// In ru, this message translates to:
+  /// **'Передано курьеру'**
+  String get handedToCourier;
+
+  /// Pay with amount button
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплатить {amount} тг'**
+  String payWithAmount(String amount);
+
+  /// Attach barcode button
+  ///
+  /// In ru, this message translates to:
+  /// **'Привязать штрихкод'**
+  String get attachBarcode;
+
+  /// Cancel order button
+  ///
+  /// In ru, this message translates to:
+  /// **'Отменить'**
+  String get cancelOrder;
+
+  /// Copy payment link button
+  ///
+  /// In ru, this message translates to:
+  /// **'Скопировать ссылку на платеж'**
+  String get copyPaymentLink;
+
+  /// Payment link copied message
+  ///
+  /// In ru, this message translates to:
+  /// **'Ссылка скопирована'**
+  String get paymentLinkCopied;
+
+  /// No orders yet message
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас пока нет заказов'**
+  String get noOrdersYet;
+
+  /// Create first order prompt
+  ///
+  /// In ru, this message translates to:
+  /// **'Создайте свой первый заказ\nна главной странице'**
+  String get createFirstOrder;
+
+  /// Error occurred message
+  ///
+  /// In ru, this message translates to:
+  /// **'Произошла ошибка'**
+  String get errorOccurred;
+
+  /// Authorization required message
+  ///
+  /// In ru, this message translates to:
+  /// **'Требуется авторизация'**
+  String get authorizationRequired;
+
+  /// Authorization required help text
+  ///
+  /// In ru, this message translates to:
+  /// **'Для просмотра заказов\nнеобходимо войти в аккаунт'**
+  String get authorizationRequiredHelp;
+
+  /// Payment successful message
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплата прошла успешно!'**
+  String get paymentSuccessful;
+
+  /// Recipient section label
+  ///
+  /// In ru, this message translates to:
+  /// **'Получатель'**
+  String get recipientLabel;
+
+  /// Delivery section label
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставка'**
+  String get deliveryLabel;
+
+  /// Processing payment message
+  ///
+  /// In ru, this message translates to:
+  /// **'Обработка платежа...'**
+  String get processingPayment;
+
+  /// Please wait message
+  ///
+  /// In ru, this message translates to:
+  /// **'Пожалуйста, подождите'**
+  String get pleaseWait;
+
+  /// Add card prompt title
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавьте карту'**
+  String get addCardPrompt;
+
+  /// No saved cards message
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас пока нет сохраненных карт'**
+  String get noSavedCards;
+
+  /// Adding card page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавление карты'**
+  String get addingCard;
+
+  /// Try again button text
+  ///
+  /// In ru, this message translates to:
+  /// **'Попробовать снова'**
+  String get tryAgainButton;
+
+  /// Payment for order title
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплата заказа №{orderId}'**
+  String paymentForOrder(String orderId);
+
+  /// Adding card bottom sheet title
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавление карты'**
+  String get addingCardTitle;
+
+  /// Not authorized message
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы не авторизованы'**
+  String get notAuthorized;
+
+  /// User role label
+  ///
+  /// In ru, this message translates to:
+  /// **'Роль'**
+  String get role;
+
+  /// Name label
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get name;
+
+  /// Email label
+  ///
+  /// In ru, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Logout from profile button
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти из профиля'**
+  String get logoutFromProfile;
+
+  /// Delete profile request button
+  ///
+  /// In ru, this message translates to:
+  /// **'Заявка на удаление профиля'**
+  String get deleteProfileRequest;
+
+  /// Delete profile in development message
+  ///
+  /// In ru, this message translates to:
+  /// **'Функция удаления профиля в разработке'**
+  String get deleteProfileInDevelopment;
+
+  /// Logout dialog title
+  ///
+  /// In ru, this message translates to:
+  /// **'Выход'**
+  String get logoutTitle;
+
+  /// Logout confirmation message
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы уверены, что хотите выйти?'**
+  String get logoutConfirmation;
+
+  /// Contacts page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты'**
+  String get contacts;
+
+  /// Contact phone label
+  ///
+  /// In ru, this message translates to:
+  /// **'Контактный телефон'**
+  String get contactPhone;
+
+  /// Mobile phone label
+  ///
+  /// In ru, this message translates to:
+  /// **'Сотовый телефон'**
+  String get mobilePhone;
+
+  /// WhatsApp label
+  ///
+  /// In ru, this message translates to:
+  /// **'Whatsapp'**
+  String get whatsapp;
+
+  /// Legal address label
+  ///
+  /// In ru, this message translates to:
+  /// **'Юридический адрес'**
+  String get legalAddress;
+
+  /// Call button text
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить'**
+  String get call;
+
+  /// Write on WhatsApp button
+  ///
+  /// In ru, this message translates to:
+  /// **'Написать в Whatsapp'**
+  String get writeWhatsapp;
+
+  /// App authentication settings label
+  ///
+  /// In ru, this message translates to:
+  /// **'Авторизация в приложении'**
+  String get appAuthSettings;
+
+  /// App version information
+  ///
+  /// In ru, this message translates to:
+  /// **'Sapsano {year} год. Версия {version}'**
+  String appVersionInfo(String year, String version);
+
+  /// Recipient data page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Данные получателя'**
+  String get recipientData;
+
+  /// Recipient contact info section title
+  ///
+  /// In ru, this message translates to:
+  /// **'Контактная информация получателя'**
+  String get recipientContactInfo;
+
+  /// Recipient contact info help text
+  ///
+  /// In ru, this message translates to:
+  /// **'Укажите имя и номер телефона получателя для связи'**
+  String get recipientContactInfoHelp;
+
+  /// Save data button
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить данные'**
+  String get saveData;
+
+  /// Description page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Описание'**
+  String get description;
+
+  /// Package description input label
+  ///
+  /// In ru, this message translates to:
+  /// **'Описание посылки'**
+  String get descriptionLabel;
+
+  /// Save description button
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить'**
+  String get saveDescription;
+
+  /// Weight in kg field label
+  ///
+  /// In ru, this message translates to:
+  /// **'Вес, в кг'**
+  String get weightInKg;
+
+  /// Address in city page title
+  ///
+  /// In ru, this message translates to:
+  /// **'Адрес в {city}'**
+  String addressIn(String city);
+
+  /// Enter address placeholder
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите адрес...'**
+  String get enterAddressPlaceholder;
+
+  /// Searching addresses message
+  ///
+  /// In ru, this message translates to:
+  /// **'Поиск адресов...'**
+  String get searchingAddresses;
+
+  /// Address search error message
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка поиска'**
+  String get addressSearchError;
+
+  /// Addresses not found message
+  ///
+  /// In ru, this message translates to:
+  /// **'Адреса не найдены'**
+  String get addressesNotFound;
+
+  /// Try changing query suggestion
+  ///
+  /// In ru, this message translates to:
+  /// **'Попробуйте изменить поисковый запрос'**
+  String get tryChangingQuery;
+
+  /// Start typing address prompt
+  ///
+  /// In ru, this message translates to:
+  /// **'Начните вводить адрес'**
+  String get startTypingAddress;
+
+  /// Minimum two characters message
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите минимум 2 символа для поиска'**
+  String get minTwoCharacters;
+
+  /// Choose city alert message
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите город'**
+  String get chooseCity;
+
+  /// Enter address alert message
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите адрес'**
+  String get enterAddressField;
+
+  /// City label
+  ///
+  /// In ru, this message translates to:
+  /// **'Город'**
+  String get city;
+
+  /// Address label
+  ///
+  /// In ru, this message translates to:
+  /// **'Адрес'**
+  String get address;
+
+  /// Apartment label
+  ///
+  /// In ru, this message translates to:
+  /// **'Квартира'**
+  String get apartment;
+
+  /// Apartment number placeholder
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер квартиры'**
+  String get apartmentNumber;
+
+  /// Entrance label
+  ///
+  /// In ru, this message translates to:
+  /// **'Подъезд'**
+  String get entrance;
+
+  /// Entrance number placeholder
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер подъезда'**
+  String get entranceNumber;
+
+  /// Floor label
+  ///
+  /// In ru, this message translates to:
+  /// **'Этаж'**
+  String get floor;
+
+  /// Floor number placeholder
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер этажа'**
+  String get floorNumber;
+
+  /// App language settings label
+  ///
+  /// In ru, this message translates to:
+  /// **'Язык приложения'**
+  String get appLanguage;
+
+  /// Russian language
+  ///
+  /// In ru, this message translates to:
+  /// **'Русский'**
+  String get russian;
+
+  /// English language
+  ///
+  /// In ru, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Kazakh language
+  ///
+  /// In ru, this message translates to:
+  /// **'Қазақша'**
+  String get kazakh;
+
+  /// Notification settings label
+  ///
+  /// In ru, this message translates to:
+  /// **'Настройка уведомлений'**
+  String get notificationSettings;
+
+  /// Privacy policy title
+  ///
+  /// In ru, this message translates to:
+  /// **'Политика пользования'**
+  String get privacyPolicyTitle;
+
+  /// Terms of service title
+  ///
+  /// In ru, this message translates to:
+  /// **'Условия оферты'**
+  String get termsOfServiceTitle;
+
+  /// For legal entities link
+  ///
+  /// In ru, this message translates to:
+  /// **'Для юридических лиц'**
+  String get forLegalEntities;
+
+  /// Transportation rules link
+  ///
+  /// In ru, this message translates to:
+  /// **'Правила перевозки'**
+  String get transportationRules;
+
+  /// Add photo button text
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить\nфото'**
+  String get addPhoto;
+
+  /// Select source bottom sheet title
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите источник'**
+  String get selectSource;
+
+  /// Camera option
+  ///
+  /// In ru, this message translates to:
+  /// **'Камера'**
+  String get camera;
+
+  /// Gallery option
+  ///
+  /// In ru, this message translates to:
+  /// **'Галерея'**
+  String get gallery;
+
+  /// Package photos title
+  ///
+  /// In ru, this message translates to:
+  /// **'Фото упаковки'**
+  String get packagePhotos;
+
+  /// Selected photos count
+  ///
+  /// In ru, this message translates to:
+  /// **'Выбранные фото ({count})'**
+  String selectedPhotosCount(int count);
+
+  /// Photo upload error message
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка при загрузке фото'**
+  String get photoUploadError;
+
+  /// Photo selection error message
+  ///
+  /// In ru, this message translates to:
+  /// **'Ошибка при выборе фото'**
+  String get photoSelectionError;
+
+  /// Order status: created
+  ///
+  /// In ru, this message translates to:
+  /// **'Создан'**
+  String get orderStatusCreated;
+
+  /// Order status: cancelled
+  ///
+  /// In ru, this message translates to:
+  /// **'Отменен'**
+  String get orderStatusCancelled;
+
+  /// Order status: decided/rejected by courier
+  ///
+  /// In ru, this message translates to:
+  /// **'Отклонен курьером'**
+  String get orderStatusDecided;
+
+  /// Order status: accepted, waiting for courier
+  ///
+  /// In ru, this message translates to:
+  /// **'Ожидаем курьера'**
+  String get orderStatusAccepted;
+
+  /// Order status: processing at warehouse
+  ///
+  /// In ru, this message translates to:
+  /// **'Обработка на складе'**
+  String get orderStatusProcessing;
+
+  /// Order status: delivery to city
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставка в Астану'**
+  String get orderStatusDeliveryToCity;
+
+  /// Order status: handed to courier for delivery
+  ///
+  /// In ru, this message translates to:
+  /// **'Передано курьеру'**
+  String get orderStatusHandedToCourierShort;
+
+  /// Order status: completed/delivered
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставлен'**
+  String get orderStatusCompleted;
 }
 
 class _AppLocalizationsDelegate

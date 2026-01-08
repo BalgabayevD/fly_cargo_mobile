@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class CancelOrderButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -25,7 +26,7 @@ class CancelOrderButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          'Отменить',
+          context.l10n.cancelOrder,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 
@@ -49,12 +52,28 @@ class LanguageSection extends StatelessWidget {
 
   const LanguageSection({required this.onTap, super.key});
 
+  String _getLanguageName(BuildContext context, Locale locale) {
+    switch (locale.languageCode) {
+      case 'en':
+        return context.l10n.english;
+      case 'kk':
+        return context.l10n.kazakh;
+      case 'ru':
+      default:
+        return context.l10n.russian;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SettingsMenuItem(
-      title: 'Язык приложения',
-      rightText: 'Русский',
-      onTap: onTap,
+    return BlocBuilder<LocaleCubit, Locale>(
+      builder: (context, locale) {
+        return SettingsMenuItem(
+          title: context.l10n.appLanguage,
+          rightText: _getLanguageName(context, locale),
+          onTap: onTap,
+        );
+      },
     );
   }
 }
@@ -67,7 +86,7 @@ class NotificationsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsMenuItem(
-      title: 'Настройка уведомлений',
+      title: context.l10n.notificationSettings,
       onTap: onTap,
     );
   }
@@ -92,22 +111,22 @@ class LegalSections extends StatelessWidget {
     return Column(
       children: [
         SettingsMenuItem(
-          title: 'Политика пользования',
+          title: context.l10n.privacyPolicyTitle,
           onTap: onPrivacyTap,
           showExternalLink: true,
         ),
         SettingsMenuItem(
-          title: 'Условия оферты',
+          title: context.l10n.termsOfServiceTitle,
           onTap: onTermsTap,
           showExternalLink: true,
         ),
         SettingsMenuItem(
-          title: 'Для юридических лиц',
+          title: context.l10n.forLegalEntities,
           onTap: onLegalTap,
           showExternalLink: true,
         ),
         SettingsMenuItem(
-          title: 'Правила перевозки',
+          title: context.l10n.transportationRules,
           onTap: onRulesTap,
           showExternalLink: true,
         ),
@@ -124,7 +143,7 @@ class ContactsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsMenuItem(
-      title: 'Контакты',
+      title: context.l10n.contacts,
       onTap: onTap,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_event.dart';
 import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_state.dart';
@@ -37,7 +38,7 @@ class _AddCardPageState extends State<AddCardPage> {
           onPressed: () => Navigator.pop(context, false),
         ),
         title: Text(
-          'Добавление карты',
+          context.l10n.addingCard,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -81,7 +82,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       onPressed: () {
                         context.read<AddCardBloc>().add(const AddCardRequested());
                       },
-                      child: const Text('Попробовать снова'),
+                      child: Text(context.l10n.tryAgainButton),
                     ),
                   ],
                 ),

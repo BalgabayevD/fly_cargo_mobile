@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
 import 'package:fly_cargo/core/config/core_module.dart' as _i624;
+import 'package:fly_cargo/core/l10n/locale_cubit.dart' as _i596;
 import 'package:fly_cargo/core/network/api_config.dart' as _i469;
 import 'package:fly_cargo/core/network/dio_module.dart' as _i794;
 import 'package:fly_cargo/core/network/domain/behaviors/flutter_better_auth_session_behavior.dart'
@@ -153,6 +154,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1004.PaymentFlowCubit>(() => paymentModule.paymentFlowCubit());
     gh.singleton<_i993.Talker>(() => coreModule.talker);
     gh.singleton<_i469.ApiConfig>(() => _i469.ApiConfig());
+    gh.singleton<_i596.LocaleCubit>(
+      () => _i596.LocaleCubit(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i856.GetSessionIdBehavior>(
       () => _i5.FlutterBetterAuthSessionBehavior(),
       instanceName: 'flutter-better-auth-session-behavior',

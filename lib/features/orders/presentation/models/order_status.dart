@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 
 enum OrderStatus {
@@ -24,6 +25,34 @@ enum OrderStatus {
 }
 
 extension OrderStatusExtension on OrderStatus {
+  /// Локализованный текст статуса
+  String getLocalizedText(BuildContext context) {
+    switch (this) {
+      case OrderStatus.created:
+        return context.l10n.orderStatusCreated;
+      case OrderStatus.cancelled:
+        return context.l10n.orderStatusCancelled;
+      case OrderStatus.decided:
+        return context.l10n.orderStatusDecided;
+      case OrderStatus.accepted:
+        return context.l10n.orderStatusAccepted;
+      case OrderStatus.submitted:
+      case OrderStatus.accounted:
+      case OrderStatus.checked:
+      case OrderStatus.revision:
+        return context.l10n.orderStatusProcessing;
+      case OrderStatus.dispatched:
+      case OrderStatus.transit:
+        return context.l10n.orderStatusDeliveryToCity;
+      case OrderStatus.arrived:
+      case OrderStatus.deliversRecipient:
+        return context.l10n.orderStatusHandedToCourierShort;
+      case OrderStatus.completed:
+        return context.l10n.orderStatusCompleted;
+    }
+  }
+
+  /// @deprecated Используйте getLocalizedText(context) для локализации
   String get text {
     switch (this) {
       case OrderStatus.created:

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class PhotoSquareCard extends StatelessWidget {
   final File? photo;
@@ -74,7 +75,7 @@ class PhotoSquareCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      'Добавить\nфото',
+                      context.l10n.addPhoto,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,

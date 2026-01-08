@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_event.dart';
@@ -35,7 +36,7 @@ mixin PhotoHandlerMixin<T extends StatefulWidget> on State<T> {
             children: [
               const SizedBox(height: AppSpacing.lg),
               Text(
-                'Выберите источник',
+                context.l10n.selectSource,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -45,12 +46,12 @@ mixin PhotoHandlerMixin<T extends StatefulWidget> on State<T> {
               const SizedBox(height: AppSpacing.lg),
               ListTile(
                 leading: Icon(Icons.camera_alt, color: AppColors.primary),
-                title: Text('Камера'),
+                title: Text(context.l10n.camera),
                 onTap: () => Navigator.pop(context, ImageSource.camera),
               ),
               ListTile(
                 leading: Icon(Icons.photo_library, color: AppColors.primary),
-                title: Text('Галерея'),
+                title: Text(context.l10n.gallery),
                 onTap: () => Navigator.pop(context, ImageSource.gallery),
               ),
               const SizedBox(height: AppSpacing.md),

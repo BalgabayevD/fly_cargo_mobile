@@ -6,13 +6,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
-import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_bloc.dart';
 import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/tariffs/presentation/bloc/tariffs_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -59,6 +59,7 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (_) => authBloc),
+        BlocProvider<LocaleCubit>(create: (_) => getIt<LocaleCubit>()),
         BlocProvider<TariffsBloc>(create: (_) => getIt<TariffsBloc>()),
         BlocProvider<PriceCalculationBloc>(
           create: (_) => getIt<PriceCalculationBloc>(),
@@ -106,18 +107,22 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Sapsano',
-      theme: AppTheme.lightTheme,
-      routerConfig: _router,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: L10n.supportedLocales,
-      locale: L10n.fallbackLocale,
+    return BlocBuilder<LocaleCubit, Locale>(
+      builder: (context, locale) {
+        return MaterialApp.router(
+          title: 'Sapsano',
+          theme: AppTheme.lightTheme,
+          routerConfig: _router,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: L10n.supportedLocales,
+          locale: locale,
+        );
+      },
     );
   }
 }

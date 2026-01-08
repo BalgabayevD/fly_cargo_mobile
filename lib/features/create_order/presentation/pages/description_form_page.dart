@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 class DescriptionFormPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
         backgroundColor: AppColors.white,
         elevation: 0,
         title: Text(
-          'Описание',
+          context.l10n.description,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -68,8 +69,8 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
               controller: _descriptionController,
               maxLines: 6,
               decoration: InputDecoration(
-                labelText: 'Описание посылки',
-                hintText: 'Опишите содержимое посылки',
+                labelText: context.l10n.descriptionLabel,
+                hintText: context.l10n.describePackageContents,
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
@@ -88,7 +89,7 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Введите описание посылки';
+                  return context.l10n.enterPackageDescription;
                 }
                 return null;
               },
@@ -107,7 +108,7 @@ class _DescriptionFormPageState extends State<DescriptionFormPage> {
                   elevation: 0,
                 ),
                 child: Text(
-                  'Сохранить',
+                  context.l10n.saveDescription,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

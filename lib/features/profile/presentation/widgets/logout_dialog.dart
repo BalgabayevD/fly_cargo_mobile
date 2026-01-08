@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:go_router/go_router.dart';
@@ -9,12 +10,12 @@ void logoutDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Выход'),
-      content: const Text('Вы уверены, что хотите выйти?'),
+      title: Text(context.l10n.logoutTitle),
+      content: Text(context.l10n.logoutConfirmation),
       actions: [
         TextButton(
           onPressed: () => context.pop(),
-          child: const Text('Отмена'),
+          child: Text(context.l10n.cancel),
         ),
         TextButton(
           onPressed: () {
@@ -23,7 +24,7 @@ void logoutDialog(BuildContext context) {
             context.pop();
           },
           child: Text(
-            'Выйти',
+            context.l10n.logout,
             style: TextStyle(color: AppColors.danger),
           ),
         ),

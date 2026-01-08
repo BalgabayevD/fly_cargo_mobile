@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
@@ -88,7 +89,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
           onPressed: () => context.pop(),
           variant: AppButtonVariant.ghost,
         ),
-        title: Text('Подтвердить', style: AppTypography.h6),
+        title: Text(context.l10n.confirmCode, style: AppTypography.h6),
         centerTitle: true,
       ),
       body: BlocListener<AuthBloc, AuthState>(
@@ -116,7 +117,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
             } else if (state is AuthCodeSent) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Код отправлен повторно'),
+                  content: Text(context.l10n.codeSentAgain),
                   backgroundColor: AppColors.success,
                   behavior: SnackBarBehavior.floating,
                 ),
@@ -131,21 +132,21 @@ class _CodeInputPageState extends State<CodeInputPage> {
                 children: [
                   SizedBox(height: AppSpacing.lg),
                   Text(
-                    'СМС код',
+                    context.l10n.smsCode,
                     style: AppTypography.h4.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Мы отправили 6 значный код по смс\nна номер ${widget.phoneNumber}',
+                    context.l10n.smsCodeHelpText(widget.phoneNumber),
                     style: AppTypography.bodyMedium.copyWith(
                       color: AppColors.surface4,
                     ),
                   ),
                   SizedBox(height: AppSpacing.xxl),
                   Text(
-                    'Код',
+                    context.l10n.smsCodeLabel,
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.primary,
                     ),
@@ -161,7 +162,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     ],
                     style: AppTypography.h5,
                     decoration: InputDecoration(
-                      hintText: '144 356',
+                      hintText: context.l10n.smsCodeHint,
                       hintStyle: AppTypography.h5.copyWith(
                         color: AppColors.surface5,
                       ),
@@ -224,7 +225,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                     builder: (context, state) {
                       final isLoading = state is AuthLoading;
                       return AppButton(
-                        text: 'Отправить',
+                        text: context.l10n.send,
                         onPressed:
                             _isCodeComplete && _agreedToTerms && !isLoading
                             ? _onCodeSubmitted
@@ -239,7 +240,7 @@ class _CodeInputPageState extends State<CodeInputPage> {
                   SizedBox(height: AppSpacing.md),
                   Center(
                     child: Text(
-                      'Повторный код через $_resendTimer сек',
+                      context.l10n.resendCodeIn(_resendTimer),
                       style: AppTypography.bodySmall.copyWith(
                         color: AppColors.surface4,
                       ),
@@ -300,14 +301,14 @@ class _CheckboxWithText extends StatelessWidget {
                   color: AppColors.surface5,
                 ),
                 children: [
-                  const TextSpan(text: 'Я ознакомился и согласен с '),
+                  TextSpan(text: '${context.l10n.iAgreeWith} '),
                   TextSpan(
-                    text: 'политикой использования',
+                    text: context.l10n.privacyPolicy,
                     style: TextStyle(color: AppColors.primary),
                   ),
-                  const TextSpan(text: ' и '),
+                  TextSpan(text: ' ${context.l10n.and} '),
                   TextSpan(
-                    text: 'условиями оферты',
+                    text: context.l10n.termsOfService,
                     style: TextStyle(color: AppColors.primary),
                   ),
                 ],

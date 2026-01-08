@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
@@ -23,7 +24,7 @@ class ProfilePage extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'Профиль',
+          context.l10n.profile,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -37,7 +38,7 @@ class ProfilePage extends StatelessWidget {
           if (state is! AuthAuthenticated) {
             return Center(
               child: Text(
-                'Вы не авторизованы',
+                context.l10n.notAuthorized,
                 style: TextStyle(color: AppColors.danger),
               ),
             );
@@ -56,20 +57,20 @@ class ProfilePage extends StatelessWidget {
                 child: ListView(
                   children: [
                     ProfileField(
-                      label: 'Номер телефона',
+                      label: context.l10n.phoneNumber,
                       value: profile.phoneNumber,
                       isEditable: false,
                     ),
                     ProfileField(
-                      label: 'Имя',
+                      label: context.l10n.name,
                       value: profile.name,
                     ),
                     ProfileField(
-                      label: 'Email',
+                      label: context.l10n.email,
                       value: profile.email,
                     ),
                     ProfileField(
-                      label: 'Роль',
+                      label: context.l10n.role,
                       value: profile.role.displayName,
                     ),
                   ],
@@ -94,7 +95,7 @@ class ProfilePage extends StatelessWidget {
                           elevation: 0,
                         ),
                         child: Text(
-                          'Выйти из профиля',
+                          context.l10n.logoutFromProfile,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -109,7 +110,7 @@ class ProfilePage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Функция удаления профиля в разработке',
+                              context.l10n.deleteProfileInDevelopment,
                             ),
                           ),
                         );
@@ -119,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                           vertical: AppSpacing.sm,
                         ),
                         child: Text(
-                          'Заявка на удаление профиля',
+                          context.l10n.deleteProfileRequest,
                           style: TextStyle(
                             fontSize: 14,
                             color: AppColors.primary,

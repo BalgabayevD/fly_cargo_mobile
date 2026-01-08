@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class CopyPaymentLinkButton extends StatelessWidget {
   final int orderId;
@@ -18,7 +19,7 @@ class CopyPaymentLinkButton extends StatelessWidget {
         Clipboard.setData(ClipboardData(text: link));
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Ссылка скопирована'),
+            content: Text(context.l10n.paymentLinkCopied),
             duration: Duration(seconds: 2),
           ),
         );
@@ -31,7 +32,7 @@ class CopyPaymentLinkButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Скопировать ссылку на платеж',
+            context.l10n.copyPaymentLink,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,

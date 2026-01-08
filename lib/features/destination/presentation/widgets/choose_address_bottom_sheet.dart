@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/features/destination/presentation/models/city_type.dart';
@@ -120,7 +121,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
     if (_selectedCity == null) {
       ScaffoldMessenger.of(context).showSnackBar(
              SnackBar(
-          content: Text('Выберите город'),
+          content: Text(context.l10n.chooseCity),
           backgroundColor: AppColors.danger,
         ),
       );
@@ -131,7 +132,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
     if (address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Введите адрес'),
+          content: Text(context.l10n.enterAddressField),
           backgroundColor: AppColors.danger,
         ),
       );
@@ -213,19 +214,19 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ReadOnlyAddressField(
-                    label: 'Город',
+                    label: context.l10n.city,
                     value: _selectedCity != null
                         ? 'г. ${_selectedCity!.name}'
-                        : 'Выберите город',
+                        : context.l10n.selectCity,
                     onTap: _selectCity,
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   BlocProvider.value(
                     value: getIt<DestinationBloc>(),
                     child: AddressAutocompleteField(
-                      label: 'Адрес',
+                      label: context.l10n.address,
                       controller: _addressController,
-                      hintText: 'Введите адрес',
+                      hintText: context.l10n.enterAddressPlaceholder,
                       cityName: _selectedCity?.name,
                       onAddressSelected: (address) {
                         setState(() {
@@ -236,23 +237,23 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   AddressTextField(
-                    label: 'Квартира',
+                    label: context.l10n.apartment,
                     controller: _apartmentController,
-                    hintText: 'Номер квартиры',
+                    hintText: context.l10n.apartmentNumber,
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   AddressTextField(
-                    label: 'Подъезд',
+                    label: context.l10n.entrance,
                     controller: _entranceController,
-                    hintText: 'Номер подъезда',
+                    hintText: context.l10n.entranceNumber,
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   AddressTextField(
-                    label: 'Этаж',
+                    label: context.l10n.floor,
                     controller: _floorController,
-                    hintText: 'Номер этажа',
+                    hintText: context.l10n.floorNumber,
                     keyboardType: TextInputType.number,
                   ),
                 ],
@@ -280,7 +281,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
                   ),
                 ),
                 child: Text(
-                  'Сохранить',
+                  context.l10n.save,
                   style: AppTypography.buttonLarge,
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
@@ -61,17 +62,8 @@ class _OrdersListPageState extends State<OrdersListPage> {
   }
 
   void _onOrderTap(OrderEntity order) {
-    final authState = context.read<AuthBloc>().state;
     context
-        .push(
-          '${AppRoutes.orders}/${AppRoutes.orderDetail}/${order.id}',
-          extra: {
-            'order': order,
-            'userType': authState is AuthAuthenticated
-                ? authState.userType
-                : UserType.user,
-          },
-        )
+        .push('${AppRoutes.orders}/${AppRoutes.orderDetail}/${order.id}')
         .then((_) => _loadOrders());
   }
 
@@ -87,7 +79,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
         backgroundColor: AppColors.white,
         elevation: 0,
         title: Text(
-          'Заказы',
+          context.l10n.orders,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,

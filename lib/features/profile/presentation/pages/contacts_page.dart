@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,7 +19,7 @@ class ContactsPage extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'Контакты',
+          context.l10n.contacts,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -33,27 +34,27 @@ class ContactsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _ContactItem(
-              label: 'Контактный телефон',
+              label: context.l10n.contactPhone,
               value: '+7 727 123-456',
             ),
             const SizedBox(height: AppSpacing.lg),
             _ContactItem(
-              label: 'Сотовый телефон',
+              label: context.l10n.mobilePhone,
               value: '+7 (777) 231-24-12',
             ),
             const SizedBox(height: AppSpacing.lg),
             _ContactItem(
-              label: 'Почта',
+              label: context.l10n.email,
               value: 'sapsano@gmail.com',
             ),
             const SizedBox(height: AppSpacing.lg),
             _ContactItem(
-              label: 'Whatsapp',
+              label: context.l10n.whatsapp,
               value: '+7 (777) 231-24-12',
             ),
             const SizedBox(height: AppSpacing.lg),
             _ContactItem(
-              label: 'Юридический адрес',
+              label: context.l10n.legalAddress,
               value: 'г. Алматы, ул. Аспандиярова, д 4',
             ),
             const SizedBox(height: AppSpacing.xxl),
@@ -70,7 +71,7 @@ class ContactsPage extends StatelessWidget {
                   elevation: 0,
                 ),
                 child: Text(
-                  'Позвонить',
+                  context.l10n.call,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -93,7 +94,7 @@ class ContactsPage extends StatelessWidget {
                   elevation: 0,
                 ),
                 child: Text(
-                  'Написать в Whatsapp',
+                  context.l10n.writeWhatsapp,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:heroicons/heroicons.dart';
 
 class CreateOrderAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,7 +12,7 @@ class CreateOrderAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.white,
       elevation: 0,
       title: Text(
-        'Главная',
+        context.l10n.home,
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
@@ -39,4 +40,3 @@ class CreateOrderAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-

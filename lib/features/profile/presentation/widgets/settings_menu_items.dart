@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:heroicons/heroicons.dart';
 
 class SettingsMenuItem extends StatelessWidget {
@@ -127,7 +128,7 @@ class SettingsUserMenuItem extends StatelessWidget {
                         ],
                       )
                     : Text(
-                        'Авторизация в приложении',
+                        context.l10n.appAuthSettings,
                         style: TextStyle(
                           fontSize: 16,
                           color: AppColors.surface5,
@@ -160,7 +161,7 @@ class SettingsFooter extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Text(
-        'Sapsano 2025 год. Версия $appVersion',
+        context.l10n.appVersionInfo('2025', appVersion),
         style: TextStyle(
           fontSize: 12,
           color: AppColors.surface5,

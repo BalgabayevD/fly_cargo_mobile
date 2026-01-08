@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PhotoUploadWidget extends StatefulWidget {
@@ -32,12 +33,14 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
         widget.onPhotosChanged(updatedPhotos);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка при выборе фото: $e'),
-          backgroundColor: AppColors.danger,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${context.l10n.photoSelectionError}: $e'),
+            backgroundColor: AppColors.danger,
+          ),
+        );
+      }
     }
   }
 
@@ -55,12 +58,14 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
         widget.onPhotosChanged(updatedPhotos);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка при выборе фото: $e'),
-          backgroundColor: AppColors.danger,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${context.l10n.photoSelectionError}: $e'),
+            backgroundColor: AppColors.danger,
+          ),
+        );
+      }
     }
   }
 
@@ -76,7 +81,7 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Фото упаковки',
+          context.l10n.packagePhotos,
           style: AppTypography.h6.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -88,7 +93,7 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
               child: OutlinedButton.icon(
                 onPressed: _pickImage,
                 icon: const Icon(Icons.camera_alt),
-                label: const Text('Камера'),
+                label: Text(context.l10n.camera),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: BorderSide(color: AppColors.primary),
@@ -103,7 +108,7 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
               child: OutlinedButton.icon(
                 onPressed: _pickImageFromGallery,
                 icon: const Icon(Icons.photo_library),
-                label: const Text('Галерея'),
+                label: Text(context.l10n.gallery),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: BorderSide(color: AppColors.primary),
@@ -118,7 +123,7 @@ class _PhotoUploadWidgetState extends State<PhotoUploadWidget> {
         const SizedBox(height: 16),
         if (widget.photos.isNotEmpty) ...[
           Text(
-            'Выбранные фото (${widget.photos.length})',
+            context.l10n.selectedPhotosCount(widget.photos.length),
             style: AppTypography.bodyMedium.copyWith(
               color: AppColors.surface4,
             ),

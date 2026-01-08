@@ -3,7 +3,9 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
@@ -47,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Настройки',
+          context.l10n.settings,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -78,7 +80,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     LanguageSection(
-                      onTap: () {},
+                      onTap: () {
+                        LanguageSelectionBottomSheet.show(context);
+                      },
                     ),
                     NotificationsSection(
                       onTap: () {

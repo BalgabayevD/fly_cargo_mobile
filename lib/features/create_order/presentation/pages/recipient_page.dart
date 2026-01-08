@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 class RecipientPage extends StatefulWidget {
   final String? initialName;
   final String? initialPhone;
@@ -27,21 +28,18 @@ class _RecipientPageState extends State<RecipientPage> {
   }
   String? _validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Введите имя получателя';
-    }
-    if (value.trim().length < 2) {
-      return 'Имя должно содержать минимум 2 символа';
+      return context.l10n.enterRecipientName;
     }
     return null;
   }
   String? _validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Введите номер телефона';
+      return context.l10n.enterPhoneNumber;
     }
     final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}$');
     final cleanPhone = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     if (!phoneRegex.hasMatch(cleanPhone)) {
-      return 'Введите корректный номер телефона';
+      return context.l10n.enterValidPhoneNumber;
     }
     return null;
   }
@@ -65,9 +63,9 @@ class _RecipientPageState extends State<RecipientPage> {
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF333333)),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Данные получателя',
-          style: TextStyle(
+        title: Text(
+          context.l10n.recipientData,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             color: Color(0xFF333333),
@@ -82,23 +80,23 @@ class _RecipientPageState extends State<RecipientPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Контактная информация получателя',
-                style: TextStyle(
+              Text(
+                context.l10n.recipientContactInfo,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF333333),
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Укажите имя и номер телефона получателя для связи',
-                style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+              Text(
+                context.l10n.recipientContactInfoHelp,
+                style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
               ),
               const SizedBox(height: 30),
-              const Text(
-                'Имя получателя',
-                style: TextStyle(
+              Text(
+                context.l10n.recipientName,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF333333),
@@ -109,7 +107,7 @@ class _RecipientPageState extends State<RecipientPage> {
                 controller: _nameController,
                 validator: _validateName,
                 decoration: InputDecoration(
-                  hintText: 'Введите имя получателя',
+                  hintText: context.l10n.enterRecipientName,
                   hintStyle: const TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 16,
@@ -150,9 +148,9 @@ class _RecipientPageState extends State<RecipientPage> {
                 textCapitalization: TextCapitalization.words,
               ),
               const SizedBox(height: 24),
-              const Text(
-                'Номер телефона',
-                style: TextStyle(
+              Text(
+                context.l10n.phoneNumber,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF333333),
@@ -168,7 +166,7 @@ class _RecipientPageState extends State<RecipientPage> {
                   LengthLimitingTextInputFormatter(15),
                 ],
                 decoration: InputDecoration(
-                  hintText: '+7 (___) ___-__-__',
+                  hintText: context.l10n.phoneInputHint,
                   hintStyle: const TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 16,
@@ -209,7 +207,7 @@ class _RecipientPageState extends State<RecipientPage> {
               ),
               const SizedBox(height: 40),
               AppButton(
-                text: 'Сохранить данные',
+                text: context.l10n.saveData,
                 onPressed: _saveRecipient,
                 size: AppButtonSize.extraLarge,
                 variant: AppButtonVariant.primary,

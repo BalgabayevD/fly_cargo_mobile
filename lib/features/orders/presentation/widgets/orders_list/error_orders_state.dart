@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class ErrorOrdersListState extends StatelessWidget {
   final String message;
@@ -24,7 +25,7 @@ class ErrorOrdersListState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
-              'Произошла ошибка',
+              context.l10n.errorOccurred,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,

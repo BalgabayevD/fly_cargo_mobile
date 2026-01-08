@@ -89,7 +89,7 @@ class CourierOrderDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          status.text,
+                          status.getLocalizedText(context),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,

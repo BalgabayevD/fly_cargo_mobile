@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class EmptyOrdersListState extends StatelessWidget {
   const EmptyOrdersListState({super.key});
@@ -27,7 +28,7 @@ class EmptyOrdersListState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.xl),
             Text(
-              'У вас пока нет заказов',
+              context.l10n.noOrdersYet,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -36,7 +37,7 @@ class EmptyOrdersListState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Создайте свой первый заказ\nна главной странице',
+              context.l10n.createFirstOrder,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.surface4,

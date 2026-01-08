@@ -2,6 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_event.dart';
@@ -93,9 +94,9 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
           Expanded(
             child: BlocBuilder<PaymentFlowCubit, PaymentStep>(
               builder: (context, step) {
-                String title = 'Оплата заказа №${widget.orderId}';
+                String title = context.l10n.paymentForOrder(widget.orderId.toString());
                 if (step == PaymentStep.addCard) {
-                  title = 'Добавление карты';
+                  title = context.l10n.addingCardTitle;
                 } else {
                   title = '';
                 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class PaymentProcessingWidget extends StatelessWidget {
   const PaymentProcessingWidget({super.key});
@@ -16,7 +17,7 @@ class PaymentProcessingWidget extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'Обработка платежа...',
+            context.l10n.processingPayment,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -25,7 +26,7 @@ class PaymentProcessingWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Пожалуйста, подождите',
+            context.l10n.pleaseWait,
             style: TextStyle(
               fontSize: 14,
               color: AppColors.surface4,

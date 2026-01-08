@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_event.dart';
 import 'package:fly_cargo/features/destination/presentation/bloc/destination_state.dart';
@@ -57,7 +58,7 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Адрес в ${widget.city}',
+          context.l10n.addressIn(widget.city),
           style: TextStyle(
             color: AppColors.surface5,
             fontSize: 18,
@@ -78,15 +79,15 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
               ),
               child: TextField(
                 controller: _searchController,
-                decoration: const InputDecoration(
-                  hintText: 'Введите адрес...',
-                  hintStyle: TextStyle(color: Color(0xFF999999)),
+                decoration: InputDecoration(
+                  hintText: context.l10n.enterAddressPlaceholder,
+                  hintStyle: const TextStyle(color: Color(0xFF999999)),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Color(0xFF666666)),
+                  prefixIcon: const Icon(Icons.search, color: Color(0xFF666666)),
                 ),
                 style: const TextStyle(fontSize: 16),
               ),
@@ -97,19 +98,19 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
               bloc: _destinationBloc,
               builder: (context, state) {
                 if (state is DestinationLoading) {
-                  return const Center(
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(
+                        const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
                             Color(0xFF007AFF),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
-                          'Поиск адресов...',
-                          style: TextStyle(
+                          context.l10n.searchingAddresses,
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xFF666666),
                           ),
@@ -131,9 +132,9 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                             color: Color(0xFF666666),
                           ),
                           const SizedBox(height: 16),
-                          const Text(
-                            'Ошибка поиска',
-                            style: TextStyle(
+                          Text(
+                            context.l10n.addressSearchError,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF333333),
@@ -156,28 +157,28 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                 if (state is AddressesFound) {
                   final addresses = state.addresses;
                   if (addresses.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.search_off,
                             size: 64,
                             color: Color(0xFF666666),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Text(
-                            'Адреса не найдены',
-                            style: TextStyle(
+                            context.l10n.addressesNotFound,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF333333),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
-                            'Попробуйте изменить поисковый запрос',
-                            style: TextStyle(
+                            context.l10n.tryChangingQuery,
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xFF666666),
                             ),
@@ -224,24 +225,24 @@ class _ChooseAddressPageState extends State<ChooseAddressPage> {
                     },
                   );
                 }
-                return const Center(
+                return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.search, size: 64, color: Color(0xFF666666)),
-                      SizedBox(height: 16),
+                      const Icon(Icons.search, size: 64, color: Color(0xFF666666)),
+                      const SizedBox(height: 16),
                       Text(
-                        'Начните вводить адрес',
-                        style: TextStyle(
+                        context.l10n.startTypingAddress,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF333333),
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
-                        'Введите минимум 2 символа для поиска',
-                        style: TextStyle(
+                        context.l10n.minTwoCharacters,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xFF666666),
                         ),

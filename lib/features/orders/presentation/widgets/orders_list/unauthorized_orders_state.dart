@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 
 class UnauthorizedOrdersListState extends StatelessWidget {
   const UnauthorizedOrdersListState({super.key});
@@ -27,7 +28,7 @@ class UnauthorizedOrdersListState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.xl),
             Text(
-              'Требуется авторизация',
+              context.l10n.authorizationRequired,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -36,7 +37,7 @@ class UnauthorizedOrdersListState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Для просмотра заказов\nнеобходимо войти в аккаунт',
+              context.l10n.authorizationRequiredHelp,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.surface4,

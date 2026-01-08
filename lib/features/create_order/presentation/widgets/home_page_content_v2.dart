@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/ai_analysis_indicator.dart';
@@ -71,19 +72,19 @@ class HomePageContentV2 extends StatelessWidget {
             AnalysisStatusMessage(status: analysisStatus!),
           const SizedBox(height: AppSpacing.lg),
           OrderFieldCardV2(
-            label: 'Откуда',
+            label: context.l10n.from,
             value: fromAddress?.displayText,
             onTap: onFromAddressSelection,
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCardV2(
-            label: 'Куда',
+            label: context.l10n.to,
             value: toAddress?.displayText,
             onTap: onToAddressSelection,
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCardV2(
-            label: 'Получатель',
+            label: context.l10n.recipient,
             value: recipientName != null && recipientPhone != null
                 ? '$recipientName, $recipientPhone'
                 : null,
@@ -91,7 +92,7 @@ class HomePageContentV2 extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCardV2(
-            label: 'Вес, в кг',
+            label: context.l10n.weightInKg,
             value: tariffWeight?.toStringAsFixed(1),
             showChevron: onWeightTap != null,
             onTap: onWeightTap,
@@ -99,7 +100,7 @@ class HomePageContentV2 extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           OrderFieldCardV2(
-            label: 'Описание',
+            label: context.l10n.description,
             value: description,
             onTap: onDescriptionForm,
             isEnabled: isAnalysisCompleted && !isAnalyzing,
@@ -120,8 +121,8 @@ class HomePageContentV2 extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Создать заказ',
-                  style: TextStyle(
+                  context.l10n.createOrder,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

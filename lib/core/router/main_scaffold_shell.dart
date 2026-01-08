@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
@@ -52,39 +53,39 @@ class MainScaffoldShell extends StatelessWidget {
           unselectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w400,
           ),
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: HeroIcon(
+              icon: const HeroIcon(
                 HeroIcons.home,
                 size: 24,
               ),
-              activeIcon: HeroIcon(
+              activeIcon: const HeroIcon(
                 HeroIcons.home,
                 size: 24,
               ),
-              label: 'Главная',
+              label: context.l10n.home,
             ),
             BottomNavigationBarItem(
-              icon: HeroIcon(
+              icon: const HeroIcon(
                 HeroIcons.queueList,
                 size: 24,
               ),
-              activeIcon: HeroIcon(
+              activeIcon: const HeroIcon(
                 HeroIcons.queueList,
                 size: 24,
               ),
-              label: 'Заказы',
+              label: context.l10n.orders,
             ),
             BottomNavigationBarItem(
-              icon: HeroIcon(
+              icon: const HeroIcon(
                 HeroIcons.cog6Tooth,
                 size: 24,
               ),
-              activeIcon: HeroIcon(
+              activeIcon: const HeroIcon(
                 HeroIcons.cog6Tooth,
                 size: 24,
               ),
-              label: 'Настройки',
+              label: context.l10n.settings,
             ),
           ],
         ),

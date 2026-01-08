@@ -8,6 +8,7 @@ import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dar
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_order_detail_page.dart';
 
 /// Страница-загрузчик деталей заказа по ID
 /// Используется когда заказ не передан через extra (DevTools, deep links, etc.)
@@ -43,11 +44,18 @@ class _OrderDetailLoaderPageState extends State<OrderDetailLoaderPage> {
     return BlocBuilder<OrdersListBloc, OrdersListState>(
       builder: (context, state) {
         if (state is OrderDetailLoaded) {
-          // Заказ загружен - показываем страницу деталей
-          return ClientOrderDetailPage(
-            order: state.order,
-            userType: userType,
-          );
+          // Заказ загружен - показываем страницу деталей в зависимости от типа пользователя
+          if (userType.isCourier) {
+            return CourierOrderDetailPage(
+              order: state.order,
+              userType: userType,
+            );
+          } else {
+            return ClientOrderDetailPage(
+              order: state.order,
+              userType: userType,
+            );
+          }
         }
 
         if (state is OrdersListError) {

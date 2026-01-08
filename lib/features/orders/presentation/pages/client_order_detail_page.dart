@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/cancel_order_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/copy_payment_link_button.dart';
@@ -31,30 +32,30 @@ class ClientOrderDetailPage extends StatelessWidget {
     }
   }
 
-  String _getDeliveryDate() {
+  String _getDeliveryDate(BuildContext context) {
     try {
       final date = DateTime.parse(order.createdAt).add(const Duration(days: 3));
       final formatter = DateFormat('d MMMM', 'ru');
-      return 'Доставка в ${formatter.format(date)}';
+      return context.l10n.deliveryOn(formatter.format(date));
     } catch (e) {
-      return 'Доставка';
+      return context.l10n.delivery;
     }
   }
 
-  List<TimelineStep> _buildTimelineSteps() {
+  List<TimelineStep> _buildTimelineSteps(BuildContext context) {
     return [
       TimelineStep(
-        title: 'Посылка отправлена',
+        title: context.l10n.parcelSent,
         date: _formatDate(order.createdAt),
         isCompleted: true,
       ),
       TimelineStep(
-        title: 'Обработан на складе',
+        title: context.l10n.processedAtWarehouse,
         date: _formatDate(order.createdAt),
         isCompleted: false,
       ),
       TimelineStep(
-        title: 'Доставка в ${order.toCity?.name ?? 'г. Астана'}',
+        title: context.l10n.deliveryToCity(order.toCity?.name ?? 'г. Астана'),
         date: _formatDate(
           DateTime.parse(
             order.createdAt,
@@ -63,7 +64,7 @@ class ClientOrderDetailPage extends StatelessWidget {
         isCompleted: false,
       ),
       TimelineStep(
-        title: 'Передано курьеру',
+        title: context.l10n.handedToCourier,
         date: _formatDate(
           DateTime.parse(
             order.createdAt,
@@ -85,7 +86,7 @@ class ClientOrderDetailPage extends StatelessWidget {
       // Оплата прошла успешно, можно обновить UI или перейти к списку заказов
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Оплата прошла успешно!'),
+          content: Text(context.l10n.paymentSuccessful),
           backgroundColor: const Color(0xFF4CAF50),
         ),
       );
@@ -108,7 +109,7 @@ class ClientOrderDetailPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Заказ ${order.id}',
+          context.l10n.orderDetail(order.id.toString()),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -131,7 +132,7 @@ class ClientOrderDetailPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                _getDeliveryDate(),
+                _getDeliveryDate(context),
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -140,7 +141,7 @@ class ClientOrderDetailPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 24),
-            OrderTimeline(steps: _buildTimelineSteps()),
+            OrderTimeline(steps: _buildTimelineSteps(context)),
             SizedBox(height: 24),
             if (!(order.isPaid ?? false)) ...[
               Padding(
@@ -154,12 +155,12 @@ class ClientOrderDetailPage extends StatelessWidget {
               SizedBox(height: 32),
             ],
             OrderInfoSection(
-              label: 'Получатель',
+              label: context.l10n.recipientLabel,
               value: '${order.toName ?? ''}, ${order.toPhone ?? ''}',
             ),
             SizedBox(height: 24),
             OrderInfoSection(
-              label: 'Доставка',
+              label: context.l10n.deliveryLabel,
               value: '${order.toCity?.name ?? ''}, ${order.toAddress}',
             ),
             SizedBox(height: 24),

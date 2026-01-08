@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 
 class OrderPaymentButton extends StatelessWidget {
@@ -31,8 +32,8 @@ class OrderPaymentButton extends StatelessWidget {
         ),
         child: Text(
           userType.isUser
-              ? 'Оплатить ${price.toStringAsFixed(0)} тг'
-              : 'Привязать штрихкод',
+              ? context.l10n.payWithAmount(price.toStringAsFixed(0))
+              : context.l10n.attachBarcode,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,

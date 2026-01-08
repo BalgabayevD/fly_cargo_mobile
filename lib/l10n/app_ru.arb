@@ -501,5 +501,643 @@
   "openKaspi": "Открыть Kaspi.kz",
   "@openKaspi": {
     "description": "Open Kaspi button text"
+  },
+
+  "authorization": "Авторизация",
+  "@authorization": {
+    "description": "Authorization page title"
+  },
+
+  "phoneNumber": "Номер телефона",
+  "@phoneNumber": {
+    "description": "Phone number label"
+  },
+
+  "phoneNumberHelpText": "Поможет создавать и отслеживать\nваши заказы",
+  "@phoneNumberHelpText": {
+    "description": "Phone number help text"
+  },
+
+  "phoneNumberHint": "+7 (777) 123-45-65",
+  "@phoneNumberHint": {
+    "description": "Phone number input placeholder"
+  },
+
+  "enterPhoneNumberError": "Введите номер телефона",
+  "@enterPhoneNumberError": {
+    "description": "Enter phone number error"
+  },
+
+  "enterValidPhoneNumber": "Введите корректный номер телефона",
+  "@enterValidPhoneNumber": {
+    "description": "Enter valid phone number error"
+  },
+
+  "getCode": "Получить код",
+  "@getCode": {
+    "description": "Get verification code button"
+  },
+
+  "confirmCode": "Подтвердить",
+  "@confirmCode": {
+    "description": "Confirm code page title"
+  },
+
+  "smsCode": "СМС код",
+  "@smsCode": {
+    "description": "SMS code title"
+  },
+
+  "smsCodeHelpText": "Мы отправили 6 значный код по смс\nна номер {phone}",
+  "@smsCodeHelpText": {
+    "description": "SMS code help text",
+    "placeholders": {
+      "phone": {
+        "type": "String",
+        "example": "+7 (777) 123-45-65"
+      }
+    }
+  },
+
+  "smsCodeLabel": "Код",
+  "@smsCodeLabel": {
+    "description": "SMS code input label"
+  },
+
+  "smsCodeHint": "144 356",
+  "@smsCodeHint": {
+    "description": "SMS code input placeholder"
+  },
+
+  "send": "Отправить",
+  "@send": {
+    "description": "Send button text"
+  },
+
+  "codeSentAgain": "Код отправлен повторно",
+  "@codeSentAgain": {
+    "description": "Code sent again message"
+  },
+
+  "iAgreeWith": "Я ознакомился и согласен с",
+  "@iAgreeWith": {
+    "description": "Agreement prefix text"
+  },
+
+  "privacyPolicy": "политикой использования",
+  "@privacyPolicy": {
+    "description": "Privacy policy link text"
+  },
+
+  "and": "и",
+  "@and": {
+    "description": "Conjunction 'and'"
+  },
+
+  "termsOfService": "условиями оферты",
+  "@termsOfService": {
+    "description": "Terms of service link text"
+  },
+
+  "order": "Заказ",
+  "@order": {
+    "description": "Order label"
+  },
+
+  "orderDetail": "Заказ {orderId}",
+  "@orderDetail": {
+    "description": "Order detail title",
+    "placeholders": {
+      "orderId": {
+        "type": "String",
+        "example": "12345"
+      }
+    }
+  },
+
+  "delivery": "Доставка",
+  "@delivery": {
+    "description": "Delivery label"
+  },
+
+  "deliveryOn": "Доставка в {date}",
+  "@deliveryOn": {
+    "description": "Delivery date message",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "15 января"
+      }
+    }
+  },
+
+  "parcelSent": "Посылка отправлена",
+  "@parcelSent": {
+    "description": "Parcel sent timeline step"
+  },
+
+  "processedAtWarehouse": "Обработан на складе",
+  "@processedAtWarehouse": {
+    "description": "Processed at warehouse timeline step"
+  },
+
+  "deliveryToCity": "Доставка в {city}",
+  "@deliveryToCity": {
+    "description": "Delivery to city timeline step",
+    "placeholders": {
+      "city": {
+        "type": "String",
+        "example": "Алматы"
+      }
+    }
+  },
+
+  "handedToCourier": "Передано курьеру",
+  "@handedToCourier": {
+    "description": "Handed to courier timeline step"
+  },
+
+  "payWithAmount": "Оплатить {amount} тг",
+  "@payWithAmount": {
+    "description": "Pay with amount button",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "1000"
+      }
+    }
+  },
+
+  "attachBarcode": "Привязать штрихкод",
+  "@attachBarcode": {
+    "description": "Attach barcode button"
+  },
+
+  "cancelOrder": "Отменить",
+  "@cancelOrder": {
+    "description": "Cancel order button"
+  },
+
+  "copyPaymentLink": "Скопировать ссылку на платеж",
+  "@copyPaymentLink": {
+    "description": "Copy payment link button"
+  },
+
+  "paymentLinkCopied": "Ссылка скопирована",
+  "@paymentLinkCopied": {
+    "description": "Payment link copied message"
+  },
+
+  "noOrdersYet": "У вас пока нет заказов",
+  "@noOrdersYet": {
+    "description": "No orders yet message"
+  },
+
+  "createFirstOrder": "Создайте свой первый заказ\nна главной странице",
+  "@createFirstOrder": {
+    "description": "Create first order prompt"
+  },
+
+  "errorOccurred": "Произошла ошибка",
+  "@errorOccurred": {
+    "description": "Error occurred message"
+  },
+
+  "authorizationRequired": "Требуется авторизация",
+  "@authorizationRequired": {
+    "description": "Authorization required message"
+  },
+
+  "authorizationRequiredHelp": "Для просмотра заказов\nнеобходимо войти в аккаунт",
+  "@authorizationRequiredHelp": {
+    "description": "Authorization required help text"
+  },
+
+  "paymentSuccessful": "Оплата прошла успешно!",
+  "@paymentSuccessful": {
+    "description": "Payment successful message"
+  },
+
+  "recipientLabel": "Получатель",
+  "@recipientLabel": {
+    "description": "Recipient section label"
+  },
+
+  "deliveryLabel": "Доставка",
+  "@deliveryLabel": {
+    "description": "Delivery section label"
+  },
+
+  "processingPayment": "Обработка платежа...",
+  "@processingPayment": {
+    "description": "Processing payment message"
+  },
+
+  "pleaseWait": "Пожалуйста, подождите",
+  "@pleaseWait": {
+    "description": "Please wait message"
+  },
+
+  "addCardPrompt": "Добавьте карту",
+  "@addCardPrompt": {
+    "description": "Add card prompt title"
+  },
+
+  "noSavedCards": "У вас пока нет сохраненных карт",
+  "@noSavedCards": {
+    "description": "No saved cards message"
+  },
+
+  "addingCard": "Добавление карты",
+  "@addingCard": {
+    "description": "Adding card page title"
+  },
+
+  "tryAgainButton": "Попробовать снова",
+  "@tryAgainButton": {
+    "description": "Try again button text"
+  },
+
+  "paymentForOrder": "Оплата заказа №{orderId}",
+  "@paymentForOrder": {
+    "description": "Payment for order title",
+    "placeholders": {
+      "orderId": {
+        "type": "String",
+        "example": "12345"
+      }
+    }
+  },
+
+  "addingCardTitle": "Добавление карты",
+  "@addingCardTitle": {
+    "description": "Adding card bottom sheet title"
+  },
+
+  "notAuthorized": "Вы не авторизованы",
+  "@notAuthorized": {
+    "description": "Not authorized message"
+  },
+
+  "role": "Роль",
+  "@role": {
+    "description": "User role label"
+  },
+
+  "name": "Имя",
+  "@name": {
+    "description": "Name label"
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "Email label"
+  },
+
+  "logoutFromProfile": "Выйти из профиля",
+  "@logoutFromProfile": {
+    "description": "Logout from profile button"
+  },
+
+  "deleteProfileRequest": "Заявка на удаление профиля",
+  "@deleteProfileRequest": {
+    "description": "Delete profile request button"
+  },
+
+  "deleteProfileInDevelopment": "Функция удаления профиля в разработке",
+  "@deleteProfileInDevelopment": {
+    "description": "Delete profile in development message"
+  },
+
+  "logoutTitle": "Выход",
+  "@logoutTitle": {
+    "description": "Logout dialog title"
+  },
+
+  "logoutConfirmation": "Вы уверены, что хотите выйти?",
+  "@logoutConfirmation": {
+    "description": "Logout confirmation message"
+  },
+
+  "contacts": "Контакты",
+  "@contacts": {
+    "description": "Contacts page title"
+  },
+
+  "contactPhone": "Контактный телефон",
+  "@contactPhone": {
+    "description": "Contact phone label"
+  },
+
+  "mobilePhone": "Сотовый телефон",
+  "@mobilePhone": {
+    "description": "Mobile phone label"
+  },
+
+  "whatsapp": "Whatsapp",
+  "@whatsapp": {
+    "description": "WhatsApp label"
+  },
+
+  "legalAddress": "Юридический адрес",
+  "@legalAddress": {
+    "description": "Legal address label"
+  },
+
+  "call": "Позвонить",
+  "@call": {
+    "description": "Call button text"
+  },
+
+  "writeWhatsapp": "Написать в Whatsapp",
+  "@writeWhatsapp": {
+    "description": "Write on WhatsApp button"
+  },
+
+  "appAuthSettings": "Авторизация в приложении",
+  "@appAuthSettings": {
+    "description": "App authentication settings label"
+  },
+
+  "appVersionInfo": "Sapsano {year} год. Версия {version}",
+  "@appVersionInfo": {
+    "description": "App version information",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "2025"
+      },
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+
+  "recipientData": "Данные получателя",
+  "@recipientData": {
+    "description": "Recipient data page title"
+  },
+
+  "recipientContactInfo": "Контактная информация получателя",
+  "@recipientContactInfo": {
+    "description": "Recipient contact info section title"
+  },
+
+  "recipientContactInfoHelp": "Укажите имя и номер телефона получателя для связи",
+  "@recipientContactInfoHelp": {
+    "description": "Recipient contact info help text"
+  },
+
+  "saveData": "Сохранить данные",
+  "@saveData": {
+    "description": "Save data button"
+  },
+
+  "description": "Описание",
+  "@description": {
+    "description": "Description page title"
+  },
+
+  "descriptionLabel": "Описание посылки",
+  "@descriptionLabel": {
+    "description": "Package description input label"
+  },
+
+  "saveDescription": "Сохранить",
+  "@saveDescription": {
+    "description": "Save description button"
+  },
+
+  "weightInKg": "Вес, в кг",
+  "@weightInKg": {
+    "description": "Weight in kg field label"
+  },
+
+  "addressIn": "Адрес в {city}",
+  "@addressIn": {
+    "description": "Address in city page title",
+    "placeholders": {
+      "city": {
+        "type": "String",
+        "example": "Алматы"
+      }
+    }
+  },
+
+  "enterAddressPlaceholder": "Введите адрес...",
+  "@enterAddressPlaceholder": {
+    "description": "Enter address placeholder"
+  },
+
+  "searchingAddresses": "Поиск адресов...",
+  "@searchingAddresses": {
+    "description": "Searching addresses message"
+  },
+
+  "addressSearchError": "Ошибка поиска",
+  "@addressSearchError": {
+    "description": "Address search error message"
+  },
+
+  "addressesNotFound": "Адреса не найдены",
+  "@addressesNotFound": {
+    "description": "Addresses not found message"
+  },
+
+  "tryChangingQuery": "Попробуйте изменить поисковый запрос",
+  "@tryChangingQuery": {
+    "description": "Try changing query suggestion"
+  },
+
+  "startTypingAddress": "Начните вводить адрес",
+  "@startTypingAddress": {
+    "description": "Start typing address prompt"
+  },
+
+  "minTwoCharacters": "Введите минимум 2 символа для поиска",
+  "@minTwoCharacters": {
+    "description": "Minimum two characters message"
+  },
+
+  "chooseCity": "Выберите город",
+  "@chooseCity": {
+    "description": "Choose city alert message"
+  },
+
+  "enterAddressField": "Введите адрес",
+  "@enterAddressField": {
+    "description": "Enter address alert message"
+  },
+
+  "city": "Город",
+  "@city": {
+    "description": "City label"
+  },
+
+  "address": "Адрес",
+  "@address": {
+    "description": "Address label"
+  },
+
+  "apartment": "Квартира",
+  "@apartment": {
+    "description": "Apartment label"
+  },
+
+  "apartmentNumber": "Номер квартиры",
+  "@apartmentNumber": {
+    "description": "Apartment number placeholder"
+  },
+
+  "entrance": "Подъезд",
+  "@entrance": {
+    "description": "Entrance label"
+  },
+
+  "entranceNumber": "Номер подъезда",
+  "@entranceNumber": {
+    "description": "Entrance number placeholder"
+  },
+
+  "floor": "Этаж",
+  "@floor": {
+    "description": "Floor label"
+  },
+
+  "floorNumber": "Номер этажа",
+  "@floorNumber": {
+    "description": "Floor number placeholder"
+  },
+
+  "appLanguage": "Язык приложения",
+  "@appLanguage": {
+    "description": "App language settings label"
+  },
+
+  "russian": "Русский",
+  "@russian": {
+    "description": "Russian language"
+  },
+
+  "english": "English",
+  "@english": {
+    "description": "English language"
+  },
+
+  "kazakh": "Қазақша",
+  "@kazakh": {
+    "description": "Kazakh language"
+  },
+
+  "notificationSettings": "Настройка уведомлений",
+  "@notificationSettings": {
+    "description": "Notification settings label"
+  },
+
+  "privacyPolicyTitle": "Политика пользования",
+  "@privacyPolicyTitle": {
+    "description": "Privacy policy title"
+  },
+
+  "termsOfServiceTitle": "Условия оферты",
+  "@termsOfServiceTitle": {
+    "description": "Terms of service title"
+  },
+
+  "forLegalEntities": "Для юридических лиц",
+  "@forLegalEntities": {
+    "description": "For legal entities link"
+  },
+
+  "transportationRules": "Правила перевозки",
+  "@transportationRules": {
+    "description": "Transportation rules link"
+  },
+
+  "addPhoto": "Добавить\nфото",
+  "@addPhoto": {
+    "description": "Add photo button text"
+  },
+
+  "selectSource": "Выберите источник",
+  "@selectSource": {
+    "description": "Select source bottom sheet title"
+  },
+
+  "camera": "Камера",
+  "@camera": {
+    "description": "Camera option"
+  },
+
+  "gallery": "Галерея",
+  "@gallery": {
+    "description": "Gallery option"
+  },
+
+  "packagePhotos": "Фото упаковки",
+  "@packagePhotos": {
+    "description": "Package photos title"
+  },
+
+  "selectedPhotosCount": "Выбранные фото ({count})",
+  "@selectedPhotosCount": {
+    "description": "Selected photos count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "photoUploadError": "Ошибка при загрузке фото",
+  "@photoUploadError": {
+    "description": "Photo upload error message"
+  },
+
+  "photoSelectionError": "Ошибка при выборе фото",
+  "@photoSelectionError": {
+    "description": "Photo selection error message"
+  },
+
+  "orderStatusCreated": "Создан",
+  "@orderStatusCreated": {
+    "description": "Order status: created"
+  },
+
+  "orderStatusCancelled": "Отменен",
+  "@orderStatusCancelled": {
+    "description": "Order status: cancelled"
+  },
+
+  "orderStatusDecided": "Отклонен курьером",
+  "@orderStatusDecided": {
+    "description": "Order status: decided/rejected by courier"
+  },
+
+  "orderStatusAccepted": "Ожидаем курьера",
+  "@orderStatusAccepted": {
+    "description": "Order status: accepted, waiting for courier"
+  },
+
+  "orderStatusProcessing": "Обработка на складе",
+  "@orderStatusProcessing": {
+    "description": "Order status: processing at warehouse"
+  },
+
+  "orderStatusDeliveryToCity": "Доставка в Астану",
+  "@orderStatusDeliveryToCity": {
+    "description": "Order status: delivery to city"
+  },
+
+  "orderStatusHandedToCourierShort": "Передано курьеру",
+  "@orderStatusHandedToCourierShort": {
+    "description": "Order status: handed to courier for delivery"
+  },
+
+  "orderStatusCompleted": "Доставлен",
+  "@orderStatusCompleted": {
+    "description": "Order status: completed/delivered"
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
@@ -151,7 +152,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
           onPressed: () => Navigator.of(context).pop(),
           variant: AppButtonVariant.ghost,
         ),
-        title: Text('Авторизация', style: AppTypography.h6),
+        title: Text(context.l10n.authorization, style: AppTypography.h6),
         centerTitle: true,
       ),
       body: BlocListener<AuthBloc, AuthState>(
@@ -183,21 +184,21 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                 children: [
                   SizedBox(height: AppSpacing.lg),
                   Text(
-                    'Номер телефона',
+                    context.l10n.phoneNumber,
                     style: AppTypography.h4.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Поможет создавать и отслеживать\nваши заказы',
+                    context.l10n.phoneNumberHelpText,
                     style: AppTypography.bodyMedium.copyWith(
                       color: AppColors.surface4,
                     ),
                   ),
                   SizedBox(height: AppSpacing.xxl),
                   Text(
-                    'Номер телефона',
+                    context.l10n.phoneNumber,
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.primary,
                     ),
@@ -213,7 +214,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                     ],
                     style: AppTypography.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: '+7 (777) 123-45-65',
+                      hintText: context.l10n.phoneNumberHint,
                       hintStyle: AppTypography.bodyLarge.copyWith(
                         color: AppColors.surface5,
                       ),
@@ -262,10 +263,10 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Введите номер телефона';
+                        return context.l10n.enterPhoneNumberError;
                       }
                       if (!_isValidPhoneNumber(value)) {
-                        return 'Введите корректный номер телефона';
+                        return context.l10n.enterValidPhoneNumber;
                       }
                       return null;
                     },
@@ -279,7 +280,7 @@ class _PhoneInputPageState extends State<PhoneInputPage> {
                     builder: (context, state) {
                       final isLoading = state is AuthLoading;
                       return AppButton(
-                        text: 'Получить код',
+                        text: context.l10n.getCode,
                         onPressed: _isValidPhone && !isLoading
                             ? _onPhoneSubmitted
                             : null,

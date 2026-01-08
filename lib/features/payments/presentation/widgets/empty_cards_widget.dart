@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_bloc.dart';
@@ -45,7 +46,7 @@ class EmptyCardsWidget extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Добавьте карту',
+              context.l10n.addCardPrompt,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -54,7 +55,7 @@ class EmptyCardsWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'У вас пока нет сохраненных карт',
+              context.l10n.noSavedCards,
               style: TextStyle(
                 fontSize: 14,
                 color: AppColors.surface4,
@@ -75,9 +76,9 @@ class EmptyCardsWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Добавить карту',
-                  style: TextStyle(
+                child: Text(
+                  context.l10n.addCard,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -88,7 +89,7 @@ class EmptyCardsWidget extends StatelessWidget {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
-                'Назад',
+                context.l10n.back,
                 style: TextStyle(
                   fontSize: 16,
                   color: AppColors.surface5,

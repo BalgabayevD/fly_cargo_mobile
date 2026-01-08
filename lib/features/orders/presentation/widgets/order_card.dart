@@ -83,7 +83,7 @@ class OrderCard extends StatelessWidget {
               ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              status.text,
+              status.getLocalizedText(context),
               style: AppTypography.cardTitle.copyWith(
                 color: status.statusTextColor,
                 fontWeight: FontWeight.w600,
