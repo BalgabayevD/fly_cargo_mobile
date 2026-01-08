@@ -236,5 +236,9 @@
   "dangerousGoods": "Қауіпті жүктер",
   "explosiveMaterials": "Жарылғыш материалдар,\nотшашқылар",
   "compressedGases": "Сығылған газдар",
-  "oxidizingSubstances": "Тотықтырғыш заттар"
+  "oxidizingSubstances": "Тотықтырғыш заттар",
+
+  "orderNumber": "№{orderId} тапсырыс",
+  "trackingNumber": "Трек нөмірі {number}",
+  "orderCost": "Құны: {amount} тг"
 }

@@ -1164,5 +1164,38 @@
   "oxidizingSubstances": "Окисляющие вещества",
   "@oxidizingSubstances": {
     "description": "Oxidizing substances"
+  },
+
+  "orderNumber": "Заказ {orderId}",
+  "@orderNumber": {
+    "description": "Order number with ID",
+    "placeholders": {
+      "orderId": {
+        "type": "String",
+        "example": "123"
+      }
+    }
+  },
+
+  "trackingNumber": "Трековый номер {number}",
+  "@trackingNumber": {
+    "description": "Tracking number label",
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "example": "123-456-789"
+      }
+    }
+  },
+
+  "orderCost": "Стоимость: {amount} тг",
+  "@orderCost": {
+    "description": "Order cost label",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "5000"
+      }
+    }
   }
 }

@@ -55,97 +55,210 @@ class HomePageContentV2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Column(
-        children: [
-          PhotoGridSection(
-            photos: photos,
-            onPickPhoto: onPickPhoto,
-            onRemovePhoto: onRemovePhoto,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          if (isAnalyzing)
-            AIAnalysisIndicator()
-          else if (!isAnalysisCompleted && photos.isEmpty)
-            SizedBox.shrink()
-          else if (isAnalysisCompleted && analysisStatus != null)
-            AnalysisStatusMessage(status: analysisStatus!),
-          const SizedBox(height: AppSpacing.lg),
-          OrderFieldCardV2(
-            label: context.l10n.from,
-            value: fromAddress?.displayText,
-            onTap: onFromAddressSelection,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          OrderFieldCardV2(
-            label: context.l10n.to,
-            value: toAddress?.displayText,
-            onTap: onToAddressSelection,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          OrderFieldCardV2(
-            label: context.l10n.recipient,
-            value: recipientName != null && recipientPhone != null
-                ? '$recipientName, $recipientPhone'
-                : null,
-            onTap: onRecipientForm,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          OrderFieldCardV2(
-            label: context.l10n.weightInKg,
-            value: tariffWeight?.toStringAsFixed(1),
-            showChevron: onWeightTap != null,
-            onTap: onWeightTap,
-            isEnabled: isAnalysisCompleted && !isAnalyzing,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          OrderFieldCardV2(
-            label: context.l10n.description,
-            value: description,
-            onTap: onDescriptionForm,
-            isEnabled: isAnalysisCompleted && !isAnalyzing,
-          ),
-          if (onSubmitOrder != null) ...[
-            const SizedBox(height: AppSpacing.xl),
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: onSubmitOrder,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  ),
-                ),
-                child: Text(
-                  context.l10n.createOrder,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ],
-          SizedBox(height: AppSpacing.buttonHeightSM),
-          GestureDetector(
-            onTap: () => DangerousCargoBottomSheet.show(context),
-            child: Text(
-              context.l10n.learnAllowedProducts,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: AppColors.surface4,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: AppSpacing.buttonHeightXL),
+      children: [
+        PhotoGridSection(
+          photos: photos,
+          onPickPhoto: onPickPhoto,
+          onRemovePhoto: onRemovePhoto,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        _AnalysisSection(
+          isAnalyzing: isAnalyzing,
+          isAnalysisCompleted: isAnalysisCompleted,
+          analysisStatus: analysisStatus,
+          hasPhotos: photos.isNotEmpty,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _OrderFieldsSection(
+          fromAddress: fromAddress,
+          toAddress: toAddress,
+          recipientName: recipientName,
+          recipientPhone: recipientPhone,
+          tariffWeight: tariffWeight,
+          description: description,
+          onFromAddressSelection: onFromAddressSelection,
+          onToAddressSelection: onToAddressSelection,
+          onRecipientForm: onRecipientForm,
+          onWeightTap: onWeightTap,
+          onDescriptionForm: onDescriptionForm,
+          isAnalysisCompleted: isAnalysisCompleted,
+          isAnalyzing: isAnalyzing,
+        ),
+        if (onSubmitOrder != null) ...[
+          const SizedBox(height: AppSpacing.xl),
+          _CreateOrderButton(onPressed: onSubmitOrder!),
         ],
+        const SizedBox(height: AppSpacing.buttonHeightSM),
+        const _AllowedProductsLink(),
+        const SizedBox(height: AppSpacing.buttonHeightXL),
+      ],
+    );
+  }
+}
+
+class _AnalysisSection extends StatelessWidget {
+  final bool isAnalyzing;
+  final bool isAnalysisCompleted;
+  final AnalysisStatus? analysisStatus;
+  final bool hasPhotos;
+
+  const _AnalysisSection({
+    required this.isAnalyzing,
+    required this.isAnalysisCompleted,
+    required this.analysisStatus,
+    required this.hasPhotos,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isAnalyzing) {
+      return const AIAnalysisIndicator();
+    }
+
+    if (!isAnalysisCompleted && !hasPhotos) {
+      return const SizedBox.shrink();
+    }
+
+    if (isAnalysisCompleted && analysisStatus != null) {
+      return AnalysisStatusMessage(status: analysisStatus!);
+    }
+
+    return const SizedBox.shrink();
+  }
+}
+
+class _OrderFieldsSection extends StatelessWidget {
+  final AddressModel? fromAddress;
+  final AddressModel? toAddress;
+  final String? recipientName;
+  final String? recipientPhone;
+  final double? tariffWeight;
+  final String? description;
+  final VoidCallback onFromAddressSelection;
+  final VoidCallback onToAddressSelection;
+  final VoidCallback onRecipientForm;
+  final VoidCallback? onWeightTap;
+  final VoidCallback onDescriptionForm;
+  final bool isAnalysisCompleted;
+  final bool isAnalyzing;
+
+  const _OrderFieldsSection({
+    required this.fromAddress,
+    required this.toAddress,
+    required this.recipientName,
+    required this.recipientPhone,
+    required this.tariffWeight,
+    required this.description,
+    required this.onFromAddressSelection,
+    required this.onToAddressSelection,
+    required this.onRecipientForm,
+    required this.onWeightTap,
+    required this.onDescriptionForm,
+    required this.isAnalysisCompleted,
+    required this.isAnalyzing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isFieldsEnabled = isAnalysisCompleted && !isAnalyzing;
+
+    return Column(
+      children: [
+        OrderFieldCardV2(
+          label: context.l10n.from,
+          value: fromAddress?.displayText,
+          onTap: onFromAddressSelection,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        OrderFieldCardV2(
+          label: context.l10n.to,
+          value: toAddress?.displayText,
+          onTap: onToAddressSelection,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        OrderFieldCardV2(
+          label: context.l10n.recipient,
+          value: _formatRecipientInfo(),
+          onTap: onRecipientForm,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        OrderFieldCardV2(
+          label: context.l10n.weightInKg,
+          value: tariffWeight?.toStringAsFixed(1),
+          showChevron: onWeightTap != null,
+          onTap: onWeightTap,
+          isEnabled: isFieldsEnabled,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        OrderFieldCardV2(
+          label: context.l10n.description,
+          value: description,
+          onTap: onDescriptionForm,
+          isEnabled: isFieldsEnabled,
+        ),
+      ],
+    );
+  }
+
+  String? _formatRecipientInfo() {
+    if (recipientName != null && recipientPhone != null) {
+      return '$recipientName, $recipientPhone';
+    }
+    return null;
+  }
+}
+
+class _CreateOrderButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const _CreateOrderButton({
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 56,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+          ),
+        ),
+        child: Text(
+          context.l10n.createOrder,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AllowedProductsLink extends StatelessWidget {
+  const _AllowedProductsLink();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => DangerousCargoBottomSheet.show(context),
+      child: Text(
+        context.l10n.learnAllowedProducts,
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          color: AppColors.surface4,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }

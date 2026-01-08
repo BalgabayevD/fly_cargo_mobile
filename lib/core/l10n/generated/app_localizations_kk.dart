@@ -183,8 +183,8 @@ class AppLocalizationsKk extends AppLocalizations {
   String get noOrders => 'Тапсырыстар жоқ';
 
   @override
-  String orderNumber(String number) {
-    return '№$number тапсырыс';
+  String orderNumber(String orderId) {
+    return '№$orderId тапсырыс';
   }
 
   @override
@@ -683,4 +683,14 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get oxidizingSubstances => 'Тотықтырғыш заттар';
+
+  @override
+  String trackingNumber(String number) {
+    return 'Трек нөмірі $number';
+  }
+
+  @override
+  String orderCost(String amount) {
+    return 'Құны: $amount тг';
+  }
 }

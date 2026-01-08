@@ -430,11 +430,11 @@ abstract class AppLocalizations {
   /// **'Нет заказов'**
   String get noOrders;
 
-  /// Order number
+  /// Order number with ID
   ///
   /// In ru, this message translates to:
-  /// **'Заказ №{number}'**
-  String orderNumber(String number);
+  /// **'Заказ {orderId}'**
+  String orderNumber(String orderId);
 
   /// Order status label
   ///
@@ -1377,6 +1377,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Окисляющие вещества'**
   String get oxidizingSubstances;
+
+  /// Tracking number label
+  ///
+  /// In ru, this message translates to:
+  /// **'Трековый номер {number}'**
+  String trackingNumber(String number);
+
+  /// Order cost label
+  ///
+  /// In ru, this message translates to:
+  /// **'Стоимость: {amount} тг'**
+  String orderCost(String amount);
 }
 
 class _AppLocalizationsDelegate

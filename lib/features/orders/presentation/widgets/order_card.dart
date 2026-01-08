@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/orders/presentation/models/order_status.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:intl/intl.dart';
@@ -13,17 +14,6 @@ class OrderCard extends StatelessWidget {
     this.onTap,
     super.key,
   });
-
-  String _formatDate(String dateString) {
-    try {
-      final clean = dateString.trim().replaceAll('"', '');
-      final date = DateTime.parse(clean);
-      final formatter = DateFormat('d.M.yyyy', 'ru');
-      return formatter.format(date.toLocal());
-    } catch (e) {
-      return dateString;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,53 +35,121 @@ class OrderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    'Заказ ${order.id}',
-                    style: AppTypography.h6.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.surface5,
-                    ),
-                  ),
-                ),
-                Text(
-                  _formatDate(order.createdAt),
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.surface4,
-                  ),
-                ),
-              ],
+            _OrderCardHeader(
+              orderId: order.id.toString(),
+              createdAt: order.createdAt,
             ),
             const SizedBox(height: AppSpacing.md),
             if (trackingNumber != null)
-              Text(
-                'Трековый номер $trackingNumber',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.surface4,
-                ),
-              ),
+              _OrderTrackingNumber(trackingNumber: trackingNumber),
             if (order.price != null && trackingNumber == null)
-              Text(
-                'Стоимость: ${order.price!.toStringAsFixed(0)} тг',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.surface4,
-                ),
-              ),
+              _OrderCost(price: order.price!),
             const SizedBox(height: AppSpacing.sm),
-            Text(
-              status.getLocalizedText(context),
-              style: AppTypography.cardTitle.copyWith(
-                color: status.statusTextColor,
-                fontWeight: FontWeight.w600,
-                fontSize: 17,
-              ),
-            ),
+            _OrderStatusText(status: status),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _OrderCardHeader extends StatelessWidget {
+  final String orderId;
+  final String createdAt;
+
+  const _OrderCardHeader({
+    required this.orderId,
+    required this.createdAt,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(
+            context.l10n.orderNumber(orderId),
+            style: AppTypography.h6.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.surface5,
+            ),
+          ),
+        ),
+        Text(
+          _formatDate(createdAt),
+          style: AppTypography.bodySmall.copyWith(
+            color: AppColors.surface5,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _formatDate(String dateString) {
+    try {
+      final clean = dateString.trim().replaceAll('"', '');
+      final date = DateTime.parse(clean);
+      final formatter = DateFormat('d.M.yyyy');
+      return formatter.format(date.toLocal());
+    } catch (e) {
+      return dateString;
+    }
+  }
+}
+
+class _OrderTrackingNumber extends StatelessWidget {
+  final String trackingNumber;
+
+  const _OrderTrackingNumber({
+    required this.trackingNumber,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      context.l10n.trackingNumber(trackingNumber),
+      style: AppTypography.bodyMedium.copyWith(
+        color: AppColors.surface4,
+      ),
+    );
+  }
+}
+
+class _OrderCost extends StatelessWidget {
+  final double price;
+
+  const _OrderCost({
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      context.l10n.orderCost(price.toStringAsFixed(0)),
+      style: AppTypography.bodyMedium.copyWith(
+        color: AppColors.surface4,
+      ),
+    );
+  }
+}
+
+class _OrderStatusText extends StatelessWidget {
+  final OrderStatus status;
+
+  const _OrderStatusText({
+    required this.status,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      status.getLocalizedText(context),
+      style: AppTypography.cardTitle.copyWith(
+        color: status.statusTextColor,
+        fontWeight: FontWeight.w600,
+        fontSize: 17,
       ),
     );
   }

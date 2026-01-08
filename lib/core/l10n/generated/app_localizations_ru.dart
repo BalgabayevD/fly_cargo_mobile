@@ -183,8 +183,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noOrders => 'Нет заказов';
 
   @override
-  String orderNumber(String number) {
-    return 'Заказ №$number';
+  String orderNumber(String orderId) {
+    return 'Заказ $orderId';
   }
 
   @override
@@ -684,4 +684,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get oxidizingSubstances => 'Окисляющие вещества';
+
+  @override
+  String trackingNumber(String number) {
+    return 'Трековый номер $number';
+  }
+
+  @override
+  String orderCost(String amount) {
+    return 'Стоимость: $amount тг';
+  }
 }

@@ -183,8 +183,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noOrders => 'No orders';
 
   @override
-  String orderNumber(String number) {
-    return 'Order #$number';
+  String orderNumber(String orderId) {
+    return 'Order $orderId';
   }
 
   @override
@@ -682,4 +682,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get oxidizingSubstances => 'Oxidizing substances';
+
+  @override
+  String trackingNumber(String number) {
+    return 'Tracking number $number';
+  }
+
+  @override
+  String orderCost(String amount) {
+    return 'Cost: $amount tg';
+  }
 }

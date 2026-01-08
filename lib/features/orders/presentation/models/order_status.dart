@@ -25,8 +25,39 @@ enum OrderStatus {
 }
 
 extension OrderStatusExtension on OrderStatus {
-  /// Локализованный текст статуса
+  static const _processingStatuses = {
+    OrderStatus.submitted,
+    OrderStatus.accounted,
+    OrderStatus.checked,
+    OrderStatus.revision,
+  };
+
+  static const _transitStatuses = {
+    OrderStatus.dispatched,
+    OrderStatus.transit,
+  };
+  static const _courierStatuses = {
+    OrderStatus.arrived,
+    OrderStatus.deliversRecipient,
+  };
+
+  static const _errorStatuses = {
+    OrderStatus.cancelled,
+    OrderStatus.decided,
+  };
+
+
   String getLocalizedText(BuildContext context) {
+    if (_processingStatuses.contains(this)) {
+      return context.l10n.orderStatusProcessing;
+    }
+    if (_transitStatuses.contains(this)) {
+      return context.l10n.orderStatusDeliveryToCity;
+    }
+    if (_courierStatuses.contains(this)) {
+      return context.l10n.orderStatusHandedToCourierShort;
+    }
+
     switch (this) {
       case OrderStatus.created:
         return context.l10n.orderStatusCreated;
@@ -36,125 +67,39 @@ extension OrderStatusExtension on OrderStatus {
         return context.l10n.orderStatusDecided;
       case OrderStatus.accepted:
         return context.l10n.orderStatusAccepted;
-      case OrderStatus.submitted:
-      case OrderStatus.accounted:
-      case OrderStatus.checked:
-      case OrderStatus.revision:
-        return context.l10n.orderStatusProcessing;
-      case OrderStatus.dispatched:
-      case OrderStatus.transit:
-        return context.l10n.orderStatusDeliveryToCity;
-      case OrderStatus.arrived:
-      case OrderStatus.deliversRecipient:
-        return context.l10n.orderStatusHandedToCourierShort;
       case OrderStatus.completed:
         return context.l10n.orderStatusCompleted;
-    }
-  }
-
-  /// @deprecated Используйте getLocalizedText(context) для локализации
-  String get text {
-    switch (this) {
-      case OrderStatus.created:
-        return 'Создан';
-      case OrderStatus.cancelled:
-        return 'Отменен';
-      case OrderStatus.decided:
-        return 'Отклонен курьером';
-      case OrderStatus.accepted:
-        return 'Ожидаем курьера';
-      case OrderStatus.submitted:
-        return 'Обработка на складе';
-      case OrderStatus.accounted:
-        return 'Обработка на складе';
-      case OrderStatus.checked:
-        return 'Обработка на складе';
-      case OrderStatus.revision:
-        return 'Обработка на складе';
-      case OrderStatus.dispatched:
-        return 'Доставка в Астану';
-      case OrderStatus.transit:
-        return 'Доставка в Астану';
-      case OrderStatus.arrived:
-        return 'Передано курьеру';
-      case OrderStatus.deliversRecipient:
-        return 'Передано курьеру';
-      case OrderStatus.completed:
-        return 'Доставлен';
+      default:
+        return context.l10n.orderStatusCreated;
     }
   }
 
   Color get backgroundColor {
-    switch (this) {
-      case OrderStatus.created:
-        return AppColors.white;
-      case OrderStatus.cancelled:
-        return AppColors.errorLight;
-      case OrderStatus.decided:
-        return AppColors.errorLight;
-      case OrderStatus.accepted:
-        return AppColors.white;
-      case OrderStatus.submitted:
-      case OrderStatus.accounted:
-      case OrderStatus.checked:
-      case OrderStatus.revision:
-        return AppColors.warningBackground;
-      case OrderStatus.dispatched:
-      case OrderStatus.transit:
-        return AppColors.infoBackground;
-      case OrderStatus.arrived:
-      case OrderStatus.deliversRecipient:
-        return AppColors.white;
-      case OrderStatus.completed:
-        return AppColors.successBackground;
+    if (_errorStatuses.contains(this)) return AppColors.errorLight;
+    if (_processingStatuses.contains(this)) return AppColors.warningBackground;
+    if (_transitStatuses.contains(this)) return AppColors.infoBackground;
+    if (this == OrderStatus.completed) return AppColors.successBackground;
+    if (this == OrderStatus.created || this == OrderStatus.accepted) {
+      return AppColors.warningBackground;
     }
+    return AppColors.white;
   }
 
   Color get borderColor {
-    switch (this) {
-      case OrderStatus.created:
-      case OrderStatus.accepted:
-      case OrderStatus.arrived:
-      case OrderStatus.deliversRecipient:
-        return AppColors.borderLight;
-      case OrderStatus.cancelled:
-      case OrderStatus.decided:
-        return AppColors.errorBorder;
-      case OrderStatus.submitted:
-      case OrderStatus.accounted:
-      case OrderStatus.checked:
-      case OrderStatus.revision:
-      case OrderStatus.dispatched:
-      case OrderStatus.transit:
-      case OrderStatus.completed:
-        return AppColors.borderLight;
-    }
+    if (_errorStatuses.contains(this)) return AppColors.errorLight;
+    return AppColors.warningLight;
   }
 
   Color get statusTextColor {
-    switch (this) {
-      case OrderStatus.created:
-        return AppColors.surface5;
-      case OrderStatus.cancelled:
-        return AppColors.errorText;
-      case OrderStatus.decided:
-        return AppColors.errorText;
-      case OrderStatus.accepted:
-        return AppColors.surface5;
-      case OrderStatus.submitted:
-      case OrderStatus.accounted:
-      case OrderStatus.checked:
-      case OrderStatus.revision:
-        return AppColors.warningText;
-      case OrderStatus.dispatched:
-      case OrderStatus.transit:
-        return AppColors.infoText;
-      case OrderStatus.arrived:
-      case OrderStatus.deliversRecipient:
-        return AppColors.surface5;
-      case OrderStatus.completed:
-        return AppColors.successText;
+    if (_errorStatuses.contains(this)) return AppColors.errorText;
+    if (_processingStatuses.contains(this)) return AppColors.warningText;
+    if (_transitStatuses.contains(this)) return AppColors.infoText;
+    if (this == OrderStatus.completed) return AppColors.successText;
+    // Статусы created и accepted - оранжевый текст для акцента
+    if (this == OrderStatus.created || this == OrderStatus.accepted) {
+      return AppColors.warningText;
     }
+    return AppColors.surface5;
   }
 }
 
@@ -188,13 +133,9 @@ class OrderStatusHelper {
           return OrderStatus.deliversRecipient;
         case 'completed':
           return OrderStatus.completed;
-        default:
-          // По умолчанию для неизвестного статуса
-          return OrderStatus.created;
       }
     }
 
-    // Если статус не указан, возвращаем created
     return OrderStatus.created;
   }
 

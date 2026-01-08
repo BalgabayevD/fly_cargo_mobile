@@ -236,5 +236,9 @@
   "dangerousGoods": "Dangerous Goods",
   "explosiveMaterials": "Explosive materials,\nfireworks",
   "compressedGases": "Compressed gases",
-  "oxidizingSubstances": "Oxidizing substances"
+  "oxidizingSubstances": "Oxidizing substances",
+
+  "orderNumber": "Order {orderId}",
+  "trackingNumber": "Tracking number {number}",
+  "orderCost": "Cost: {amount} tg"
 }
