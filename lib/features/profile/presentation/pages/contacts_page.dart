@@ -5,7 +5,17 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactsPage extends StatelessWidget {
+  static const String path = 'contacts';
+
   const ContactsPage({super.key});
+
+  static GoRoute route({GlobalKey<NavigatorState>? parentNavigatorKey}) {
+    return GoRoute(
+      path: path,
+      parentNavigatorKey: parentNavigatorKey,
+      builder: (context, state) => const ContactsPage(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

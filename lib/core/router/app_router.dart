@@ -25,7 +25,7 @@ class AppRoutes {
   // Main Shell
   static const home = '/home';
   static const orders = '/orders';
-  static const settings = '/settings';
+  static const settings = SettingsPage.path;
 
   // Home Sub-pages
   static const descriptionForm = 'description-form';
@@ -36,8 +36,8 @@ class AppRoutes {
   static const orderDetail = 'order-detail';
 
   // Settings Sub-pages
-  static const profile = 'profile';
-  static const contacts = 'contacts';
+  static const profile = ProfilePage.path;
+  static const contacts = ContactsPage.path;
   static const notifications = 'notifications';
 
   // User Demo Flow
@@ -51,7 +51,7 @@ class AppRoutes {
   static const userNotifications = 'notifications';
 }
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _rootNavigator = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _ordersNavigatorKey =
     GlobalKey<NavigatorState>();
@@ -60,7 +60,7 @@ final GlobalKey<NavigatorState> _settingsNavigatorKey =
 
 GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
   return GoRouter(
-    navigatorKey: _rootNavigatorKey,
+    navigatorKey: _rootNavigator,
     initialLocation: initialLocation,
     refreshListenable: GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
@@ -136,11 +136,10 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
               GoRoute(
                 path: AppRoutes.home,
                 builder: (context, state) => const CreateOrderPage(),
-                // CreateOrderPage(),
                 routes: [
                   GoRoute(
                     path: AppRoutes.descriptionForm,
-                    parentNavigatorKey: _rootNavigatorKey,
+                    parentNavigatorKey: _rootNavigator,
                     builder: (context, state) {
                       final initialDescription = state.extra as String?;
                       return DescriptionFormPage(
@@ -150,12 +149,12 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                   ),
                   GoRoute(
                     path: AppRoutes.recipientPage,
-                    parentNavigatorKey: _rootNavigatorKey,
+                    parentNavigatorKey: _rootNavigator,
                     builder: (context, state) => const RecipientPage(),
                   ),
                   GoRoute(
                     path: AppRoutes.recipientForm,
-                    parentNavigatorKey: _rootNavigatorKey,
+                    parentNavigatorKey: _rootNavigator,
                     builder: (context, state) => const RecipientFormPage(),
                   ),
                 ],
@@ -171,7 +170,7 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
                 routes: [
                   GoRoute(
                     path: '${AppRoutes.orderDetail}/:orderId',
-                    parentNavigatorKey: _rootNavigatorKey,
+                    parentNavigatorKey: _rootNavigator,
                     builder: (context, state) {
                       final orderIdStr = state.pathParameters['orderId'];
 
@@ -193,20 +192,10 @@ GoRouter createRouter(AuthBloc authBloc, String initialLocation) {
           StatefulShellBranch(
             navigatorKey: _settingsNavigatorKey,
             routes: [
-              GoRoute(
-                path: AppRoutes.settings,
-                builder: (context, state) => const SettingsPage(),
+              SettingsPage.route(
                 routes: [
-                  GoRoute(
-                    path: AppRoutes.profile,
-                    parentNavigatorKey: _rootNavigatorKey,
-                    builder: (context, state) => const ProfilePage(),
-                  ),
-                  GoRoute(
-                    path: AppRoutes.contacts,
-                    parentNavigatorKey: _rootNavigatorKey,
-                    builder: (context, state) => const ContactsPage(),
-                  ),
+                  ProfilePage.route(parentNavigatorKey: _rootNavigator),
+                  ContactsPage.route(parentNavigatorKey: _rootNavigator),
                 ],
               ),
             ],
