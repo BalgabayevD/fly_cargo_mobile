@@ -40,32 +40,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            _VideoBackground(
-              controller: _controller,
-              isInitialized: _isInitialized,
-            ),
+      body: Stack(
+        children: [
+          _VideoBackground(
+            controller: _controller,
+            isInitialized: _isInitialized,
+          ),
 
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      AppColors.surface5.withValues(alpha: 0.35),
-                      AppColors.surface5.withValues(alpha: 0.45),
-                      AppColors.surface5.withValues(alpha: 0.35),
-                    ],
-                    stops: const [0.0, 0.45, 1.0],
-                  ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    AppColors.surface5.withValues(alpha: 0.35),
+                    AppColors.surface5.withValues(alpha: 0.45),
+                    AppColors.surface5.withValues(alpha: 0.35),
+                  ],
+                  stops: const [0.0, 0.45, 1.0],
                 ),
               ),
             ),
+          ),
 
-            Positioned.fill(
+          SafeArea(
+            child: Positioned.fill(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -175,8 +175,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
