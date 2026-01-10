@@ -9,7 +9,17 @@ import 'package:fly_cargo/features/profile/presentation/widgets/profile_field.da
 import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
+  static const String path = 'profile';
+
   const ProfilePage({super.key});
+
+  static GoRoute route({GlobalKey<NavigatorState>? parentNavigatorKey}) {
+    return GoRoute(
+      path: path,
+      parentNavigatorKey: parentNavigatorKey,
+      builder: (context, state) => const ProfilePage(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

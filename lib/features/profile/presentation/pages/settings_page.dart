@@ -5,18 +5,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/auth/presentation/router/auth_router.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
+  static const String path = '/settings';
+
   const SettingsPage({super.key});
+
+  static GoRoute route({
+    List<RouteBase>? routes,
+    GlobalKey<NavigatorState>? parentNavigatorKey,
+  }) {
+    return GoRoute(
+      path: path,
+      builder: (context, state) => const SettingsPage(),
+      routes: routes ?? const <RouteBase>[],
+    );
+  }
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
