@@ -2,23 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/features/destination/data/models/destination_models.dart'
-    as destination;
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_event.dart';
-import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_state.dart' as bloc_state;
-import 'package:fly_cargo/features/create_order/presentation/pages/create_order_state.dart' as page_state;
+import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_state.dart'
+    as bloc_state;
 import 'package:fly_cargo/features/create_order/presentation/mixins/order_bloc_listener_mixin.dart';
 import 'package:fly_cargo/features/create_order/presentation/mixins/order_navigation_mixin.dart';
 import 'package:fly_cargo/features/create_order/presentation/mixins/photo_handler_mixin.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/create_order_app_bar.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_state.dart'
+    as page_state;
 import 'package:fly_cargo/features/create_order/presentation/widgets/home_page_content_v2.dart';
+import 'package:fly_cargo/features/destination/data/models/destination_models.dart'
+    as destination;
 import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
     as tariffs;
+import 'package:fly_cargo/shared/ui/button.dart';
+import 'package:fly_cargo/shared/ui/page.dart';
 
 class CreateOrderPage extends StatefulWidget {
   const CreateOrderPage({super.key});
@@ -117,32 +120,45 @@ class _CreateOrderPageState extends State<CreateOrderPage>
 
   void _submitOrder() {
     context.read<CreateOrderBloc>().add(
-          SubmitOrderFormEvent(
-            fromAddress: _state.fromAddress,
-            toAddress: _state.toAddress,
-            recipientName: _state.recipientName,
-            recipientPhone: _state.recipientPhone,
-            selectedTariffId: _state.selectedTariffId,
-            selectedTariff: _state.selectedTariff,
-            description: _state.description,
-            isFragile: _state.isFragile,
-            customLength: _state.customLength,
-            customWidth: _state.customWidth,
-            customHeight: _state.customHeight,
-            photos: _state.photos,
-            photoIds: _state.photoIds,
-          ),
-        );
+      SubmitOrderFormEvent(
+        fromAddress: _state.fromAddress,
+        toAddress: _state.toAddress,
+        recipientName: _state.recipientName,
+        recipientPhone: _state.recipientPhone,
+        selectedTariffId: _state.selectedTariffId,
+        selectedTariff: _state.selectedTariff,
+        description: _state.description,
+        isFragile: _state.isFragile,
+        customLength: _state.customLength,
+        customWidth: _state.customWidth,
+        customHeight: _state.customHeight,
+        photos: _state.photos,
+        photoIds: _state.photoIds,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateOrderBloc, bloc_state.CreateOrderState>(
       listener: handleOrdersState,
-      child: Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: CreateOrderAppBar(),
-        body: HomePageContentV2(
+      child: BePage(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: context.l10n.home,
+        trailing: [
+          SizedBox(
+            width: 150,
+            child: BeButton(
+              text: 'Условия доставки',
+              onPressed: () {},
+              size: .sm,
+              variant: .light,
+              color: .info,
+            ),
+          ),
+        ],
+        child: HomePageContentV2(
           fromAddress: _state.fromAddress,
           toAddress: _state.toAddress,
           recipientName: _state.recipientName,

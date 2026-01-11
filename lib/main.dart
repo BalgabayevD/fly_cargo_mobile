@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_better_auth/core/flutter_better_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fly_cargo/core/design_system/theme.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
@@ -15,7 +14,9 @@ import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculat
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
 import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
 import 'package:fly_cargo/features/tariffs/presentation/bloc/tariffs_bloc.dart';
+import 'package:fly_cargo/shared/ui/colors.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yandex_maps_mapkit_lite/init.dart';
@@ -111,7 +112,32 @@ class _AppState extends State<App> {
       builder: (context, locale) {
         return MaterialApp.router(
           title: 'Sapsano',
-          theme: AppTheme.lightTheme,
+          theme: ThemeData(
+            useMaterial3: true,
+            buttonTheme: ButtonThemeData(buttonColor: BeColors.primary),
+            primaryColor: BeColors.primary,
+            colorScheme: ColorScheme.of(
+              context,
+            ).copyWith(primary: BeColors.primary),
+            scaffoldBackgroundColor: Colors.white,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(color: BeColors.primary),
+              ),
+            ),
+            textTheme: GoogleFonts.montserratTextTheme(
+              TextTheme.of(context),
+            ),
+            appBarTheme: AppBarTheme(
+              centerTitle: true,
+              titleTextStyle: GoogleFonts.montserrat(
+                fontWeight: .w600,
+                fontSize: 17,
+                color: BeColors.surface5,
+              ),
+              backgroundColor: BeColors.white,
+            ),
+          ),
           routerConfig: _router,
           localizationsDelegates: const [
             AppLocalizations.delegate,

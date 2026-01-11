@@ -7,9 +7,10 @@ import 'package:fly_cargo/features/create_order/data/models/pre_create_order_res
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/ai_analysis_indicator.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/analysis_status_message.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/dangerous_cargo_bottom_sheet.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_field_card_v2.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/shared/ui/button.dart';
+import 'package:fly_cargo/shared/ui/space.dart';
 
 class HomePageContentV2 extends StatelessWidget {
   final AddressModel? fromAddress;
@@ -56,7 +57,7 @@ class HomePageContentV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.zero,
       children: [
         PhotoGridSection(
           photos: photos,
@@ -88,11 +89,12 @@ class HomePageContentV2 extends StatelessWidget {
         ),
         if (onSubmitOrder != null) ...[
           const SizedBox(height: AppSpacing.xl),
-          _CreateOrderButton(onPressed: onSubmitOrder!),
+          BeButton(
+            text: context.l10n.createOrder,
+            color: .primary,
+            onPressed: onSubmitOrder,
+          ),
         ],
-        const SizedBox(height: AppSpacing.buttonHeightSM),
-        const _AllowedProductsLink(),
-        const SizedBox(height: AppSpacing.buttonHeightXL),
       ],
     );
   }
@@ -171,19 +173,19 @@ class _OrderFieldsSection extends StatelessWidget {
           value: fromAddress?.displayText,
           onTap: onFromAddressSelection,
         ),
-        const SizedBox(height: AppSpacing.md),
+        BeSpace(size: .md),
         OrderFieldCardV2(
           label: context.l10n.to,
           value: toAddress?.displayText,
           onTap: onToAddressSelection,
         ),
-        const SizedBox(height: AppSpacing.md),
+        BeSpace(size: .md),
         OrderFieldCardV2(
           label: context.l10n.recipient,
           value: _formatRecipientInfo(),
           onTap: onRecipientForm,
         ),
-        const SizedBox(height: AppSpacing.md),
+        BeSpace(size: .md),
         OrderFieldCardV2(
           label: context.l10n.weightInKg,
           value: tariffWeight?.toStringAsFixed(1),
@@ -191,7 +193,7 @@ class _OrderFieldsSection extends StatelessWidget {
           onTap: onWeightTap,
           isEnabled: isFieldsEnabled,
         ),
-        const SizedBox(height: AppSpacing.md),
+        BeSpace(size: .md),
         OrderFieldCardV2(
           label: context.l10n.description,
           value: description,
@@ -207,59 +209,5 @@ class _OrderFieldsSection extends StatelessWidget {
       return '$recipientName, $recipientPhone';
     }
     return null;
-  }
-}
-
-class _CreateOrderButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _CreateOrderButton({
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.white,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-          ),
-        ),
-        child: Text(
-          context.l10n.createOrder,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _AllowedProductsLink extends StatelessWidget {
-  const _AllowedProductsLink();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => DangerousCargoBottomSheet.show(context),
-      child: Text(
-        context.l10n.learnAllowedProducts,
-        style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
-          color: AppColors.surface4,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
   }
 }

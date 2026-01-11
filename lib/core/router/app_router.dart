@@ -9,7 +9,7 @@ import 'package:fly_cargo/features/create_order/presentation/pages/create_order_
 import 'package:fly_cargo/features/create_order/presentation/pages/description_form_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_form_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/recipient_page.dart';
-import 'package:fly_cargo/features/onboarding/onboarding_video.dart';
+import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_loader_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
