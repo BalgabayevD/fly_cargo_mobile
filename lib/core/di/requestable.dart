@@ -34,7 +34,7 @@ class Requestable {
           HttpHeaders.contentTypeHeader: 'application/json',
           'Origin': 'https://cargo.maguya.kz',
           'x-skip-oauth-proxy': true,
-          'x-app': 'sapsano_tsd',
+          'x-app': 'sapsano',
         },
         connectTimeout: const Duration(seconds: 420),
         receiveTimeout: const Duration(seconds: 420),

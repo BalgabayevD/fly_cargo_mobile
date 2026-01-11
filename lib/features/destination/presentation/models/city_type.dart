@@ -1,0 +1,4 @@
+enum CityType {
+  from,
+  to,
+}
