@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   final String message;
@@ -34,7 +31,7 @@ class ErrorStateWidget extends StatelessWidget {
             const SizedBox(height: AppSpacing.lg),
             ElevatedButton(
               onPressed: () {
-                context.read<AuthBloc>().add(const AuthLoadProfile());
+                // context.read<AuthBloc>().add(const AuthLoadProfile());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,

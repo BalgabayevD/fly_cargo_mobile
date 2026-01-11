@@ -1,13 +1,25 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/auth/presentation/router/auth_router.dart';
-import 'package:fly_cargo/shared/ui/button.dart';
-import 'package:fly_cargo/shared/ui/colors.dart';
-import 'package:fly_cargo/shared/ui/space.dart';
+import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingScreen extends StatelessWidget {
+  static String path = '/onboarding';
+
   const OnboardingScreen({super.key});
+
+  static String location() => Uri(path: path).toString();
+
+  static GoRoute route() {
+    return GoRoute(
+      path: path,
+      builder: (context, state) => const OnboardingScreen(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,22 +55,22 @@ class OnboardingScreen extends StatelessWidget {
                         Spacer(),
 
                         BeButton(
-                          text: 'Авторизоваться',
+                          text: 'Пропустить',
                           backgroundColor: BeColors.white.withAlpha(30),
                           textColor: BeColors.white,
                           color: .gray,
-                          onPressed: () =>
-                              AuthRouter.navigateToPhoneInput(context),
+                          onPressed: () {},
                         ),
 
                         BeSpace(size: .xl),
 
                         BeButton(
-                          text: 'Продолжить',
+                          text: 'Авторизоваться',
                           backgroundColor: BeColors.white,
                           color: .gray,
-                          onPressed: () =>
-                              AuthRouter.navigateToPhoneInput(context),
+                          onPressed: () => context.push(
+                            AuthorizationRequestScreen.location(),
+                          ),
                         ),
 
                         BeSpace(size: .xxxl),
