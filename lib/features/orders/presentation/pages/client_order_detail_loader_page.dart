@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_page.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/courier_order_detail_page.dart';
 
 /// Страница-загрузчик деталей заказа по ID
 /// Используется когда заказ не передан через extra (DevTools, deep links, etc.)
@@ -36,26 +31,26 @@ class _OrderDetailLoaderPageState extends State<OrderDetailLoaderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.read<AuthBloc>().state;
-    final userType = authState is AuthAuthenticated
-        ? authState.userType
-        : UserType.user;
+    // final authState = context.read<AuthBloc>().state;
+    // final userType = authState is AuthAuthenticated
+    //     ? authState.userType
+    //     : UserType.user;
 
     return BlocBuilder<OrdersListBloc, OrdersListState>(
       builder: (context, state) {
         if (state is OrderDetailLoaded) {
           // Заказ загружен - показываем страницу деталей в зависимости от типа пользователя
-          if (userType.isCourier) {
-            return CourierOrderDetailPage(
-              order: state.order,
-              userType: userType,
-            );
-          } else {
-            return ClientOrderDetailPage(
-              order: state.order,
-              userType: userType,
-            );
-          }
+          // if (userType.isCourier) {
+          //   return CourierOrderDetailPage(
+          //     order: state.order,
+          //     userType: userType,
+          //   );
+          // } else {
+          //   return ClientOrderDetailPage(
+          //     order: state.order,
+          //     userType: userType,
+          //   );
+          // }
         }
 
         if (state is OrdersListError) {

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/courier_order_detail_page.dart';
 
 /// Страница-загрузчик деталей заказа по ID для курьера
 class CourierOrderDetailLoaderPage extends StatefulWidget {
@@ -29,26 +25,26 @@ class _CourierOrderDetailLoaderPageState
   void initState() {
     super.initState();
     // Загружаем заказ по ID
-    context
-        .read<OrdersListBloc>()
-        .add(GetOrderByIdEvent(orderId: widget.orderId));
+    context.read<OrdersListBloc>().add(
+      GetOrderByIdEvent(orderId: widget.orderId),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.read<AuthBloc>().state;
-    final userType = authState is AuthAuthenticated
-        ? authState.userType
-        : UserType.courier;
+    // final authState = context.read<AuthBloc>().state;
+    // final userType = authState is AuthAuthenticated
+    //     ? authState.userType
+    //     : UserType.courier;
 
     return BlocBuilder<OrdersListBloc, OrdersListState>(
       builder: (context, state) {
         if (state is OrderDetailLoaded) {
           // Заказ загружен - показываем страницу деталей
-          return CourierOrderDetailPage(
-            order: state.order,
-            userType: userType,
-          );
+          // return CourierOrderDetailPage(
+          //   order: state.order,
+          //   userType: userType,
+          // );
         }
 
         if (state is OrdersListError) {
@@ -81,9 +77,9 @@ class _CourierOrderDetailLoaderPageState
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () {
-                      context
-                          .read<OrdersListBloc>()
-                          .add(GetOrderByIdEvent(orderId: widget.orderId));
+                      context.read<OrdersListBloc>().add(
+                        GetOrderByIdEvent(orderId: widget.orderId),
+                      );
                     },
                     child: const Text('Повторить'),
                   ),
@@ -118,4 +114,3 @@ class _CourierOrderDetailLoaderPageState
     );
   }
 }
-

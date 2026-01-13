@@ -1,3 +1,4 @@
+import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
 import 'package:fly_cargo/features/destination/data/destination_remote_source.dart';
 import 'package:injectable/injectable.dart';
@@ -7,11 +8,11 @@ abstract class DestinationModule {
   @factoryMethod
   DestinationRemoteSource provideDestinationRemoteSource(
     Requestable requestable,
-    ApiConfig dataSourceConfig,
+    Configuration configuration,
   ) {
     return DestinationRemoteSource(
-      privateDio,
-      baseUrl: dataSourceConfig.baseUrl,
+      requestable.dio,
+      baseUrl: configuration.environmentVariables.orderBaseUrl,
     );
   }
 }

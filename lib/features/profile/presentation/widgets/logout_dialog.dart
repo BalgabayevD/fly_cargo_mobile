@@ -1,9 +1,6 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/colors.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:go_router/go_router.dart';
 
 void logoutDialog(BuildContext context) {
@@ -19,7 +16,7 @@ void logoutDialog(BuildContext context) {
         ),
         TextButton(
           onPressed: () {
-            context.read<AuthBloc>().add(const AuthLogout());
+            // context.read<AuthBloc>().add(const AuthLogout());
             context.pop();
             context.pop();
           },

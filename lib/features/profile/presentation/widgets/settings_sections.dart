@@ -3,15 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 
 class AuthSection extends StatelessWidget {
-  final AuthState authState;
+  // final AuthState authState;
   final VoidCallback onProfileTap;
   final VoidCallback onAuthTap;
 
   const AuthSection({
-    required this.authState,
+    // required this.authState,
     required this.onProfileTap,
     required this.onAuthTap,
     super.key,
@@ -19,31 +18,32 @@ class AuthSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAuthenticated = authState is AuthAuthenticated;
+    // final isAuthenticated = authState is AuthAuthenticated;
     String? displayName;
     String? userPhone;
+    return Text("Content");
 
-    if (isAuthenticated) {
-      final authenticatedState = authState as AuthAuthenticated;
-      final profile = authenticatedState.profile;
-
-      if (profile != null) {
-        final name = profile.name.trim();
-        if (name.isNotEmpty) {
-          displayName = name;
-        } else if (profile.phoneNumber.isNotEmpty) {
-          displayName = profile.phoneNumber;
-        }
-        userPhone = profile.phoneNumber.isNotEmpty ? profile.phoneNumber : null;
-      }
-    }
-
-    return SettingsUserMenuItem(
-      displayName: displayName,
-      userPhone: userPhone,
-      isAuthenticated: isAuthenticated,
-      onTap: isAuthenticated ? onProfileTap : onAuthTap,
-    );
+    // if (isAuthenticated) {
+    //   final authenticatedState = authState as AuthAuthenticated;
+    //   final profile = authenticatedState.profile;
+    //
+    //   if (profile != null) {
+    //     final name = profile.name.trim();
+    //     if (name.isNotEmpty) {
+    //       displayName = name;
+    //     } else if (profile.phoneNumber.isNotEmpty) {
+    //       displayName = profile.phoneNumber;
+    //     }
+    //     userPhone = profile.phoneNumber.isNotEmpty ? profile.phoneNumber : null;
+    //   }
+    // }
+    //
+    // return SettingsUserMenuItem(
+    //   displayName: displayName,
+    //   userPhone: userPhone,
+    //   isAuthenticated: isAuthenticated,
+    //   onTap: isAuthenticated ? onProfileTap : onAuthTap,
+    // );
   }
 }
 

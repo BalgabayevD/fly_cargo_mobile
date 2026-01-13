@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,7 +24,10 @@ class _SapsanoAppState extends State<SapsanoApp> {
   @override
   void initState() {
     super.initState();
-    _router = createRouter('/onboarding');
+    _router = createRouter(
+      getIt<AuthorizationBloc>(),
+      CreateOrderScreen.path,
+    );
   }
 
   @override

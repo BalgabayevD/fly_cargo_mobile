@@ -1,8 +1,6 @@
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class GetClientOrdersUseCase {
   final OrdersRepository _ordersRepository;
 

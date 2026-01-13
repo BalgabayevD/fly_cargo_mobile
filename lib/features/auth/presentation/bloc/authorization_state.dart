@@ -2,7 +2,12 @@ part of 'authorization_bloc.dart';
 
 sealed class AuthorizationState {}
 
-class InitialAuthorizationState extends AuthorizationState {}
+class InitialAuthorizationState extends AuthorizationState {
+  final bool isShowOnboarding;
+  final bool isAuthenticated;
+
+  InitialAuthorizationState(this.isShowOnboarding, this.isAuthenticated);
+}
 
 class AuthorizationOtpRequestingState extends AuthorizationState {
   final String phoneNumber;
@@ -42,6 +47,8 @@ class AuthorizationOtpConfirmFailureState extends AuthorizationState {
 
   AuthorizationOtpConfirmFailureState(this.phoneNumber, this.code);
 }
+
+class AuthorizationLoadingState extends AuthorizationState {}
 
 class AuthorizedState extends AuthorizationState {
   final UserSessionInfoModel sessionInfo;

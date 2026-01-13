@@ -39,6 +39,9 @@ class BeBottomDialog {
   static Future<T?> showBottomDialog<T>({
     required BuildContext context,
     required String text,
+    double initialChildSize = 0.5,
+    double maxChildSize = 0.5,
+    double minChildSize = 0.25,
     List<Widget> children = const <Widget>[],
   }) {
     Haptics.canVibrate().then((can) {
@@ -49,23 +52,31 @@ class BeBottomDialog {
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
+      useRootNavigator: true,
       backgroundColor: BeColors.none,
       builder: (context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.5,
-          maxChildSize: 0.5,
+          minChildSize: minChildSize,
+          initialChildSize: initialChildSize,
+          maxChildSize: maxChildSize,
           builder: (context, controller) {
             return ClipRRect(
               clipBehavior: .hardEdge,
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
               child: Scaffold(
                 body: ListView(
-                  padding: EdgeInsets.only(left: 16, right: 16),
                   controller: controller,
                   children: [
-                    BeBottomTitle(text: text),
-                    SizedBox(height: 12),
-                    ...children,
+                    Padding(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: BeBottomTitle(text: text),
+                    ),
+                    ListView(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      shrinkWrap: true,
+                      primary: false,
+                      children: children,
+                    ),
                   ],
                 ),
               ),

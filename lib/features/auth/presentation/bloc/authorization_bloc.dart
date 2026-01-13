@@ -21,7 +21,12 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     required this.authorizationRepository,
     required this.configuration,
     required this.requestable,
-  }) : super(InitialAuthorizationState()) {
+  }) : super(
+         InitialAuthorizationState(
+           configuration.isShowOnboarding,
+           configuration.isAuthenticated,
+         ),
+       ) {
     on<AuthorizationGetSessionEvent>(_getSession);
     on<AuthorizationRequestOtpEvent>(_requestOtp);
     on<AuthorizationConfirmOtpEvent>(_confirmOtp);
@@ -33,6 +38,8 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     Emitter<AuthorizationState> emit,
   ) async {
     try {
+      emit(AuthorizationLoadingState());
+
       final session = await authorizationRepository.getSession();
 
       if (session != null) {

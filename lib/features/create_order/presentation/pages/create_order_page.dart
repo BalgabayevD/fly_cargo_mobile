@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
@@ -20,17 +22,28 @@ import 'package:fly_cargo/features/destination/data/models/destination_models.da
     as destination;
 import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
     as tariffs;
-import 'package:fly_cargo/shared/ui/button.dart';
-import 'package:fly_cargo/shared/ui/page.dart';
+import 'package:go_router/go_router.dart';
 
-class CreateOrderPage extends StatefulWidget {
-  const CreateOrderPage({super.key});
+class CreateOrderScreen extends StatefulWidget {
+  static String path = '/order/create';
+
+  const CreateOrderScreen({super.key});
+
+  static String location() => Uri(path: path).toString();
+
+  static GoRoute route({List<RouteBase> routes = const <RouteBase>[]}) {
+    return GoRoute(
+      path: path,
+      builder: (context, state) => const CreateOrderScreen(),
+      routes: routes,
+    );
+  }
 
   @override
-  State<CreateOrderPage> createState() => _CreateOrderPageState();
+  State<CreateOrderScreen> createState() => _CreateOrderScreenState();
 }
 
-class _CreateOrderPageState extends State<CreateOrderPage>
+class _CreateOrderScreenState extends State<CreateOrderScreen>
     with PhotoHandlerMixin, OrderNavigationMixin, OrderBlocListenerMixin {
   late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
   late final page_state.CreateOrderState _state;
@@ -146,18 +159,7 @@ class _CreateOrderPageState extends State<CreateOrderPage>
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: context.l10n.home,
-        trailing: [
-          SizedBox(
-            width: 150,
-            child: BeButton(
-              text: 'Условия доставки',
-              onPressed: () {},
-              size: .sm,
-              variant: .light,
-              color: .info,
-            ),
-          ),
-        ],
+        trailing: [Delivery()],
         child: HomePageContentV2(
           fromAddress: _state.fromAddress,
           toAddress: _state.toAddress,
@@ -178,6 +180,24 @@ class _CreateOrderPageState extends State<CreateOrderPage>
           isAnalysisCompleted: _state.preOrderData != null,
           analysisStatus: _state.analysisStatus,
         ),
+      ),
+    );
+  }
+}
+
+class Delivery extends StatelessWidget {
+  const Delivery({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: BeButton(
+        text: 'Условия доставки',
+        onPressed: () {},
+        size: .sm,
+        variant: .light,
+        color: .info,
       ),
     );
   }

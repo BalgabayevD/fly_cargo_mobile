@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/choose_recipient_bottom_sheet.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/choose_tariff_bottom_sheet.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart'
     as destination;
 import 'package:fly_cargo/features/destination/presentation/models/city_type.dart';
 import 'package:fly_cargo/features/destination/presentation/widgets/choose_address_bottom_sheet.dart';
-import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/choose_recipient_bottom_sheet.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/choose_tariff_bottom_sheet.dart';
 import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
     as tariffs;
 import 'package:go_router/go_router.dart';
@@ -30,23 +31,27 @@ mixin OrderNavigationMixin<T extends StatefulWidget> on State<T> {
   void recalculatePrice();
 
   Future<void> openFromAddressSelection() async {
-    final address = await showModalBottomSheet<destination.AddressModel>(
-      context: context,
-      useRootNavigator: true,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => ChooseAddressBottomSheet(
-        initialCity: fromAddress != null
-            ? destination.CityModel(
-                id: fromAddress!.cityId,
-                name: fromAddress!.city,
-              )
-            : null,
-        initialAddress: fromAddress,
-        title: 'Откуда',
-        cityType: CityType.from,
-      ),
-    );
+    final address =
+        await BeBottomDialog.showBottomDialog<destination.AddressModel>(
+          context: context,
+          maxChildSize: 0.7,
+          initialChildSize: 0.7,
+          text: "Откуда",
+          children: [
+            ChooseAddressBottomSheet(
+              initialCity: fromAddress != null
+                  ? destination.CityModel(
+                      id: fromAddress!.cityId,
+                      name: fromAddress!.city,
+                    )
+                  : null,
+              initialAddress: fromAddress,
+              title: 'Откуда',
+              cityType: CityType.from,
+            ),
+          ],
+        );
+
     if (address != null) {
       updateFromAddress(address);
       recalculatePrice();
@@ -149,15 +154,14 @@ mixin OrderNavigationMixin<T extends StatefulWidget> on State<T> {
 
       if (fromCityId != null && toCityId != null) {
         context.read<PriceCalculationBloc>().add(
-              CalculatePriceEvent(
-                tariffId: selectedTariffId!,
-                fromCityId: fromCityId,
-                toCityId: toCityId,
-                toPhone: recipientPhone ?? '+77777777777',
-              ),
-            );
+          CalculatePriceEvent(
+            tariffId: selectedTariffId!,
+            fromCityId: fromCityId,
+            toCityId: toCityId,
+            toPhone: recipientPhone ?? '+77777777777',
+          ),
+        );
       }
     }
   }
 }
-

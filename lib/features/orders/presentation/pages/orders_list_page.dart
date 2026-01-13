@@ -3,11 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
-import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/courier_orders_tabs_widget.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/orders_list/empty_orders_state.dart';
@@ -36,22 +32,22 @@ class _OrdersListPageState extends State<OrdersListPage> {
   }
 
   void _loadOrders() {
-    final authState = context.read<AuthBloc>().state;
-    if (authState is! AuthAuthenticated) {
-      context.read<OrdersListBloc>().add(const GetClientOrdersListEvent());
-      return;
-    }
-
-    final userType = authState.userType;
-    if (userType.isCourier) {
-      if (_selectedTabIndex == 0) {
-        context.read<OrdersListBloc>().add(const GetCreatedOrdersListEvent());
-      } else {
-        context.read<OrdersListBloc>().add(const GetCourierOrdersListEvent());
-      }
-    } else {
-      context.read<OrdersListBloc>().add(const GetClientOrdersListEvent());
-    }
+    // final authState = context.read<AuthBloc>().state;
+    // if (authState is! AuthAuthenticated) {
+    //   context.read<OrdersListBloc>().add(const GetClientOrdersListEvent());
+    //   return;
+    // }
+    //
+    // final userType = authState.userType;
+    // if (userType.isCourier) {
+    //   if (_selectedTabIndex == 0) {
+    //     context.read<OrdersListBloc>().add(const GetCreatedOrdersListEvent());
+    //   } else {
+    //     context.read<OrdersListBloc>().add(const GetCourierOrdersListEvent());
+    //   }
+    // } else {
+    //   context.read<OrdersListBloc>().add(const GetClientOrdersListEvent());
+    // }
   }
 
   void _onTabChanged(int index) {
@@ -69,9 +65,10 @@ class _OrdersListPageState extends State<OrdersListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.watch<AuthBloc>().state;
-    final isCourier =
-        authState is AuthAuthenticated && authState.userType.isCourier;
+    // final authState = context.watch<AuthBloc>().state;
+    // final isCourier =
+    //     authState is AuthAuthenticated && authState.userType.isCourier;
+    final isCourier = false;
 
     return Scaffold(
       backgroundColor: AppColors.white,

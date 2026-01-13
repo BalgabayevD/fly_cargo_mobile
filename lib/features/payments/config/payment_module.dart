@@ -1,4 +1,4 @@
-﻿import 'package:dio/dio.dart';
+﻿import 'package:fly_cargo/core/di/requestable.dart';
 import 'package:fly_cargo/features/payments/data/sources/payment_remoute_source.dart';
 import 'package:fly_cargo/features/payments/presentation/payment_flow_cubit.dart';
 import 'package:injectable/injectable.dart';
@@ -10,8 +10,8 @@ abstract class PaymentModule {
 
   @factoryMethod
   PaymentRemoteSource providePaymentRemoteSource(
-    @Named('payment-dio') Dio paymentDio,
+    Requestable requestable,
   ) {
-    return PaymentRemoteSource(paymentDio);
+    return PaymentRemoteSource(requestable.dio);
   }
 }

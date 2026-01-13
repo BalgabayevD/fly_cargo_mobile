@@ -9,6 +9,9 @@ enum BeButtonSize { sm, md, lg }
 
 class BeButton extends StatelessWidget {
   final VoidCallback? onPressed;
+  final Widget? startContent;
+  final Widget? endContent;
+  final Widget? child;
   final String? text;
   final BeButtonVariant variant;
   final BeButtonColor color;
@@ -27,6 +30,9 @@ class BeButton extends StatelessWidget {
     this.isLoading = false,
     this.backgroundColor,
     this.textColor,
+    this.startContent,
+    this.child,
+    this.endContent,
   });
 
   Color get _color {
@@ -350,6 +356,7 @@ class BeButton extends StatelessWidget {
               mainAxisAlignment: .center,
               spacing: 12,
               children: [
+                if (startContent != null) startContent!,
                 if (isLoading)
                   SizedBox.square(
                     dimension: 16,
@@ -361,9 +368,10 @@ class BeButton extends StatelessWidget {
                     ),
                   ),
                 Text(text!, style: _textStyle),
+                if (endContent != null) endContent!,
               ],
             )
-          : null,
+          : child,
     );
 
     if (variant == .shadow) {

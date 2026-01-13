@@ -1,16 +1,8 @@
 import 'dart:developer' show log;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
-import 'package:fly_cargo/core/router/app_router.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:fly_cargo/features/auth/presentation/bloc/auth_state.dart';
-import 'package:fly_cargo/features/auth/presentation/router/auth_router.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
-import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -71,61 +63,62 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, authState) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Divider(height: 1, color: AppColors.border),
-                    AuthSection(
-                      authState: authState,
-                      onProfileTap: () {
-                        context.go(
-                          '${AppRoutes.settings}/${AppRoutes.profile}',
-                        );
-                      },
-                      onAuthTap: () {
-                        AuthRouter.navigateToPhoneInput(context);
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    LanguageSection(
-                      onTap: () {
-                        LanguageSelectionBottomSheet.show(context);
-                      },
-                    ),
-                    NotificationsSection(
-                      onTap: () {
-                        context.go(
-                          '${AppRoutes.settings}/${AppRoutes.notifications}',
-                        );
-                      },
-                    ),
-                    ContactsSection(
-                      onTap: () {
-                        context.go(
-                          '${AppRoutes.settings}/${AppRoutes.contacts}',
-                        );
-                      },
-                    ),
-                    LegalSections(
-                      onPrivacyTap: () =>
-                          _openUrl('https://example.com/privacy'),
-                      onTermsTap: () => _openUrl('https://example.com/terms'),
-                      onLegalTap: () => _openUrl('https://example.com/legal'),
-                      onRulesTap: () => _openUrl('https://example.com/rules'),
-                    ),
-                  ],
-                ),
-              ),
-              SettingsFooter(appVersion: _appVersion),
-            ],
-          );
-        },
-      ),
+      body: Text('content'),
+      // body: BlocBuilder<AuthBloc, AuthState>(
+      //   builder: (context, authState) {
+      //     return Column(
+      //       children: [
+      //         Expanded(
+      //           child: ListView(
+      //             padding: EdgeInsets.zero,
+      //             children: [
+      //               Divider(height: 1, color: AppColors.border),
+      //               AuthSection(
+      //                 authState: authState,
+      //                 onProfileTap: () {
+      //                   context.go(
+      //                     '${AppRoutes.settings}/${AppRoutes.profile}',
+      //                   );
+      //                 },
+      //                 onAuthTap: () {
+      //                   AuthRouter.navigateToPhoneInput(context);
+      //                 },
+      //               ),
+      //               const SizedBox(height: AppSpacing.sm),
+      //               LanguageSection(
+      //                 onTap: () {
+      //                   LanguageSelectionBottomSheet.show(context);
+      //                 },
+      //               ),
+      //               NotificationsSection(
+      //                 onTap: () {
+      //                   context.go(
+      //                     '${AppRoutes.settings}/${AppRoutes.notifications}',
+      //                   );
+      //                 },
+      //               ),
+      //               ContactsSection(
+      //                 onTap: () {
+      //                   context.go(
+      //                     '${AppRoutes.settings}/${AppRoutes.contacts}',
+      //                   );
+      //                 },
+      //               ),
+      //               LegalSections(
+      //                 onPrivacyTap: () =>
+      //                     _openUrl('https://example.com/privacy'),
+      //                 onTermsTap: () => _openUrl('https://example.com/terms'),
+      //                 onLegalTap: () => _openUrl('https://example.com/legal'),
+      //                 onRulesTap: () => _openUrl('https://example.com/rules'),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //         SettingsFooter(appVersion: _appVersion),
+      //       ],
+      //     );
+      //   },
+      // ),
     );
   }
 

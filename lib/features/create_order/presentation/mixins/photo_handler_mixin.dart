@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/core/design_system/colors.dart';
+import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
+import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_event.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
 
 mixin PhotoHandlerMixin<T extends StatefulWidget> on State<T> {
@@ -21,49 +24,40 @@ mixin PhotoHandlerMixin<T extends StatefulWidget> on State<T> {
   void setAnalyzing(bool value);
 
   Future<void> pickPhoto() async {
-    final source = await showModalBottomSheet<ImageSource>(
+    final source = await BeBottomDialog.showBottomDialog(
       context: context,
-      useRootNavigator: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: AppSpacing.lg),
-              Text(
-                context.l10n.selectSource,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.surface5,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              ListTile(
-                leading: Icon(Icons.camera_alt, color: AppColors.primary),
-                title: Text(context.l10n.camera),
-                onTap: () => Navigator.pop(context, ImageSource.camera),
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_library, color: AppColors.primary),
-                title: Text(context.l10n.gallery),
-                onTap: () => Navigator.pop(context, ImageSource.gallery),
-              ),
-              const SizedBox(height: AppSpacing.md),
-            ],
+      text: 'Источник',
+      children: [
+        BeButton(
+          text: 'Камера',
+          color: .gray,
+          startContent: HeroIcon(
+            HeroIcons.camera,
+            size: 24,
           ),
+          onPressed: () {
+            Navigator.pop(context, ImageSource.camera);
+          },
         ),
-      ),
+        BeSpace(size: .md),
+        BeButton(
+          text: 'Галерея',
+          color: .gray,
+          startContent: HeroIcon(
+            HeroIcons.photo,
+            size: 24,
+          ),
+          onPressed: () {
+            Navigator.pop(context, ImageSource.gallery);
+          },
+        ),
+      ],
     );
 
     if (source == null) return;
 
     final ImagePicker picker = ImagePicker();
+
     final XFile? image = await picker.pickImage(source: source);
 
     if (image != null) {
@@ -103,8 +97,7 @@ mixin PhotoHandlerMixin<T extends StatefulWidget> on State<T> {
     print('🚀 Запускаем анализ с ${photos.length} фото');
 
     context.read<CreateOrderBloc>().add(
-          PreCreateOrderEvent(images: photos),
-        );
+      PreCreateOrderEvent(images: photos),
+    );
   }
 }
-

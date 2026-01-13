@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class PreCreateOrderUseCase {
   final OrdersRepository _repository;
 

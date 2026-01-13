@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
@@ -9,7 +11,6 @@ import 'package:fly_cargo/features/destination/presentation/models/city_type.dar
 import 'package:fly_cargo/features/destination/presentation/widgets/address_autocomplete_field.dart';
 import 'package:fly_cargo/features/destination/presentation/widgets/address_form_fields.dart';
 import 'package:fly_cargo/features/destination/presentation/widgets/choose_city_bottom_sheet.dart';
-import 'package:heroicons/heroicons.dart';
 
 class ChooseAddressBottomSheet extends StatefulWidget {
   final CityModel? initialCity;
@@ -120,7 +121,7 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
   void _onSave() {
     if (_selectedCity == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(
+        SnackBar(
           content: Text(context.l10n.chooseCity),
           backgroundColor: AppColors.danger,
         ),
@@ -175,120 +176,59 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppSpacing.radiusXL),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ReadOnlyAddressField(
+          label: context.l10n.city,
+          value: _selectedCity != null
+              ? 'г. ${_selectedCity!.name}'
+              : context.l10n.selectCity,
+          onTap: _selectCity,
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.sm),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    _title,
-                    style: AppTypography.h5,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                IconButton(
-                  icon: HeroIcon(
-                    HeroIcons.xMark,
-                    size: 24,
-                    color: AppColors.surface4,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
+        const SizedBox(height: AppSpacing.lg),
+        BlocProvider.value(
+          value: getIt<DestinationBloc>(),
+          child: AddressAutocompleteField(
+            label: context.l10n.address,
+            controller: _addressController,
+            hintText: context.l10n.enterAddressPlaceholder,
+            cityName: _selectedCity?.name,
+            onAddressSelected: (address) {
+              setState(() {
+                _addressController.text = address.address;
+              });
+            },
           ),
-          Flexible(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ReadOnlyAddressField(
-                    label: context.l10n.city,
-                    value: _selectedCity != null
-                        ? 'г. ${_selectedCity!.name}'
-                        : context.l10n.selectCity,
-                    onTap: _selectCity,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  BlocProvider.value(
-                    value: getIt<DestinationBloc>(),
-                    child: AddressAutocompleteField(
-                      label: context.l10n.address,
-                      controller: _addressController,
-                      hintText: context.l10n.enterAddressPlaceholder,
-                      cityName: _selectedCity?.name,
-                      onAddressSelected: (address) {
-                        setState(() {
-                          _addressController.text = address.address;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  AddressTextField(
-                    label: context.l10n.apartment,
-                    controller: _apartmentController,
-                    hintText: context.l10n.apartmentNumber,
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  AddressTextField(
-                    label: context.l10n.entrance,
-                    controller: _entranceController,
-                    hintText: context.l10n.entranceNumber,
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  AddressTextField(
-                    label: context.l10n.floor,
-                    controller: _floorController,
-                    hintText: context.l10n.floorNumber,
-                    keyboardType: TextInputType.number,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: AppSpacing.lg,
-              right: AppSpacing.lg,
-              top: AppSpacing.lg,
-              bottom: 56,
-            ),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _onSave,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: AppSpacing.lg,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                  ),
-                ),
-                child: Text(
-                  context.l10n.save,
-                  style: AppTypography.buttonLarge,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        AddressTextField(
+          label: context.l10n.apartment,
+          controller: _apartmentController,
+          hintText: context.l10n.apartmentNumber,
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        AddressTextField(
+          label: context.l10n.entrance,
+          controller: _entranceController,
+          hintText: context.l10n.entranceNumber,
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        AddressTextField(
+          label: context.l10n.floor,
+          controller: _floorController,
+          hintText: context.l10n.floorNumber,
+          keyboardType: TextInputType.number,
+        ),
+        BeSpace(size: .md),
+        BeButton(
+          text: context.l10n.save,
+          onPressed: _onSave,
+        ),
+        BeSpace(size: .lg),
+      ],
     );
   }
 }

@@ -9,7 +9,7 @@ part 'payment_remoute_source.g.dart';
 
 @RestApi()
 abstract class PaymentRemoteSource {
-  factory PaymentRemoteSource(Dio dio) = _PaymentRemoteSource;
+  factory PaymentRemoteSource(Dio dio, {String baseUrl}) = _PaymentRemoteSource;
   @GET('/payments/form/page')
   Future<AddCardResponse> addCard();
   @GET('/payment/cards')

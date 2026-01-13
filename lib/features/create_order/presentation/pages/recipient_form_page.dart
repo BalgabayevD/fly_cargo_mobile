@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/auth/presentation/pages/phone_input_page.dart';
 
 class RecipientFormPage extends StatefulWidget {
   final String? initialName;
@@ -111,8 +109,8 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               inputFormatters: [
-                PhoneNumberFormatter(),
-                LengthLimitingTextInputFormatter(18),
+                // PhoneNumberFormatter(),
+                // LengthLimitingTextInputFormatter(18),
               ],
               decoration: InputDecoration(
                 labelText: 'Телефон получателя *',
@@ -177,4 +175,3 @@ class _RecipientFormPageState extends State<RecipientFormPage> {
     );
   }
 }
-

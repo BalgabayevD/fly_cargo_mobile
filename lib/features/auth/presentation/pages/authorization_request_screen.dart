@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
+import 'package:fly_cargo/core/di/configuration.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/request_otp_form.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
@@ -29,6 +31,7 @@ class AuthorizationRequestScreen extends StatelessWidget {
       child: BlocConsumer<AuthorizationBloc, AuthorizationState>(
         listener: (BuildContext context, AuthorizationState state) {
           if (state is AuthorizationOtpRequestedState) {
+            getIt<Configuration>().setShowOnboarding(false);
             context.push(AuthorizationConfirmScreen.location());
           }
 

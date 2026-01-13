@@ -38,6 +38,7 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: _leading,
       title: Text(title),
       centerTitle: centerTitle,
+      systemOverlayStyle: .dark,
       automaticallyImplyLeading: automaticallyImplyLeading,
       actions: actions,
       backgroundColor: BeColors.none,
