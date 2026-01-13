@@ -15,7 +15,9 @@ class DestinationRepositoryImpl implements DestinationRepository {
   Future<List<CityEntity>> getCitiesFrom() async {
     try {
       final response = await _remoteSource.getCitiesFrom();
-      return response.data.map((city) => city.toCityModel().toEntity()).toList();
+      return response.data
+          .map((city) => city.toCityModel().toEntity())
+          .toList();
     } catch (e) {
       throw DestinationException('Ошибка при загрузке городов отправки: $e');
     }
@@ -25,7 +27,9 @@ class DestinationRepositoryImpl implements DestinationRepository {
   Future<List<CityEntity>> getCitiesTo({required String fromCityId}) async {
     try {
       final response = await _remoteSource.getCitiesTo(fromCityId);
-      return response.data.map((city) => city.toCityModel().toEntity()).toList();
+      return response.data
+          .map((city) => city.toCityModel().toEntity())
+          .toList();
     } catch (e) {
       throw DestinationException('Ошибка при загрузке городов доставки: $e');
     }
@@ -67,7 +71,7 @@ class DestinationRepositoryImpl implements DestinationRepository {
       for (final city in [...fromCities, ...toCities]) {
         if (!addedIds.contains(city.id)) {
           allCities.add(city);
-          addedIds.add(city.id);
+          addedIds.add(city.id.toString());
         }
       }
       allCities.sort((a, b) => a.name.compareTo(b.name));

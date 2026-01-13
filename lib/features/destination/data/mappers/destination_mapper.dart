@@ -5,7 +5,7 @@ import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart'
 extension CityModelMapper on CityModel {
   CityEntity toEntity() {
     return CityEntity(
-      id: id,
+      id: 1,
       name: name,
       region: region,
     );
@@ -29,7 +29,7 @@ extension AddressModelMapper on AddressModel {
 extension CityEntityMapper on CityEntity {
   CityModel toModel() {
     return CityModel(
-      id: id,
+      id: id.toString(),
       name: name,
       region: region,
     );

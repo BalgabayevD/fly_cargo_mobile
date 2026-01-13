@@ -5,6 +5,7 @@ import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dar
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
 // import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 // import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
@@ -88,6 +89,7 @@ GoRouter createRouter(
     routes: [
       OnboardingScreen.route(),
       AuthorizationRequestScreen.route(),
+      UiKitPage.route(),
       AuthorizationConfirmScreen.route(),
 
       MainScaffoldShell.route(
