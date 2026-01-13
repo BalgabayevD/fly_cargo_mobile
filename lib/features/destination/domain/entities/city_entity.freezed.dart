@@ -11,16 +11,19 @@ part of 'city_entity.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$CityEntity {
 
- String get id; String get name; String? get region;
+ int get id; String get name; String? get region;
 /// Create a copy of CityEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $CityEntityCopyWith<CityEntity> get copyWith => _$CityEntityCopyWithImpl<CityEntity>(this as CityEntity, _$identity);
 
+  /// Serializes this CityEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is CityEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.region, region) || other.region == region));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,name,region);
 
@@ -45,7 +48,7 @@ abstract mixin class $CityEntityCopyWith<$Res>  {
   factory $CityEntityCopyWith(CityEntity value, $Res Function(CityEntity) _then) = _$CityEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? region
+ int id, String name, String? region
 });
 
 
@@ -65,7 +68,7 @@ class _$CityEntityCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? region = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,region: freezed == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -149,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? region)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String? region)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CityEntity() when $default != null:
 return $default(_that.id,_that.name,_that.region);case _:
@@ -170,7 +173,7 @@ return $default(_that.id,_that.name,_that.region);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? region)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String? region)  $default,) {final _that = this;
 switch (_that) {
 case _CityEntity():
 return $default(_that.id,_that.name,_that.region);}
@@ -187,7 +190,7 @@ return $default(_that.id,_that.name,_that.region);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? region)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String? region)?  $default,) {final _that = this;
 switch (_that) {
 case _CityEntity() when $default != null:
 return $default(_that.id,_that.name,_that.region);case _:
@@ -199,13 +202,13 @@ return $default(_that.id,_that.name,_that.region);case _:
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _CityEntity extends CityEntity {
   const _CityEntity({required this.id, required this.name, this.region}): super._();
-  
+  factory _CityEntity.fromJson(Map<String, dynamic> json) => _$CityEntityFromJson(json);
 
-@override final  String id;
+@override final  int id;
 @override final  String name;
 @override final  String? region;
 
@@ -215,14 +218,17 @@ class _CityEntity extends CityEntity {
 @pragma('vm:prefer-inline')
 _$CityEntityCopyWith<_CityEntity> get copyWith => __$CityEntityCopyWithImpl<_CityEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$CityEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _CityEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.region, region) || other.region == region));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,name,region);
 
@@ -239,7 +245,7 @@ abstract mixin class _$CityEntityCopyWith<$Res> implements $CityEntityCopyWith<$
   factory _$CityEntityCopyWith(_CityEntity value, $Res Function(_CityEntity) _then) = __$CityEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? region
+ int id, String name, String? region
 });
 
 
@@ -259,7 +265,7 @@ class __$CityEntityCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? region = freezed,}) {
   return _then(_CityEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,region: freezed == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

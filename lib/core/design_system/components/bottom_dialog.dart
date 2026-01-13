@@ -5,6 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:heroicons/heroicons.dart';
 
+enum BeBottomTitleVariant {
+  primary,
+  secondary,
+}
+
 class BeBottomDialog {
   static Future<T?> show<T>({
     required BuildContext context,
@@ -39,10 +44,12 @@ class BeBottomDialog {
   static Future<T?> showBottomDialog<T>({
     required BuildContext context,
     required String text,
+    Widget? action,
     double initialChildSize = 0.5,
     double maxChildSize = 0.5,
     double minChildSize = 0.25,
     List<Widget> children = const <Widget>[],
+    BeBottomTitleVariant titleVariant = .primary,
   }) {
     Haptics.canVibrate().then((can) {
       if (can) {
@@ -54,6 +61,7 @@ class BeBottomDialog {
       isScrollControlled: true,
       useRootNavigator: true,
       backgroundColor: BeColors.none,
+      barrierColor: titleVariant == .secondary ? BeColors.none : null,
       builder: (context) {
         return DraggableScrollableSheet(
           minChildSize: minChildSize,
@@ -65,18 +73,24 @@ class BeBottomDialog {
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
               child: Scaffold(
                 body: ListView(
-                  controller: controller,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      child: BeBottomTitle(text: text),
-                    ),
+                    BeBottomTitle(text: text, variant: titleVariant),
                     ListView(
+                      controller: controller,
                       padding: EdgeInsets.only(left: 16, right: 16),
                       shrinkWrap: true,
                       primary: false,
                       children: children,
                     ),
+                    if (action != null)
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 36,
+                        ),
+                        child: action!,
+                      ),
                   ],
                 ),
               ),
@@ -89,26 +103,44 @@ class BeBottomDialog {
 }
 
 class BeBottomTitle extends StatelessWidget {
+  final BeBottomTitleVariant variant;
   final String text;
-  const BeBottomTitle({super.key, required this.text});
+  const BeBottomTitle({required this.text, super.key, this.variant = .primary});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 68,
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: .spaceBetween,
-        children: [
-          Text(
-            text,
-            style: GoogleFonts.montserrat(fontSize: 19, fontWeight: .w700),
-          ),
-          IconButton(
-            onPressed: () => context.pop(),
-            icon: HeroIcon(HeroIcons.xMark, style: HeroIconStyle.outline),
-          ),
-        ],
+    return Padding(
+      padding: EdgeInsets.only(
+        left: variant == .secondary ? 6 : 16,
+        right: 16,
+      ),
+      child: SizedBox(
+        height: 68,
+        width: double.infinity,
+        child: Row(
+          spacing: 12,
+          children: [
+            if (variant == .secondary)
+              IconButton(
+                onPressed: () => context.pop(),
+                icon: HeroIcon(
+                  HeroIcons.chevronLeft,
+                  style: HeroIconStyle.outline,
+                  color: BeColors.surface4,
+                ),
+              ),
+            Text(
+              text,
+              style: GoogleFonts.montserrat(fontSize: 19, fontWeight: .w700),
+            ),
+            if (variant == .primary) Spacer(),
+            if (variant == .primary)
+              IconButton(
+                onPressed: () => context.pop(),
+                icon: HeroIcon(HeroIcons.xMark, style: HeroIconStyle.outline),
+              ),
+          ],
+        ),
       ),
     );
   }

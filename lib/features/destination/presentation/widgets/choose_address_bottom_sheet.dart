@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
@@ -100,16 +102,19 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
   }
 
   Future<void> _selectCity() async {
-    final city = await showModalBottomSheet<CityModel>(
+    final city = await BeBottomDialog.showBottomDialog<CityModel>(
       context: context,
-      useRootNavigator: true,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => ChooseCityBottomSheet(
-        cityType: widget.cityType,
-        fromCityId: widget.fromCityId,
-        title: widget.title,
-      ),
+      text: 'Откуда',
+      maxChildSize: 0.7,
+      initialChildSize: 0.7,
+      titleVariant: .secondary,
+      children: [
+        ChooseCityBottomSheet(
+          cityType: widget.cityType,
+          fromCityId: widget.fromCityId,
+          title: widget.title,
+        ),
+      ],
     );
     if (city != null) {
       setState(() {
@@ -179,7 +184,8 @@ class _ChooseAddressBottomSheetState extends State<ChooseAddressBottomSheet> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ReadOnlyAddressField(
+        FieldListTile(
+          variant: .bordered,
           label: context.l10n.city,
           value: _selectedCity != null
               ? 'г. ${_selectedCity!.name}'

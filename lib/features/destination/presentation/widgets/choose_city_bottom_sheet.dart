@@ -9,7 +9,6 @@ import 'package:fly_cargo/features/destination/presentation/bloc/destination_sta
 import 'package:fly_cargo/features/destination/presentation/models/city_type.dart';
 import 'package:fly_cargo/features/destination/presentation/widgets/city_bottom_sheet_states.dart';
 import 'package:fly_cargo/features/destination/presentation/widgets/city_radio_option.dart';
-import 'package:heroicons/heroicons.dart';
 
 class ChooseCityBottomSheet extends StatefulWidget {
   final CityType cityType;
@@ -57,126 +56,95 @@ class _ChooseCityBottomSheetState extends State<ChooseCityBottomSheet> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _destinationBloc,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppSpacing.radiusXL),
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _title,
-                      style: AppTypography.h5,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  IconButton(
-                    icon: HeroIcon(
-                      HeroIcons.xMark,
-                      size: 24,
-                      color: AppColors.surface4,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(height: 1),
-            Flexible(
-              child: BlocBuilder<DestinationBloc, DestinationState>(
-                bloc: _destinationBloc,
-                builder: (context, state) {
-                  if (state is DestinationLoading) {
-                    return const CityLoadingState();
-                  }
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(
+            child: BlocBuilder<DestinationBloc, DestinationState>(
+              bloc: _destinationBloc,
+              builder: (context, state) {
+                if (state is DestinationLoading) {
+                  return const CityLoadingState();
+                }
 
-                  if (state is DestinationError) {
-                    return CityErrorState(
-                      message: state.message,
-                      onRetry: _loadCities,
-                    );
-                  }
-
-                  List<CityEntity> cities = [];
-                  if (state is CitiesFromLoaded) {
-                    cities = state.cities;
-                  } else if (state is CitiesToLoaded) {
-                    cities = state.cities;
-                  } else if (state is AllCitiesLoaded) {
-                    cities = state.cities;
-                  }
-
-                  if (cities.isEmpty) {
-                    return const CityEmptyState();
-                  }
-
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.lg,
-                      vertical: AppSpacing.md,
-                    ),
-                    itemCount: cities.length,
-                    itemBuilder: (context, index) {
-                      final city = cities[index];
-                      final isSelected = _selectedCity?.id == city.id;
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                        child: CityRadioOption(
-                          cityName: city.name,
-                          selected: isSelected,
-                          onTap: () {
-                            setState(() {
-                              _selectedCity = city;
-                            });
-                          },
-                        ),
-                      );
-                    },
+                if (state is DestinationError) {
+                  return CityErrorState(
+                    message: state.message,
+                    onRetry: _loadCities,
                   );
-                },
-              ),
+                }
+
+                List<CityEntity> cities = [];
+                if (state is CitiesFromLoaded) {
+                  cities = state.cities;
+                } else if (state is CitiesToLoaded) {
+                  cities = state.cities;
+                } else if (state is AllCitiesLoaded) {
+                  cities = state.cities;
+                }
+
+                if (cities.isEmpty) {
+                  return const CityEmptyState();
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.md,
+                  ),
+                  itemCount: cities.length,
+                  itemBuilder: (context, index) {
+                    final city = cities[index];
+                    final isSelected = _selectedCity?.id == city.id;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                      child: CityRadioOption(
+                        cityName: city.name,
+                        selected: isSelected,
+                        onTap: () {
+                          setState(() {
+                            _selectedCity = city;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: AppSpacing.lg,
-                right: AppSpacing.lg,
-                top: AppSpacing.lg,
-                bottom: 56,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _selectedCity != null
-                      ? () => Navigator.pop(context, _selectedCity)
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    disabledBackgroundColor: AppColors.surface3,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: AppSpacing.lg,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+              top: AppSpacing.lg,
+              bottom: 56,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _selectedCity != null
+                    ? () => Navigator.pop(context, _selectedCity)
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  disabledBackgroundColor: AppColors.surface3,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppSpacing.lg,
                   ),
-                  child: Text(
-                    'Выбрать',
-                    style: AppTypography.buttonLarge,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
                   ),
+                ),
+                child: Text(
+                  'Выбрать',
+                  style: AppTypography.buttonLarge,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

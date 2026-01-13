@@ -194,21 +194,51 @@ class CheckListTile extends StatelessWidget {
   }
 }
 
+enum FieldListTileVariant {
+  flat,
+  bordered,
+}
+
 class FieldListTile extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isShowIcon;
   final HeroIcons icon;
   final String label;
-  final String value;
+  final String? value;
+  final FieldListTileVariant variant;
 
   const FieldListTile({
     required this.label,
-    required this.value,
+    this.value,
     this.onTap,
     this.isShowIcon = true,
-    this.icon = HeroIcons.chevronRight,
+    this.variant = .flat,
+    this.icon = .chevronRight,
     super.key,
   });
+
+  MainAxisAlignment get _alignment {
+    if (value != null) {
+      return .spaceBetween;
+    }
+    return .center;
+  }
+
+  TextStyle get _labelStyle {
+    if (value != null) {
+      return GoogleFonts.montserrat(
+        fontSize: 13,
+        height: 1,
+        fontWeight: .w500,
+        color: BeColors.surface4,
+      );
+    }
+    return GoogleFonts.montserrat(
+      fontSize: 17,
+      fontWeight: .w500,
+      color: BeColors.surface4,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -221,33 +251,27 @@ class FieldListTile extends StatelessWidget {
           top: 16,
           bottom: 12,
         ),
+        borderColor: variant == .bordered ? BeColors.border : null,
         child: Row(
           crossAxisAlignment: .center,
           mainAxisAlignment: .spaceBetween,
           spacing: 16,
           children: [
             Column(
-              mainAxisAlignment: .spaceBetween,
+              mainAxisAlignment: _alignment,
               crossAxisAlignment: .start,
               children: [
-                Text(
-                  label,
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    height: 1,
-                    fontWeight: .w500,
-                    color: BeColors.surface4,
-                  ),
-                ),
+                Text(label, style: _labelStyle),
 
-                Text(
-                  value,
-                  style: GoogleFonts.montserrat(
-                    fontSize: 17,
-                    fontWeight: .w500,
-                    color: BeColors.surface5,
+                if (value != null)
+                  Text(
+                    value!,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 17,
+                      fontWeight: .w500,
+                      color: BeColors.surface5,
+                    ),
                   ),
-                ),
               ],
             ),
 

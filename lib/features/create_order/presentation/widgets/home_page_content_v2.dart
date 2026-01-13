@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
@@ -168,7 +169,7 @@ class _OrderFieldsSection extends StatelessWidget {
 
     return Column(
       children: [
-        OrderFieldCardV2(
+        FieldListTile(
           label: context.l10n.from,
           value: fromAddress?.displayText,
           onTap: onFromAddressSelection,

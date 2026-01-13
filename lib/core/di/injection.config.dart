@@ -39,10 +39,20 @@ import 'package:fly_cargo/features/destination/config/destination_module.dart'
     as _i1065;
 import 'package:fly_cargo/features/destination/data/destination_remote_source.dart'
     as _i117;
+import 'package:fly_cargo/features/destination/data/repositories/cities_persist_repository.dart'
+    as _i166;
+import 'package:fly_cargo/features/destination/data/repositories/cities_rest_repository.dart'
+    as _i531;
 import 'package:fly_cargo/features/destination/data/repositories/destination_repository_impl.dart'
     as _i624;
+import 'package:fly_cargo/features/destination/domain/repositories/cities_persist_repository.dart'
+    as _i193;
+import 'package:fly_cargo/features/destination/domain/repositories/cities_rest_repository.dart'
+    as _i1025;
 import 'package:fly_cargo/features/destination/domain/repositories/destination_repository.dart'
     as _i933;
+import 'package:fly_cargo/features/destination/domain/usecases/cities_use_case.dart'
+    as _i542;
 import 'package:fly_cargo/features/destination/domain/usecases/get_all_cities_usecase.dart'
     as _i55;
 import 'package:fly_cargo/features/destination/domain/usecases/get_cities_from_usecase.dart'
@@ -51,8 +61,6 @@ import 'package:fly_cargo/features/destination/domain/usecases/get_cities_to_use
     as _i760;
 import 'package:fly_cargo/features/destination/domain/usecases/search_addresses_usecase.dart'
     as _i801;
-import 'package:fly_cargo/features/destination/presentation/bloc/destination_bloc.dart'
-    as _i577;
 import 'package:fly_cargo/features/orders/config/orders_module.dart' as _i142;
 import 'package:fly_cargo/features/orders/domain/usecases/get_client_orders_usecase.dart'
     as _i899;
@@ -149,6 +157,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i113.CreateTariffUseCase>(
       () => _i113.CreateTariffUseCase(gh<_i170.TariffsRepository>()),
     );
+    gh.lazySingleton<_i193.CitiesPersistRepository>(
+      () => _i166.CitiesPersistRepositoryImpl(
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
     await gh.factoryAsync<_i129.Requestable>(
       () => requestableModule.requestable(gh<_i156.Configuration>()),
       preResolve: true,
@@ -158,6 +171,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i777.PaymentRemoteSource>(
       () => paymentModule.providePaymentRemoteSource(gh<_i129.Requestable>()),
+    );
+    gh.lazySingleton<_i1025.CitiesRestRepository>(
+      () => _i531.CitiesRestRepositoryImpl(
+        requestable: gh<_i129.Requestable>(),
+        configuration: gh<_i156.Configuration>(),
+      ),
     );
     gh.factory<_i478.App>(
       () => _i478.App(
@@ -184,6 +203,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedOrdersModule.ordersRemoteSource(
         gh<_i129.Requestable>(),
         gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i542.CitiesUseCase>(
+      () => _i542.CitiesUseCase(
+        gh<_i1025.CitiesRestRepository>(),
+        gh<_i193.CitiesPersistRepository>(),
       ),
     );
     gh.factory<_i355.AddCardUseCase>(
@@ -279,14 +304,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => createOrderModule.createOrderBloc(
         gh<_i297.CreateOrderUseCase>(),
         gh<_i180.PreCreateOrderUseCase>(),
-      ),
-    );
-    gh.factory<_i577.DestinationBloc>(
-      () => _i577.DestinationBloc(
-        gh<_i331.GetCitiesFromUseCase>(),
-        gh<_i760.GetCitiesToUseCase>(),
-        gh<_i801.SearchAddressesUseCase>(),
-        gh<_i55.GetAllCitiesUseCase>(),
       ),
     );
     return this;
