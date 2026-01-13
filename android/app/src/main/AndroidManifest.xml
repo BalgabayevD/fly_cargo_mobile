@@ -6,11 +6,6 @@
         android:label="fly_cargo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <!-- Яндекс карты API ключ должен быть в application, а не в activity -->
-        <meta-data
-            android:name="com.yandex.maps.apikey"
-            android:value="59c25445-fa99-4ece-9e95-cb87746576c5" />
-        
         <activity
             android:name=".MainActivity"
             android:exported="true"
