@@ -12,9 +12,9 @@ class BePage extends StatelessWidget {
   final bool automaticallyImplyLeading;
   final EdgeInsetsGeometry? padding;
   final bool? isBorder;
+  final Color backgroundColor;
 
   const BePage({
-    super.key,
     required this.child,
     required this.title,
     this.actions,
@@ -24,6 +24,8 @@ class BePage extends StatelessWidget {
     this.actionsPersist = false,
     this.automaticallyImplyLeading = true,
     this.isBorder,
+    this.backgroundColor = BeColors.surface2,
+    super.key,
   });
 
   @override
@@ -37,7 +39,7 @@ class BePage extends StatelessWidget {
       behavior: .translucent,
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: BeColors.surface2,
+        backgroundColor: backgroundColor,
         appBar: BeAppBar(
           title: title,
           actions: trailing,

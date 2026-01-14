@@ -351,7 +351,7 @@ class BeButton extends StatelessWidget {
       color: backgroundColor ?? _color,
       height: _height,
       onPressed: () {
-        if (onPressed != null && !isDisabled) {
+        if (onPressed != null && !isDisabled && !isLoading) {
           onPressed!();
         }
       },

@@ -181,7 +181,6 @@ class _DialogAddressSelectState extends State<_DialogAddressSelect> {
           children: [
             AddressSelectField(
               label: context.l10n.address,
-              readOnly: true,
               autofocus: true,
               value: location?.address,
               autoSelect: true,

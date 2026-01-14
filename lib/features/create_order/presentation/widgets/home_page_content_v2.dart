@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/form_input.dart';
@@ -7,12 +8,14 @@ import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/ai_analysis_indicator.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/analysis_status_message.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_field_card_v2.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/select_location.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePageContentV2 extends StatelessWidget {
   final AddressModel? fromAddress;
@@ -91,6 +94,13 @@ class HomePageContentV2 extends StatelessWidget {
           color: .primary,
           onPressed: onSubmitOrder,
         ),
+        if (kDebugMode) const SizedBox(height: AppSpacing.xl),
+        if (kDebugMode)
+          BeButton(
+            text: 'UiKit',
+            color: .success,
+            onPressed: () => context.push(UiKitPage.location()),
+          ),
         const SizedBox(height: AppSpacing.xl),
       ],
     );
