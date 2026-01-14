@@ -51,11 +51,13 @@ class BeBottomDialog {
     List<Widget> children = const <Widget>[],
     BeBottomTitleVariant titleVariant = .primary,
   }) {
-    Haptics.canVibrate().then((can) {
-      if (can) {
-        Haptics.vibrate(HapticsType.selection);
-      }
-    });
+    if (titleVariant == .primary) {
+      Haptics.canVibrate().then((can) {
+        if (can) {
+          Haptics.vibrate(HapticsType.selection);
+        }
+      });
+    }
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
@@ -72,15 +74,17 @@ class BeBottomDialog {
               clipBehavior: .hardEdge,
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
               child: Scaffold(
-                body: ListView(
+                body: Column(
                   children: [
                     BeBottomTitle(text: text, variant: titleVariant),
-                    ListView(
-                      controller: controller,
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      shrinkWrap: true,
-                      primary: false,
-                      children: children,
+                    Expanded(
+                      child: ListView(
+                        controller: controller,
+                        padding: EdgeInsets.only(left: 16, right: 16),
+                        shrinkWrap: true,
+                        primary: false,
+                        children: children,
+                      ),
                     ),
                     if (action != null)
                       Padding(
@@ -107,6 +111,17 @@ class BeBottomTitle extends StatelessWidget {
   final String text;
   const BeBottomTitle({required this.text, super.key, this.variant = .primary});
 
+  void onClose(BuildContext context) {
+    if (variant == .primary) {
+      Haptics.canVibrate().then((can) {
+        if (can) {
+          Haptics.vibrate(HapticsType.selection);
+        }
+      });
+    }
+    context.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -122,7 +137,7 @@ class BeBottomTitle extends StatelessWidget {
           children: [
             if (variant == .secondary)
               IconButton(
-                onPressed: () => context.pop(),
+                onPressed: () => onClose(context),
                 icon: HeroIcon(
                   HeroIcons.chevronLeft,
                   style: HeroIconStyle.outline,
@@ -136,7 +151,7 @@ class BeBottomTitle extends StatelessWidget {
             if (variant == .primary) Spacer(),
             if (variant == .primary)
               IconButton(
-                onPressed: () => context.pop(),
+                onPressed: () => onClose(context),
                 icon: HeroIcon(HeroIcons.xMark, style: HeroIconStyle.outline),
               ),
           ],

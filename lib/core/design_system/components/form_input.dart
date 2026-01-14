@@ -3,12 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+enum BeFormInputVariant {
+  flat,
+  bordered,
+}
+
 class BeFormInput extends StatelessWidget {
   final String? label;
   final List<TextInputFormatter>? inputFormatters;
   final FormFieldValidator<String>? validator;
   final TextInputType? keyboardType;
+  final BeFormInputVariant variant;
   final bool autofocus;
+  final bool readOnly;
   final int? maxLength;
 
   late final TextEditingController controller;
@@ -20,8 +27,10 @@ class BeFormInput extends StatelessWidget {
     this.validator,
     this.label,
     this.autofocus = false,
+    this.readOnly = false,
     this.keyboardType,
     this.maxLength,
+    this.variant = .flat,
     TextEditingController? controller,
     FocusNode? focusNode,
   }) {
@@ -42,7 +51,11 @@ class BeFormInput extends StatelessWidget {
           Container(
             height: 70,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                width: 1,
+                color: variant == .bordered ? BeColors.border : BeColors.white,
+              ),
               color: BeColors.white,
             ),
           ),
@@ -86,6 +99,7 @@ class BeFormInput extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               autofocus: autofocus,
+              readOnly: readOnly,
               focusNode: focusNode,
               keyboardType: keyboardType,
               validator: validator,

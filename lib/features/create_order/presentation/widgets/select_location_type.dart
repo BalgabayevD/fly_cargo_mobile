@@ -1,0 +1,4 @@
+enum SelectLocationType {
+  from,
+  to,
+}

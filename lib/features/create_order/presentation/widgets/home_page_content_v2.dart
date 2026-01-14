@@ -2,18 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
-import 'package:fly_cargo/core/design_system/components/list_tile.dart';
+import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/ai_analysis_indicator.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/analysis_status_message.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_field_card_v2.dart';
+import 'package:fly_cargo/features/create_order/presentation/widgets/select_location.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
-import 'package:go_router/go_router.dart';
 
 class HomePageContentV2 extends StatelessWidget {
   final AddressModel? fromAddress;
@@ -62,19 +61,8 @@ class HomePageContentV2 extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        PhotoGridSection(
-          photos: photos,
-          onPickPhoto: onPickPhoto,
-          onRemovePhoto: onRemovePhoto,
-        ),
+        PhotoGridSection(),
         const SizedBox(height: AppSpacing.md),
-        BeButton(
-          text: 'Ui Kit',
-          color: .success,
-          onPressed: () {
-            context.push(UiKitPage.location());
-          },
-        ),
         _AnalysisSection(
           isAnalyzing: isAnalyzing,
           isAnalysisCompleted: isAnalysisCompleted,
@@ -97,14 +85,13 @@ class HomePageContentV2 extends StatelessWidget {
           isAnalysisCompleted: isAnalysisCompleted,
           isAnalyzing: isAnalyzing,
         ),
-        if (onSubmitOrder != null) ...[
-          const SizedBox(height: AppSpacing.xl),
-          BeButton(
-            text: context.l10n.createOrder,
-            color: .primary,
-            onPressed: onSubmitOrder,
-          ),
-        ],
+        const SizedBox(height: AppSpacing.xl),
+        BeButton(
+          text: context.l10n.createOrder,
+          color: .primary,
+          onPressed: onSubmitOrder,
+        ),
+        const SizedBox(height: AppSpacing.xl),
       ],
     );
   }
@@ -174,21 +161,11 @@ class _OrderFieldsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isFieldsEnabled = isAnalysisCompleted && !isAnalyzing;
-
     return Column(
       children: [
-        FieldListTile(
-          label: context.l10n.from,
-          value: fromAddress?.displayText,
-          onTap: onFromAddressSelection,
-        ),
+        SelectLocation(type: .from),
         BeSpace(size: .md),
-        OrderFieldCardV2(
-          label: context.l10n.to,
-          value: toAddress?.displayText,
-          onTap: onToAddressSelection,
-        ),
+        SelectLocation(type: .to),
         BeSpace(size: .md),
         OrderFieldCardV2(
           label: context.l10n.recipient,
@@ -196,19 +173,12 @@ class _OrderFieldsSection extends StatelessWidget {
           onTap: onRecipientForm,
         ),
         BeSpace(size: .md),
-        OrderFieldCardV2(
+        BeFormInput(
           label: context.l10n.weightInKg,
-          value: tariffWeight?.toStringAsFixed(1),
-          showChevron: onWeightTap != null,
-          onTap: onWeightTap,
-          isEnabled: isFieldsEnabled,
         ),
         BeSpace(size: .md),
-        OrderFieldCardV2(
+        BeFormInput(
           label: context.l10n.description,
-          value: description,
-          onTap: onDescriptionForm,
-          isEnabled: isFieldsEnabled,
         ),
       ],
     );

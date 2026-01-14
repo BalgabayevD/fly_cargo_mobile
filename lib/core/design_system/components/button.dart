@@ -17,6 +17,7 @@ class BeButton extends StatelessWidget {
   final BeButtonColor color;
   final BeButtonSize size;
   final bool isLoading;
+  final bool isDisabled;
   final Color? backgroundColor;
   final Color? textColor;
 
@@ -28,6 +29,7 @@ class BeButton extends StatelessWidget {
     this.color = BeButtonColor.primary,
     this.size = BeButtonSize.lg,
     this.isLoading = false,
+    this.isDisabled = false,
     this.backgroundColor,
     this.textColor,
     this.startContent,
@@ -348,7 +350,11 @@ class BeButton extends StatelessWidget {
       splashColor: BeColors.none,
       color: backgroundColor ?? _color,
       height: _height,
-      onPressed: onPressed != null && isLoading ? () {} : onPressed,
+      onPressed: () {
+        if (onPressed != null && !isDisabled) {
+          onPressed!();
+        }
+      },
       textColor: textColor ?? _textColor,
       child: text != null
           ? Row(
