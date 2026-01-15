@@ -206,12 +206,14 @@ class FieldListTile extends StatelessWidget {
   final String label;
   final String? value;
   final FieldListTileVariant variant;
+  final bool disabled;
 
   const FieldListTile({
     required this.label,
     this.value,
     this.onTap,
     this.isShowIcon = true,
+    this.disabled = false,
     this.variant = .flat,
     this.icon = .chevronRight,
     super.key,
@@ -243,8 +245,9 @@ class FieldListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: disabled ? () {} : onTap,
       child: BaseListTile(
+        backgroundColor: disabled ? BeColors.surface2 : BeColors.white,
         padding: const EdgeInsets.only(
           left: 12,
           right: 10,

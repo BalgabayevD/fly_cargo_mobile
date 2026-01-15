@@ -6,20 +6,21 @@ class CitiesInitialState extends CitiesState {}
 
 class CitiesEmptyState extends CitiesState {}
 
-class CitiesLoadedState extends CitiesState {
-  final LocationsEntity from;
-
-  CitiesLoadedState(this.from);
-}
-
 class FromCityTouchedLoadedState extends CitiesState {
   final LocationsEntity from;
   final LocationsEntity to;
 
-  FromCityTouchedLoadedState({
-    required this.from,
-    required this.to,
-  });
+  FromCityTouchedLoadedState(this.from, this.to);
+
+  FromCityTouchedLoadedState copyWith({
+    LocationsEntity? from,
+    LocationsEntity? to,
+  }) {
+    return FromCityTouchedLoadedState(
+      from ?? this.from,
+      to ?? this.to,
+    );
+  }
 }
 
 class ToCityTouchedLoadedState extends CitiesState {

@@ -27,6 +27,8 @@ class LocationsEntity extends Equatable {
     this.searchQueries = const [],
   });
 
+  const LocationsEntity.empty() : this(cities: const <CityEntity>[]);
+
   @override
   List<Object?> get props => [
     cities,

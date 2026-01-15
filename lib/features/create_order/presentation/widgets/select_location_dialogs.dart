@@ -5,18 +5,22 @@ import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/features/create_order/presentation/notifier/location_notifier.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/address_select_field.dart';
 import 'package:fly_cargo/features/destination/domain/entities/locations_entity.dart';
+import 'package:go_router/go_router.dart';
 
 class SelectLocationDialogs {
   const SelectLocationDialogs();
 
-  void toSelectAddress(
+  Future<LocationsEntity?> toSelectAddress(
     BuildContext context,
     String text,
-    LocationsEntity? location,
+    LocationsEntity location,
   ) {
-    BeBottomDialog.showBottomDialog<LocationsEntity>(
+    LocationNotifier notifier = LocationNotifier(locations: location);
+
+    return BeBottomDialog.showBottomDialog<LocationsEntity?>(
       context: context,
       maxChildSize: 0.90,
       initialChildSize: 0.90,
@@ -25,116 +29,111 @@ class SelectLocationDialogs {
       action: BeButton(
         text: 'Сохранить',
       ),
-      children: [
-        Column(
-          children: [
-            _DialogCitySelect(
-              location: location,
-              completions: ['1', '2', '3'],
-            ),
-            BeSpace(size: .md),
-            _DialogAddressSelect(
-              location: location,
-              completions: ['1', '2', '3'],
-            ),
-            BeSpace(size: .md),
-            _DialogApartmentSelect(),
-          ],
-        ),
-      ],
+      builder: (BuildContext context, ScrollController controller) {
+        return ListenableBuilder(
+          listenable: notifier,
+          builder: (BuildContext context, Widget? child) {
+            return BeDialogBody(
+              controller: controller,
+              titleVariant: .secondary,
+              text: context.l10n.city,
+              action: BeButton(
+                text: 'Сохранить',
+                onPressed: () => context.pop(notifier.locations),
+              ),
+              children: [
+                FieldListTile(
+                  label: context.l10n.city,
+                  value: notifier.locations.city?.name,
+                  variant: .bordered,
+                  disabled: location.cities.length == 1,
+                  isShowIcon: false,
+                  onTap: () {
+                    BeBottomDialog.showBottomDialog(
+                      context: context,
+                      text: context.l10n.city,
+                      titleVariant: .secondary,
+                      maxChildSize: 0.90,
+                      initialChildSize: 0.90,
+                      minChildSize: 0.85,
+                      builder:
+                          (BuildContext context, ScrollController controller) {
+                            return _DialogCitySelect(
+                              controller: controller,
+                              notifier: notifier,
+                            );
+                          },
+                    );
+                  },
+                ),
+                BeSpace(size: .md),
+                FieldListTile(
+                  label: context.l10n.address,
+                  value: notifier.locations.address,
+                  variant: .bordered,
+                  isShowIcon: false,
+                  onTap: () {
+                    BeBottomDialog.showBottomDialog(
+                      context: context,
+                      text: context.l10n.address,
+                      titleVariant: .secondary,
+                      maxChildSize: 0.90,
+                      initialChildSize: 0.90,
+                      minChildSize: 0.85,
+                      builder:
+                          (BuildContext context, ScrollController controller) {
+                            return _DialogAddressSelect(
+                              notifier: notifier,
+                              controller: controller,
+                            );
+                          },
+                    );
+                  },
+                ),
+                BeSpace(size: .md),
+                _DialogApartmentSelect(notifier: notifier),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
 
-class LocationEditDialog extends StatefulWidget {
-  final LocationsEntity? location;
-  final void Function(LocationsEntity? location)? onChange;
-  const LocationEditDialog({
-    super.key,
-    this.location,
-    this.onChange,
+class _DialogCitySelect extends StatelessWidget {
+  final ScrollController controller;
+  final LocationNotifier notifier;
+
+  const _DialogCitySelect({
+    required this.notifier,
+    required this.controller,
   });
 
   @override
-  State<LocationEditDialog> createState() => _LocationEditDialogState();
-}
-
-class _LocationEditDialogState extends State<LocationEditDialog> {
-  late LocationsEntity? location = widget.location;
-
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _DialogCitySelect(
-          location: location,
-          completions: ['1', '2', '3'],
-        ),
-        BeSpace(size: .md),
-        _DialogAddressSelect(
-          location: location,
-          completions: ['1', '2', '3'],
-        ),
-        BeSpace(size: .md),
-        _DialogApartmentSelect(
-          location: location,
-          onChange: (value) {
-            location = value;
-            setState(() {});
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _DialogCitySelect extends StatefulWidget {
-  final List<String>? completions;
-  final LocationsEntity? location;
-  final void Function(LocationsEntity? location)? onChange;
-
-  const _DialogCitySelect({this.location, this.completions, this.onChange});
-
-  @override
-  State<_DialogCitySelect> createState() => _DialogCitySelectState();
-}
-
-class _DialogCitySelectState extends State<_DialogCitySelect> {
-  late LocationsEntity? location = widget.location;
-
-  @override
-  Widget build(BuildContext context) {
-    return FieldListTile(
-      label: context.l10n.city,
-      value: location?.city?.name,
-      variant: .bordered,
-      isShowIcon: false,
-      onTap: () {
-        BeBottomDialog.showBottomDialog(
-          context: context,
-          text: context.l10n.city,
+    final local = LocationNotifier(locations: notifier.locations);
+    return ListenableBuilder(
+      listenable: local,
+      builder: (BuildContext context, Widget? child) {
+        return BeDialogBody(
+          controller: controller,
           titleVariant: .secondary,
-          maxChildSize: 0.90,
-          initialChildSize: 0.90,
-          minChildSize: 0.85,
+          text: context.l10n.city,
           action: BeButton(
             text: 'Сохранить',
             onPressed: () {
-              if (widget.onChange != null) {
-                widget.onChange!(location);
-              }
+              notifier.setLocations(local.locations);
+              context.pop();
             },
           ),
-          children: [
-            AddressSelectField(
-              label: context.l10n.city,
-              readOnly: true,
-              autofocus: true,
-              value: location?.city?.name,
-              autoSelect: true,
-              completions: widget.completions,
-            ),
-          ],
+          children: local.locations.cities.map((city) {
+            return CheckListTile(
+              title: city.name,
+              isSelected: local.locations.selectedCityId == city.id,
+              onTap: () => local.selectCity(city.id),
+            );
+          }).toList(),
         );
       },
     );
@@ -142,48 +141,61 @@ class _DialogCitySelectState extends State<_DialogCitySelect> {
 }
 
 class _DialogAddressSelect extends StatefulWidget {
-  final List<String>? completions;
-  final LocationsEntity? location;
-  final void Function(LocationsEntity? location)? onChange;
+  final LocationNotifier notifier;
+  final ScrollController controller;
 
-  const _DialogAddressSelect({this.location, this.completions, this.onChange});
+  const _DialogAddressSelect({
+    required this.controller,
+    required this.notifier,
+  });
 
   @override
   State<_DialogAddressSelect> createState() => _DialogAddressSelectState();
 }
 
 class _DialogAddressSelectState extends State<_DialogAddressSelect> {
-  late LocationsEntity? location = widget.location;
+  final textController = TextEditingController();
+
+  late final local = LocationNotifier(locations: widget.notifier.locations);
+
+  @override
+  void initState() {
+    super.initState();
+    textController.addListener(() {
+      local.setAddress(textController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FieldListTile(
-      label: context.l10n.address,
-      value: location?.address,
-      variant: .bordered,
-      isShowIcon: false,
-      onTap: () {
-        BeBottomDialog.showBottomDialog(
-          context: context,
+    print(widget.notifier.locations);
+    return ListenableBuilder(
+      listenable: local,
+      builder: (BuildContext context, Widget? child) {
+        return BeDialogBody(
+          controller: widget.controller,
           text: context.l10n.address,
           titleVariant: .secondary,
-          maxChildSize: 0.90,
-          initialChildSize: 0.90,
-          minChildSize: 0.85,
           action: BeButton(
-            text: 'Выбрать',
+            text: 'Сохранить',
             onPressed: () {
-              if (widget.onChange != null) {
-                widget.onChange!(location);
-              }
+              widget.notifier.setLocations(local.locations);
+              context.pop();
             },
           ),
           children: [
             AddressSelectField(
+              controller: textController,
               label: context.l10n.address,
               autofocus: true,
-              value: location?.address,
-              autoSelect: true,
+              value: local.locations.address,
+              completions: local.locations.searchQueries,
             ),
           ],
         );
@@ -193,23 +205,41 @@ class _DialogAddressSelectState extends State<_DialogAddressSelect> {
 }
 
 class _DialogApartmentSelect extends StatefulWidget {
-  final LocationsEntity? location;
-  final void Function(LocationsEntity? location)? onChange;
+  final LocationNotifier notifier;
 
-  const _DialogApartmentSelect({this.location, this.onChange});
+  const _DialogApartmentSelect({required this.notifier});
 
   @override
   State<_DialogApartmentSelect> createState() => _DialogApartmentSelectState();
 }
 
 class _DialogApartmentSelectState extends State<_DialogApartmentSelect> {
-  late LocationsEntity? location = widget.location;
+  final textController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    textController.addListener(() {
+      widget.notifier.setApartment(textController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BeFormInput(
-      variant: .bordered,
-      label: context.l10n.apartment,
+    return ListenableBuilder(
+      listenable: widget.notifier,
+      builder: (BuildContext context, Widget? child) {
+        return BeFormInput(
+          variant: .bordered,
+          label: context.l10n.apartment,
+          controller: textController,
+        );
+      },
     );
   }
 }

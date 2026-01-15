@@ -42,11 +42,6 @@ class AuthorizationConfirmScreen extends StatelessWidget {
           }
 
           if (state is AuthorizationOtpConfirmFailureState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Что-то пошло не так. Попробуйте еще раз'),
-              ),
-            );
             context.push(OnboardingScreen.location());
           }
         },

@@ -61,6 +61,8 @@ import 'package:fly_cargo/features/destination/domain/usecases/get_cities_to_use
     as _i760;
 import 'package:fly_cargo/features/destination/domain/usecases/search_addresses_usecase.dart'
     as _i801;
+import 'package:fly_cargo/features/destination/presentation/bloc/cities_bloc.dart'
+    as _i435;
 import 'package:fly_cargo/features/orders/config/orders_module.dart' as _i142;
 import 'package:fly_cargo/features/orders/domain/usecases/get_client_orders_usecase.dart'
     as _i899;
@@ -193,6 +195,12 @@ extension GetItInjectableX on _i174.GetIt {
         configuration: gh<_i156.Configuration>(),
       ),
     );
+    gh.factory<_i550.AuthorizationBloc>(
+      () => _i550.AuthorizationBloc(
+        authorizationRepository: gh<_i498.AuthorizationRepository>(),
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
     gh.factory<_i117.DestinationRemoteSource>(
       () => destinationModule.provideDestinationRemoteSource(
         gh<_i129.Requestable>(),
@@ -211,6 +219,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i193.CitiesPersistRepository>(),
       ),
     );
+    gh.factory<_i435.CitiesBloc>(
+      () => _i435.CitiesBloc(gh<_i542.CitiesUseCase>()),
+    );
     gh.factory<_i355.AddCardUseCase>(
       () => _i355.AddCardUseCase(gh<_i860.PaymentRepository>()),
     );
@@ -226,13 +237,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i933.DestinationRepository>(
       () =>
           _i624.DestinationRepositoryImpl(gh<_i117.DestinationRemoteSource>()),
-    );
-    gh.factory<_i550.AuthorizationBloc>(
-      () => _i550.AuthorizationBloc(
-        authorizationRepository: gh<_i498.AuthorizationRepository>(),
-        configuration: gh<_i156.Configuration>(),
-        requestable: gh<_i129.Requestable>(),
-      ),
     );
     gh.factory<_i598.OrdersRepository>(
       () => sharedOrdersModule.ordersRepository(

@@ -44,6 +44,7 @@ class BeBottomDialog {
   static Future<T?> showBottomDialog<T>({
     required BuildContext context,
     required String text,
+    Widget Function(BuildContext context, ScrollController controller)? builder,
     Widget? action,
     double initialChildSize = 0.5,
     double maxChildSize = 0.5,
@@ -70,38 +71,83 @@ class BeBottomDialog {
           initialChildSize: initialChildSize,
           maxChildSize: maxChildSize,
           builder: (context, controller) {
-            return ClipRRect(
-              clipBehavior: .hardEdge,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-              child: Scaffold(
-                body: Column(
-                  children: [
-                    BeBottomTitle(text: text, variant: titleVariant),
-                    Expanded(
-                      child: ListView(
-                        controller: controller,
-                        padding: EdgeInsets.only(left: 16, right: 16),
-                        shrinkWrap: true,
-                        primary: false,
-                        children: children,
-                      ),
-                    ),
-                    if (action != null)
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 16,
-                          right: 16,
-                          bottom: 36,
-                        ),
-                        child: action!,
-                      ),
-                  ],
-                ),
-              ),
+            if (builder != null) {
+              return builder(context, controller);
+            }
+            return BeDialogBody(
+              text: text,
+              titleVariant: titleVariant,
+              action: action,
+              controller: controller,
+              children: children,
             );
           },
         );
       },
+    );
+  }
+}
+
+class BeDialogBody extends StatelessWidget {
+  final Widget? action;
+  final List<Widget> children;
+  final ScrollController? controller;
+  final String text;
+  final BeBottomTitleVariant titleVariant;
+  final Widget Function(BuildContext context, ScrollController? controller)?
+  builder;
+
+  const BeDialogBody({
+    required this.text,
+    this.titleVariant = .primary,
+    this.children = const <Widget>[],
+    this.action,
+    this.controller,
+    super.key,
+  }) : builder = null;
+
+  const BeDialogBody.builder({
+    required this.text,
+    required this.builder,
+    this.titleVariant = .primary,
+    this.action,
+    this.controller,
+    super.key,
+  }) : children = const <Widget>[];
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      clipBehavior: .hardEdge,
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      child: Scaffold(
+        body: Column(
+          children: [
+            BeBottomTitle(text: text, variant: titleVariant),
+            if (builder != null) builder!(context, controller),
+            if (builder == null)
+              Expanded(
+                child: ListView(
+                  controller: controller,
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  shrinkWrap: true,
+                  primary: false,
+                  children: children,
+                ),
+              ),
+
+            if (action != null)
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  bottom: 36,
+                ),
+                child: action!,
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

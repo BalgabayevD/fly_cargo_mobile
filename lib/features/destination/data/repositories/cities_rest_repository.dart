@@ -14,15 +14,18 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
     required this.configuration,
   });
 
+  String get _order => configuration.environmentVariables.orderBaseUrl;
+
   @override
   Future<List<CityEntity>> getCitiesFrom() async {
     try {
       final response = await requestable.dio.get(
-        '/api/v1/directions/cities/from',
+        '${_order}/api/v1/directions/cities/from',
       );
-      return response.data
-          .map((city) => city.toCityModel().toEntity())
-          .toList();
+
+      return (response.data['data'] as List).map((data) {
+        return CityEntity.fromJson(data);
+      }).toList();
     } catch (e) {
       rethrow;
     }
@@ -32,12 +35,12 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   Future<List<CityEntity>> getCitiesTo(int fromCityId) async {
     try {
       final response = await requestable.dio.get(
-        '/api/v1/directions/cities/to',
+        '${_order}/api/v1/directions/cities/to',
         queryParameters: {'fromCityId': fromCityId},
       );
-      return response.data
-          .map((city) => city.toCityModel().toEntity())
-          .toList();
+      return (response.data['data'] as List).map((data) {
+        return CityEntity.fromJson(data);
+      }).toList();
     } catch (e) {
       rethrow;
     }
@@ -50,7 +53,7 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   ) async {
     try {
       final response = await requestable.dio.get<List<String>>(
-        '/api/v1/maps/cities/list',
+        '${_order}/api/v1/maps/cities/list',
         queryParameters: {
           'city': city,
           'address': address,

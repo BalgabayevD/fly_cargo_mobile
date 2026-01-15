@@ -44,6 +44,10 @@ class AuthorizationRequestScreen extends StatelessWidget {
             context.push(OnboardingScreen.location());
           }
         },
+        listenWhen: (previous, current) {
+          return GoRouter.of(context).state.path ==
+              AuthorizationRequestScreen.location();
+        },
         builder: (BuildContext context, AuthorizationState state) {
           return RequestOtpForm(
             isLoading: state is AuthorizationOtpRequestingState,

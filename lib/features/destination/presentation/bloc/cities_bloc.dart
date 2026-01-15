@@ -1,49 +1,66 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/features/destination/domain/entities/locations_entity.dart';
 import 'package:fly_cargo/features/destination/domain/usecases/cities_use_case.dart';
+import 'package:injectable/injectable.dart';
 
 part 'cities_event.dart';
 part 'cities_state.dart';
 
+@injectable
 class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
   final CitiesUseCase cities;
 
   CitiesBloc(this.cities) : super(CitiesInitialState()) {
-    on<LoadFromCitiesEvent>(_loadFromCities);
+    on<LoadInitialCitiesEvent>(_loadInitialCities);
     on<TouchFromCityEvent>(_touchFromCity);
     on<TouchToCityEvent>(_touchToCity);
-    on<UpdateLocationEvent>(_updateLocation);
   }
 
-  Future<void> _loadFromCities(
-    LoadFromCitiesEvent event,
+  Future<void> _loadInitialCities(
+    LoadInitialCitiesEvent event,
     Emitter<CitiesState> emit,
   ) async {
     try {
+      LocationsEntity from = LocationsEntity.empty();
+      LocationsEntity to = LocationsEntity.empty();
+
       final localFromCities = await cities.getPersistCitiesFrom();
 
       if (localFromCities.isNotEmpty) {
-        final from = LocationsEntity(
-          cities: localFromCities,
-          selectedCityId: localFromCities.first.id,
+        from = from.copyWith(cities: localFromCities);
+
+        final localToCities = await cities.getPersistCitiesTo(
+          localFromCities.first.id,
         );
 
-        emit(CitiesLoadedState(from));
+        if (localToCities.isNotEmpty) {
+          to = to.copyWith(cities: localToCities);
+        }
       }
+
+      emit(FromCityTouchedLoadedState(from, to));
 
       final remoteFromCities = await cities.getRestCitiesFrom();
 
       if (remoteFromCities.isNotEmpty) {
-        final from = LocationsEntity(
+        from = from.copyWith(
           cities: remoteFromCities,
           selectedCityId: remoteFromCities.first.id,
         );
 
-        emit(CitiesLoadedState(from));
-        await cities.saveCitiesFrom(remoteFromCities);
+        final remoteToCities = await cities.getRestCitiesTo(
+          localFromCities.first.id,
+        );
 
-        add(TouchFromCityEvent(remoteFromCities.first.id));
+        if (remoteToCities.isNotEmpty) {
+          to = to.copyWith(
+            cities: remoteToCities,
+            selectedCityId: remoteToCities.first.id,
+          );
+        }
       }
+
+      emit(FromCityTouchedLoadedState(from, to));
     } catch (_) {
       emit(CitiesEmptyState());
     }
@@ -53,41 +70,37 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     TouchFromCityEvent event,
     Emitter<CitiesState> emit,
   ) async {
-    if (state is CitiesLoadedState || state is FromCityTouchedLoadedState) {
-      final s = state as CitiesLoadedState;
-
-      if (event.cityId == s.from.selectedCityId) return;
-
-      final from = s.from.copyWith(selectedCityId: event.cityId);
-
-      final to = LocationsEntity(
-        cities: [],
-        selectedCityId: null,
-      );
-
-      emit(FromCityTouchedLoadedState(from: from, to: to));
+    if (state is FromCityTouchedLoadedState) {
+      final current = state as FromCityTouchedLoadedState;
 
       try {
-        final toCities = await cities.getPersistCitiesTo(event.cityId);
+        if (event.location.selectedCityId != current.from.selectedCityId) {
+          LocationsEntity to = current.to;
 
-        if (toCities.isNotEmpty) {
-          final to = LocationsEntity(
-            cities: toCities,
-            selectedCityId: toCities.first.id,
+          final localToCities = await cities.getPersistCitiesTo(
+            event.location.selectedCityId!,
           );
 
-          emit(FromCityTouchedLoadedState(from: s.from, to: to));
-        }
+          if (localToCities.isNotEmpty) {
+            to = to.copyWith(cities: localToCities);
+          }
 
-        final remoteToCities = await cities.getRestCitiesTo(event.cityId);
+          emit(FromCityTouchedLoadedState(event.location, to));
 
-        if (remoteToCities.isNotEmpty) {
-          final to = LocationsEntity(
-            cities: remoteToCities,
-            selectedCityId: remoteToCities.first.id,
+          final remoteToCities = await cities.getRestCitiesTo(
+            event.location.selectedCityId!,
           );
 
-          emit(FromCityTouchedLoadedState(from: s.from, to: to));
+          if (remoteToCities.isNotEmpty) {
+            to = to.copyWith(
+              cities: remoteToCities,
+              selectedCityId: remoteToCities.first.id,
+            );
+          }
+
+          emit(FromCityTouchedLoadedState(event.location, to));
+        } else {
+          emit(FromCityTouchedLoadedState(event.location, current.to));
         }
       } catch (_) {}
     }
@@ -98,85 +111,79 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     Emitter<CitiesState> emit,
   ) async {
     if (state is ToCityTouchedLoadedState) {
-      final s = state as ToCityTouchedLoadedState;
+      final current = state as ToCityTouchedLoadedState;
 
-      if (event.cityId == s.to.selectedCityId) return;
-
-      final to = s.from.copyWith(selectedCityId: event.cityId);
-
-      emit(FromCityTouchedLoadedState(from: s.from, to: to));
+      emit(FromCityTouchedLoadedState(current.from, event.location));
     }
   }
 
-  Future<void> _updateLocation(
-    UpdateLocationEvent event,
-    Emitter<CitiesState> emit,
-  ) async {
-    switch (event.field) {
-      case .from:
-        await _updateFromLocation(event.location, emit);
-        break;
-      case .to:
-        await _updateToLocation(event.location, emit);
-        break;
-    }
-  }
-
-  Future<void> _updateFromLocation(
-    LocationsEntity event,
-    Emitter<CitiesState> emit,
-  ) async {
-    try {
-      var location = event;
-
-      if (event.validQuery) {
-        final queries = await cities.getAddressesFromQuery(
-          event.city!.name,
-          event.address!,
-        );
-
-        location = location.copyWith(searchQueries: queries);
-      }
-
-      if (state is CitiesLoadedState) {
-        emit(CitiesLoadedState(event));
-      }
-
-      if (state is FromCityTouchedLoadedState) {
-        emit(
-          FromCityTouchedLoadedState(
-            from: event,
-            to: (state as FromCityTouchedLoadedState).to,
-          ),
-        );
-      }
-    } catch (e) {}
-  }
-
-  Future<void> _updateToLocation(
-    LocationsEntity event,
-    Emitter<CitiesState> emit,
-  ) async {
-    try {
-      var location = event;
-
-      if (event.validQuery) {
-        final queries = await cities.getAddressesFromQuery(
-          event.city!.name,
-          event.address!,
-        );
-
-        location = location.copyWith(searchQueries: queries);
-      }
-
-      if (state is FromCityTouchedLoadedState) {
-        emit(
-          FromCityTouchedLoadedState(
-            from: (state as FromCityTouchedLoadedState).from,
-            to: location,
-          ),
-        );
-      }
-    } catch (e) {}
-  }
+  // Future<void> _updateLocation(
+  //   UpdateLocationEvent event,
+  //   Emitter<CitiesState> emit,
+  // ) async {
+  //   switch (event.field) {
+  //     case .from:
+  //       await _updateFromLocation(event.location, emit);
+  //       break;
+  //     case .to:
+  //       await _updateToLocation(event.location, emit);
+  //       break;
+  //   }
+  // }
+  //
+  // Future<void> _updateFromLocation(
+  //   LocationsEntity event,
+  //   Emitter<CitiesState> emit,
+  // ) async {
+  //   try {
+  //     if (event.validQuery) {
+  //       final queries = await cities.getAddressesFromQuery(
+  //         event.city!.name,
+  //         event.address!,
+  //       );
+  //
+  //       event = event.copyWith(searchQueries: queries);
+  //     }
+  //
+  //     if (state is CitiesLoadedState) {
+  //       emit(CitiesLoadedState(event));
+  //     }
+  //
+  //     if (state is FromCityTouchedLoadedState) {
+  //       emit(
+  //         FromCityTouchedLoadedState(
+  //           from: event,
+  //           to: (state as FromCityTouchedLoadedState).to,
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {}
+  // }
+  //
+  // Future<void> _updateToLocation(
+  //   LocationsEntity event,
+  //   Emitter<CitiesState> emit,
+  // ) async {
+  //   try {
+  //     var location = event;
+  //
+  //     if (event.validQuery) {
+  //       final queries = await cities.getAddressesFromQuery(
+  //         event.city!.name,
+  //         event.address!,
+  //       );
+  //
+  //       location = location.copyWith(searchQueries: queries);
+  //     }
+  //
+  //     if (state is FromCityTouchedLoadedState) {
+  //       emit(
+  //         FromCityTouchedLoadedState(
+  //           from: (state as FromCityTouchedLoadedState).from,
+  //           to: location,
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {}
+  // }
 }

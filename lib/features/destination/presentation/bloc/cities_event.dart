@@ -2,25 +2,16 @@ part of 'cities_bloc.dart';
 
 sealed class CitiesEvent {}
 
-class LoadFromCitiesEvent extends CitiesEvent {}
+class LoadInitialCitiesEvent extends CitiesEvent {}
 
 class TouchFromCityEvent extends CitiesEvent {
-  final int cityId;
+  final LocationsEntity location;
 
-  TouchFromCityEvent(this.cityId);
+  TouchFromCityEvent(this.location);
 }
 
 class TouchToCityEvent extends CitiesEvent {
-  final int cityId;
-
-  TouchToCityEvent(this.cityId);
-}
-
-enum LocationsEntityField { from, to }
-
-class UpdateLocationEvent extends CitiesEvent {
-  final LocationsEntityField field;
   final LocationsEntity location;
 
-  UpdateLocationEvent(this.field, this.location);
+  TouchToCityEvent(this.location);
 }

@@ -3,6 +3,7 @@ import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 
 class AddressSelectField extends StatefulWidget {
+  final TextEditingController? controller;
   final String? label;
   final String? value;
   final bool readOnly;
@@ -18,6 +19,7 @@ class AddressSelectField extends StatefulWidget {
     this.autofocus = false,
     this.autoSelect = false,
     this.completions = const [],
+    this.controller,
   });
 
   @override
@@ -27,7 +29,7 @@ class AddressSelectField extends StatefulWidget {
 class _AddressSelectFieldState extends State<AddressSelectField> {
   bool isFocused = false;
   final focusNode = FocusNode();
-  final controller = TextEditingController();
+  late final controller = widget.controller ?? TextEditingController();
 
   @override
   void initState() {

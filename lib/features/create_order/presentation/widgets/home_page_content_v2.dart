@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
@@ -15,6 +17,7 @@ import 'package:fly_cargo/features/create_order/presentation/widgets/create_orde
 import 'package:fly_cargo/features/create_order/presentation/widgets/order_field_card_v2.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/select_location.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
+import 'package:fly_cargo/features/destination/presentation/bloc/cities_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePageContentV2 extends StatelessWidget {
@@ -171,26 +174,30 @@ class _OrderFieldsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SelectLocation(type: .from),
-        BeSpace(size: .md),
-        SelectLocation(type: .to),
-        BeSpace(size: .md),
-        OrderFieldCardV2(
-          label: context.l10n.recipient,
-          value: _formatRecipientInfo(),
-          onTap: onRecipientForm,
-        ),
-        BeSpace(size: .md),
-        BeFormInput(
-          label: context.l10n.weightInKg,
-        ),
-        BeSpace(size: .md),
-        BeFormInput(
-          label: context.l10n.description,
-        ),
-      ],
+    return BlocProvider<CitiesBloc>(
+      create: (BuildContext context) =>
+          getIt<CitiesBloc>()..add(LoadInitialCitiesEvent()),
+      child: Column(
+        children: [
+          SelectLocation(type: .from),
+          BeSpace(size: .md),
+          SelectLocation(type: .to),
+          BeSpace(size: .md),
+          OrderFieldCardV2(
+            label: context.l10n.recipient,
+            value: _formatRecipientInfo(),
+            onTap: onRecipientForm,
+          ),
+          BeSpace(size: .md),
+          BeFormInput(
+            label: context.l10n.weightInKg,
+          ),
+          BeSpace(size: .md),
+          BeFormInput(
+            label: context.l10n.description,
+          ),
+        ],
+      ),
     );
   }
 
