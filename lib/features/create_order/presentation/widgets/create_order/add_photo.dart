@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/features/create_order/domain/enitites/order_photo.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/add_photo_button.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/add_photo_dialog.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,18 +16,19 @@ class AddPhoto extends StatelessWidget {
       dialog = const AddPhotoDialog();
 
   Future<void> onTap(BuildContext context) async {
-    final source = await dialog.open(context);
+    try {
+      final source = await dialog.open(context);
 
-    if (source != null) {
-      final image = await imagePicker.pickImage(source: source);
+      if (source != null) {
+        final image = await imagePicker.pickImage(source: source);
 
-      if (image != null) {
-        final file = File(image.path);
+        if (image != null && context.mounted) {
+          final file = File(image.path);
 
-        final orderPhoto = OrderPhoto(file: file);
-        print(orderPhoto);
+          context.read<PhotosBloc>().add(PickPhotoEvent(file));
+        }
       }
-    }
+    } catch (_) {}
   }
 
   @override

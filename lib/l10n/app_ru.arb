@@ -179,12 +179,12 @@
     "description": "Recipient label"
   },
 
-  "recipientName": "Имя получателя",
+  "recipientName": "Имя",
   "@recipientName": {
     "description": "Recipient name label"
   },
 
-  "recipientPhone": "Телефон получателя",
+  "recipientPhone": "Телефон",
   "@recipientPhone": {
     "description": "Recipient phone label"
   },

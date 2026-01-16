@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/features/destination/domain/entities/locations_entity.dart';
 import 'package:fly_cargo/features/destination/domain/usecases/cities_use_case.dart';
@@ -38,7 +39,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
         }
       }
 
-      emit(FromCityTouchedLoadedState(from, to));
+      emit(CitySelectedState(from, to));
 
       final remoteFromCities = await cities.getRestCitiesFrom();
 
@@ -60,7 +61,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
         }
       }
 
-      emit(FromCityTouchedLoadedState(from, to));
+      emit(CitySelectedState(from, to));
     } catch (_) {
       emit(CitiesEmptyState());
     }
@@ -70,8 +71,8 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     TouchFromCityEvent event,
     Emitter<CitiesState> emit,
   ) async {
-    if (state is FromCityTouchedLoadedState) {
-      final current = state as FromCityTouchedLoadedState;
+    if (state is CitySelectedState) {
+      final current = state as CitySelectedState;
 
       try {
         if (event.location.selectedCityId != current.from.selectedCityId) {
@@ -85,7 +86,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
             to = to.copyWith(cities: localToCities);
           }
 
-          emit(FromCityTouchedLoadedState(event.location, to));
+          emit(CitySelectedState(event.location, to));
 
           final remoteToCities = await cities.getRestCitiesTo(
             event.location.selectedCityId!,
@@ -98,9 +99,9 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
             );
           }
 
-          emit(FromCityTouchedLoadedState(event.location, to));
+          emit(CitySelectedState(event.location, to));
         } else {
-          emit(FromCityTouchedLoadedState(event.location, current.to));
+          emit(CitySelectedState(event.location, current.to));
         }
       } catch (_) {}
     }
@@ -110,10 +111,9 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     TouchToCityEvent event,
     Emitter<CitiesState> emit,
   ) async {
-    if (state is ToCityTouchedLoadedState) {
-      final current = state as ToCityTouchedLoadedState;
-
-      emit(FromCityTouchedLoadedState(current.from, event.location));
+    if (state is CitySelectedState) {
+      final current = state as CitySelectedState;
+      emit(CitySelectedState(current.from, event.location));
     }
   }
 

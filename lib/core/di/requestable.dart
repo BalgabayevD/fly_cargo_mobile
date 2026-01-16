@@ -68,7 +68,7 @@ class Requestable {
     dio.options.headers['Language'] = configuration.package.build;
 
     if (accessToken != null) {
-      // dio.options.headers['Authorization'] = "Bearer $accessToken";
+      dio.options.headers['Authorization'] = "Bearer $accessToken";
     }
 
     dio.interceptors.add(

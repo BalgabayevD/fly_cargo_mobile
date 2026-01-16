@@ -1,34 +1,29 @@
 part of 'cities_bloc.dart';
 
-sealed class CitiesState {}
+sealed class CitiesState {
+  const CitiesState();
+}
 
 class CitiesInitialState extends CitiesState {}
 
 class CitiesEmptyState extends CitiesState {}
 
-class FromCityTouchedLoadedState extends CitiesState {
+class CitySelectedState extends CitiesState with EquatableMixin {
   final LocationsEntity from;
   final LocationsEntity to;
 
-  FromCityTouchedLoadedState(this.from, this.to);
+  const CitySelectedState(this.from, this.to);
 
-  FromCityTouchedLoadedState copyWith({
+  CitySelectedState copyWith({
     LocationsEntity? from,
     LocationsEntity? to,
   }) {
-    return FromCityTouchedLoadedState(
+    return CitySelectedState(
       from ?? this.from,
       to ?? this.to,
     );
   }
-}
 
-class ToCityTouchedLoadedState extends CitiesState {
-  final LocationsEntity from;
-  final LocationsEntity to;
-
-  ToCityTouchedLoadedState({
-    required this.from,
-    required this.to,
-  });
+  @override
+  List<Object?> get props => [from, to];
 }

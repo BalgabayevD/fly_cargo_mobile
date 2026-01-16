@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
@@ -23,6 +23,7 @@ import 'package:fly_cargo/features/destination/data/models/destination_models.da
 import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
     as tariffs;
 import 'package:go_router/go_router.dart';
+import 'package:heroicons/heroicons.dart';
 
 class CreateOrderScreen extends StatefulWidget {
   static String path = '/order/create';
@@ -190,14 +191,14 @@ class Delivery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      child: BeButton(
-        text: 'Условия доставки',
+    return Padding(
+      padding: EdgeInsets.only(right: 14),
+      child: IconButton(
         onPressed: () {},
-        size: .sm,
-        variant: .light,
-        color: .info,
+        icon: HeroIcon(
+          HeroIcons.bell,
+          color: BeColors.surface4,
+        ),
       ),
     );
   }

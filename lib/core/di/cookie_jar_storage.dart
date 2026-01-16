@@ -16,20 +16,24 @@ class CookieJarStorage implements Storage {
 
   @override
   Future<void> write(String key, Object value) async {
-    sharedPreferences.setString(_prefix + key, value.toString());
+    print('J-write = ${value}');
+    await sharedPreferences.setString(_prefix + key, value.toString());
   }
 
   @override
   Future<String?> read(String key) async {
+    print('J-read');
     return sharedPreferences.getString(_prefix + key);
   }
 
   @override
   Future<void> delete(String key) async {
+    print('J-delete');
     await sharedPreferences.remove(_prefix + key);
   }
 
   Future<void> clear() async {
+    print('J-clear');
     var keys = sharedPreferences.getKeys();
     for (String key in keys) {
       if (key.startsWith(_prefix)) {

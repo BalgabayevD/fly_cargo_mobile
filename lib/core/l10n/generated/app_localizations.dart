@@ -295,13 +295,13 @@ abstract class AppLocalizations {
   /// Recipient name label
   ///
   /// In ru, this message translates to:
-  /// **'Имя получателя'**
+  /// **'Имя'**
   String get recipientName;
 
   /// Recipient phone label
   ///
   /// In ru, this message translates to:
-  /// **'Телефон получателя'**
+  /// **'Телефон'**
   String get recipientPhone;
 
   /// Recipient name input hint

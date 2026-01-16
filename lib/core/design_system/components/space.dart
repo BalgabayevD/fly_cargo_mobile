@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/core/design_system/spacing.dart';
 
 enum BeSpacingSize {
-  /// **2px** — extra small
+  /// **4.0px**
   xs,
 
-  /// **2px**
+  /// **8.0px**
   sm,
 
-  /// **2px**
+  /// **12.0px**
   md,
 
-  /// **2px**
+  /// **16.0px**
   lg,
 
-  /// **2px**
+  /// **20.0px**
   xl,
 
-  /// **2px**
+  /// **24.0px**
   xxl,
 
-  /// **2px**
+  /// **32.0px**
   xxxl,
 }
 
@@ -42,19 +41,19 @@ class BeSpace extends StatelessWidget {
   double get _size {
     switch (size) {
       case BeSpacingSize.xs:
-        return AppSpacing.space1;
+        return 4.0;
       case BeSpacingSize.sm:
-        return AppSpacing.space2;
+        return 8.0;
       case BeSpacingSize.md:
-        return AppSpacing.space3;
+        return 12.0;
       case BeSpacingSize.lg:
-        return AppSpacing.space4;
+        return 16.0;
       case BeSpacingSize.xl:
-        return AppSpacing.space5;
+        return 20.0;
       case BeSpacingSize.xxl:
-        return AppSpacing.space6;
+        return 24.0;
       case BeSpacingSize.xxxl:
-        return AppSpacing.space8;
+        return 32.0;
     }
   }
 

@@ -32,7 +32,8 @@ class App {
       MultiBlocProvider(
         providers: [
           BlocProvider<AuthorizationBloc>(
-            create: (_) => getIt<AuthorizationBloc>(),
+            create: (_) =>
+                getIt<AuthorizationBloc>()..add(AuthorizationGetSessionEvent()),
           ),
           BlocProvider<LocaleCubit>(create: (_) => getIt<LocaleCubit>()),
           BlocProvider<TariffsBloc>(create: (_) => getIt<TariffsBloc>()),

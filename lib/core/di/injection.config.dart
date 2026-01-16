@@ -23,16 +23,24 @@ import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dar
     as _i550;
 import 'package:fly_cargo/features/create_order/config/create_order_module.dart'
     as _i1023;
+import 'package:fly_cargo/features/create_order/data/repository/order_photos_repository.dart'
+    as _i756;
+import 'package:fly_cargo/features/create_order/domain/repositories/order_photos_repository.dart'
+    as _i406;
 import 'package:fly_cargo/features/create_order/domain/usecases/calculate_order_price_usecase.dart'
     as _i128;
 import 'package:fly_cargo/features/create_order/domain/usecases/create_order_usecase.dart'
     as _i297;
+import 'package:fly_cargo/features/create_order/domain/usecases/order_photos_usecase.dart'
+    as _i103;
 import 'package:fly_cargo/features/create_order/domain/usecases/pre_create_order_usecase.dart'
     as _i180;
 import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart'
     as _i527;
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart'
     as _i652;
+import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart'
+    as _i298;
 import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart'
     as _i309;
 import 'package:fly_cargo/features/destination/config/destination_module.dart'
@@ -180,6 +188,12 @@ extension GetItInjectableX on _i174.GetIt {
         configuration: gh<_i156.Configuration>(),
       ),
     );
+    gh.factory<_i406.OrderPhotosRepository>(
+      () => _i756.OrderPhotosRepositoryImpl(
+        requestable: gh<_i129.Requestable>(),
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
     gh.factory<_i478.App>(
       () => _i478.App(
         configuration: gh<_i156.Configuration>(),
@@ -192,12 +206,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i498.AuthorizationRepository>(
       () => _i652.AuthorizationRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
-        configuration: gh<_i156.Configuration>(),
-      ),
-    );
-    gh.factory<_i550.AuthorizationBloc>(
-      () => _i550.AuthorizationBloc(
-        authorizationRepository: gh<_i498.AuthorizationRepository>(),
         configuration: gh<_i156.Configuration>(),
       ),
     );
@@ -219,6 +227,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i193.CitiesPersistRepository>(),
       ),
     );
+    gh.factory<_i103.OrderPhotosUseCase>(
+      () => _i103.OrderPhotosUseCase(gh<_i406.OrderPhotosRepository>()),
+    );
     gh.factory<_i435.CitiesBloc>(
       () => _i435.CitiesBloc(gh<_i542.CitiesUseCase>()),
     );
@@ -237,6 +248,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i933.DestinationRepository>(
       () =>
           _i624.DestinationRepositoryImpl(gh<_i117.DestinationRemoteSource>()),
+    );
+    gh.factory<_i298.PhotosBloc>(
+      () => _i298.PhotosBloc(gh<_i103.OrderPhotosUseCase>()),
+    );
+    gh.factory<_i550.AuthorizationBloc>(
+      () => _i550.AuthorizationBloc(
+        authorizationRepository: gh<_i498.AuthorizationRepository>(),
+        configuration: gh<_i156.Configuration>(),
+        requestable: gh<_i129.Requestable>(),
+      ),
     );
     gh.factory<_i598.OrdersRepository>(
       () => sharedOrdersModule.ordersRepository(

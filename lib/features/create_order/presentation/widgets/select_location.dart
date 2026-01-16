@@ -23,35 +23,43 @@ class SelectLocation extends StatelessWidget {
 
     return BlocBuilder<CitiesBloc, CitiesState>(
       builder: (BuildContext context, CitiesState state) {
-        if (state is FromCityTouchedLoadedState && type == .from) {
+        if (state is CitySelectedState && type == .from) {
           return FieldListTile(
             label: label,
             value: state.from.listTileLabel,
-            onTap: () {
-              showDialog.toSelectAddress(
+            onTap: () async {
+              final location = await showDialog.toSelectAddress(
                 context,
                 label,
                 state.from,
               );
+
+              if (location != null && context.mounted) {
+                context.read<CitiesBloc>().add(TouchFromCityEvent(location));
+              }
             },
           );
         }
 
-        if (state is FromCityTouchedLoadedState && type == .to) {
+        if (state is CitySelectedState && type == .to) {
           return FieldListTile(
             label: label,
             value: state.to.listTileLabel,
-            onTap: () {
-              showDialog.toSelectAddress(
+            onTap: () async {
+              final location = await showDialog.toSelectAddress(
                 context,
                 label,
                 state.to,
               );
+
+              if (location != null && context.mounted) {
+                context.read<CitiesBloc>().add(TouchToCityEvent(location));
+              }
             },
           );
         }
 
-        return FieldListTile(label: label);
+        return FieldListTile(label: label, disabled: true);
       },
     );
   }

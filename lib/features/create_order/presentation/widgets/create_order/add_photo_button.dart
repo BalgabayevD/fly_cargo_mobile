@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
-import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
@@ -18,10 +18,10 @@ class AddPhotoButton extends StatelessWidget {
         height: 164,
         width: 120,
         decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
+          color: BeColors.white,
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.surface2,
+            color: BeColors.white,
             width: 1,
           ),
         ),
@@ -30,7 +30,7 @@ class AddPhotoButton extends StatelessWidget {
           children: [
             HeroIcon(
               HeroIcons.camera,
-              color: AppColors.surface4,
+              color: BeColors.surface4,
             ),
             BeSpace(size: .sm),
             Text(
@@ -38,7 +38,7 @@ class AddPhotoButton extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
                 fontSize: 13,
-                color: AppColors.surface4,
+                color: BeColors.surface4,
                 fontWeight: FontWeight.w500,
               ),
             ),

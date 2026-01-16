@@ -112,10 +112,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get recipient => 'Получатель';
 
   @override
-  String get recipientName => 'Имя получателя';
+  String get recipientName => 'Имя';
 
   @override
-  String get recipientPhone => 'Телефон получателя';
+  String get recipientPhone => 'Телефон';
 
   @override
   String get enterRecipientName => 'Введите имя получателя';

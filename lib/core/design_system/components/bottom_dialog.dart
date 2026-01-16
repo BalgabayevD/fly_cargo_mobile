@@ -43,7 +43,7 @@ class BeBottomDialog {
 
   static Future<T?> showBottomDialog<T>({
     required BuildContext context,
-    required String text,
+    String text = '',
     Widget Function(BuildContext context, ScrollController controller)? builder,
     Widget? action,
     double initialChildSize = 0.5,
@@ -98,7 +98,7 @@ class BeDialogBody extends StatelessWidget {
   builder;
 
   const BeDialogBody({
-    required this.text,
+    this.text = '',
     this.titleVariant = .primary,
     this.children = const <Widget>[],
     this.action,
@@ -107,7 +107,7 @@ class BeDialogBody extends StatelessWidget {
   }) : builder = null;
 
   const BeDialogBody.builder({
-    required this.text,
+    this.text = '',
     required this.builder,
     this.titleVariant = .primary,
     this.action,
@@ -124,7 +124,7 @@ class BeDialogBody extends StatelessWidget {
         body: Column(
           children: [
             BeBottomTitle(text: text, variant: titleVariant),
-            if (builder != null) builder!(context, controller),
+            if (builder != null) Expanded(child: builder!(context, controller)),
             if (builder == null)
               Expanded(
                 child: ListView(

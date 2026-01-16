@@ -26,9 +26,6 @@ class SelectLocationDialogs {
       initialChildSize: 0.90,
       minChildSize: 0.85,
       text: text,
-      action: BeButton(
-        text: 'Сохранить',
-      ),
       builder: (BuildContext context, ScrollController controller) {
         return ListenableBuilder(
           listenable: notifier,
@@ -174,7 +171,6 @@ class _DialogAddressSelectState extends State<_DialogAddressSelect> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.notifier.locations);
     return ListenableBuilder(
       listenable: local,
       builder: (BuildContext context, Widget? child) {

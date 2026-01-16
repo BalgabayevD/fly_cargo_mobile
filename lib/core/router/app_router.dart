@@ -82,9 +82,43 @@ GoRouter createRouter(
             return AuthorizationRequestScreen.location();
           }
         }
+
+        return null;
       }
 
-      return null;
+      if (authorizationState is AuthorizationOtpRequestingState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizationOtpRequestedState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizationOtpRequestFailureState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizationOtpConfirmingState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizationOtpConfirmedState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizationOtpConfirmFailureState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizationLoadingState) {
+        return null;
+      }
+
+      if (authorizationState is AuthorizedState) {
+        return null;
+      }
+
+      return AuthorizationRequestScreen.location();
     },
     routes: [
       OnboardingScreen.route(),

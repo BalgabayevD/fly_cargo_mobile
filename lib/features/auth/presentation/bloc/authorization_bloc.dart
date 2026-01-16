@@ -15,10 +15,12 @@ part 'authorization_state.dart';
 class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
   final AuthorizationRepository authorizationRepository;
   final Configuration configuration;
+  final Requestable requestable;
 
   AuthorizationBloc({
     required this.authorizationRepository,
     required this.configuration,
+    required this.requestable,
   }) : super(
          InitialAuthorizationState(
            configuration.isShowOnboarding,
@@ -79,6 +81,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
 
       if (token != null) {
         configuration.package.setAccessToken(token);
+        requestable.addAuthorizationHeader(token);
       }
 
       emit(AuthorizationOtpConfirmedState(event.phoneNumber, event.code));
@@ -94,7 +97,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     try {
       await authorizationRepository.signOut();
       await configuration.package.removeAccessToken();
-
+      requestable.removeAuthorizationHeader();
       emit(UnauthorizedState());
     } catch (_) {
       emit(UnauthorizedState());

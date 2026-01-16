@@ -1,7 +1,40 @@
 import 'dart:io';
 
-class OrderPhoto {
-  final File file;
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
-  const OrderPhoto({required this.file});
+enum ViewType {
+  close,
+  delete,
+}
+
+class OrderPhoto extends Equatable {
+  final Key key;
+  final File file;
+  final String? fingerprint;
+  final bool isUploading;
+
+  const OrderPhoto(
+    this.key,
+    this.file, {
+    this.fingerprint,
+    this.isUploading = false,
+  });
+
+  OrderPhoto copyWith({
+    Key? key,
+    File? file,
+    String? fingerprint,
+    bool? isUploading,
+  }) {
+    return OrderPhoto(
+      key ?? this.key,
+      file ?? this.file,
+      fingerprint: fingerprint ?? this.fingerprint,
+      isUploading: isUploading ?? this.isUploading,
+    );
+  }
+
+  @override
+  List<Object?> get props => [file, fingerprint, isUploading];
 }
