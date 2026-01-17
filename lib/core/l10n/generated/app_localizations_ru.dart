@@ -694,4 +694,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String orderCost(String amount) {
     return 'Стоимость: $amount тг';
   }
+
+  @override
+  String get user => 'Пользователь';
+
+  @override
+  String get firstName => 'Имя';
+
+  @override
+  String get lastName => 'Фамилия';
+
+  @override
+  String get middleName => 'Отчество';
+
+  @override
+  String get birthDate => 'Дата рождения';
 }

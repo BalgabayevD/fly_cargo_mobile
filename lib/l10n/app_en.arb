@@ -240,5 +240,11 @@
 
   "orderNumber": "Order {orderId}",
   "trackingNumber": "Tracking number {number}",
-  "orderCost": "Cost: {amount} tg"
+  "orderCost": "Cost: {amount} tg",
+
+  "user": "User",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "middleName": "Middle name",
+  "birthDate": "Birth date"
 }

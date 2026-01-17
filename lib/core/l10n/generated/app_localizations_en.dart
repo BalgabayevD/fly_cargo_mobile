@@ -692,4 +692,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String orderCost(String amount) {
     return 'Cost: $amount tg';
   }
+
+  @override
+  String get user => 'User';
+
+  @override
+  String get firstName => 'First name';
+
+  @override
+  String get lastName => 'Last name';
+
+  @override
+  String get middleName => 'Middle name';
+
+  @override
+  String get birthDate => 'Birth date';
 }
