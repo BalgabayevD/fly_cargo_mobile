@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
+import 'package:fly_cargo/features/create_order/domain/enitites/tariffs_entity.dart';
 import 'package:fly_cargo/features/create_order/presentation/notifier/tariffs_notifier.dart';
-import 'package:fly_cargo/features/destination/domain/entities/tariffs_entity.dart';
 import 'package:go_router/go_router.dart';
 
 class SelectTariffsDialogs {
@@ -31,13 +31,13 @@ class SelectTariffsDialogs {
               text: 'Тариф',
               action: BeButton(
                 text: 'Сохранить',
-                onPressed: () {
-                  context.pop(notifier.tariffs.selectedTariffId);
-                },
+                onPressed: () => context.pop(notifier.tariffs),
               ),
               children: notifier.tariffs.tariffs.map((tariff) {
                 return CheckListTile(
+                  image: Image.network(tariff.image),
                   title: tariff.name,
+                  description: tariff.description,
                   isSelected: notifier.tariffs.selectedTariffId == tariff.id,
                   onTap: () => notifier.selectTariff(tariff.id),
                 );

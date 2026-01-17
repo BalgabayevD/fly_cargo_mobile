@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
-import 'package:fly_cargo/features/create_order/domain/enitites/order_photo.dart';
+import 'package:fly_cargo/features/create_order/domain/enitites/order_photo_entity.dart';
 
 class OrderPhotoButton extends StatelessWidget {
-  final OrderPhoto photo;
+  final OrderPhotoEntity photo;
   final VoidCallback? onTap;
   final double height;
   final double width;

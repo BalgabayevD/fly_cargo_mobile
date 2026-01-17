@@ -11,7 +11,7 @@ class PickPhotoEvent extends PhotosEvent {
 }
 
 class RemovePhotoEvent extends PhotosEvent {
-  final OrderPhoto photo;
+  final OrderPhotoEntity photo;
 
   const RemovePhotoEvent(this.photo);
 }

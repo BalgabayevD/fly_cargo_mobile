@@ -25,8 +25,14 @@ import 'package:fly_cargo/features/create_order/config/create_order_module.dart'
     as _i1023;
 import 'package:fly_cargo/features/create_order/data/repository/order_photos_repository.dart'
     as _i756;
+import 'package:fly_cargo/features/create_order/data/repository/tariffs_persist_repository.dart'
+    as _i499;
+import 'package:fly_cargo/features/create_order/data/repository/tariffs_rest_repository.dart'
+    as _i730;
 import 'package:fly_cargo/features/create_order/domain/repositories/order_photos_repository.dart'
     as _i406;
+import 'package:fly_cargo/features/create_order/domain/repositories/tariffs_repository.dart'
+    as _i672;
 import 'package:fly_cargo/features/create_order/domain/usecases/calculate_order_price_usecase.dart'
     as _i128;
 import 'package:fly_cargo/features/create_order/domain/usecases/create_order_usecase.dart'
@@ -35,14 +41,16 @@ import 'package:fly_cargo/features/create_order/domain/usecases/order_photos_use
     as _i103;
 import 'package:fly_cargo/features/create_order/domain/usecases/pre_create_order_usecase.dart'
     as _i180;
-import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart'
-    as _i527;
+import 'package:fly_cargo/features/create_order/domain/usecases/tariffs_usecase.dart'
+    as _i100;
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart'
     as _i652;
 import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart'
     as _i298;
 import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart'
     as _i309;
+import 'package:fly_cargo/features/create_order/presentation/bloc/tariffs_bloc.dart'
+    as _i266;
 import 'package:fly_cargo/features/destination/config/destination_module.dart'
     as _i1065;
 import 'package:fly_cargo/features/destination/data/destination_remote_source.dart'
@@ -110,16 +118,6 @@ import 'package:fly_cargo/features/shared/orders/data/orders_remote_source.dart'
     as _i436;
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart'
     as _i598;
-import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart'
-    as _i521;
-import 'package:fly_cargo/features/tariffs/domain/repositories/tariffs_repository.dart'
-    as _i170;
-import 'package:fly_cargo/features/tariffs/domain/usecases/create_tariff_usecase.dart'
-    as _i113;
-import 'package:fly_cargo/features/tariffs/domain/usecases/get_tariff_categories_usecase.dart'
-    as _i217;
-import 'package:fly_cargo/features/tariffs/presentation/bloc/tariffs_bloc.dart'
-    as _i563;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -150,25 +148,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i596.LocaleCubit>(
       () => _i596.LocaleCubit(gh<_i51.Package>()),
     );
-    gh.factory<_i217.GetTariffCategoriesUseCase>(
-      () => _i217.GetTariffCategoriesUseCase(gh<_i170.TariffsRepository>()),
-    );
-    gh.factory<_i521.TariffSelectionBloc>(
-      () => _i521.TariffSelectionBloc(
-        getTariffCategoriesUseCase: gh<_i217.GetTariffCategoriesUseCase>(),
-      ),
-    );
     gh.factory<_i156.Configuration>(
       () => _i156.Configuration(
         package: gh<_i51.Package>(),
         environmentVariables: gh<_i941.EnvironmentVariables>(),
       ),
     );
-    gh.factory<_i113.CreateTariffUseCase>(
-      () => _i113.CreateTariffUseCase(gh<_i170.TariffsRepository>()),
-    );
     gh.lazySingleton<_i193.CitiesPersistRepository>(
       () => _i166.CitiesPersistRepositoryImpl(
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.lazySingleton<_i672.TariffsPersistRepository>(
+      () => _i499.TariffsPersistRepositoryImpl(
         configuration: gh<_i156.Configuration>(),
       ),
     );
@@ -176,14 +168,17 @@ extension GetItInjectableX on _i174.GetIt {
       () => requestableModule.requestable(gh<_i156.Configuration>()),
       preResolve: true,
     );
-    gh.factory<_i563.TariffsBloc>(
-      () => _i563.TariffsBloc(gh<_i217.GetTariffCategoriesUseCase>()),
-    );
     gh.factory<_i777.PaymentRemoteSource>(
       () => paymentModule.providePaymentRemoteSource(gh<_i129.Requestable>()),
     );
     gh.lazySingleton<_i1025.CitiesRestRepository>(
       () => _i531.CitiesRestRepositoryImpl(
+        requestable: gh<_i129.Requestable>(),
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i672.TariffsRestRepository>(
+      () => _i730.TariffsRestRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
       ),
@@ -225,6 +220,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i542.CitiesUseCase(
         gh<_i1025.CitiesRestRepository>(),
         gh<_i193.CitiesPersistRepository>(),
+      ),
+    );
+    gh.factory<_i100.TariffsUseCase>(
+      () => _i100.TariffsUseCase(
+        gh<_i672.TariffsRestRepository>(),
+        gh<_i672.TariffsPersistRepository>(),
       ),
     );
     gh.factory<_i103.OrderPhotosUseCase>(
@@ -272,11 +273,6 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           createOrderModule.preCreateOrderUseCase(gh<_i598.OrdersRepository>()),
     );
-    gh.factory<_i527.UploadOrderPhotoUseCase>(
-      () => createOrderModule.uploadOrderPhotoUseCase(
-        gh<_i598.OrdersRepository>(),
-      ),
-    );
     gh.factory<_i128.CalculateOrderPriceUseCase>(
       () => createOrderModule.calculateOrderPriceUseCase(
         gh<_i598.OrdersRepository>(),
@@ -316,6 +312,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i221.EpaymentPayBloc>(
       () => _i221.EpaymentPayBloc(gh<_i298.PayOrderUseCase>()),
+    );
+    gh.factory<_i266.TariffsBloc>(
+      () => _i266.TariffsBloc(gh<_i100.TariffsUseCase>()),
     );
     gh.factory<_i309.PriceCalculationBloc>(
       () => createOrderModule.priceCalculationBloc(

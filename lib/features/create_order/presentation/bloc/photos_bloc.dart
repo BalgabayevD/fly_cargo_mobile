@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/features/create_order/domain/enitites/order_photo.dart';
+import 'package:fly_cargo/features/create_order/domain/enitites/order_photo_entity.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/order_photos_usecase.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,7 +27,7 @@ class PhotosBloc extends Bloc<PhotosEvent, PhotosState> {
     if (state is PhotosPickerState) {
       final current = state as PhotosPickerState;
 
-      final photo = OrderPhoto(
+      final photo = OrderPhotoEntity(
         UniqueKey(),
         event.file,
         isUploading: true,

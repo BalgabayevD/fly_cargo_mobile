@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:fly_cargo/features/create_order/data/models/order_data.dart';
+import 'package:fly_cargo/features/create_order/data/models/tariff_models.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
-import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
-    as tariffs;
 
 abstract class CreateOrderEvent extends Equatable {
   const CreateOrderEvent();
@@ -25,7 +24,7 @@ class SubmitOrderFormEvent extends CreateOrderEvent {
   final String? recipientName;
   final String? recipientPhone;
   final int? selectedTariffId;
-  final tariffs.TariffModel? selectedTariff;
+  final TariffModel? selectedTariff;
   final String? description;
   final bool isFragile;
   final double? customLength;
@@ -52,20 +51,20 @@ class SubmitOrderFormEvent extends CreateOrderEvent {
 
   @override
   List<Object?> get props => [
-        fromAddress,
-        toAddress,
-        recipientName,
-        recipientPhone,
-        selectedTariffId,
-        selectedTariff,
-        description,
-        isFragile,
-        customLength,
-        customWidth,
-        customHeight,
-        photos,
-        photoIds,
-      ];
+    fromAddress,
+    toAddress,
+    recipientName,
+    recipientPhone,
+    selectedTariffId,
+    selectedTariff,
+    description,
+    isFragile,
+    customLength,
+    customWidth,
+    customHeight,
+    photos,
+    photoIds,
+  ];
 }
 
 class PreCreateOrderEvent extends CreateOrderEvent {
@@ -78,4 +77,3 @@ class PreCreateOrderEvent extends CreateOrderEvent {
 class ResetCreateOrderEvent extends CreateOrderEvent {
   const ResetCreateOrderEvent();
 }
-

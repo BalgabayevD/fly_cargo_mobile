@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart'
     as destination;
-import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
-import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
-    as tariffs;
+
+import '../../data/models/tariff_models.dart';
 
 class CreateOrderState {
   destination.AddressModel? fromAddress;
@@ -14,7 +14,7 @@ class CreateOrderState {
   int? selectedTariffId;
   String? tariffName;
   double? tariffWeight;
-  tariffs.TariffModel? selectedTariff;
+  TariffModel? selectedTariff;
   String? description;
   bool isFragile;
   double? customLength;
@@ -45,8 +45,8 @@ class CreateOrderState {
     this.preOrderData,
     this.analysisStatus,
     this.isAnalyzing = false,
-  })  : photos = photos ?? [],
-        photoIds = photoIds ?? {};
+  }) : photos = photos ?? [],
+       photoIds = photoIds ?? {};
 
   void reset() {
     fromAddress = null;
@@ -81,7 +81,7 @@ class CreateOrderState {
     tariffWeight = data.weight;
   }
 
-  void updateTariff(tariffs.TariffModel tariff) {
+  void updateTariff(TariffModel tariff) {
     selectedTariff = tariff;
     selectedTariffId = tariff.id;
     tariffName = tariff.name;
@@ -91,4 +91,3 @@ class CreateOrderState {
     customHeight = null;
   }
 }
-

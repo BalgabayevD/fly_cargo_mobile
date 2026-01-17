@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:fly_cargo/features/tariffs/domain/entities/tariff_entity.dart';
+import 'package:fly_cargo/features/create_order/data/models/tariff_models.dart';
 
 class TariffsEntity extends Equatable {
-  final List<TariffEntity> tariffs;
+  final List<TariffModel> tariffs;
   final int? selectedTariffId;
 
   const TariffsEntity({
@@ -10,7 +10,7 @@ class TariffsEntity extends Equatable {
     this.selectedTariffId,
   });
 
-  const TariffsEntity.empty() : this(tariffs: const <TariffEntity>[]);
+  const TariffsEntity.empty() : this(tariffs: const <TariffModel>[]);
 
   @override
   List<Object?> get props => [
@@ -19,7 +19,7 @@ class TariffsEntity extends Equatable {
   ];
 
   TariffsEntity copyWith({
-    List<TariffEntity>? tariffs,
+    List<TariffModel>? tariffs,
     int? selectedTariffId,
   }) {
     return TariffsEntity(
@@ -28,7 +28,7 @@ class TariffsEntity extends Equatable {
     );
   }
 
-  TariffEntity? get tariff {
+  TariffModel? get tariff {
     if (selectedTariffId == null) return null;
 
     final isAny = tariffs.any((tariff) => tariff.id == selectedTariffId);

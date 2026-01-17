@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:fly_cargo/features/destination/domain/entities/tariffs_entity.dart';
+import 'package:fly_cargo/features/create_order/domain/enitites/tariffs_entity.dart';
 
 class TariffsNotifier extends ChangeNotifier {
   TariffsEntity tariffs;

@@ -4,24 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
-import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/create_order/data/models/pre_create_order_response.dart';
-import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_event.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_state.dart'
     as bloc_state;
 import 'package:fly_cargo/features/create_order/presentation/mixins/order_bloc_listener_mixin.dart';
-import 'package:fly_cargo/features/create_order/presentation/mixins/order_navigation_mixin.dart';
-import 'package:fly_cargo/features/create_order/presentation/mixins/photo_handler_mixin.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_state.dart'
     as page_state;
 import 'package:fly_cargo/features/create_order/presentation/widgets/home_page_content_v2.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart'
     as destination;
-import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart'
-    as tariffs;
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -45,21 +39,15 @@ class CreateOrderScreen extends StatefulWidget {
 }
 
 class _CreateOrderScreenState extends State<CreateOrderScreen>
-    with PhotoHandlerMixin, OrderNavigationMixin, OrderBlocListenerMixin {
-  late final UploadOrderPhotoUseCase _uploadOrderPhotoUseCase;
+    with OrderBlocListenerMixin {
   late final page_state.CreateOrderState _state;
 
   @override
   void initState() {
     super.initState();
-    _uploadOrderPhotoUseCase = getIt<UploadOrderPhotoUseCase>();
     _state = page_state.CreateOrderState();
   }
 
-  // PhotoHandlerMixin
-  @override
-  UploadOrderPhotoUseCase get uploadOrderPhotoUseCase =>
-      _uploadOrderPhotoUseCase;
   @override
   List<File> get photos => _state.photos;
   @override
@@ -107,9 +95,6 @@ class _CreateOrderScreenState extends State<CreateOrderScreen>
   void updateDescription(String? desc) =>
       setState(() => _state.description = desc);
   @override
-  void updateTariff(tariffs.TariffModel tariff) =>
-      setState(() => _state.updateTariff(tariff));
-  @override
   void updateCustomDimensions(double? length, double? width, double? height) {
     setState(() {
       _state.customLength = length;
@@ -117,9 +102,6 @@ class _CreateOrderScreenState extends State<CreateOrderScreen>
       _state.customHeight = height;
     });
   }
-
-  @override
-  void recalculatePrice() => recalculatePriceIfPossible();
 
   // OrderBlocListenerMixin
   @override
@@ -160,7 +142,18 @@ class _CreateOrderScreenState extends State<CreateOrderScreen>
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: context.l10n.home,
-        trailing: [Delivery()],
+        trailing: [
+          Padding(
+            padding: EdgeInsets.only(right: 14),
+            child: IconButton(
+              onPressed: () {},
+              icon: HeroIcon(
+                HeroIcons.bell,
+                color: BeColors.surface4,
+              ),
+            ),
+          ),
+        ],
         child: HomePageContentV2(
           fromAddress: _state.fromAddress,
           toAddress: _state.toAddress,
@@ -169,35 +162,10 @@ class _CreateOrderScreenState extends State<CreateOrderScreen>
           tariffWeight: _state.tariffWeight,
           description: _state.description,
           photos: _state.photos,
-          onFromAddressSelection: openFromAddressSelection,
-          onToAddressSelection: openToAddressSelection,
-          onRecipientForm: openRecipientForm,
-          onDescriptionForm: openDescriptionForm,
-          onPickPhoto: pickPhoto,
-          onRemovePhoto: removePhoto,
-          onWeightTap: openTariffSelection,
           onSubmitOrder: _submitOrder,
           isAnalyzing: _state.isAnalyzing,
           isAnalysisCompleted: _state.preOrderData != null,
           analysisStatus: _state.analysisStatus,
-        ),
-      ),
-    );
-  }
-}
-
-class Delivery extends StatelessWidget {
-  const Delivery({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 14),
-      child: IconButton(
-        onPressed: () {},
-        icon: HeroIcon(
-          HeroIcons.bell,
-          color: BeColors.surface4,
         ),
       ),
     );

@@ -8,26 +8,26 @@ enum ViewType {
   delete,
 }
 
-class OrderPhoto extends Equatable {
+class OrderPhotoEntity extends Equatable {
   final Key key;
   final File file;
   final String? fingerprint;
   final bool isUploading;
 
-  const OrderPhoto(
+  const OrderPhotoEntity(
     this.key,
     this.file, {
     this.fingerprint,
     this.isUploading = false,
   });
 
-  OrderPhoto copyWith({
+  OrderPhotoEntity copyWith({
     Key? key,
     File? file,
     String? fingerprint,
     bool? isUploading,
   }) {
-    return OrderPhoto(
+    return OrderPhotoEntity(
       key ?? this.key,
       file ?? this.file,
       fingerprint: fingerprint ?? this.fingerprint,

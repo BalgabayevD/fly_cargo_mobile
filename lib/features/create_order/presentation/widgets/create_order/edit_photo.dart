@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/features/create_order/domain/enitites/order_photo.dart';
+import 'package:fly_cargo/features/create_order/domain/enitites/order_photo_entity.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/add_photo_dialog.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/order_photo_button.dart';
 
 class EditPhoto extends StatelessWidget {
-  final OrderPhoto photo;
+  final OrderPhotoEntity photo;
   final AddPhotoDialog dialog;
 
   const EditPhoto({required this.photo, super.key})

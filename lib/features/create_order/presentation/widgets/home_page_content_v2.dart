@@ -26,12 +26,7 @@ class HomePageContentV2 extends StatelessWidget {
   final double? tariffWeight;
   final String? description;
   final List<File> photos;
-  final VoidCallback onFromAddressSelection;
-  final VoidCallback onToAddressSelection;
-  final VoidCallback onRecipientForm;
-  final VoidCallback onDescriptionForm;
-  final VoidCallback onPickPhoto;
-  final Function(File) onRemovePhoto;
+
   final VoidCallback? onWeightTap;
   final VoidCallback? onSubmitOrder;
   final bool isAnalyzing;
@@ -46,12 +41,6 @@ class HomePageContentV2 extends StatelessWidget {
     required this.tariffWeight,
     required this.description,
     required this.photos,
-    required this.onFromAddressSelection,
-    required this.onToAddressSelection,
-    required this.onRecipientForm,
-    required this.onDescriptionForm,
-    required this.onPickPhoto,
-    required this.onRemovePhoto,
     this.onWeightTap,
     this.onSubmitOrder,
     this.isAnalyzing = false,
@@ -81,9 +70,6 @@ class HomePageContentV2 extends StatelessWidget {
           recipientPhone: recipientPhone,
           tariffWeight: tariffWeight,
           description: description,
-          onFromAddressSelection: onFromAddressSelection,
-          onToAddressSelection: onToAddressSelection,
-          onRecipientForm: onRecipientForm,
           onWeightTap: onWeightTap,
         ),
         const SizedBox(height: AppSpacing.xl),
@@ -136,9 +122,6 @@ class _OrderFieldsSection extends StatelessWidget {
   final String? recipientPhone;
   final double? tariffWeight;
   final String? description;
-  final VoidCallback onFromAddressSelection;
-  final VoidCallback onToAddressSelection;
-  final VoidCallback onRecipientForm;
   final VoidCallback? onWeightTap;
 
   const _OrderFieldsSection({
@@ -148,9 +131,6 @@ class _OrderFieldsSection extends StatelessWidget {
     required this.recipientPhone,
     required this.tariffWeight,
     required this.description,
-    required this.onFromAddressSelection,
-    required this.onToAddressSelection,
-    required this.onRecipientForm,
     required this.onWeightTap,
   });
 

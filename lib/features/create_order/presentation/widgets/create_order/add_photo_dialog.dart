@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
-import 'package:fly_cargo/features/create_order/domain/enitites/order_photo.dart';
+import 'package:fly_cargo/features/create_order/domain/enitites/order_photo_entity.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,7 +46,7 @@ class AddPhotoDialog {
 
   Future<ViewType?> openPhoto(
     BuildContext context,
-    OrderPhoto photo,
+    OrderPhotoEntity photo,
   ) {
     return BeBottomDialog.showBottomDialog<ViewType?>(
       context: context,

@@ -5,24 +5,24 @@ sealed class PhotosState {
 }
 
 class PhotosPickerState extends PhotosState with EquatableMixin {
-  final List<OrderPhoto> photos;
+  final List<OrderPhotoEntity> photos;
 
   const PhotosPickerState(this.photos);
 
   const PhotosPickerState.empty() : photos = const [];
 
-  PhotosPickerState withItem(OrderPhoto photo) {
+  PhotosPickerState withItem(OrderPhotoEntity photo) {
     return PhotosPickerState([photo, ...photos]);
   }
 
-  PhotosPickerState withReplace(OrderPhoto photo) {
+  PhotosPickerState withReplace(OrderPhotoEntity photo) {
     final list = photos.map((element) {
       return element.key == photo.key ? photo : element;
     }).toList();
     return PhotosPickerState(list);
   }
 
-  PhotosPickerState omit(OrderPhoto photo) {
+  PhotosPickerState omit(OrderPhotoEntity photo) {
     final list = photos.where((element) {
       return element.key != photo.key;
     }).toList();

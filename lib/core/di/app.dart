@@ -8,8 +8,6 @@ import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dar
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
-import 'package:fly_cargo/features/tariff/presentation/bloc/tariff_selection_bloc.dart';
-import 'package:fly_cargo/features/tariffs/presentation/bloc/tariffs_bloc.dart';
 // import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 // import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
 // import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
@@ -36,12 +34,8 @@ class App {
                 getIt<AuthorizationBloc>()..add(AuthorizationGetSessionEvent()),
           ),
           BlocProvider<LocaleCubit>(create: (_) => getIt<LocaleCubit>()),
-          BlocProvider<TariffsBloc>(create: (_) => getIt<TariffsBloc>()),
           BlocProvider<PriceCalculationBloc>(
             create: (_) => getIt<PriceCalculationBloc>(),
-          ),
-          BlocProvider<TariffSelectionBloc>(
-            create: (_) => getIt<TariffSelectionBloc>(),
           ),
           BlocProvider<CreateOrderBloc>(
             create: (_) => getIt<CreateOrderBloc>(),

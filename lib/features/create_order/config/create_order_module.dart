@@ -1,7 +1,6 @@
 import 'package:fly_cargo/features/create_order/domain/usecases/calculate_order_price_usecase.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/create_order_usecase.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/pre_create_order_usecase.dart';
-import 'package:fly_cargo/features/create_order/domain/usecases/upload_order_photo_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/price_calculation_bloc.dart';
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
@@ -15,25 +14,21 @@ abstract class CreateOrderModule {
   PreCreateOrderUseCase preCreateOrderUseCase(OrdersRepository repository) =>
       PreCreateOrderUseCase(repository);
 
-  UploadOrderPhotoUseCase uploadOrderPhotoUseCase(OrdersRepository repository) =>
-      UploadOrderPhotoUseCase(repository);
-
   CalculateOrderPriceUseCase calculateOrderPriceUseCase(
-          OrdersRepository repository) =>
-      CalculateOrderPriceUseCase(repository);
+    OrdersRepository repository,
+  ) => CalculateOrderPriceUseCase(repository);
 
   CreateOrderBloc createOrderBloc(
     CreateOrderUseCase createOrderUseCase,
     PreCreateOrderUseCase preCreateOrderUseCase,
-  ) =>
-      CreateOrderBloc(
-        createOrderUseCase,
-        preCreateOrderUseCase,
-      );
+  ) => CreateOrderBloc(
+    createOrderUseCase,
+    preCreateOrderUseCase,
+  );
 
   PriceCalculationBloc priceCalculationBloc(
     CalculateOrderPriceUseCase calculateOrderPriceUseCase,
-  ) =>
-      PriceCalculationBloc(calculateOrderPriceUseCase: calculateOrderPriceUseCase);
+  ) => PriceCalculationBloc(
+    calculateOrderPriceUseCase: calculateOrderPriceUseCase,
+  );
 }
-

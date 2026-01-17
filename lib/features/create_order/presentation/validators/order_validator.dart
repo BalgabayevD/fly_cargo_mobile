@@ -1,5 +1,5 @@
+import 'package:fly_cargo/features/create_order/data/models/tariff_models.dart';
 import 'package:fly_cargo/features/destination/data/models/destination_models.dart';
-import 'package:fly_cargo/features/tariffs/data/models/tariff_models.dart';
 
 class OrderValidator {
   static String? validateSubmitOrder({
@@ -30,4 +30,3 @@ class OrderValidator {
     return null;
   }
 }
-
