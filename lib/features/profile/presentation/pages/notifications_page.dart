@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 class NotificationsPage extends StatelessWidget {
-  static const String path = 'notifications';
+  static const String path = '/notifications';
+
+  static String location() => Uri(path: path).toString();
 
   const NotificationsPage({super.key});
 
@@ -22,9 +25,11 @@ class NotificationsPage extends StatelessWidget {
     return BePage(
       title: context.l10n.notificationSettings,
       automaticallyImplyLeading: true,
-      centerTitle: false,
+      centerTitle: true,
+      isBorder: true,
       child: ListView(
         children: [
+          BeSpace(size: .xxl),
           _NotificationSettingTile(
             title: 'Push-уведомления',
             description: 'Получать уведомления о статусе заказов',

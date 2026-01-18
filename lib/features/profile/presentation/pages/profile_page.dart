@@ -10,7 +10,9 @@ import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dar
 import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
-  static const String path = 'profile';
+  static const String path = '/profile';
+
+  static String location() => Uri(path: path).toString();
 
   const ProfilePage({super.key});
 
@@ -77,36 +79,36 @@ class ProfilePage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    BeSpace(size: .xxl, direction: .vertical),
+                    BeSpace(size: .xxl),
                     FieldListTile(
                       label: context.l10n.phoneNumber,
                       value: user.phoneNumber ?? '',
                       isShowIcon: false,
                     ),
-                    BeSpace(size: .md),
+                    BeSpace(size: .xxl),
                     FieldListTile(
                       label: context.l10n.firstName,
-                      value: user.firstName ?? '',
+                      value: user.name ?? '',
                       isShowIcon: false,
                     ),
-                    BeSpace(size: .md),
-                    FieldListTile(
-                      label: context.l10n.lastName,
-                      value: user.lastName ?? '',
-                      isShowIcon: false,
-                    ),
-                    BeSpace(size: .md),
-                    FieldListTile(
-                      label: context.l10n.middleName,
-                      value: user.middleName ?? '',
-                      isShowIcon: false,
-                    ),
-                    BeSpace(size: .md),
-                    FieldListTile(
-                      label: context.l10n.birthDate,
-                      value: user.birthDay ?? '',
-                      isShowIcon: false,
-                    ),
+                    // BeSpace(size: .xxl),
+                    // FieldListTile(
+                    //   label: context.l10n.lastName,
+                    //   value: user.lastName ?? '',
+                    //   isShowIcon: false,
+                    // ),
+                    // BeSpace(size: .xxl),
+                    // FieldListTile(
+                    //   label: context.l10n.middleName,
+                    //   value: user.middleName ?? '',
+                    //   isShowIcon: false,
+                    // ),
+                    // BeSpace(size: .xxl),
+                    // FieldListTile(
+                    //   label: context.l10n.birthDate,
+                    //   value: user.birthDay ?? '',
+                    //   isShowIcon: false,
+                    // ),
                   ],
                 ),
               ),
@@ -138,7 +140,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.md),
+                    BeSpace(size: .xxl),
                     InkWell(
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -158,7 +160,6 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             color: AppColors.danger,
-                            decoration: TextDecoration.underline,
                             decorationColor: AppColors.danger,
                           ),
                           textAlign: TextAlign.center,

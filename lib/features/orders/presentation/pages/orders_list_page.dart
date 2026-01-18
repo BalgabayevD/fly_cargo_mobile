@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
-import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/courier_orders_tabs_widget.dart';
@@ -15,7 +14,22 @@ import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.da
 import 'package:go_router/go_router.dart';
 
 class OrdersListPage extends StatefulWidget {
+  static const String path = '/orders';
+
+  static String location() => Uri(path: path).toString();
+
   const OrdersListPage({super.key});
+
+  static GoRoute route({
+    List<RouteBase> routes = const <RouteBase>[],
+    GlobalKey<NavigatorState>? parentNavigatorKey,
+  }) {
+    return GoRoute(
+      path: path,
+      builder: (context, state) => const OrdersListPage(),
+      routes: routes,
+    );
+  }
 
   @override
   State<OrdersListPage> createState() => _OrdersListPageState();
@@ -60,7 +74,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
 
   void _onOrderTap(OrderEntity order) {
     context
-        .push('${AppRoutes.orders}/${AppRoutes.orderDetail}/${order.id}')
+        .push('${OrdersListPage.path}/order-detail/${order.id}')
         .then((_) => _loadOrders());
   }
 

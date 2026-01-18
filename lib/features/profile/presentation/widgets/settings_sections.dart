@@ -20,12 +20,12 @@ class AuthSection extends StatelessWidget {
     String? lastName,
     String? name,
   ) {
-    if (firstName != null && firstName.isNotEmpty) {
-      if (lastName != null && lastName.isNotEmpty) {
-        return '$firstName $lastName';
-      }
-      return firstName;
-    }
+    // if (firstName != null && firstName.isNotEmpty) {
+    //   if (lastName != null && lastName.isNotEmpty) {
+    //     return '$firstName $lastName';
+    //   }
+    //   return firstName;
+    // }
     if (name != null && name.isNotEmpty) {
       return name;
     }
