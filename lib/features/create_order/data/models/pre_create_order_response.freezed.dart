@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PreCreateOrderData {
 
- double get weight; int get tariffId; String get description; int get height; int get length; int get width;
+ String get description; int get tariffId; double get weight; double get height; double get length; double get width;
 /// Create a copy of PreCreateOrderData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PreCreateOrderDataCopyWith<PreCreateOrderData> get copyWith => _$PreCreateOrder
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PreCreateOrderData&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.description, description) || other.description == description)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&(identical(other.width, width) || other.width == width));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PreCreateOrderData&&(identical(other.description, description) || other.description == description)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&(identical(other.width, width) || other.width == width));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,weight,tariffId,description,height,length,width);
+int get hashCode => Object.hash(runtimeType,description,tariffId,weight,height,length,width);
 
 @override
 String toString() {
-  return 'PreCreateOrderData(weight: $weight, tariffId: $tariffId, description: $description, height: $height, length: $length, width: $width)';
+  return 'PreCreateOrderData(description: $description, tariffId: $tariffId, weight: $weight, height: $height, length: $length, width: $width)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PreCreateOrderDataCopyWith<$Res>  {
   factory $PreCreateOrderDataCopyWith(PreCreateOrderData value, $Res Function(PreCreateOrderData) _then) = _$PreCreateOrderDataCopyWithImpl;
 @useResult
 $Res call({
- double weight, int tariffId, String description, int height, int length, int width
+ String description, int tariffId, double weight, double height, double length, double width
 });
 
 
@@ -65,15 +65,15 @@ class _$PreCreateOrderDataCopyWithImpl<$Res>
 
 /// Create a copy of PreCreateOrderData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? weight = null,Object? tariffId = null,Object? description = null,Object? height = null,Object? length = null,Object? width = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? description = null,Object? tariffId = null,Object? weight = null,Object? height = null,Object? length = null,Object? width = null,}) {
   return _then(_self.copyWith(
-weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as double,tariffId: null == tariffId ? _self.tariffId : tariffId // ignore: cast_nullable_to_non_nullable
-as int,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
-as int,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
-as int,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
-as int,
+description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,tariffId: null == tariffId ? _self.tariffId : tariffId // ignore: cast_nullable_to_non_nullable
+as int,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as double,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as double,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
+as double,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 
@@ -155,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double weight,  int tariffId,  String description,  int height,  int length,  int width)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String description,  int tariffId,  double weight,  double height,  double length,  double width)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PreCreateOrderData() when $default != null:
-return $default(_that.weight,_that.tariffId,_that.description,_that.height,_that.length,_that.width);case _:
+return $default(_that.description,_that.tariffId,_that.weight,_that.height,_that.length,_that.width);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return $default(_that.weight,_that.tariffId,_that.description,_that.height,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double weight,  int tariffId,  String description,  int height,  int length,  int width)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String description,  int tariffId,  double weight,  double height,  double length,  double width)  $default,) {final _that = this;
 switch (_that) {
 case _PreCreateOrderData():
-return $default(_that.weight,_that.tariffId,_that.description,_that.height,_that.length,_that.width);}
+return $default(_that.description,_that.tariffId,_that.weight,_that.height,_that.length,_that.width);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -193,10 +193,10 @@ return $default(_that.weight,_that.tariffId,_that.description,_that.height,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double weight,  int tariffId,  String description,  int height,  int length,  int width)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String description,  int tariffId,  double weight,  double height,  double length,  double width)?  $default,) {final _that = this;
 switch (_that) {
 case _PreCreateOrderData() when $default != null:
-return $default(_that.weight,_that.tariffId,_that.description,_that.height,_that.length,_that.width);case _:
+return $default(_that.description,_that.tariffId,_that.weight,_that.height,_that.length,_that.width);case _:
   return null;
 
 }
@@ -208,15 +208,15 @@ return $default(_that.weight,_that.tariffId,_that.description,_that.height,_that
 @JsonSerializable()
 
 class _PreCreateOrderData implements PreCreateOrderData {
-  const _PreCreateOrderData({required this.weight, required this.tariffId, required this.description, required this.height, required this.length, required this.width});
+  const _PreCreateOrderData({required this.description, required this.tariffId, required this.weight, required this.height, required this.length, required this.width});
   factory _PreCreateOrderData.fromJson(Map<String, dynamic> json) => _$PreCreateOrderDataFromJson(json);
 
-@override final  double weight;
-@override final  int tariffId;
 @override final  String description;
-@override final  int height;
-@override final  int length;
-@override final  int width;
+@override final  int tariffId;
+@override final  double weight;
+@override final  double height;
+@override final  double length;
+@override final  double width;
 
 /// Create a copy of PreCreateOrderData
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PreCreateOrderData&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.description, description) || other.description == description)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&(identical(other.width, width) || other.width == width));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PreCreateOrderData&&(identical(other.description, description) || other.description == description)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.height, height) || other.height == height)&&(identical(other.length, length) || other.length == length)&&(identical(other.width, width) || other.width == width));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,weight,tariffId,description,height,length,width);
+int get hashCode => Object.hash(runtimeType,description,tariffId,weight,height,length,width);
 
 @override
 String toString() {
-  return 'PreCreateOrderData(weight: $weight, tariffId: $tariffId, description: $description, height: $height, length: $length, width: $width)';
+  return 'PreCreateOrderData(description: $description, tariffId: $tariffId, weight: $weight, height: $height, length: $length, width: $width)';
 }
 
 
@@ -251,7 +251,7 @@ abstract mixin class _$PreCreateOrderDataCopyWith<$Res> implements $PreCreateOrd
   factory _$PreCreateOrderDataCopyWith(_PreCreateOrderData value, $Res Function(_PreCreateOrderData) _then) = __$PreCreateOrderDataCopyWithImpl;
 @override @useResult
 $Res call({
- double weight, int tariffId, String description, int height, int length, int width
+ String description, int tariffId, double weight, double height, double length, double width
 });
 
 
@@ -268,15 +268,15 @@ class __$PreCreateOrderDataCopyWithImpl<$Res>
 
 /// Create a copy of PreCreateOrderData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? weight = null,Object? tariffId = null,Object? description = null,Object? height = null,Object? length = null,Object? width = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? description = null,Object? tariffId = null,Object? weight = null,Object? height = null,Object? length = null,Object? width = null,}) {
   return _then(_PreCreateOrderData(
-weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as double,tariffId: null == tariffId ? _self.tariffId : tariffId // ignore: cast_nullable_to_non_nullable
-as int,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
-as int,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
-as int,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
-as int,
+description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,tariffId: null == tariffId ? _self.tariffId : tariffId // ignore: cast_nullable_to_non_nullable
+as int,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as double,height: null == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as double,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
+as double,width: null == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 

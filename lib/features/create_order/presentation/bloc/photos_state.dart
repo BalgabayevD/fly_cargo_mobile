@@ -33,4 +33,6 @@ class PhotosPickerState extends PhotosState with EquatableMixin {
   List<Object?> get props => [photos];
 
   int get itemsCount => min(photos.length + 1, 5);
+  bool get isFulfilled =>
+      photos.every((e) => e.fingerprint != null) && photos.length == 5;
 }

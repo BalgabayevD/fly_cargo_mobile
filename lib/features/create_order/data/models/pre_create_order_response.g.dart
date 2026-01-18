@@ -8,19 +8,19 @@ part of 'pre_create_order_response.dart';
 
 _PreCreateOrderData _$PreCreateOrderDataFromJson(Map<String, dynamic> json) =>
     _PreCreateOrderData(
-      weight: (json['weight'] as num).toDouble(),
-      tariffId: (json['tariffId'] as num).toInt(),
       description: json['description'] as String,
-      height: (json['height'] as num).toInt(),
-      length: (json['length'] as num).toInt(),
-      width: (json['width'] as num).toInt(),
+      tariffId: (json['tariffId'] as num).toInt(),
+      weight: (json['weight'] as num).toDouble(),
+      height: (json['height'] as num).toDouble(),
+      length: (json['length'] as num).toDouble(),
+      width: (json['width'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$PreCreateOrderDataToJson(_PreCreateOrderData instance) =>
     <String, dynamic>{
-      'weight': instance.weight,
-      'tariffId': instance.tariffId,
       'description': instance.description,
+      'tariffId': instance.tariffId,
+      'weight': instance.weight,
       'height': instance.height,
       'length': instance.length,
       'width': instance.width,

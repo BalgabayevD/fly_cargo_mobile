@@ -3,14 +3,13 @@
 part 'pre_create_order_response.freezed.dart';
 part 'pre_create_order_response.g.dart';
 
-/// Статус анализа фотографий
 enum AnalysisStatus {
   @JsonValue('NONE')
   none, // Достаточно фото
-  
+
   @JsonValue('MORE_PHOTO_INSIDE')
   morePhotoInside, // Нужно больше фото содержимого
-  
+
   @JsonValue('MORE_PHOTO_OUTSIDE')
   morePhotoOutside, // Нужно больше фото снаружи
 }
@@ -18,12 +17,12 @@ enum AnalysisStatus {
 @freezed
 sealed class PreCreateOrderData with _$PreCreateOrderData {
   const factory PreCreateOrderData({
-    required double weight,
-    required int tariffId,
     required String description,
-    required int height,
-    required int length,
-    required int width,
+    required int tariffId,
+    required double weight,
+    required double height,
+    required double length,
+    required double width,
   }) = _PreCreateOrderData;
 
   factory PreCreateOrderData.fromJson(Map<String, dynamic> json) =>

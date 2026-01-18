@@ -142,7 +142,7 @@ class CheckListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: BaseListTile(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Row(
           crossAxisAlignment: .center,
           spacing: 16,
@@ -161,29 +161,33 @@ class CheckListTile extends StatelessWidget {
               ),
 
             if (child == null)
-              Column(
-                mainAxisAlignment: .center,
-                crossAxisAlignment: .start,
-                children: [
-                  if (title != null)
-                    Text(
-                      title!,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 17,
-                        fontWeight: .w500,
-                        color: BeColors.surface5,
+              Expanded(
+                child: Column(
+                  spacing: 3,
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .start,
+                  children: [
+                    if (title != null)
+                      Text(
+                        title!,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 17,
+                          height: 1,
+                          fontWeight: .w500,
+                          color: BeColors.surface5,
+                        ),
                       ),
-                    ),
-                  if (description != null)
-                    Text(
-                      description!,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 13,
-                        height: 1,
-                        color: BeColors.surface4,
+                    if (description != null)
+                      Text(
+                        description!,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          height: 1,
+                          color: BeColors.surface4,
+                        ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
 
             if (child != null) child!,

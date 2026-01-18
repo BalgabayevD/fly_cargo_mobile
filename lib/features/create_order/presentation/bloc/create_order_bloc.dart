@@ -1,17 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/features/create_order/data/models/order_data.dart';
-import 'package:fly_cargo/features/create_order/domain/usecases/create_order_usecase.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/pre_create_order_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_event.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_order_state.dart';
 
 class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
-  final CreateOrderUseCase _createOrderUseCase;
   final PreCreateOrderUseCase _preCreateOrderUseCase;
 
   CreateOrderBloc(
-    this._createOrderUseCase,
     this._preCreateOrderUseCase,
   ) : super(const CreateOrderInitial()) {
     on<CreateOrderSubmitEvent>(_onCreateOrder);
@@ -25,10 +22,7 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     Emitter<CreateOrderState> emit,
   ) async {
     emit(const CreateOrderLoading());
-    try {
-      final result = await _createOrderUseCase.call(event.orderData);
-      emit(OrderCreated(orderResult: result));
-    } catch (e) {
+    try {} catch (e) {
       if (_isUnauthorized(e)) {
         emit(const CreateOrderUnauthorized());
       } else {
@@ -43,30 +37,38 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   ) async {
     // Валидация данных
     if (event.fromAddress == null || event.toAddress == null) {
-      emit(const OrderValidationError(
-        message: 'Укажите адреса отправки и доставки',
-      ));
+      emit(
+        const OrderValidationError(
+          message: 'Укажите адреса отправки и доставки',
+        ),
+      );
       return;
     }
 
     if (event.recipientName == null || event.recipientPhone == null) {
-      emit(const OrderValidationError(
-        message: 'Укажите данные получателя',
-      ));
+      emit(
+        const OrderValidationError(
+          message: 'Укажите данные получателя',
+        ),
+      );
       return;
     }
 
     if (event.selectedTariffId == null || event.selectedTariff == null) {
-      emit(const OrderValidationError(
-        message: 'Выберите тариф',
-      ));
+      emit(
+        const OrderValidationError(
+          message: 'Выберите тариф',
+        ),
+      );
       return;
     }
 
     if (event.description == null || event.description!.isEmpty) {
-      emit(const OrderValidationError(
-        message: 'Укажите описание посылки',
-      ));
+      emit(
+        const OrderValidationError(
+          message: 'Укажите описание посылки',
+        ),
+      );
       return;
     }
 
@@ -112,10 +114,7 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
 
     // Создание заказа
     emit(const CreateOrderLoading());
-    try {
-      final result = await _createOrderUseCase.call(orderData);
-      emit(OrderCreated(orderResult: result));
-    } catch (e) {
+    try {} catch (e) {
       if (_isUnauthorized(e)) {
         emit(const CreateOrderUnauthorized());
       } else {
@@ -131,10 +130,12 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     emit(const CreateOrderLoading());
     try {
       final result = await _preCreateOrderUseCase.call(event.images);
-      emit(PreOrderAnalyzed(
-        preOrderData: result.result,
-        analysisStatus: result.status,
-      ));
+      emit(
+        PreOrderAnalyzed(
+          preOrderData: result.result,
+          analysisStatus: result.status,
+        ),
+      );
     } catch (e) {
       if (_isUnauthorized(e)) {
         emit(const CreateOrderUnauthorized());
@@ -144,7 +145,10 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     }
   }
 
-  void _onResetOrder(ResetCreateOrderEvent event, Emitter<CreateOrderState> emit) {
+  void _onResetOrder(
+    ResetCreateOrderEvent event,
+    Emitter<CreateOrderState> emit,
+  ) {
     emit(const CreateOrderInitial());
   }
 
@@ -156,4 +160,3 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
         e.toString().toLowerCase().contains('unauthorized');
   }
 }
-
