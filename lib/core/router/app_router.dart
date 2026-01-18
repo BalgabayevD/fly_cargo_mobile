@@ -26,20 +26,13 @@ class AppRoutes {
 
   // Main Shell
   static const home = '/home';
-  static const orders = '/orders';
-  // static const settings = SettingsPage.path;
 
   // Home Sub-pages
   static const descriptionForm = 'description-form';
   static const recipientForm = 'recipient-form'; // Or recipient page?
   static const recipientPage = 'recipient';
 
-  // Orders Sub-pages
-  static const orderDetail = 'order-detail';
-
   // Settings Sub-pages
-  // static const profile = ProfilePage.path;
-  // static const contacts = ContactsPage.path;
   static const notifications = 'notifications';
 
   // User Demo Flow
@@ -151,16 +144,6 @@ GoRouter createRouter(
                       // );
                     },
                   ),
-                  // GoRoute(
-                  //   path: AppRoutes.recipientPage,
-                  //   parentNavigatorKey: _rootNavigator,
-                  //   builder: (context, state) => const RecipientPage(),
-                  // ),
-                  // GoRoute(
-                  //   path: AppRoutes.recipientForm,
-                  //   parentNavigatorKey: _rootNavigator,
-                  //   builder: (context, state) => const RecipientFormPage(),
-                  // ),
                 ],
               ),
             ],
@@ -168,16 +151,14 @@ GoRouter createRouter(
                 StatefulShellBranch(
                   navigatorKey: _ordersNavigatorKey,
                   routes: [
-                    GoRoute(
-                      path: AppRoutes.orders,
-                      builder: (context, state) => const OrdersListPage(),
+                    OrdersListPage.route(
                       routes: [
                         GoRoute(
-                          path: '${AppRoutes.orderDetail}/:orderId',
+                          path: 'order-detail/:orderId',
                           parentNavigatorKey: _rootNavigator,
                           builder: (context, state) {
                             final orderIdStr = state.pathParameters['orderId'];
-          
+
                             if (orderIdStr == null || orderIdStr.isEmpty) {
                               return const Scaffold(
                                 body: Center(
@@ -185,7 +166,7 @@ GoRouter createRouter(
                                 ),
                               );
                             }
-          
+
                             return OrderDetailLoaderPage(orderId: orderIdStr);
                           },
                         ),
@@ -203,34 +184,13 @@ GoRouter createRouter(
       ),
 
       // Profile and Settings sub-pages (full screen, outside of shell)
-      GoRoute(
-        path: '/profile',
-        builder: (context, state) => const ProfilePage(),
-      ),
-      GoRoute(
-        path: '/contacts',
-        builder: (context, state) => const ContactsPage(),
-      ),
-      GoRoute(
-        path: '/notifications',
-        builder: (context, state) => const NotificationsPage(),
-      ),
-      GoRoute(
-        path: '/privacy-policy',
-        builder: (context, state) => const PrivacyPolicyPage(),
-      ),
-      GoRoute(
-        path: TermsOfServicePage.path,
-        builder: (context, state) => const TermsOfServicePage(),
-      ),
-      GoRoute(
-        path: LegalEntitiesPage.path,
-        builder: (context, state) => const LegalEntitiesPage(),
-      ),
-      GoRoute(
-        path: TransportationRulesPage.path,
-        builder: (context, state) => const TransportationRulesPage(),
-      ),
+      ProfilePage.route(),
+      ContactsPage.route(),
+      NotificationsPage.route(),
+      PrivacyPolicyPage.route(),
+      TermsOfServicePage.route(),
+      LegalEntitiesPage.route(),
+      TransportationRulesPage.route(),
     ],
   );
 }
