@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +29,7 @@ class NotificationsPage extends StatelessWidget {
       isBorder: true,
       child: ListView(
         children: [
+          BeSpace(size: .xxl),
           _NotificationSettingTile(
             title: 'Push-уведомления',
             description: 'Получать уведомления о статусе заказов',
