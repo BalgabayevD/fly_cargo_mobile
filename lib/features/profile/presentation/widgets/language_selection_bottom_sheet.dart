@@ -137,6 +137,7 @@ class _LanguageSelectionHeader extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.sm),
       child: Row(
         children: [
+          const SizedBox(width: 48),
           Expanded(
             child: Text(
               context.l10n.appLanguage,

@@ -6,13 +6,19 @@ import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/privacy_policy_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/terms_of_service_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/transportation_rules_page.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   static const String path = '/settings';
@@ -71,7 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 AuthSection(
                   onProfileTap: () {
-                    context.push('/profile');
+                    context.push(ProfilePage.location());
                   },
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -83,22 +89,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 LightListTile(
                   title: context.l10n.notificationSettings,
                   onTap: () {
-                    context.push('/notifications');
+                    context.push(NotificationsPage.location());
                   },
                 ),
                 LightListTile(
                   title: context.l10n.privacyPolicyTitle,
-                  onTap: () => _openUrl('https://example.com/privacy'),
+                  onTap: () => context.push(PrivacyPolicyPage.location()),
                   endContent: HeroIcon(
                     HeroIcons.arrowTopRightOnSquare,
                     size: 20,
                     color: AppColors.surface4,
                   ),
                 ),
-
                 LightListTile(
                   title: context.l10n.termsOfServiceTitle,
-                  onTap: () => _openUrl('https://example.com/terms'),
+                  onTap: () => context.push(TermsOfServicePage.location()),
                   endContent: HeroIcon(
                     HeroIcons.arrowTopRightOnSquare,
                     size: 20,
@@ -107,13 +112,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 LightListTile(
                   title: context.l10n.contacts,
-                  onTap: () {
-                    context.push('/contacts');
-                  },
+                  onTap: () => context.push(ContactsPage.location()),
                 ),
                 LightListTile(
                   title: context.l10n.forLegalEntities,
-                  onTap: () => _openUrl('https://example.com/legal'),
+                  onTap: () => context.push(LegalEntitiesPage.location()),
                   endContent: HeroIcon(
                     HeroIcons.arrowTopRightOnSquare,
                     size: 20,
@@ -122,7 +125,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 LightListTile(
                   title: context.l10n.transportationRules,
-                  onTap: () => _openUrl('https://example.com/rules'),
+                  onTap: () => context.push(TransportationRulesPage.location()),
                   endContent: HeroIcon(
                     HeroIcons.arrowTopRightOnSquare,
                     size: 20,
@@ -136,12 +139,5 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
     );
-  }
-
-  Future<void> _openUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
   }
 }

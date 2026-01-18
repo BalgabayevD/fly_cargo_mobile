@@ -11,8 +11,12 @@ import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail
 import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/privacy_policy_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/terms_of_service_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/transportation_rules_page.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -210,6 +214,22 @@ GoRouter createRouter(
       GoRoute(
         path: '/notifications',
         builder: (context, state) => const NotificationsPage(),
+      ),
+      GoRoute(
+        path: '/privacy-policy',
+        builder: (context, state) => const PrivacyPolicyPage(),
+      ),
+      GoRoute(
+        path: TermsOfServicePage.path,
+        builder: (context, state) => const TermsOfServicePage(),
+      ),
+      GoRoute(
+        path: LegalEntitiesPage.path,
+        builder: (context, state) => const LegalEntitiesPage(),
+      ),
+      GoRoute(
+        path: TransportationRulesPage.path,
+        builder: (context, state) => const TransportationRulesPage(),
       ),
     ],
   );

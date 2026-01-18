@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +8,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactsPage extends StatelessWidget {
-  static const String path = 'contacts';
+  static const String path = '/contacts';
+
+  static String location() => Uri(path: path).toString();
 
   const ContactsPage({super.key});
 
@@ -25,7 +28,7 @@ class ContactsPage extends StatelessWidget {
       isBorder: true,
       title: context.l10n.contacts,
       automaticallyImplyLeading: true,
-      centerTitle: false,
+      centerTitle: true,
       child: ListView(
         children: [
           Column(
@@ -36,25 +39,25 @@ class ContactsPage extends StatelessWidget {
                 label: context.l10n.contactPhone,
                 value: '+7 727 123-456',
               ),
-              const SizedBox(height: AppSpacing.xxxl),
+              BeSpace(size: .xxl),
               _ContactItemWidget(
                 icon: HeroIcons.devicePhoneMobile,
                 label: context.l10n.mobilePhone,
                 value: '+7 (777) 231-24-12',
               ),
-              const SizedBox(height: AppSpacing.xxxl),
+              BeSpace(size: .xxl),
               _ContactItemWidget(
                 icon: HeroIcons.envelope,
                 label: context.l10n.email,
                 value: 'sapsano@gmail.com',
               ),
-              const SizedBox(height: AppSpacing.xxxl),
+              BeSpace(size: .xxl),
               _ContactItemWidget(
                 icon: HeroIcons.chatBubbleLeftRight,
                 label: context.l10n.whatsapp,
                 value: '+7 (777) 231-24-12',
               ),
-              const SizedBox(height: AppSpacing.xxxl),
+              BeSpace(size: .xxl),
               _ContactItemWidget(
                 icon: HeroIcons.mapPin,
                 label: context.l10n.legalAddress,
@@ -62,7 +65,7 @@ class ContactsPage extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          BeSpace(size: .xxl),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Column(
@@ -102,7 +105,7 @@ class ContactsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md),
+                BeSpace(size: .xxl),
                 SizedBox(
                   width: double.infinity,
                   height: 56,

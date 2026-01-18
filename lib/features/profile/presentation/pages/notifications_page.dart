@@ -5,7 +5,9 @@ import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 class NotificationsPage extends StatelessWidget {
-  static const String path = 'notifications';
+  static const String path = '/notifications';
+
+  static String location() => Uri(path: path).toString();
 
   const NotificationsPage({super.key});
 
@@ -22,7 +24,8 @@ class NotificationsPage extends StatelessWidget {
     return BePage(
       title: context.l10n.notificationSettings,
       automaticallyImplyLeading: true,
-      centerTitle: false,
+      centerTitle: true,
+      isBorder: true,
       child: ListView(
         children: [
           _NotificationSettingTile(
