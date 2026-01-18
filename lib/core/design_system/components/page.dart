@@ -13,6 +13,7 @@ class BePage extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool? isBorder;
   final Color backgroundColor;
+  final Color appBarColor;
 
   const BePage({
     required this.child,
@@ -25,6 +26,7 @@ class BePage extends StatelessWidget {
     this.automaticallyImplyLeading = true,
     this.isBorder,
     this.backgroundColor = BeColors.surface2,
+    this.appBarColor = BeColors.none,
     super.key,
   });
 
@@ -46,6 +48,7 @@ class BePage extends StatelessWidget {
           isBorder: isBorder,
           centerTitle: centerTitle,
           automaticallyImplyLeading: automaticallyImplyLeading,
+          appBarColor: appBarColor,
         ),
         body: Stack(
           fit: .expand,

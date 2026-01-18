@@ -1389,6 +1389,36 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Стоимость: {amount} тг'**
   String orderCost(String amount);
+
+  /// Default user name when name is not provided
+  ///
+  /// In ru, this message translates to:
+  /// **'Пользователь'**
+  String get user;
+
+  /// First name label
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get firstName;
+
+  /// Last name label
+  ///
+  /// In ru, this message translates to:
+  /// **'Фамилия'**
+  String get lastName;
+
+  /// Middle name label
+  ///
+  /// In ru, this message translates to:
+  /// **'Отчество'**
+  String get middleName;
+
+  /// Birth date label
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата рождения'**
+  String get birthDate;
 }
 
 class _AppLocalizationsDelegate

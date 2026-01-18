@@ -9,17 +9,18 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final bool automaticallyImplyLeading;
   final bool? isBorder;
-
+  final Color appBarColor;
   final List<Widget>? actions;
 
   const BeAppBar({
-    super.key,
     required this.title,
+    super.key,
     this.actions,
     this.leading,
     this.centerTitle,
     this.automaticallyImplyLeading = true,
     this.isBorder = false,
+    this.appBarColor = BeColors.none,
   });
 
   Widget? get _leading {
@@ -41,7 +42,7 @@ class BeAppBar extends StatelessWidget implements PreferredSizeWidget {
       systemOverlayStyle: .dark,
       automaticallyImplyLeading: automaticallyImplyLeading,
       actions: actions,
-      backgroundColor: BeColors.none,
+      backgroundColor: appBarColor,
       surfaceTintColor: BeColors.none,
     );
   }

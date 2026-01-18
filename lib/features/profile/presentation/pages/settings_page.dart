@@ -1,9 +1,16 @@
 import 'dart:developer' show log;
 
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/design_system/components/list_tile.dart';
+import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
+import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
 import 'package:go_router/go_router.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,76 +56,85 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.surface,
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          context.l10n.settings,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: AppColors.surface5,
+    return BePage(
+      title: context.l10n.settings,
+      automaticallyImplyLeading: false,
+      centerTitle: true,
+      isBorder: true,
+      padding: EdgeInsets.zero,
+      appBarColor: BeColors.white,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                AuthSection(
+                  onProfileTap: () {
+                    context.push('/profile');
+                  },
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                LanguageSection(
+                  onTap: () {
+                    LanguageSelectionBottomSheet.show(context);
+                  },
+                ),
+                LightListTile(
+                  title: context.l10n.notificationSettings,
+                  onTap: () {
+                    context.push('/notifications');
+                  },
+                ),
+                LightListTile(
+                  title: context.l10n.privacyPolicyTitle,
+                  onTap: () => _openUrl('https://example.com/privacy'),
+                  endContent: HeroIcon(
+                    HeroIcons.arrowTopRightOnSquare,
+                    size: 20,
+                    color: AppColors.surface4,
+                  ),
+                ),
+
+                LightListTile(
+                  title: context.l10n.termsOfServiceTitle,
+                  onTap: () => _openUrl('https://example.com/terms'),
+                  endContent: HeroIcon(
+                    HeroIcons.arrowTopRightOnSquare,
+                    size: 20,
+                    color: AppColors.surface4,
+                  ),
+                ),
+                LightListTile(
+                  title: context.l10n.contacts,
+                  onTap: () {
+                    context.push('/contacts');
+                  },
+                ),
+                LightListTile(
+                  title: context.l10n.forLegalEntities,
+                  onTap: () => _openUrl('https://example.com/legal'),
+                  endContent: HeroIcon(
+                    HeroIcons.arrowTopRightOnSquare,
+                    size: 20,
+                    color: AppColors.surface4,
+                  ),
+                ),
+                LightListTile(
+                  title: context.l10n.transportationRules,
+                  onTap: () => _openUrl('https://example.com/rules'),
+                  endContent: HeroIcon(
+                    HeroIcons.arrowTopRightOnSquare,
+                    size: 20,
+                    color: AppColors.surface4,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        centerTitle: true,
+          SettingsFooter(appVersion: _appVersion),
+        ],
       ),
-      body: Text('content'),
-      // body: BlocBuilder<AuthBloc, AuthState>(
-      //   builder: (context, authState) {
-      //     return Column(
-      //       children: [
-      //         Expanded(
-      //           child: ListView(
-      //             padding: EdgeInsets.zero,
-      //             children: [
-      //               Divider(height: 1, color: AppColors.border),
-      //               AuthSection(
-      //                 authState: authState,
-      //                 onProfileTap: () {
-      //                   context.go(
-      //                     '${AppRoutes.settings}/${AppRoutes.profile}',
-      //                   );
-      //                 },
-      //                 onAuthTap: () {
-      //                   AuthRouter.navigateToPhoneInput(context);
-      //                 },
-      //               ),
-      //               const SizedBox(height: AppSpacing.sm),
-      //               LanguageSection(
-      //                 onTap: () {
-      //                   LanguageSelectionBottomSheet.show(context);
-      //                 },
-      //               ),
-      //               NotificationsSection(
-      //                 onTap: () {
-      //                   context.go(
-      //                     '${AppRoutes.settings}/${AppRoutes.notifications}',
-      //                   );
-      //                 },
-      //               ),
-      //               ContactsSection(
-      //                 onTap: () {
-      //                   context.go(
-      //                     '${AppRoutes.settings}/${AppRoutes.contacts}',
-      //                   );
-      //                 },
-      //               ),
-      //               LegalSections(
-      //                 onPrivacyTap: () =>
-      //                     _openUrl('https://example.com/privacy'),
-      //                 onTermsTap: () => _openUrl('https://example.com/terms'),
-      //                 onLegalTap: () => _openUrl('https://example.com/legal'),
-      //                 onRulesTap: () => _openUrl('https://example.com/rules'),
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //         SettingsFooter(appVersion: _appVersion),
-      //       ],
-      //     );
-      //   },
-      // ),
     );
   }
 

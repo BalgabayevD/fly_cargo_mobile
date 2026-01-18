@@ -1197,5 +1197,30 @@
         "example": "5000"
       }
     }
+  },
+
+  "user": "Пользователь",
+  "@user": {
+    "description": "Default user name when name is not provided"
+  },
+
+  "firstName": "Имя",
+  "@firstName": {
+    "description": "First name label"
+  },
+
+  "lastName": "Фамилия",
+  "@lastName": {
+    "description": "Last name label"
+  },
+
+  "middleName": "Отчество",
+  "@middleName": {
+    "description": "Middle name label"
+  },
+
+  "birthDate": "Дата рождения",
+  "@birthDate": {
+    "description": "Birth date label"
   }
 }

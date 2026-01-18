@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
@@ -70,22 +71,12 @@ class _OrdersListPageState extends State<OrdersListPage> {
     //     authState is AuthAuthenticated && authState.userType.isCourier;
     final isCourier = false;
 
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        title: Text(
-          context.l10n.orders,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: AppColors.surface5,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Column(
+    return BePage(
+      title: context.l10n.orders,
+      automaticallyImplyLeading: false,
+      centerTitle: true,
+      isBorder: true,
+      child: Column(
         children: [
           if (isCourier)
             CourierOrdersTabsWidget(

@@ -240,5 +240,11 @@
 
   "orderNumber": "№{orderId} тапсырыс",
   "trackingNumber": "Трек нөмірі {number}",
-  "orderCost": "Құны: {amount} тг"
+  "orderCost": "Құны: {amount} тг",
+
+  "user": "Пайдаланушы",
+  "firstName": "Аты",
+  "lastName": "Тегі",
+  "middleName": "Әкесінің аты",
+  "birthDate": "Туған күні"
 }

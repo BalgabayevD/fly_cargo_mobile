@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
@@ -94,24 +95,20 @@ class _LanguageSelectionBottomSheetState
             ),
             child: Column(
               children: [
-                _LanguageOptionWidget(
-                  languageCode: 'kk',
-                  languageName: _getLanguageName(context, 'kk'),
+                CheckListTile(
+                  title: _getLanguageName(context, 'kk'),
                   isSelected: _selectedLanguageCode == 'kk',
                   onTap: () => _onLanguageSelected('kk'),
                 ),
-
                 const SizedBox(height: AppSpacing.sm),
-                _LanguageOptionWidget(
-                  languageCode: 'ru',
-                  languageName: _getLanguageName(context, 'ru'),
+                CheckListTile(
+                  title: _getLanguageName(context, 'ru'),
                   isSelected: _selectedLanguageCode == 'ru',
                   onTap: () => _onLanguageSelected('ru'),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                _LanguageOptionWidget(
-                  languageCode: 'en',
-                  languageName: _getLanguageName(context, 'en'),
+                CheckListTile(
+                  title: _getLanguageName(context, 'en'),
                   isSelected: _selectedLanguageCode == 'en',
                   onTap: () => _onLanguageSelected('en'),
                 ),
@@ -157,89 +154,6 @@ class _LanguageSelectionHeader extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _LanguageOptionWidget extends StatelessWidget {
-  final String languageCode;
-  final String languageName;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _LanguageOptionWidget({
-    required this.languageCode,
-    required this.languageName,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMD),
-          border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.surface2,
-            width: isSelected ? 2 : 1,
-          ),
-        ),
-        child: Row(
-          children: [
-            _RadioIndicator(isSelected: isSelected),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Text(
-                languageName,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: isSelected ? AppColors.surface5 : AppColors.surface4,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _RadioIndicator extends StatelessWidget {
-  final bool isSelected;
-
-  const _RadioIndicator({required this.isSelected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.border,
-          width: 2,
-        ),
-        color: isSelected ? AppColors.white : AppColors.none,
-      ),
-      child: isSelected
-          ? Center(
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary,
-                ),
-              ),
-            )
-          : null,
     );
   }
 }

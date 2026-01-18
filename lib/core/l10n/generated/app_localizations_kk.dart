@@ -693,4 +693,19 @@ class AppLocalizationsKk extends AppLocalizations {
   String orderCost(String amount) {
     return 'Құны: $amount тг';
   }
+
+  @override
+  String get user => 'Пайдаланушы';
+
+  @override
+  String get firstName => 'Аты';
+
+  @override
+  String get lastName => 'Тегі';
+
+  @override
+  String get middleName => 'Әкесінің аты';
+
+  @override
+  String get birthDate => 'Туған күні';
 }
