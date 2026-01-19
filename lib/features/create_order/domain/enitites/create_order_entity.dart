@@ -28,7 +28,7 @@ abstract class CreateOrderEntity with _$CreateOrderEntity {
     @Default('') String toEntrance,
 
     @Default('') String toName,
-    @Default('+7') String toPhone,
+    @Default('') String toPhone,
     @Default('') String fromEntrance,
     @Default('') String fromFloor,
     double? fromLatitude,

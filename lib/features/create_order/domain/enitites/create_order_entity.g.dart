@@ -36,7 +36,7 @@ _CreateOrderEntity _$CreateOrderEntityFromJson(Map<String, dynamic> json) =>
       toApartment: json['toApartment'] as String? ?? '',
       toEntrance: json['toEntrance'] as String? ?? '',
       toName: json['toName'] as String? ?? '',
-      toPhone: json['toPhone'] as String? ?? '+7',
+      toPhone: json['toPhone'] as String? ?? '',
       fromEntrance: json['fromEntrance'] as String? ?? '',
       fromFloor: json['fromFloor'] as String? ?? '',
       fromLatitude: (json['fromLatitude'] as num?)?.toDouble(),

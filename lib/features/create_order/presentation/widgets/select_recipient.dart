@@ -34,12 +34,15 @@ class SelectRecipient extends StatelessWidget {
     );
   }
 
-  String _value(String name, String phone) {
+  String? _value(String name, String phone) {
     final parts = <String>[
       if (name.isNotEmpty) name,
       if (phone.isNotEmpty) phone,
     ];
-    return parts.join(', ');
+    if (parts.isNotEmpty) {
+      return parts.join(', ');
+    }
+    return null;
   }
 
   Future<void> _onTap(

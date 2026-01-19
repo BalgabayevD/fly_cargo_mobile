@@ -62,9 +62,11 @@ class _DialogNameSelectState extends State<_DialogNameSelect> {
   late final textController = TextEditingController(
     text: widget.notifier.recipient.name,
   );
+  late final FocusNode focusNode;
   @override
   void initState() {
     super.initState();
+    focusNode = FocusNode();
     textController.addListener(() {
       widget.notifier.setName(textController.text);
     });
@@ -72,6 +74,7 @@ class _DialogNameSelectState extends State<_DialogNameSelect> {
 
   @override
   void dispose() {
+    focusNode.dispose();
     textController.dispose();
     super.dispose();
   }
@@ -82,6 +85,7 @@ class _DialogNameSelectState extends State<_DialogNameSelect> {
       listenable: widget.notifier,
       builder: (BuildContext context, Widget? child) {
         return BeFormInput(
+          focusNode: focusNode,
           variant: .bordered,
           label: context.l10n.recipientName,
           controller: textController,
@@ -101,12 +105,14 @@ class _DialogPhoneSelect extends StatefulWidget {
 }
 
 class _DialogPhoneSelectState extends State<_DialogPhoneSelect> {
+  late final FocusNode focusNode;
   late final textController = TextEditingController(
     text: widget.notifier.recipient.phone,
   );
   @override
   void initState() {
     super.initState();
+    focusNode = FocusNode();
     textController.addListener(() {
       widget.notifier.setPhone(textController.text);
     });
@@ -114,6 +120,7 @@ class _DialogPhoneSelectState extends State<_DialogPhoneSelect> {
 
   @override
   void dispose() {
+    focusNode.dispose();
     textController.dispose();
     super.dispose();
   }
@@ -124,6 +131,7 @@ class _DialogPhoneSelectState extends State<_DialogPhoneSelect> {
       listenable: widget.notifier,
       builder: (BuildContext context, Widget? child) {
         return BeFormInput(
+          focusNode: focusNode,
           variant: .bordered,
           keyboardType: .phone,
           validator: (value) {
