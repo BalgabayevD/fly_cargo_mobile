@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
-import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/features/create_order/data/models/create_order_description.dart';
+import 'package:fly_cargo/features/create_order/data/models/create_order_weight.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/create_orders_submit.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photos_status_chip.dart';
@@ -28,14 +28,9 @@ class CreateOrdersForm extends StatelessWidget {
         BeSpace(size: .xxxl),
         SelectTariffs(),
         BeSpace(size: .md),
-        BeFormInput(
-          keyboardType: .numberWithOptions(decimal: true),
-          label: context.l10n.weightInKg,
-        ),
+        CreateOrderWeight(),
         BeSpace(size: .md),
-        BeFormInput(
-          label: context.l10n.description,
-        ),
+        CreateOrderDescription(),
         BeSpace(size: .xxxl),
         CreateOrdersSubmitButton(),
         BeSpace(size: .xxxl),

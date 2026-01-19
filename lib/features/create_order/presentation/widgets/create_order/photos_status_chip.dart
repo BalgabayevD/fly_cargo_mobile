@@ -19,7 +19,8 @@ class PhotosStatusChip extends StatelessWidget {
               builder: (BuildContext context, PhotosState photosState) {
                 switch (state.photosValidationStatus) {
                   case PhotosValidationStatus.idle:
-                    if (photosState is PhotosPickerState) {
+                    if (photosState is PhotosPickerState &&
+                        photosState.photos.isNotEmpty) {
                       return BeChip(
                         text: 'Фото ${photosState.photos.length}/5',
                         color: .warning,
@@ -97,7 +98,7 @@ class _PhotosPendingChipState extends State<PhotosPendingChip> {
   @override
   Widget build(BuildContext context) {
     return BeChip(
-      text: '${percent}% загрузка',
+      text: '$percent% загрузка',
       isLoading: true,
       size: .sm,
     );

@@ -23,6 +23,6 @@ class RecipientEntity extends Equatable {
   }
 
   String get listTileLabel {
-    return '$name, ${phone}';
+    return '$name, $phone';
   }
 }

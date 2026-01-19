@@ -16,13 +16,13 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
   CreateOrdersBloc(this.createOrders)
     : super(const CreateOrdersCreateState.initial()) {
     on<AddPhotoOrdersCreateEvent>(_onAddPhotoOrdersCreate);
+    on<UpdateOrdersCreateEvent>(_updateFieldValue);
   }
 
   Future<void> _onAddPhotoOrdersCreate(
     AddPhotoOrdersCreateEvent event,
     Emitter<CreateOrdersState> emit,
   ) async {
-    print(state);
     if (state is CreateOrdersCreateState) {
       final currentState = state as CreateOrdersCreateState;
 
@@ -64,6 +64,55 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
           photosValidationStatus: photosValidationStatus,
         ),
       );
+    }
+  }
+
+  Future<void> _updateFieldValue(
+    UpdateOrdersCreateEvent event,
+    Emitter<CreateOrdersState> emit,
+  ) async {
+    if (state is CreateOrdersCreateState) {
+      final current = state as CreateOrdersCreateState;
+
+      if (event.field is UpdateOrdersWeightField) {
+        final data = current.data.copyWith(
+          weight: (event.field as UpdateOrdersWeightField).weight,
+        );
+        emit(current.copyWith(data: data));
+      }
+
+      if (event.field is UpdateOrdersDescriptionField) {
+        final field = event.field as UpdateOrdersDescriptionField;
+
+        final data = current.data.copyWith(
+          description: field.description,
+        );
+
+        emit(current.copyWith(data: data));
+      }
+
+      if (event.field is UpdateOrdersLocationField) {
+        final field = event.field as UpdateOrdersLocationField;
+
+        final data = current.data.copyWith(
+          fromCityId: field.fromCityId,
+          fromAddress: field.fromAddress,
+          fromFloor: field.fromFloor,
+          fromEntrance: field.fromEntrance,
+          fromApartment: field.fromApartment,
+          fromLatitude: field.fromLatitude,
+          fromLongitude: field.fromLongitude,
+
+          toCityId: field.toCityId,
+          toAddress: field.toAddress,
+          toFloor: field.toFloor,
+          toEntrance: field.toEntrance,
+          toApartment: field.toApartment,
+          toLatitude: field.toLatitude,
+          toLongitude: field.toLongitude,
+        );
+        emit(current.copyWith(data: data));
+      }
     }
   }
 }
