@@ -51,6 +51,7 @@ dependencies:
   cookie_jar: ^4.0.8
   pretty_dio_logger: ^1.4.0
   flutter_multi_formatter: ^2.13.10
+  flutter_markdown: ^0.7.4+3
 
 dev_dependencies:
   flutter_test:
