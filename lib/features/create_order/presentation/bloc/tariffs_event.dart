@@ -5,9 +5,3 @@ sealed class TariffsEvent {
 }
 
 class TariffsLoadEvent extends TariffsEvent {}
-
-class TariffsSelectTariffEvent extends TariffsEvent {
-  final TariffsEntity tariff;
-
-  const TariffsSelectTariffEvent(this.tariff);
-}

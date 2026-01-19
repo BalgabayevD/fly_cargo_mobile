@@ -14,44 +14,41 @@ class SelectTariffs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TariffsBloc, TariffsState>(
-      listener: (BuildContext context, TariffsState state) {
-        if (state is TariffsLoadedState &&
-            state.tariff.selectedTariffId != null) {
-          final field = UpdateOrdersTariffField(
-            state.tariff.selectedTariffId!,
-          );
-          context.read<CreateOrdersBloc>().add(UpdateOrdersCreateEvent(field));
-        }
-      },
-      listenWhen: (TariffsState prev, TariffsState state) {
-        if (prev is TariffsLoadedState && state is TariffsLoadedState) {
-          return prev.tariff.selectedTariffId != state.tariff.selectedTariffId;
-        }
-
-        return false;
-      },
-      builder: (context, state) {
-        if (state is TariffsLoadedState) {
-          return FieldListTile(
-            label: 'Тариф',
-            value: state.tariff.listTileLabel,
-            onTap: () async {
-              final tariff = await dialogs.toSelectTariffs(
-                context,
-                context.l10n.recipient,
-                state.tariff,
+    return BlocBuilder<TariffsBloc, TariffsState>(
+      builder: (BuildContext context, TariffsState state) {
+        return BlocBuilder<CreateOrdersBloc, CreateOrdersState>(
+          builder: (BuildContext context, CreateOrdersState ordersState) {
+            if (state is TariffsLoadedState &&
+                ordersState is CreateOrdersCreateState) {
+              final tileValue = state.tariff.findById(
+                ordersState.data.tariffId,
               );
-              if (tariff != null && context.mounted) {
-                context.read<TariffsBloc>().add(
-                  TariffsSelectTariffEvent(tariff),
-                );
-              }
-            },
-          );
-        }
 
-        return FieldListTile(label: 'Тариф', disabled: true);
+              return FieldListTile(
+                label: 'Тариф',
+                value: tileValue != null
+                    ? '${tileValue.name}, ${tileValue.description}'
+                    : null,
+                onTap: () async {
+                  final tariffId = await dialogs.toSelectTariffs(
+                    context,
+                    context.l10n.recipient,
+                    state.tariff,
+                  );
+                  if (tariffId != null && context.mounted) {
+                    final field = UpdateOrdersTariffField(
+                      tariffId,
+                    );
+                    context.read<CreateOrdersBloc>().add(
+                      UpdateOrdersCreateEvent(field),
+                    );
+                  }
+                },
+              );
+            }
+            return FieldListTile(label: 'Тариф', disabled: true);
+          },
+        );
       },
     );
   }

@@ -27,7 +27,7 @@ class SelectLocation extends StatelessWidget {
         if (state is CitySelectedState && type == .from) {
           return FieldListTile(
             label: label,
-            value: state.from.listTileLabel,
+            value: "1",
             onTap: () async {
               final location = await showDialog.toSelectAddress(
                 context,
@@ -67,7 +67,7 @@ class SelectLocation extends StatelessWidget {
         if (state is CitySelectedState && type == .to) {
           return FieldListTile(
             label: label,
-            value: state.to.listTileLabel,
+            value: '2',
             onTap: () async {
               final location = await showDialog.toSelectAddress(
                 context,

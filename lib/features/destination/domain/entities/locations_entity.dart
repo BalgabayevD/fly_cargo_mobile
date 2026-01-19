@@ -66,24 +66,20 @@ class LocationsEntity extends Equatable {
     );
   }
 
-  CityEntity? get city {
-    if (selectedCityId == null) return null;
-
-    final isAny = cities.any((city) => city.id == selectedCityId);
+  CityEntity? getById(int cityId) {
+    final isAny = cities.any((city) => city.id == cityId);
 
     if (!isAny) return null;
 
-    return cities.firstWhere((c) => c.id == selectedCityId);
+    return cities.firstWhere((c) => c.id == cityId);
   }
 
-  String get listTileLabel {
-    String label = city?.name ?? '';
-
-    if (address != null) {
-      label += ', $address';
+  CityEntity? get city {
+    if (selectedCityId != null) {
+      return getById(selectedCityId!);
     }
 
-    return label;
+    return null;
   }
 
   bool get validQuery {

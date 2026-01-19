@@ -9,14 +9,14 @@ import 'package:go_router/go_router.dart';
 class SelectTariffsDialogs {
   const SelectTariffsDialogs();
 
-  Future<TariffsEntity?> toSelectTariffs(
+  Future<int?> toSelectTariffs(
     BuildContext context,
     String text,
     TariffsEntity tariffs,
   ) {
     TariffsNotifier notifier = TariffsNotifier(tariffs: tariffs);
 
-    return BeBottomDialog.showBottomDialog<TariffsEntity?>(
+    return BeBottomDialog.showBottomDialog<int?>(
       context: context,
       maxChildSize: 0.90,
       initialChildSize: 0.90,
@@ -31,7 +31,7 @@ class SelectTariffsDialogs {
               text: 'Тариф',
               action: BeButton(
                 text: 'Сохранить',
-                onPressed: () => context.pop(notifier.tariffs),
+                onPressed: () => context.pop(notifier.tariffs.selectedTariffId),
               ),
               children: notifier.tariffs.tariffs.map((tariff) {
                 return CheckListTile(

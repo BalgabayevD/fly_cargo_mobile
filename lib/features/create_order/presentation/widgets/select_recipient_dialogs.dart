@@ -59,7 +59,9 @@ class _DialogNameSelect extends StatefulWidget {
 }
 
 class _DialogNameSelectState extends State<_DialogNameSelect> {
-  final textController = TextEditingController();
+  late final textController = TextEditingController(
+    text: widget.notifier.recipient.name,
+  );
   @override
   void initState() {
     super.initState();
@@ -99,8 +101,8 @@ class _DialogPhoneSelect extends StatefulWidget {
 }
 
 class _DialogPhoneSelectState extends State<_DialogPhoneSelect> {
-  final textController = TextEditingController(
-    text: '+7',
+  late final textController = TextEditingController(
+    text: widget.notifier.recipient.phone,
   );
   @override
   void initState() {

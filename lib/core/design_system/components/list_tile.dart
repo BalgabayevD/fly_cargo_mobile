@@ -264,22 +264,26 @@ class FieldListTile extends StatelessWidget {
           mainAxisAlignment: .spaceBetween,
           spacing: 16,
           children: [
-            Column(
-              mainAxisAlignment: _alignment,
-              crossAxisAlignment: .start,
-              children: [
-                Text(label, style: _labelStyle),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: _alignment,
+                crossAxisAlignment: .start,
+                children: [
+                  Text(label, style: _labelStyle),
 
-                if (value != null)
-                  Text(
-                    value!,
-                    style: GoogleFonts.montserrat(
-                      fontSize: 17,
-                      fontWeight: .w500,
-                      color: BeColors.surface5,
+                  if (value != null)
+                    Text(
+                      value!,
+                      overflow: .ellipsis,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 17,
+                        height: 1,
+                        fontWeight: .w500,
+                        color: BeColors.surface5,
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
 
             if (isShowIcon)

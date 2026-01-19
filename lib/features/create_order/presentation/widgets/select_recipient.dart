@@ -14,23 +14,39 @@ class SelectRecipient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FieldListTile(
-      label: context.l10n.recipient,
-      value: '22',
-      onTap: () async {
-        final recipient = await dialogs.toSelectRecipient(
-          context,
-          context.l10n.recipient,
-          RecipientEntity(),
-        );
+    return BlocBuilder<CreateOrdersBloc, CreateOrdersState>(
+      builder: (BuildContext context, CreateOrdersState state) {
+        if (state is CreateOrdersCreateState) {
+          return FieldListTile(
+            label: context.l10n.recipient,
+            value: [
+              if (state.data.toName.isNotEmpty) state.data.toName,
+              if (state.data.toPhone.isNotEmpty) state.data.toPhone,
+            ].join(', '),
+            onTap: () async {
+              final recipient = await dialogs.toSelectRecipient(
+                context,
+                context.l10n.recipient,
+                RecipientEntity(
+                  name: state.data.toName,
+                  phone: state.data.toPhone,
+                ),
+              );
 
-        if (recipient != null && context.mounted) {
-          final field = UpdateOrdersRecipientField(
-            recipient.name,
-            recipient.phone,
+              if (recipient != null && context.mounted) {
+                final field = UpdateOrdersRecipientField(
+                  recipient.name,
+                  recipient.phone,
+                );
+                context.read<CreateOrdersBloc>().add(
+                  UpdateOrdersCreateEvent(field),
+                );
+              }
+            },
           );
-          context.read<CreateOrdersBloc>().add(UpdateOrdersCreateEvent(field));
         }
+
+        return SizedBox.shrink();
       },
     );
   }

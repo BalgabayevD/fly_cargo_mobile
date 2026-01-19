@@ -28,21 +28,18 @@ class TariffsEntity extends Equatable {
     );
   }
 
-  TariffModel? get tariff {
-    if (selectedTariffId == null) return null;
-
-    final isAny = tariffs.any((tariff) => tariff.id == selectedTariffId);
+  TariffModel? findById(int id) {
+    final isAny = tariffs.any((tariff) => tariff.id == id);
 
     if (!isAny) return null;
 
-    return tariffs.firstWhere((c) => c.id == selectedTariffId);
+    return tariffs.firstWhere((c) => c.id == id);
   }
 
-  String get listTileLabel {
-    if (tariff != null) {
-      return tariff!.name;
+  TariffModel? get tariff {
+    if (selectedTariffId != null) {
+      return findById(selectedTariffId!);
     }
-
-    return '';
+    return null;
   }
 }

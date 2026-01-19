@@ -73,6 +73,22 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
   ) async {
     if (state is CreateOrdersCreateState) {
       final current = state as CreateOrdersCreateState;
+      print(state);
+      if (event.field is UpdateOrdersRecipientField) {
+        final field = event.field as UpdateOrdersRecipientField;
+        final data = current.data.copyWith(
+          toName: field.toName,
+          toPhone: field.toPhone,
+        );
+        emit(current.copyWith(data: data));
+      }
+
+      if (event.field is UpdateOrdersTariffField) {
+        final data = current.data.copyWith(
+          tariffId: (event.field as UpdateOrdersTariffField).tariffId,
+        );
+        emit(current.copyWith(data: data));
+      }
 
       if (event.field is UpdateOrdersWeightField) {
         final data = current.data.copyWith(
