@@ -18,11 +18,19 @@ class _CreateOrderDescriptionState extends State<CreateOrderDescription> {
   void initState() {
     controller = TextEditingController();
 
-    controller.addListener(() {
-      final field = UpdateOrdersDescriptionField(controller.text);
-      context.read<CreateOrdersBloc>().add(UpdateOrdersCreateEvent(field));
-    });
+    final state = context.read<CreateOrdersBloc>().state;
+    if (state is CreateOrdersCreateState) {
+      controller.text = state.data.description;
+    }
+
+    controller.addListener(_onTextChanged);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,16 +41,22 @@ class _CreateOrderDescriptionState extends State<CreateOrderDescription> {
           controller.text = current.data.description;
         }
       },
-      listenWhen: (CreateOrdersState previous, CreateOrdersState current) {
-        if (previous is CreateOrdersCreateState &&
-            current is CreateOrdersCreateState) {
-          return previous.data.description != current.data.description;
-        }
-        return false;
+      listenWhen: (previous, current) {
+        return previous is CreateOrdersCreateState &&
+            current is CreateOrdersCreateState &&
+            previous.data.description != current.data.description;
       },
       child: BeFormInput(
         label: context.l10n.description,
         controller: controller,
+      ),
+    );
+  }
+
+  void _onTextChanged() {
+    context.read<CreateOrdersBloc>().add(
+      UpdateOrdersCreateEvent(
+        UpdateOrdersDescriptionField(controller.text),
       ),
     );
   }

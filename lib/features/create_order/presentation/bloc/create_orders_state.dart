@@ -38,5 +38,5 @@ class CreateOrdersCreateState extends CreateOrdersState with EquatableMixin {
   }
 
   @override
-  List<Object?> get props => [data];
+  List<Object?> get props => [data, photosValidationStatus];
 }

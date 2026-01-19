@@ -13,13 +13,6 @@ sealed class CityEntity with _$CityEntity {
     String? region,
   }) = _CityEntity;
 
-  String get displayName {
-    if (region != null) {
-      return '$name, $region';
-    }
-    return name;
-  }
-
   factory CityEntity.fromJson(Map<String, dynamic> json) =>
       _$CityEntityFromJson(json);
 }

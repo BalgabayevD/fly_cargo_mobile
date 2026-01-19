@@ -26,9 +26,19 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
     if (state is CreateOrdersCreateState) {
       final currentState = state as CreateOrdersCreateState;
 
-      emit(currentState.copyWith(photosValidationStatus: .pending));
+      if (!event.isValid) {
+        emit(
+          currentState.copyWith(
+            data: currentState.data.copyWith(
+              photos: event.fingerprints,
+            ),
+            photosValidationStatus: .idle,
+          ),
+        );
+        return;
+      }
 
-      if (!event.isValid) return;
+      emit(currentState.copyWith(photosValidationStatus: .pending));
 
       final status = await createOrders.checkOrderByPhotos(
         event.fingerprints,
@@ -49,8 +59,11 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
         }
         if (status.status == AnalysisStatus.none) {
           photosValidationStatus = .fulfilled;
+
           data = data.copyWith(
             photos: event.fingerprints,
+            description: status.result.description,
+            tariffId: status.result.tariffId,
             weight: status.result.weight,
             length: status.result.length,
             width: status.result.width,
@@ -73,7 +86,6 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
   ) async {
     if (state is CreateOrdersCreateState) {
       final current = state as CreateOrdersCreateState;
-      print(state);
       if (event.field is UpdateOrdersRecipientField) {
         final field = event.field as UpdateOrdersRecipientField;
         final data = current.data.copyWith(

@@ -62,7 +62,7 @@ class BeFormInput extends StatelessWidget {
           if (label != null)
             ListenableBuilder(
               listenable: focusNode,
-              builder: (context, child) {
+              builder: (BuildContext context, child) {
                 final isBlank = controller.text.isEmpty && !focusNode.hasFocus;
 
                 return ListenableBuilder(

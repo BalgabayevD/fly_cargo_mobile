@@ -210,10 +210,14 @@ class _DialogApartmentSelect extends StatefulWidget {
 }
 
 class _DialogApartmentSelectState extends State<_DialogApartmentSelect> {
-  final textController = TextEditingController();
+  late final TextEditingController textController;
   @override
   void initState() {
     super.initState();
+    textController = TextEditingController(
+      text: widget.notifier.locations.apartment,
+    );
+
     textController.addListener(() {
       widget.notifier.setApartment(textController.text);
     });

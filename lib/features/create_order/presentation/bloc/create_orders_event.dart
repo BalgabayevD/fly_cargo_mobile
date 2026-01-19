@@ -9,7 +9,8 @@ class AddPhotoOrdersCreateEvent extends CreateOrdersEvent {
 
   const AddPhotoOrdersCreateEvent(this.photos);
 
-  bool get isValid => photos.every((e) => e.fingerprint != null);
+  bool get isValid =>
+      photos.every((e) => e.fingerprint != null) && photos.length == 5;
 
   List<String> get fingerprints =>
       photos.map((e) => e.fingerprint ?? '').toList();
