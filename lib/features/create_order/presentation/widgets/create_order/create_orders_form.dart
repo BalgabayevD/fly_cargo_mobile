@@ -15,6 +15,7 @@ class CreateOrdersForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      keyboardDismissBehavior: .onDrag,
       children: [
         PhotoGridSection(),
         BeSpace(size: .md),
