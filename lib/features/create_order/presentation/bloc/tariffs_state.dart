@@ -1,15 +1,11 @@
 part of 'tariffs_bloc.dart';
 
-sealed class TariffsState {
-  const TariffsState();
-}
-
-class TariffsInitialState extends TariffsState {}
-
-class TariffsLoadedState extends TariffsState with EquatableMixin {
+class TariffsState with EquatableMixin {
   final TariffsEntity tariff;
 
-  const TariffsLoadedState(this.tariff);
+  const TariffsState(this.tariff);
+
+  factory TariffsState.empty() => const TariffsState(TariffsEntity.empty());
 
   @override
   List<Object?> get props => [tariff];

@@ -236,8 +236,8 @@ return $default(_that.comment,_that.description,_that.isDefect,_that.isFragile,_
 /// @nodoc
 @JsonSerializable()
 
-class _CreateOrderEntity implements CreateOrderEntity {
-  const _CreateOrderEntity({this.comment = '', this.description = '', this.isDefect = false, this.isFragile = false, final  List<String> photos = const <String>[], final  List<String> contentPhotos = const <String>[], this.tariffId = 0, this.height = 0.0, this.length = 0.0, this.volumetricWeight, this.weight = 0.0, this.width = 0.0, this.fromCityId = 0, this.fromAddress = '', this.fromApartment = '', this.toCityId = 0, this.toAddress = '', this.toApartment = '', this.toEntrance = '', this.toName = '', this.toPhone = '', this.fromEntrance = '', this.fromFloor = '', this.fromLatitude, this.fromLongitude, this.toFloor = '', this.toLatitude, this.toLongitude, this.category = ''}): _photos = photos,_contentPhotos = contentPhotos;
+class _CreateOrderEntity extends CreateOrderEntity {
+  const _CreateOrderEntity({this.comment = '', this.description = '', this.isDefect = false, this.isFragile = false, final  List<String> photos = const <String>[], final  List<String> contentPhotos = const <String>[], this.tariffId = 0, this.height = 0.0, this.length = 0.0, this.volumetricWeight, this.weight = 0.0, this.width = 0.0, this.fromCityId = 0, this.fromAddress = '', this.fromApartment = '', this.toCityId = 0, this.toAddress = '', this.toApartment = '', this.toEntrance = '', this.toName = '', this.toPhone = '', this.fromEntrance = '', this.fromFloor = '', this.fromLatitude, this.fromLongitude, this.toFloor = '', this.toLatitude, this.toLongitude, this.category = ''}): _photos = photos,_contentPhotos = contentPhotos,super._();
   factory _CreateOrderEntity.fromJson(Map<String, dynamic> json) => _$CreateOrderEntityFromJson(json);
 
 @override@JsonKey() final  String comment;

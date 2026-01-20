@@ -11,6 +11,7 @@ part of 'order_entity.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$OrderCityEntity {
 
@@ -21,6 +22,8 @@ mixin _$OrderCityEntity {
 @pragma('vm:prefer-inline')
 $OrderCityEntityCopyWith<OrderCityEntity> get copyWith => _$OrderCityEntityCopyWithImpl<OrderCityEntity>(this as OrderCityEntity, _$identity);
 
+  /// Serializes this OrderCityEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderCityEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.country, country) || other.country == country)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.id, id) || other.id == id)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,name,country,createdAt,updatedAt,id,deletedAt);
 
@@ -202,11 +205,11 @@ return $default(_that.name,_that.country,_that.createdAt,_that.updatedAt,_that.i
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _OrderCityEntity implements OrderCityEntity {
   const _OrderCityEntity({required this.name, required this.country, required this.createdAt, required this.updatedAt, this.id, this.deletedAt});
-  
+  factory _OrderCityEntity.fromJson(Map<String, dynamic> json) => _$OrderCityEntityFromJson(json);
 
 @override final  String name;
 @override final  String country;
@@ -221,14 +224,17 @@ class _OrderCityEntity implements OrderCityEntity {
 @pragma('vm:prefer-inline')
 _$OrderCityEntityCopyWith<_OrderCityEntity> get copyWith => __$OrderCityEntityCopyWithImpl<_OrderCityEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$OrderCityEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderCityEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.country, country) || other.country == country)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.id, id) || other.id == id)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,name,country,createdAt,updatedAt,id,deletedAt);
 
@@ -277,6 +283,7 @@ as String?,
 
 }
 
+
 /// @nodoc
 mixin _$OrderHistoryEntity {
 
@@ -287,6 +294,8 @@ mixin _$OrderHistoryEntity {
 @pragma('vm:prefer-inline')
 $OrderHistoryEntityCopyWith<OrderHistoryEntity> get copyWith => _$OrderHistoryEntityCopyWithImpl<OrderHistoryEntity>(this as OrderHistoryEntity, _$identity);
 
+  /// Serializes this OrderHistoryEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -294,7 +303,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderHistoryEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.status, status) || other.status == status)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.description, description) || other.description == description)&&(identical(other.parameters, parameters) || other.parameters == parameters));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,deletedAt,orderId,status,userId,comment,description,parameters);
 
@@ -472,11 +481,11 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.o
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _OrderHistoryEntity implements OrderHistoryEntity {
   const _OrderHistoryEntity({this.id, this.createdAt, this.updatedAt, this.deletedAt, this.orderId, this.status, this.userId, this.comment, this.description, this.parameters});
-  
+  factory _OrderHistoryEntity.fromJson(Map<String, dynamic> json) => _$OrderHistoryEntityFromJson(json);
 
 @override final  int? id;
 @override final  String? createdAt;
@@ -495,14 +504,17 @@ class _OrderHistoryEntity implements OrderHistoryEntity {
 @pragma('vm:prefer-inline')
 _$OrderHistoryEntityCopyWith<_OrderHistoryEntity> get copyWith => __$OrderHistoryEntityCopyWithImpl<_OrderHistoryEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$OrderHistoryEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderHistoryEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.status, status) || other.status == status)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.description, description) || other.description == description)&&(identical(other.parameters, parameters) || other.parameters == parameters));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,deletedAt,orderId,status,userId,comment,description,parameters);
 
@@ -555,6 +567,7 @@ as String?,
 
 }
 
+
 /// @nodoc
 mixin _$OrderIdentificationEntity {
 
@@ -565,6 +578,8 @@ mixin _$OrderIdentificationEntity {
 @pragma('vm:prefer-inline')
 $OrderIdentificationEntityCopyWith<OrderIdentificationEntity> get copyWith => _$OrderIdentificationEntityCopyWithImpl<OrderIdentificationEntity>(this as OrderIdentificationEntity, _$identity);
 
+  /// Serializes this OrderIdentificationEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -572,7 +587,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderIdentificationEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.target, target) || other.target == target)&&(identical(other.uuid, uuid) || other.uuid == uuid));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,orderId,target,uuid);
 
@@ -746,11 +761,11 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.orderId,_that.tar
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _OrderIdentificationEntity implements OrderIdentificationEntity {
   const _OrderIdentificationEntity({this.id, this.createdAt, this.updatedAt, this.orderId, this.target, this.uuid});
-  
+  factory _OrderIdentificationEntity.fromJson(Map<String, dynamic> json) => _$OrderIdentificationEntityFromJson(json);
 
 @override final  int? id;
 @override final  String? createdAt;
@@ -765,14 +780,17 @@ class _OrderIdentificationEntity implements OrderIdentificationEntity {
 @pragma('vm:prefer-inline')
 _$OrderIdentificationEntityCopyWith<_OrderIdentificationEntity> get copyWith => __$OrderIdentificationEntityCopyWithImpl<_OrderIdentificationEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$OrderIdentificationEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderIdentificationEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.target, target) || other.target == target)&&(identical(other.uuid, uuid) || other.uuid == uuid));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,orderId,target,uuid);
 
@@ -821,6 +839,7 @@ as String?,
 
 }
 
+
 /// @nodoc
 mixin _$QrEntity {
 
@@ -831,6 +850,8 @@ mixin _$QrEntity {
 @pragma('vm:prefer-inline')
 $QrEntityCopyWith<QrEntity> get copyWith => _$QrEntityCopyWithImpl<QrEntity>(this as QrEntity, _$identity);
 
+  /// Serializes this QrEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -838,7 +859,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is QrEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.target, target) || other.target == target)&&(identical(other.uuid, uuid) || other.uuid == uuid));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,orderId,target,uuid);
 
@@ -1012,11 +1033,11 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.orderId,_that.tar
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _QrEntity implements QrEntity {
   const _QrEntity({this.id, this.createdAt, this.updatedAt, this.orderId, this.target, this.uuid});
-  
+  factory _QrEntity.fromJson(Map<String, dynamic> json) => _$QrEntityFromJson(json);
 
 @override final  int? id;
 @override final  String? createdAt;
@@ -1031,14 +1052,17 @@ class _QrEntity implements QrEntity {
 @pragma('vm:prefer-inline')
 _$QrEntityCopyWith<_QrEntity> get copyWith => __$QrEntityCopyWithImpl<_QrEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$QrEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _QrEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.target, target) || other.target == target)&&(identical(other.uuid, uuid) || other.uuid == uuid));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,createdAt,updatedAt,orderId,target,uuid);
 
@@ -1419,6 +1443,7 @@ as double?,
 
 }
 
+
 /// @nodoc
 mixin _$OrderTariffEntity {
 
@@ -1429,6 +1454,8 @@ mixin _$OrderTariffEntity {
 @pragma('vm:prefer-inline')
 $OrderTariffEntityCopyWith<OrderTariffEntity> get copyWith => _$OrderTariffEntityCopyWithImpl<OrderTariffEntity>(this as OrderTariffEntity, _$identity);
 
+  /// Serializes this OrderTariffEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -1436,7 +1463,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderTariffEntity&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.image, image) || other.image == image)&&(identical(other.id, id) || other.id == id)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.sortIndex, sortIndex) || other.sortIndex == sortIndex)&&const DeepCollectionEquality().equals(other.fields, fields)&&(identical(other.tariffCategoryId, tariffCategoryId) || other.tariffCategoryId == tariffCategoryId)&&(identical(other.length, length) || other.length == length)&&(identical(other.height, height) || other.height == height)&&(identical(other.width, width) || other.width == width)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.invoiceWeight, invoiceWeight) || other.invoiceWeight == invoiceWeight)&&(identical(other.costPriceOfAirShipment, costPriceOfAirShipment) || other.costPriceOfAirShipment == costPriceOfAirShipment)&&(identical(other.packageId, packageId) || other.packageId == packageId)&&(identical(other.additionalCostForFragileCargo, additionalCostForFragileCargo) || other.additionalCostForFragileCargo == additionalCostForFragileCargo));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hashAll([runtimeType,createdAt,updatedAt,isActive,name,description,image,id,deletedAt,icon,sortIndex,const DeepCollectionEquality().hash(fields),tariffCategoryId,length,height,width,volumetricWeight,weight,invoiceWeight,costPriceOfAirShipment,packageId,additionalCostForFragileCargo]);
 
@@ -1625,11 +1652,11 @@ return $default(_that.createdAt,_that.updatedAt,_that.isActive,_that.name,_that.
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _OrderTariffEntity implements OrderTariffEntity {
   const _OrderTariffEntity({required this.createdAt, required this.updatedAt, required this.isActive, required this.name, required this.description, required this.image, this.id, this.deletedAt, this.icon, this.sortIndex, final  List<String>? fields, this.tariffCategoryId, this.length, this.height, this.width, this.volumetricWeight, this.weight, this.invoiceWeight, this.costPriceOfAirShipment, this.packageId, this.additionalCostForFragileCargo}): _fields = fields;
-  
+  factory _OrderTariffEntity.fromJson(Map<String, dynamic> json) => _$OrderTariffEntityFromJson(json);
 
 @override final  String createdAt;
 @override final  String updatedAt;
@@ -1667,14 +1694,17 @@ class _OrderTariffEntity implements OrderTariffEntity {
 @pragma('vm:prefer-inline')
 _$OrderTariffEntityCopyWith<_OrderTariffEntity> get copyWith => __$OrderTariffEntityCopyWithImpl<_OrderTariffEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$OrderTariffEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderTariffEntity&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.image, image) || other.image == image)&&(identical(other.id, id) || other.id == id)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.sortIndex, sortIndex) || other.sortIndex == sortIndex)&&const DeepCollectionEquality().equals(other._fields, _fields)&&(identical(other.tariffCategoryId, tariffCategoryId) || other.tariffCategoryId == tariffCategoryId)&&(identical(other.length, length) || other.length == length)&&(identical(other.height, height) || other.height == height)&&(identical(other.width, width) || other.width == width)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.invoiceWeight, invoiceWeight) || other.invoiceWeight == invoiceWeight)&&(identical(other.costPriceOfAirShipment, costPriceOfAirShipment) || other.costPriceOfAirShipment == costPriceOfAirShipment)&&(identical(other.packageId, packageId) || other.packageId == packageId)&&(identical(other.additionalCostForFragileCargo, additionalCostForFragileCargo) || other.additionalCostForFragileCargo == additionalCostForFragileCargo));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hashAll([runtimeType,createdAt,updatedAt,isActive,name,description,image,id,deletedAt,icon,sortIndex,const DeepCollectionEquality().hash(_fields),tariffCategoryId,length,height,width,volumetricWeight,weight,invoiceWeight,costPriceOfAirShipment,packageId,additionalCostForFragileCargo]);
 
@@ -1738,30 +1768,33 @@ as double?,
 
 }
 
+
 /// @nodoc
 mixin _$OrderEntity {
 
- int get id; String get createdAt; String get updatedAt; int get fromCityId; double get fromLatitude; double get fromLongitude; String get fromAddress; int get toCityId; double get toLatitude; double get toLongitude; String get toAddress; int get tariffId; bool get isFragile; bool get isDefect; double get volumetricWeight; double get weight; double get width; double get length; double get height; int get calculationId; bool? get isPaid; String? get deletedAt; String? get status; String get fromApartment; String? get fromEntrance; String get fromFloor; String? get fromPhone; String? get fromName; String get toApartment; String? get toEntrance; String get toFloor; String? get toPhone; String? get toName; double? get price; double? get paidAmount; double? get payAmount; OrderTariffEntity? get tariff; String? get sendTime; String? get courierArriveTime; int? get orderAccumulatorId; String get comment; String get description; String get category; List<String> get photos; List<String> get contentPhotos; List<String>? get defectPhotos; String get decideReason; String get decideDescription; OrderCityEntity? get fromCity; OrderCityEntity? get toCity; List<QrEntity>? get qrs; List<OrderIdentificationEntity> get identifications; List<OrderHistoryEntity> get histories; PriceCalculationEntity? get priceCalculations;
+ int get id; String get createdAt; String get updatedAt; int get fromCityId; double get fromLatitude; double get fromLongitude; String get fromAddress; int get toCityId; double get toLatitude; double get toLongitude; String get toAddress; int get tariffId; bool get isFragile; bool get isDefect; double get volumetricWeight; double get weight; double get width; double get length; double get height; int get calculationId; bool? get isPaid; String? get deletedAt; String? get status; String get fromApartment; String? get fromEntrance; String get fromFloor; String? get fromPhone; String? get fromName; String get toApartment; String? get toEntrance; String get toFloor; String? get toPhone; String? get toName; double? get price; double? get paidAmount; double? get payAmount; OrderTariffEntity? get tariff; String? get sendTime; String? get courierArriveTime; int? get orderAccumulatorId; String get comment; String get description; String get category; List<String> get photos; List<String> get contentPhotos; List<String>? get defectPhotos; String get decideReason; String get decideDescription; OrderCityEntity? get fromCity; OrderCityEntity? get toCity; List<QrEntity>? get qrs; List<OrderIdentificationEntity> get identifications; List<OrderHistoryEntity> get histories;
 /// Create a copy of OrderEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $OrderEntityCopyWith<OrderEntity> get copyWith => _$OrderEntityCopyWithImpl<OrderEntity>(this as OrderEntity, _$identity);
 
+  /// Serializes this OrderEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.length, length) || other.length == length)&&(identical(other.height, height) || other.height == height)&&(identical(other.calculationId, calculationId) || other.calculationId == calculationId)&&(identical(other.isPaid, isPaid) || other.isPaid == isPaid)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromPhone, fromPhone) || other.fromPhone == fromPhone)&&(identical(other.fromName, fromName) || other.fromName == fromName)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.price, price) || other.price == price)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.payAmount, payAmount) || other.payAmount == payAmount)&&(identical(other.tariff, tariff) || other.tariff == tariff)&&(identical(other.sendTime, sendTime) || other.sendTime == sendTime)&&(identical(other.courierArriveTime, courierArriveTime) || other.courierArriveTime == courierArriveTime)&&(identical(other.orderAccumulatorId, orderAccumulatorId) || other.orderAccumulatorId == orderAccumulatorId)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other.photos, photos)&&const DeepCollectionEquality().equals(other.contentPhotos, contentPhotos)&&const DeepCollectionEquality().equals(other.defectPhotos, defectPhotos)&&(identical(other.decideReason, decideReason) || other.decideReason == decideReason)&&(identical(other.decideDescription, decideDescription) || other.decideDescription == decideDescription)&&(identical(other.fromCity, fromCity) || other.fromCity == fromCity)&&(identical(other.toCity, toCity) || other.toCity == toCity)&&const DeepCollectionEquality().equals(other.qrs, qrs)&&const DeepCollectionEquality().equals(other.identifications, identifications)&&const DeepCollectionEquality().equals(other.histories, histories)&&(identical(other.priceCalculations, priceCalculations) || other.priceCalculations == priceCalculations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.length, length) || other.length == length)&&(identical(other.height, height) || other.height == height)&&(identical(other.calculationId, calculationId) || other.calculationId == calculationId)&&(identical(other.isPaid, isPaid) || other.isPaid == isPaid)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromPhone, fromPhone) || other.fromPhone == fromPhone)&&(identical(other.fromName, fromName) || other.fromName == fromName)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.price, price) || other.price == price)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.payAmount, payAmount) || other.payAmount == payAmount)&&(identical(other.tariff, tariff) || other.tariff == tariff)&&(identical(other.sendTime, sendTime) || other.sendTime == sendTime)&&(identical(other.courierArriveTime, courierArriveTime) || other.courierArriveTime == courierArriveTime)&&(identical(other.orderAccumulatorId, orderAccumulatorId) || other.orderAccumulatorId == orderAccumulatorId)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other.photos, photos)&&const DeepCollectionEquality().equals(other.contentPhotos, contentPhotos)&&const DeepCollectionEquality().equals(other.defectPhotos, defectPhotos)&&(identical(other.decideReason, decideReason) || other.decideReason == decideReason)&&(identical(other.decideDescription, decideDescription) || other.decideDescription == decideDescription)&&(identical(other.fromCity, fromCity) || other.fromCity == fromCity)&&(identical(other.toCity, toCity) || other.toCity == toCity)&&const DeepCollectionEquality().equals(other.qrs, qrs)&&const DeepCollectionEquality().equals(other.identifications, identifications)&&const DeepCollectionEquality().equals(other.histories, histories));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,createdAt,updatedAt,fromCityId,fromLatitude,fromLongitude,fromAddress,toCityId,toLatitude,toLongitude,toAddress,tariffId,isFragile,isDefect,volumetricWeight,weight,width,length,height,calculationId,isPaid,deletedAt,status,fromApartment,fromEntrance,fromFloor,fromPhone,fromName,toApartment,toEntrance,toFloor,toPhone,toName,price,paidAmount,payAmount,tariff,sendTime,courierArriveTime,orderAccumulatorId,comment,description,category,const DeepCollectionEquality().hash(photos),const DeepCollectionEquality().hash(contentPhotos),const DeepCollectionEquality().hash(defectPhotos),decideReason,decideDescription,fromCity,toCity,const DeepCollectionEquality().hash(qrs),const DeepCollectionEquality().hash(identifications),const DeepCollectionEquality().hash(histories),priceCalculations]);
+int get hashCode => Object.hashAll([runtimeType,id,createdAt,updatedAt,fromCityId,fromLatitude,fromLongitude,fromAddress,toCityId,toLatitude,toLongitude,toAddress,tariffId,isFragile,isDefect,volumetricWeight,weight,width,length,height,calculationId,isPaid,deletedAt,status,fromApartment,fromEntrance,fromFloor,fromPhone,fromName,toApartment,toEntrance,toFloor,toPhone,toName,price,paidAmount,payAmount,tariff,sendTime,courierArriveTime,orderAccumulatorId,comment,description,category,const DeepCollectionEquality().hash(photos),const DeepCollectionEquality().hash(contentPhotos),const DeepCollectionEquality().hash(defectPhotos),decideReason,decideDescription,fromCity,toCity,const DeepCollectionEquality().hash(qrs),const DeepCollectionEquality().hash(identifications),const DeepCollectionEquality().hash(histories)]);
 
 @override
 String toString() {
-  return 'OrderEntity(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, fromCityId: $fromCityId, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, fromAddress: $fromAddress, toCityId: $toCityId, toLatitude: $toLatitude, toLongitude: $toLongitude, toAddress: $toAddress, tariffId: $tariffId, isFragile: $isFragile, isDefect: $isDefect, volumetricWeight: $volumetricWeight, weight: $weight, width: $width, length: $length, height: $height, calculationId: $calculationId, isPaid: $isPaid, deletedAt: $deletedAt, status: $status, fromApartment: $fromApartment, fromEntrance: $fromEntrance, fromFloor: $fromFloor, fromPhone: $fromPhone, fromName: $fromName, toApartment: $toApartment, toEntrance: $toEntrance, toFloor: $toFloor, toPhone: $toPhone, toName: $toName, price: $price, paidAmount: $paidAmount, payAmount: $payAmount, tariff: $tariff, sendTime: $sendTime, courierArriveTime: $courierArriveTime, orderAccumulatorId: $orderAccumulatorId, comment: $comment, description: $description, category: $category, photos: $photos, contentPhotos: $contentPhotos, defectPhotos: $defectPhotos, decideReason: $decideReason, decideDescription: $decideDescription, fromCity: $fromCity, toCity: $toCity, qrs: $qrs, identifications: $identifications, histories: $histories, priceCalculations: $priceCalculations)';
+  return 'OrderEntity(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, fromCityId: $fromCityId, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, fromAddress: $fromAddress, toCityId: $toCityId, toLatitude: $toLatitude, toLongitude: $toLongitude, toAddress: $toAddress, tariffId: $tariffId, isFragile: $isFragile, isDefect: $isDefect, volumetricWeight: $volumetricWeight, weight: $weight, width: $width, length: $length, height: $height, calculationId: $calculationId, isPaid: $isPaid, deletedAt: $deletedAt, status: $status, fromApartment: $fromApartment, fromEntrance: $fromEntrance, fromFloor: $fromFloor, fromPhone: $fromPhone, fromName: $fromName, toApartment: $toApartment, toEntrance: $toEntrance, toFloor: $toFloor, toPhone: $toPhone, toName: $toName, price: $price, paidAmount: $paidAmount, payAmount: $payAmount, tariff: $tariff, sendTime: $sendTime, courierArriveTime: $courierArriveTime, orderAccumulatorId: $orderAccumulatorId, comment: $comment, description: $description, category: $category, photos: $photos, contentPhotos: $contentPhotos, defectPhotos: $defectPhotos, decideReason: $decideReason, decideDescription: $decideDescription, fromCity: $fromCity, toCity: $toCity, qrs: $qrs, identifications: $identifications, histories: $histories)';
 }
 
 
@@ -1772,11 +1805,11 @@ abstract mixin class $OrderEntityCopyWith<$Res>  {
   factory $OrderEntityCopyWith(OrderEntity value, $Res Function(OrderEntity) _then) = _$OrderEntityCopyWithImpl;
 @useResult
 $Res call({
- int id, String createdAt, String updatedAt, int fromCityId, double fromLatitude, double fromLongitude, String fromAddress, int toCityId, double toLatitude, double toLongitude, String toAddress, int tariffId, bool isFragile, bool isDefect, double volumetricWeight, double weight, double width, double length, double height, int calculationId, bool? isPaid, String? deletedAt, String? status, String fromApartment, String? fromEntrance, String fromFloor, String? fromPhone, String? fromName, String toApartment, String? toEntrance, String toFloor, String? toPhone, String? toName, double? price, double? paidAmount, double? payAmount, OrderTariffEntity? tariff, String? sendTime, String? courierArriveTime, int? orderAccumulatorId, String comment, String description, String category, List<String> photos, List<String> contentPhotos, List<String>? defectPhotos, String decideReason, String decideDescription, OrderCityEntity? fromCity, OrderCityEntity? toCity, List<QrEntity>? qrs, List<OrderIdentificationEntity> identifications, List<OrderHistoryEntity> histories, PriceCalculationEntity? priceCalculations
+ int id, String createdAt, String updatedAt, int fromCityId, double fromLatitude, double fromLongitude, String fromAddress, int toCityId, double toLatitude, double toLongitude, String toAddress, int tariffId, bool isFragile, bool isDefect, double volumetricWeight, double weight, double width, double length, double height, int calculationId, bool? isPaid, String? deletedAt, String? status, String fromApartment, String? fromEntrance, String fromFloor, String? fromPhone, String? fromName, String toApartment, String? toEntrance, String toFloor, String? toPhone, String? toName, double? price, double? paidAmount, double? payAmount, OrderTariffEntity? tariff, String? sendTime, String? courierArriveTime, int? orderAccumulatorId, String comment, String description, String category, List<String> photos, List<String> contentPhotos, List<String>? defectPhotos, String decideReason, String decideDescription, OrderCityEntity? fromCity, OrderCityEntity? toCity, List<QrEntity>? qrs, List<OrderIdentificationEntity> identifications, List<OrderHistoryEntity> histories
 });
 
 
-$OrderTariffEntityCopyWith<$Res>? get tariff;$OrderCityEntityCopyWith<$Res>? get fromCity;$OrderCityEntityCopyWith<$Res>? get toCity;$PriceCalculationEntityCopyWith<$Res>? get priceCalculations;
+$OrderTariffEntityCopyWith<$Res>? get tariff;$OrderCityEntityCopyWith<$Res>? get fromCity;$OrderCityEntityCopyWith<$Res>? get toCity;
 
 }
 /// @nodoc
@@ -1789,7 +1822,7 @@ class _$OrderEntityCopyWithImpl<$Res>
 
 /// Create a copy of OrderEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? createdAt = null,Object? updatedAt = null,Object? fromCityId = null,Object? fromLatitude = null,Object? fromLongitude = null,Object? fromAddress = null,Object? toCityId = null,Object? toLatitude = null,Object? toLongitude = null,Object? toAddress = null,Object? tariffId = null,Object? isFragile = null,Object? isDefect = null,Object? volumetricWeight = null,Object? weight = null,Object? width = null,Object? length = null,Object? height = null,Object? calculationId = null,Object? isPaid = freezed,Object? deletedAt = freezed,Object? status = freezed,Object? fromApartment = null,Object? fromEntrance = freezed,Object? fromFloor = null,Object? fromPhone = freezed,Object? fromName = freezed,Object? toApartment = null,Object? toEntrance = freezed,Object? toFloor = null,Object? toPhone = freezed,Object? toName = freezed,Object? price = freezed,Object? paidAmount = freezed,Object? payAmount = freezed,Object? tariff = freezed,Object? sendTime = freezed,Object? courierArriveTime = freezed,Object? orderAccumulatorId = freezed,Object? comment = null,Object? description = null,Object? category = null,Object? photos = null,Object? contentPhotos = null,Object? defectPhotos = freezed,Object? decideReason = null,Object? decideDescription = null,Object? fromCity = freezed,Object? toCity = freezed,Object? qrs = freezed,Object? identifications = null,Object? histories = null,Object? priceCalculations = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? createdAt = null,Object? updatedAt = null,Object? fromCityId = null,Object? fromLatitude = null,Object? fromLongitude = null,Object? fromAddress = null,Object? toCityId = null,Object? toLatitude = null,Object? toLongitude = null,Object? toAddress = null,Object? tariffId = null,Object? isFragile = null,Object? isDefect = null,Object? volumetricWeight = null,Object? weight = null,Object? width = null,Object? length = null,Object? height = null,Object? calculationId = null,Object? isPaid = freezed,Object? deletedAt = freezed,Object? status = freezed,Object? fromApartment = null,Object? fromEntrance = freezed,Object? fromFloor = null,Object? fromPhone = freezed,Object? fromName = freezed,Object? toApartment = null,Object? toEntrance = freezed,Object? toFloor = null,Object? toPhone = freezed,Object? toName = freezed,Object? price = freezed,Object? paidAmount = freezed,Object? payAmount = freezed,Object? tariff = freezed,Object? sendTime = freezed,Object? courierArriveTime = freezed,Object? orderAccumulatorId = freezed,Object? comment = null,Object? description = null,Object? category = null,Object? photos = null,Object? contentPhotos = null,Object? defectPhotos = freezed,Object? decideReason = null,Object? decideDescription = null,Object? fromCity = freezed,Object? toCity = freezed,Object? qrs = freezed,Object? identifications = null,Object? histories = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1844,8 +1877,7 @@ as OrderCityEntity?,toCity: freezed == toCity ? _self.toCity : toCity // ignore:
 as OrderCityEntity?,qrs: freezed == qrs ? _self.qrs : qrs // ignore: cast_nullable_to_non_nullable
 as List<QrEntity>?,identifications: null == identifications ? _self.identifications : identifications // ignore: cast_nullable_to_non_nullable
 as List<OrderIdentificationEntity>,histories: null == histories ? _self.histories : histories // ignore: cast_nullable_to_non_nullable
-as List<OrderHistoryEntity>,priceCalculations: freezed == priceCalculations ? _self.priceCalculations : priceCalculations // ignore: cast_nullable_to_non_nullable
-as PriceCalculationEntity?,
+as List<OrderHistoryEntity>,
   ));
 }
 /// Create a copy of OrderEntity
@@ -1883,18 +1915,6 @@ $OrderCityEntityCopyWith<$Res>? get toCity {
 
   return $OrderCityEntityCopyWith<$Res>(_self.toCity!, (value) {
     return _then(_self.copyWith(toCity: value));
-  });
-}/// Create a copy of OrderEntity
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$PriceCalculationEntityCopyWith<$Res>? get priceCalculations {
-    if (_self.priceCalculations == null) {
-    return null;
-  }
-
-  return $PriceCalculationEntityCopyWith<$Res>(_self.priceCalculations!, (value) {
-    return _then(_self.copyWith(priceCalculations: value));
   });
 }
 }
@@ -1975,10 +1995,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String createdAt,  String updatedAt,  int fromCityId,  double fromLatitude,  double fromLongitude,  String fromAddress,  int toCityId,  double toLatitude,  double toLongitude,  String toAddress,  int tariffId,  bool isFragile,  bool isDefect,  double volumetricWeight,  double weight,  double width,  double length,  double height,  int calculationId,  bool? isPaid,  String? deletedAt,  String? status,  String fromApartment,  String? fromEntrance,  String fromFloor,  String? fromPhone,  String? fromName,  String toApartment,  String? toEntrance,  String toFloor,  String? toPhone,  String? toName,  double? price,  double? paidAmount,  double? payAmount,  OrderTariffEntity? tariff,  String? sendTime,  String? courierArriveTime,  int? orderAccumulatorId,  String comment,  String description,  String category,  List<String> photos,  List<String> contentPhotos,  List<String>? defectPhotos,  String decideReason,  String decideDescription,  OrderCityEntity? fromCity,  OrderCityEntity? toCity,  List<QrEntity>? qrs,  List<OrderIdentificationEntity> identifications,  List<OrderHistoryEntity> histories,  PriceCalculationEntity? priceCalculations)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String createdAt,  String updatedAt,  int fromCityId,  double fromLatitude,  double fromLongitude,  String fromAddress,  int toCityId,  double toLatitude,  double toLongitude,  String toAddress,  int tariffId,  bool isFragile,  bool isDefect,  double volumetricWeight,  double weight,  double width,  double length,  double height,  int calculationId,  bool? isPaid,  String? deletedAt,  String? status,  String fromApartment,  String? fromEntrance,  String fromFloor,  String? fromPhone,  String? fromName,  String toApartment,  String? toEntrance,  String toFloor,  String? toPhone,  String? toName,  double? price,  double? paidAmount,  double? payAmount,  OrderTariffEntity? tariff,  String? sendTime,  String? courierArriveTime,  int? orderAccumulatorId,  String comment,  String description,  String category,  List<String> photos,  List<String> contentPhotos,  List<String>? defectPhotos,  String decideReason,  String decideDescription,  OrderCityEntity? fromCity,  OrderCityEntity? toCity,  List<QrEntity>? qrs,  List<OrderIdentificationEntity> identifications,  List<OrderHistoryEntity> histories)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OrderEntity() when $default != null:
-return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.fromLatitude,_that.fromLongitude,_that.fromAddress,_that.toCityId,_that.toLatitude,_that.toLongitude,_that.toAddress,_that.tariffId,_that.isFragile,_that.isDefect,_that.volumetricWeight,_that.weight,_that.width,_that.length,_that.height,_that.calculationId,_that.isPaid,_that.deletedAt,_that.status,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromPhone,_that.fromName,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toPhone,_that.toName,_that.price,_that.paidAmount,_that.payAmount,_that.tariff,_that.sendTime,_that.courierArriveTime,_that.orderAccumulatorId,_that.comment,_that.description,_that.category,_that.photos,_that.contentPhotos,_that.defectPhotos,_that.decideReason,_that.decideDescription,_that.fromCity,_that.toCity,_that.qrs,_that.identifications,_that.histories,_that.priceCalculations);case _:
+return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.fromLatitude,_that.fromLongitude,_that.fromAddress,_that.toCityId,_that.toLatitude,_that.toLongitude,_that.toAddress,_that.tariffId,_that.isFragile,_that.isDefect,_that.volumetricWeight,_that.weight,_that.width,_that.length,_that.height,_that.calculationId,_that.isPaid,_that.deletedAt,_that.status,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromPhone,_that.fromName,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toPhone,_that.toName,_that.price,_that.paidAmount,_that.payAmount,_that.tariff,_that.sendTime,_that.courierArriveTime,_that.orderAccumulatorId,_that.comment,_that.description,_that.category,_that.photos,_that.contentPhotos,_that.defectPhotos,_that.decideReason,_that.decideDescription,_that.fromCity,_that.toCity,_that.qrs,_that.identifications,_that.histories);case _:
   return orElse();
 
 }
@@ -1996,10 +2016,10 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String createdAt,  String updatedAt,  int fromCityId,  double fromLatitude,  double fromLongitude,  String fromAddress,  int toCityId,  double toLatitude,  double toLongitude,  String toAddress,  int tariffId,  bool isFragile,  bool isDefect,  double volumetricWeight,  double weight,  double width,  double length,  double height,  int calculationId,  bool? isPaid,  String? deletedAt,  String? status,  String fromApartment,  String? fromEntrance,  String fromFloor,  String? fromPhone,  String? fromName,  String toApartment,  String? toEntrance,  String toFloor,  String? toPhone,  String? toName,  double? price,  double? paidAmount,  double? payAmount,  OrderTariffEntity? tariff,  String? sendTime,  String? courierArriveTime,  int? orderAccumulatorId,  String comment,  String description,  String category,  List<String> photos,  List<String> contentPhotos,  List<String>? defectPhotos,  String decideReason,  String decideDescription,  OrderCityEntity? fromCity,  OrderCityEntity? toCity,  List<QrEntity>? qrs,  List<OrderIdentificationEntity> identifications,  List<OrderHistoryEntity> histories,  PriceCalculationEntity? priceCalculations)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String createdAt,  String updatedAt,  int fromCityId,  double fromLatitude,  double fromLongitude,  String fromAddress,  int toCityId,  double toLatitude,  double toLongitude,  String toAddress,  int tariffId,  bool isFragile,  bool isDefect,  double volumetricWeight,  double weight,  double width,  double length,  double height,  int calculationId,  bool? isPaid,  String? deletedAt,  String? status,  String fromApartment,  String? fromEntrance,  String fromFloor,  String? fromPhone,  String? fromName,  String toApartment,  String? toEntrance,  String toFloor,  String? toPhone,  String? toName,  double? price,  double? paidAmount,  double? payAmount,  OrderTariffEntity? tariff,  String? sendTime,  String? courierArriveTime,  int? orderAccumulatorId,  String comment,  String description,  String category,  List<String> photos,  List<String> contentPhotos,  List<String>? defectPhotos,  String decideReason,  String decideDescription,  OrderCityEntity? fromCity,  OrderCityEntity? toCity,  List<QrEntity>? qrs,  List<OrderIdentificationEntity> identifications,  List<OrderHistoryEntity> histories)  $default,) {final _that = this;
 switch (_that) {
 case _OrderEntity():
-return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.fromLatitude,_that.fromLongitude,_that.fromAddress,_that.toCityId,_that.toLatitude,_that.toLongitude,_that.toAddress,_that.tariffId,_that.isFragile,_that.isDefect,_that.volumetricWeight,_that.weight,_that.width,_that.length,_that.height,_that.calculationId,_that.isPaid,_that.deletedAt,_that.status,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromPhone,_that.fromName,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toPhone,_that.toName,_that.price,_that.paidAmount,_that.payAmount,_that.tariff,_that.sendTime,_that.courierArriveTime,_that.orderAccumulatorId,_that.comment,_that.description,_that.category,_that.photos,_that.contentPhotos,_that.defectPhotos,_that.decideReason,_that.decideDescription,_that.fromCity,_that.toCity,_that.qrs,_that.identifications,_that.histories,_that.priceCalculations);}
+return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.fromLatitude,_that.fromLongitude,_that.fromAddress,_that.toCityId,_that.toLatitude,_that.toLongitude,_that.toAddress,_that.tariffId,_that.isFragile,_that.isDefect,_that.volumetricWeight,_that.weight,_that.width,_that.length,_that.height,_that.calculationId,_that.isPaid,_that.deletedAt,_that.status,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromPhone,_that.fromName,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toPhone,_that.toName,_that.price,_that.paidAmount,_that.payAmount,_that.tariff,_that.sendTime,_that.courierArriveTime,_that.orderAccumulatorId,_that.comment,_that.description,_that.category,_that.photos,_that.contentPhotos,_that.defectPhotos,_that.decideReason,_that.decideDescription,_that.fromCity,_that.toCity,_that.qrs,_that.identifications,_that.histories);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -2013,10 +2033,10 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String createdAt,  String updatedAt,  int fromCityId,  double fromLatitude,  double fromLongitude,  String fromAddress,  int toCityId,  double toLatitude,  double toLongitude,  String toAddress,  int tariffId,  bool isFragile,  bool isDefect,  double volumetricWeight,  double weight,  double width,  double length,  double height,  int calculationId,  bool? isPaid,  String? deletedAt,  String? status,  String fromApartment,  String? fromEntrance,  String fromFloor,  String? fromPhone,  String? fromName,  String toApartment,  String? toEntrance,  String toFloor,  String? toPhone,  String? toName,  double? price,  double? paidAmount,  double? payAmount,  OrderTariffEntity? tariff,  String? sendTime,  String? courierArriveTime,  int? orderAccumulatorId,  String comment,  String description,  String category,  List<String> photos,  List<String> contentPhotos,  List<String>? defectPhotos,  String decideReason,  String decideDescription,  OrderCityEntity? fromCity,  OrderCityEntity? toCity,  List<QrEntity>? qrs,  List<OrderIdentificationEntity> identifications,  List<OrderHistoryEntity> histories,  PriceCalculationEntity? priceCalculations)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String createdAt,  String updatedAt,  int fromCityId,  double fromLatitude,  double fromLongitude,  String fromAddress,  int toCityId,  double toLatitude,  double toLongitude,  String toAddress,  int tariffId,  bool isFragile,  bool isDefect,  double volumetricWeight,  double weight,  double width,  double length,  double height,  int calculationId,  bool? isPaid,  String? deletedAt,  String? status,  String fromApartment,  String? fromEntrance,  String fromFloor,  String? fromPhone,  String? fromName,  String toApartment,  String? toEntrance,  String toFloor,  String? toPhone,  String? toName,  double? price,  double? paidAmount,  double? payAmount,  OrderTariffEntity? tariff,  String? sendTime,  String? courierArriveTime,  int? orderAccumulatorId,  String comment,  String description,  String category,  List<String> photos,  List<String> contentPhotos,  List<String>? defectPhotos,  String decideReason,  String decideDescription,  OrderCityEntity? fromCity,  OrderCityEntity? toCity,  List<QrEntity>? qrs,  List<OrderIdentificationEntity> identifications,  List<OrderHistoryEntity> histories)?  $default,) {final _that = this;
 switch (_that) {
 case _OrderEntity() when $default != null:
-return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.fromLatitude,_that.fromLongitude,_that.fromAddress,_that.toCityId,_that.toLatitude,_that.toLongitude,_that.toAddress,_that.tariffId,_that.isFragile,_that.isDefect,_that.volumetricWeight,_that.weight,_that.width,_that.length,_that.height,_that.calculationId,_that.isPaid,_that.deletedAt,_that.status,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromPhone,_that.fromName,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toPhone,_that.toName,_that.price,_that.paidAmount,_that.payAmount,_that.tariff,_that.sendTime,_that.courierArriveTime,_that.orderAccumulatorId,_that.comment,_that.description,_that.category,_that.photos,_that.contentPhotos,_that.defectPhotos,_that.decideReason,_that.decideDescription,_that.fromCity,_that.toCity,_that.qrs,_that.identifications,_that.histories,_that.priceCalculations);case _:
+return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.fromLatitude,_that.fromLongitude,_that.fromAddress,_that.toCityId,_that.toLatitude,_that.toLongitude,_that.toAddress,_that.tariffId,_that.isFragile,_that.isDefect,_that.volumetricWeight,_that.weight,_that.width,_that.length,_that.height,_that.calculationId,_that.isPaid,_that.deletedAt,_that.status,_that.fromApartment,_that.fromEntrance,_that.fromFloor,_that.fromPhone,_that.fromName,_that.toApartment,_that.toEntrance,_that.toFloor,_that.toPhone,_that.toName,_that.price,_that.paidAmount,_that.payAmount,_that.tariff,_that.sendTime,_that.courierArriveTime,_that.orderAccumulatorId,_that.comment,_that.description,_that.category,_that.photos,_that.contentPhotos,_that.defectPhotos,_that.decideReason,_that.decideDescription,_that.fromCity,_that.toCity,_that.qrs,_that.identifications,_that.histories);case _:
   return null;
 
 }
@@ -2025,11 +2045,11 @@ return $default(_that.id,_that.createdAt,_that.updatedAt,_that.fromCityId,_that.
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _OrderEntity implements OrderEntity {
-  const _OrderEntity({required this.id, required this.createdAt, required this.updatedAt, required this.fromCityId, required this.fromLatitude, required this.fromLongitude, required this.fromAddress, required this.toCityId, required this.toLatitude, required this.toLongitude, required this.toAddress, required this.tariffId, required this.isFragile, required this.isDefect, required this.volumetricWeight, required this.weight, required this.width, required this.length, required this.height, required this.calculationId, this.isPaid, this.deletedAt, this.status, this.fromApartment = '', this.fromEntrance, this.fromFloor = '', this.fromPhone, this.fromName, this.toApartment = '', this.toEntrance, this.toFloor = '', this.toPhone, this.toName, this.price, this.paidAmount, this.payAmount, this.tariff, this.sendTime, this.courierArriveTime, this.orderAccumulatorId, this.comment = '', this.description = '', this.category = '', final  List<String> photos = const [], final  List<String> contentPhotos = const [], final  List<String>? defectPhotos = const [], this.decideReason = '', this.decideDescription = '', this.fromCity, this.toCity, final  List<QrEntity>? qrs = const [], final  List<OrderIdentificationEntity> identifications = const [], final  List<OrderHistoryEntity> histories = const [], this.priceCalculations}): _photos = photos,_contentPhotos = contentPhotos,_defectPhotos = defectPhotos,_qrs = qrs,_identifications = identifications,_histories = histories;
-  
+  const _OrderEntity({required this.id, required this.createdAt, required this.updatedAt, required this.fromCityId, required this.fromLatitude, required this.fromLongitude, required this.fromAddress, required this.toCityId, required this.toLatitude, required this.toLongitude, required this.toAddress, required this.tariffId, required this.isFragile, required this.isDefect, required this.volumetricWeight, required this.weight, required this.width, required this.length, required this.height, required this.calculationId, this.isPaid, this.deletedAt, this.status, this.fromApartment = '', this.fromEntrance, this.fromFloor = '', this.fromPhone, this.fromName, this.toApartment = '', this.toEntrance, this.toFloor = '', this.toPhone, this.toName, this.price, this.paidAmount, this.payAmount, this.tariff, this.sendTime, this.courierArriveTime, this.orderAccumulatorId, this.comment = '', this.description = '', this.category = '', final  List<String> photos = const [], final  List<String> contentPhotos = const [], final  List<String>? defectPhotos = const [], this.decideReason = '', this.decideDescription = '', this.fromCity, this.toCity, final  List<QrEntity>? qrs = const [], final  List<OrderIdentificationEntity> identifications = const [], final  List<OrderHistoryEntity> histories = const []}): _photos = photos,_contentPhotos = contentPhotos,_defectPhotos = defectPhotos,_qrs = qrs,_identifications = identifications,_histories = histories;
+  factory _OrderEntity.fromJson(Map<String, dynamic> json) => _$OrderEntityFromJson(json);
 
 @override final  int id;
 @override final  String createdAt;
@@ -2124,7 +2144,6 @@ class _OrderEntity implements OrderEntity {
   return EqualUnmodifiableListView(_histories);
 }
 
-@override final  PriceCalculationEntity? priceCalculations;
 
 /// Create a copy of OrderEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -2132,20 +2151,23 @@ class _OrderEntity implements OrderEntity {
 @pragma('vm:prefer-inline')
 _$OrderEntityCopyWith<_OrderEntity> get copyWith => __$OrderEntityCopyWithImpl<_OrderEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$OrderEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.length, length) || other.length == length)&&(identical(other.height, height) || other.height == height)&&(identical(other.calculationId, calculationId) || other.calculationId == calculationId)&&(identical(other.isPaid, isPaid) || other.isPaid == isPaid)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromPhone, fromPhone) || other.fromPhone == fromPhone)&&(identical(other.fromName, fromName) || other.fromName == fromName)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.price, price) || other.price == price)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.payAmount, payAmount) || other.payAmount == payAmount)&&(identical(other.tariff, tariff) || other.tariff == tariff)&&(identical(other.sendTime, sendTime) || other.sendTime == sendTime)&&(identical(other.courierArriveTime, courierArriveTime) || other.courierArriveTime == courierArriveTime)&&(identical(other.orderAccumulatorId, orderAccumulatorId) || other.orderAccumulatorId == orderAccumulatorId)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other._photos, _photos)&&const DeepCollectionEquality().equals(other._contentPhotos, _contentPhotos)&&const DeepCollectionEquality().equals(other._defectPhotos, _defectPhotos)&&(identical(other.decideReason, decideReason) || other.decideReason == decideReason)&&(identical(other.decideDescription, decideDescription) || other.decideDescription == decideDescription)&&(identical(other.fromCity, fromCity) || other.fromCity == fromCity)&&(identical(other.toCity, toCity) || other.toCity == toCity)&&const DeepCollectionEquality().equals(other._qrs, _qrs)&&const DeepCollectionEquality().equals(other._identifications, _identifications)&&const DeepCollectionEquality().equals(other._histories, _histories)&&(identical(other.priceCalculations, priceCalculations) || other.priceCalculations == priceCalculations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.fromCityId, fromCityId) || other.fromCityId == fromCityId)&&(identical(other.fromLatitude, fromLatitude) || other.fromLatitude == fromLatitude)&&(identical(other.fromLongitude, fromLongitude) || other.fromLongitude == fromLongitude)&&(identical(other.fromAddress, fromAddress) || other.fromAddress == fromAddress)&&(identical(other.toCityId, toCityId) || other.toCityId == toCityId)&&(identical(other.toLatitude, toLatitude) || other.toLatitude == toLatitude)&&(identical(other.toLongitude, toLongitude) || other.toLongitude == toLongitude)&&(identical(other.toAddress, toAddress) || other.toAddress == toAddress)&&(identical(other.tariffId, tariffId) || other.tariffId == tariffId)&&(identical(other.isFragile, isFragile) || other.isFragile == isFragile)&&(identical(other.isDefect, isDefect) || other.isDefect == isDefect)&&(identical(other.volumetricWeight, volumetricWeight) || other.volumetricWeight == volumetricWeight)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.width, width) || other.width == width)&&(identical(other.length, length) || other.length == length)&&(identical(other.height, height) || other.height == height)&&(identical(other.calculationId, calculationId) || other.calculationId == calculationId)&&(identical(other.isPaid, isPaid) || other.isPaid == isPaid)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.fromApartment, fromApartment) || other.fromApartment == fromApartment)&&(identical(other.fromEntrance, fromEntrance) || other.fromEntrance == fromEntrance)&&(identical(other.fromFloor, fromFloor) || other.fromFloor == fromFloor)&&(identical(other.fromPhone, fromPhone) || other.fromPhone == fromPhone)&&(identical(other.fromName, fromName) || other.fromName == fromName)&&(identical(other.toApartment, toApartment) || other.toApartment == toApartment)&&(identical(other.toEntrance, toEntrance) || other.toEntrance == toEntrance)&&(identical(other.toFloor, toFloor) || other.toFloor == toFloor)&&(identical(other.toPhone, toPhone) || other.toPhone == toPhone)&&(identical(other.toName, toName) || other.toName == toName)&&(identical(other.price, price) || other.price == price)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.payAmount, payAmount) || other.payAmount == payAmount)&&(identical(other.tariff, tariff) || other.tariff == tariff)&&(identical(other.sendTime, sendTime) || other.sendTime == sendTime)&&(identical(other.courierArriveTime, courierArriveTime) || other.courierArriveTime == courierArriveTime)&&(identical(other.orderAccumulatorId, orderAccumulatorId) || other.orderAccumulatorId == orderAccumulatorId)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&const DeepCollectionEquality().equals(other._photos, _photos)&&const DeepCollectionEquality().equals(other._contentPhotos, _contentPhotos)&&const DeepCollectionEquality().equals(other._defectPhotos, _defectPhotos)&&(identical(other.decideReason, decideReason) || other.decideReason == decideReason)&&(identical(other.decideDescription, decideDescription) || other.decideDescription == decideDescription)&&(identical(other.fromCity, fromCity) || other.fromCity == fromCity)&&(identical(other.toCity, toCity) || other.toCity == toCity)&&const DeepCollectionEquality().equals(other._qrs, _qrs)&&const DeepCollectionEquality().equals(other._identifications, _identifications)&&const DeepCollectionEquality().equals(other._histories, _histories));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,createdAt,updatedAt,fromCityId,fromLatitude,fromLongitude,fromAddress,toCityId,toLatitude,toLongitude,toAddress,tariffId,isFragile,isDefect,volumetricWeight,weight,width,length,height,calculationId,isPaid,deletedAt,status,fromApartment,fromEntrance,fromFloor,fromPhone,fromName,toApartment,toEntrance,toFloor,toPhone,toName,price,paidAmount,payAmount,tariff,sendTime,courierArriveTime,orderAccumulatorId,comment,description,category,const DeepCollectionEquality().hash(_photos),const DeepCollectionEquality().hash(_contentPhotos),const DeepCollectionEquality().hash(_defectPhotos),decideReason,decideDescription,fromCity,toCity,const DeepCollectionEquality().hash(_qrs),const DeepCollectionEquality().hash(_identifications),const DeepCollectionEquality().hash(_histories),priceCalculations]);
+int get hashCode => Object.hashAll([runtimeType,id,createdAt,updatedAt,fromCityId,fromLatitude,fromLongitude,fromAddress,toCityId,toLatitude,toLongitude,toAddress,tariffId,isFragile,isDefect,volumetricWeight,weight,width,length,height,calculationId,isPaid,deletedAt,status,fromApartment,fromEntrance,fromFloor,fromPhone,fromName,toApartment,toEntrance,toFloor,toPhone,toName,price,paidAmount,payAmount,tariff,sendTime,courierArriveTime,orderAccumulatorId,comment,description,category,const DeepCollectionEquality().hash(_photos),const DeepCollectionEquality().hash(_contentPhotos),const DeepCollectionEquality().hash(_defectPhotos),decideReason,decideDescription,fromCity,toCity,const DeepCollectionEquality().hash(_qrs),const DeepCollectionEquality().hash(_identifications),const DeepCollectionEquality().hash(_histories)]);
 
 @override
 String toString() {
-  return 'OrderEntity(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, fromCityId: $fromCityId, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, fromAddress: $fromAddress, toCityId: $toCityId, toLatitude: $toLatitude, toLongitude: $toLongitude, toAddress: $toAddress, tariffId: $tariffId, isFragile: $isFragile, isDefect: $isDefect, volumetricWeight: $volumetricWeight, weight: $weight, width: $width, length: $length, height: $height, calculationId: $calculationId, isPaid: $isPaid, deletedAt: $deletedAt, status: $status, fromApartment: $fromApartment, fromEntrance: $fromEntrance, fromFloor: $fromFloor, fromPhone: $fromPhone, fromName: $fromName, toApartment: $toApartment, toEntrance: $toEntrance, toFloor: $toFloor, toPhone: $toPhone, toName: $toName, price: $price, paidAmount: $paidAmount, payAmount: $payAmount, tariff: $tariff, sendTime: $sendTime, courierArriveTime: $courierArriveTime, orderAccumulatorId: $orderAccumulatorId, comment: $comment, description: $description, category: $category, photos: $photos, contentPhotos: $contentPhotos, defectPhotos: $defectPhotos, decideReason: $decideReason, decideDescription: $decideDescription, fromCity: $fromCity, toCity: $toCity, qrs: $qrs, identifications: $identifications, histories: $histories, priceCalculations: $priceCalculations)';
+  return 'OrderEntity(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, fromCityId: $fromCityId, fromLatitude: $fromLatitude, fromLongitude: $fromLongitude, fromAddress: $fromAddress, toCityId: $toCityId, toLatitude: $toLatitude, toLongitude: $toLongitude, toAddress: $toAddress, tariffId: $tariffId, isFragile: $isFragile, isDefect: $isDefect, volumetricWeight: $volumetricWeight, weight: $weight, width: $width, length: $length, height: $height, calculationId: $calculationId, isPaid: $isPaid, deletedAt: $deletedAt, status: $status, fromApartment: $fromApartment, fromEntrance: $fromEntrance, fromFloor: $fromFloor, fromPhone: $fromPhone, fromName: $fromName, toApartment: $toApartment, toEntrance: $toEntrance, toFloor: $toFloor, toPhone: $toPhone, toName: $toName, price: $price, paidAmount: $paidAmount, payAmount: $payAmount, tariff: $tariff, sendTime: $sendTime, courierArriveTime: $courierArriveTime, orderAccumulatorId: $orderAccumulatorId, comment: $comment, description: $description, category: $category, photos: $photos, contentPhotos: $contentPhotos, defectPhotos: $defectPhotos, decideReason: $decideReason, decideDescription: $decideDescription, fromCity: $fromCity, toCity: $toCity, qrs: $qrs, identifications: $identifications, histories: $histories)';
 }
 
 
@@ -2156,11 +2178,11 @@ abstract mixin class _$OrderEntityCopyWith<$Res> implements $OrderEntityCopyWith
   factory _$OrderEntityCopyWith(_OrderEntity value, $Res Function(_OrderEntity) _then) = __$OrderEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String createdAt, String updatedAt, int fromCityId, double fromLatitude, double fromLongitude, String fromAddress, int toCityId, double toLatitude, double toLongitude, String toAddress, int tariffId, bool isFragile, bool isDefect, double volumetricWeight, double weight, double width, double length, double height, int calculationId, bool? isPaid, String? deletedAt, String? status, String fromApartment, String? fromEntrance, String fromFloor, String? fromPhone, String? fromName, String toApartment, String? toEntrance, String toFloor, String? toPhone, String? toName, double? price, double? paidAmount, double? payAmount, OrderTariffEntity? tariff, String? sendTime, String? courierArriveTime, int? orderAccumulatorId, String comment, String description, String category, List<String> photos, List<String> contentPhotos, List<String>? defectPhotos, String decideReason, String decideDescription, OrderCityEntity? fromCity, OrderCityEntity? toCity, List<QrEntity>? qrs, List<OrderIdentificationEntity> identifications, List<OrderHistoryEntity> histories, PriceCalculationEntity? priceCalculations
+ int id, String createdAt, String updatedAt, int fromCityId, double fromLatitude, double fromLongitude, String fromAddress, int toCityId, double toLatitude, double toLongitude, String toAddress, int tariffId, bool isFragile, bool isDefect, double volumetricWeight, double weight, double width, double length, double height, int calculationId, bool? isPaid, String? deletedAt, String? status, String fromApartment, String? fromEntrance, String fromFloor, String? fromPhone, String? fromName, String toApartment, String? toEntrance, String toFloor, String? toPhone, String? toName, double? price, double? paidAmount, double? payAmount, OrderTariffEntity? tariff, String? sendTime, String? courierArriveTime, int? orderAccumulatorId, String comment, String description, String category, List<String> photos, List<String> contentPhotos, List<String>? defectPhotos, String decideReason, String decideDescription, OrderCityEntity? fromCity, OrderCityEntity? toCity, List<QrEntity>? qrs, List<OrderIdentificationEntity> identifications, List<OrderHistoryEntity> histories
 });
 
 
-@override $OrderTariffEntityCopyWith<$Res>? get tariff;@override $OrderCityEntityCopyWith<$Res>? get fromCity;@override $OrderCityEntityCopyWith<$Res>? get toCity;@override $PriceCalculationEntityCopyWith<$Res>? get priceCalculations;
+@override $OrderTariffEntityCopyWith<$Res>? get tariff;@override $OrderCityEntityCopyWith<$Res>? get fromCity;@override $OrderCityEntityCopyWith<$Res>? get toCity;
 
 }
 /// @nodoc
@@ -2173,7 +2195,7 @@ class __$OrderEntityCopyWithImpl<$Res>
 
 /// Create a copy of OrderEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? createdAt = null,Object? updatedAt = null,Object? fromCityId = null,Object? fromLatitude = null,Object? fromLongitude = null,Object? fromAddress = null,Object? toCityId = null,Object? toLatitude = null,Object? toLongitude = null,Object? toAddress = null,Object? tariffId = null,Object? isFragile = null,Object? isDefect = null,Object? volumetricWeight = null,Object? weight = null,Object? width = null,Object? length = null,Object? height = null,Object? calculationId = null,Object? isPaid = freezed,Object? deletedAt = freezed,Object? status = freezed,Object? fromApartment = null,Object? fromEntrance = freezed,Object? fromFloor = null,Object? fromPhone = freezed,Object? fromName = freezed,Object? toApartment = null,Object? toEntrance = freezed,Object? toFloor = null,Object? toPhone = freezed,Object? toName = freezed,Object? price = freezed,Object? paidAmount = freezed,Object? payAmount = freezed,Object? tariff = freezed,Object? sendTime = freezed,Object? courierArriveTime = freezed,Object? orderAccumulatorId = freezed,Object? comment = null,Object? description = null,Object? category = null,Object? photos = null,Object? contentPhotos = null,Object? defectPhotos = freezed,Object? decideReason = null,Object? decideDescription = null,Object? fromCity = freezed,Object? toCity = freezed,Object? qrs = freezed,Object? identifications = null,Object? histories = null,Object? priceCalculations = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? createdAt = null,Object? updatedAt = null,Object? fromCityId = null,Object? fromLatitude = null,Object? fromLongitude = null,Object? fromAddress = null,Object? toCityId = null,Object? toLatitude = null,Object? toLongitude = null,Object? toAddress = null,Object? tariffId = null,Object? isFragile = null,Object? isDefect = null,Object? volumetricWeight = null,Object? weight = null,Object? width = null,Object? length = null,Object? height = null,Object? calculationId = null,Object? isPaid = freezed,Object? deletedAt = freezed,Object? status = freezed,Object? fromApartment = null,Object? fromEntrance = freezed,Object? fromFloor = null,Object? fromPhone = freezed,Object? fromName = freezed,Object? toApartment = null,Object? toEntrance = freezed,Object? toFloor = null,Object? toPhone = freezed,Object? toName = freezed,Object? price = freezed,Object? paidAmount = freezed,Object? payAmount = freezed,Object? tariff = freezed,Object? sendTime = freezed,Object? courierArriveTime = freezed,Object? orderAccumulatorId = freezed,Object? comment = null,Object? description = null,Object? category = null,Object? photos = null,Object? contentPhotos = null,Object? defectPhotos = freezed,Object? decideReason = null,Object? decideDescription = null,Object? fromCity = freezed,Object? toCity = freezed,Object? qrs = freezed,Object? identifications = null,Object? histories = null,}) {
   return _then(_OrderEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -2228,8 +2250,7 @@ as OrderCityEntity?,toCity: freezed == toCity ? _self.toCity : toCity // ignore:
 as OrderCityEntity?,qrs: freezed == qrs ? _self._qrs : qrs // ignore: cast_nullable_to_non_nullable
 as List<QrEntity>?,identifications: null == identifications ? _self._identifications : identifications // ignore: cast_nullable_to_non_nullable
 as List<OrderIdentificationEntity>,histories: null == histories ? _self._histories : histories // ignore: cast_nullable_to_non_nullable
-as List<OrderHistoryEntity>,priceCalculations: freezed == priceCalculations ? _self.priceCalculations : priceCalculations // ignore: cast_nullable_to_non_nullable
-as PriceCalculationEntity?,
+as List<OrderHistoryEntity>,
   ));
 }
 
@@ -2269,20 +2290,9 @@ $OrderCityEntityCopyWith<$Res>? get toCity {
   return $OrderCityEntityCopyWith<$Res>(_self.toCity!, (value) {
     return _then(_self.copyWith(toCity: value));
   });
-}/// Create a copy of OrderEntity
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$PriceCalculationEntityCopyWith<$Res>? get priceCalculations {
-    if (_self.priceCalculations == null) {
-    return null;
-  }
+}
+}
 
-  return $PriceCalculationEntityCopyWith<$Res>(_self.priceCalculations!, (value) {
-    return _then(_self.copyWith(priceCalculations: value));
-  });
-}
-}
 
 /// @nodoc
 mixin _$OrderResultEntity {
@@ -2294,6 +2304,8 @@ mixin _$OrderResultEntity {
 @pragma('vm:prefer-inline')
 $OrderResultEntityCopyWith<OrderResultEntity> get copyWith => _$OrderResultEntityCopyWithImpl<OrderResultEntity>(this as OrderResultEntity, _$identity);
 
+  /// Serializes this OrderResultEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -2301,7 +2313,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderResultEntity&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.status, status) || other.status == status)&&(identical(other.message, message) || other.message == message));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,orderId,status,message);
 
@@ -2472,11 +2484,11 @@ return $default(_that.orderId,_that.status,_that.message);case _:
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _OrderResultEntity implements OrderResultEntity {
   const _OrderResultEntity({required this.orderId, required this.status, required this.message});
-  
+  factory _OrderResultEntity.fromJson(Map<String, dynamic> json) => _$OrderResultEntityFromJson(json);
 
 @override final  int orderId;
 @override final  String status;
@@ -2488,14 +2500,17 @@ class _OrderResultEntity implements OrderResultEntity {
 @pragma('vm:prefer-inline')
 _$OrderResultEntityCopyWith<_OrderResultEntity> get copyWith => __$OrderResultEntityCopyWithImpl<_OrderResultEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$OrderResultEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderResultEntity&&(identical(other.orderId, orderId) || other.orderId == orderId)&&(identical(other.status, status) || other.status == status)&&(identical(other.message, message) || other.message == message));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,orderId,status,message);
 

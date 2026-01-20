@@ -13,20 +13,6 @@ class EmptyOrdersListState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: AppColors.surface2,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.inbox_outlined,
-                size: 60,
-                color: AppColors.surface5,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.xl),
             Text(
               context.l10n.noOrdersYet,
               style: TextStyle(
@@ -50,4 +36,3 @@ class EmptyOrdersListState extends StatelessWidget {
     );
   }
 }
-

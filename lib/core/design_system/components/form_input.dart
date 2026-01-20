@@ -17,6 +17,7 @@ class BeFormInput extends StatelessWidget {
   final bool autofocus;
   final bool readOnly;
   final int? maxLength;
+  final List<String?> errors;
 
   late final TextEditingController controller;
   late final FocusNode focusNode;
@@ -30,6 +31,7 @@ class BeFormInput extends StatelessWidget {
     this.readOnly = false,
     this.keyboardType,
     this.maxLength,
+    this.errors = const <String?>[],
     this.variant = .flat,
     TextEditingController? controller,
     FocusNode? focusNode,
@@ -38,10 +40,13 @@ class BeFormInput extends StatelessWidget {
     this.controller = controller ?? TextEditingController();
   }
 
-  final _errorNotifier = ValueNotifier<String?>(null);
-
   @override
   Widget build(BuildContext context) {
+    final anyError = errors.any((text) => text != null);
+    final errorText = anyError
+        ? errors.firstWhere((text) => text != null)
+        : null;
+
     return GestureDetector(
       onTap: () {
         if (!focusNode.hasFocus) {
@@ -50,41 +55,39 @@ class BeFormInput extends StatelessWidget {
       },
       child: Stack(
         children: [
-          ListenableBuilder(
-            listenable: _errorNotifier,
-            builder: (context, child) {
-              return Column(
-                mainAxisSize: .min,
-                crossAxisAlignment: .start,
-                children: [
-                  Container(
-                    height: 70,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        width: 1,
-                        color: _errorNotifier.value != null
-                            ? BeColors.danger
-                            : variant == .bordered
-                            ? BeColors.border
-                            : BeColors.white,
-                      ),
-                      color: BeColors.white,
+          Column(
+            mainAxisSize: .min,
+            crossAxisAlignment: .start,
+            children: [
+              Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    width: 1,
+                    color: errorText != null
+                        ? BeColors.danger
+                        : variant == .bordered
+                        ? BeColors.border
+                        : BeColors.white,
+                  ),
+                  color: BeColors.white,
+                ),
+              ),
+              if (errorText != null)
+                Padding(
+                  padding: EdgeInsets.only(left: 16, top: 4),
+                  child: Text(
+                    errorText,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 13,
+                      height: 1,
+                      fontWeight: .w600,
+                      color: BeColors.danger,
                     ),
                   ),
-                  if (_errorNotifier.value != null)
-                    Text(
-                      _errorNotifier.value!,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 13,
-                        height: 1,
-                        fontWeight: .w600,
-                        color: BeColors.danger,
-                      ),
-                    ),
-                ],
-              );
-            },
+                ),
+            ],
           ),
           if (label != null)
             ListenableBuilder(
@@ -129,11 +132,7 @@ class BeFormInput extends StatelessWidget {
               readOnly: readOnly,
               focusNode: focusNode,
               keyboardType: keyboardType,
-              validator: (value) {
-                final error = validator?.call(value);
-                _errorNotifier.value = error;
-                return error;
-              },
+              validator: validator,
               maxLength: maxLength,
               style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.w600,

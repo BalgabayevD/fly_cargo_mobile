@@ -5,6 +5,7 @@ import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/confirm_otp_form.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -38,7 +39,12 @@ class AuthorizationConfirmScreen extends StatelessWidget {
 
           if (state is AuthorizedState) {
             getIt<Configuration>().setIsAuthenticated(true);
-            context.push(CreateOrderScreen.location());
+
+            if (state.sessionInfo.user.name!.isNotEmpty) {
+              context.push(CreateOrderScreen.location());
+            } else {
+              context.push(AuthorizationNameScreen.location());
+            }
           }
 
           if (state is AuthorizationOtpConfirmFailureState) {

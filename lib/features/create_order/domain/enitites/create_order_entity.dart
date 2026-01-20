@@ -5,6 +5,7 @@ part 'create_order_entity.g.dart';
 
 @freezed
 abstract class CreateOrderEntity with _$CreateOrderEntity {
+  const CreateOrderEntity._();
   const factory CreateOrderEntity({
     @Default('') String comment,
     @Default('') String description,
@@ -41,4 +42,8 @@ abstract class CreateOrderEntity with _$CreateOrderEntity {
 
   factory CreateOrderEntity.fromJson(Map<String, Object?> json) =>
       _$CreateOrderEntityFromJson(json);
+
+  bool get isCheckPrice {
+    return tariffId != 0 && fromCityId != 0 && toCityId != 0 && weight != 0;
+  }
 }

@@ -66,6 +66,7 @@ class BaseListTile extends StatelessWidget {
   final EdgeInsets? padding;
   final Color? backgroundColor;
   final Color? borderColor;
+  final List<String?> errors;
 
   const BaseListTile({
     this.child,
@@ -74,22 +75,49 @@ class BaseListTile extends StatelessWidget {
     this.padding,
     this.backgroundColor,
     this.borderColor,
+    this.errors = const <String?>[],
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      width: double.infinity,
-      height: height,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? BeColors.white,
-        border: Border.all(
-          color: borderColor ?? BeColors.white,
+    final anyError = errors.any((text) => text != null);
+    final errorText = anyError
+        ? errors.firstWhere((text) => text != null)
+        : null;
+
+    return Column(
+      crossAxisAlignment: .start,
+      mainAxisSize: .min,
+      children: [
+        Container(
+          padding: padding,
+          width: double.infinity,
+          height: height,
+          decoration: BoxDecoration(
+            color: backgroundColor ?? BeColors.white,
+            border: Border.all(
+              color: errorText != null
+                  ? BeColors.danger
+                  : borderColor ?? BeColors.white,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: child,
         ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: child,
+        if (errorText != null)
+          Padding(
+            padding: EdgeInsets.only(left: 16, top: 4),
+            child: Text(
+              errorText,
+              style: GoogleFonts.montserrat(
+                fontSize: 13,
+                height: 1,
+                fontWeight: .w600,
+                color: BeColors.danger,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -216,14 +244,14 @@ class FieldListTile extends StatelessWidget {
   final String? value;
   final FieldListTileVariant variant;
   final FieldListTileColor color;
-  final String? errorText;
+  final List<String?> errors;
   final bool disabled;
 
   const FieldListTile({
     required this.label,
     this.value,
     this.onTap,
-    this.errorText,
+    this.errors = const <String?>[],
     this.isShowIcon = true,
     this.disabled = false,
     this.variant = .flat,
@@ -260,6 +288,7 @@ class FieldListTile extends StatelessWidget {
     return GestureDetector(
       onTap: disabled ? () {} : onTap,
       child: BaseListTile(
+        errors: errors,
         backgroundColor: disabled ? BeColors.surface2 : BeColors.white,
         padding: const EdgeInsets.only(
           left: 12,

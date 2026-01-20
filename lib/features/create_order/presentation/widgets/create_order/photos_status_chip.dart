@@ -14,46 +14,52 @@ class PhotosStatusChip extends StatelessWidget {
     return Center(
       child: BlocBuilder<CreateOrdersBloc, CreateOrdersState>(
         builder: (BuildContext context, CreateOrdersState state) {
-          if (state is CreateOrdersCreateState) {
-            return BlocBuilder<PhotosBloc, PhotosState>(
-              builder: (BuildContext context, PhotosState photosState) {
-                switch (state.photosValidationStatus) {
-                  case PhotosValidationStatus.idle:
-                    if (photosState is PhotosPickerState &&
-                        photosState.photos.isNotEmpty) {
-                      return BeChip(
-                        text: 'Фото ${photosState.photos.length}/5',
-                        color: .warning,
-                        size: .sm,
-                      );
-                    } else {
-                      return SizedBox.shrink();
-                    }
-                  case PhotosValidationStatus.pending:
-                    return PhotosPendingChip();
-                  case PhotosValidationStatus.moreInside:
-                    return BeChip(
-                      text: 'Нужно фото внтури',
-                      color: .danger,
-                      size: .sm,
-                    );
-                  case PhotosValidationStatus.moreOutside:
-                    return BeChip(
-                      text: 'Нужно фото снаржи',
-                      color: .danger,
-                      size: .sm,
-                    );
-                  case PhotosValidationStatus.fulfilled:
-                    return BeChip(
-                      text: 'Фотографии загружены',
-                      color: .success,
-                      size: .sm,
-                    );
-                }
-              },
+          if (state.errors['photos'] != null &&
+              state.errors['photos']!.isNotEmpty) {
+            return BeChip(
+              text: state.errors['photos'],
+              color: .danger,
+              size: .sm,
             );
           }
-          return SizedBox.shrink();
+
+          return BlocBuilder<PhotosBloc, PhotosState>(
+            builder: (BuildContext context, PhotosState photosState) {
+              switch (state.photosValidationStatus) {
+                case PhotosValidationStatus.idle:
+                  if (photosState is PhotosPickerState &&
+                      photosState.photos.isNotEmpty) {
+                    return BeChip(
+                      text: 'Фото ${photosState.photos.length}/5',
+                      color: .warning,
+                      size: .sm,
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                case PhotosValidationStatus.pending:
+                  return PhotosPendingChip();
+                case PhotosValidationStatus.moreInside:
+                  return BeChip(
+                    text: 'Нужно фото внтури',
+                    color: .danger,
+                    size: .sm,
+                  );
+                case PhotosValidationStatus.moreOutside:
+                  return BeChip(
+                    text: 'Нужно фото снаржи',
+                    color: .danger,
+                    size: .sm,
+                  );
+                case PhotosValidationStatus.fulfilled:
+                  return BeChip(
+                    text: 'Фотографии загружены',
+                    color: .success,
+                    size: .sm,
+                  );
+              }
+            },
+          );
         },
       ),
     );

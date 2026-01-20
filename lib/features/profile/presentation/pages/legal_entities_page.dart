@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
@@ -26,6 +27,7 @@ class LegalEntitiesPage extends StatelessWidget {
       isBorder: true,
       title: context.l10n.forLegalEntities,
       automaticallyImplyLeading: true,
+      backgroundColor: BeColors.white,
       centerTitle: true,
       child: Markdown(
         data: _legalEntitiesContent,

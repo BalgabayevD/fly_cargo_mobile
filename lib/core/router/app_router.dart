@@ -3,6 +3,7 @@ import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
 import 'package:fly_cargo/core/router/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
@@ -10,8 +11,8 @@ import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_loader_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
-import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/privacy_policy_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
@@ -123,8 +124,9 @@ GoRouter createRouter(
     routes: [
       OnboardingScreen.route(),
       AuthorizationRequestScreen.route(),
-      UiKitPage.route(),
       AuthorizationConfirmScreen.route(),
+      AuthorizationNameScreen.route(),
+      UiKitPage.route(),
 
       MainScaffoldShell.route(
         branches: [
@@ -137,7 +139,7 @@ GoRouter createRouter(
                     path: AppRoutes.descriptionForm,
                     parentNavigatorKey: _rootNavigator,
                     builder: (context, state) {
-                      final initialDescription = state.extra as String?;
+                      // final initialDescription = state.extra as String?;
                       return Text('1');
                       // return DescriptionFormPage(
                       //   initialDescription: initialDescription,
@@ -148,38 +150,38 @@ GoRouter createRouter(
               ),
             ],
           ),
-                StatefulShellBranch(
-                  navigatorKey: _ordersNavigatorKey,
-                  routes: [
-                    OrdersListPage.route(
-                      routes: [
-                        GoRoute(
-                          path: 'order-detail/:orderId',
-                          parentNavigatorKey: _rootNavigator,
-                          builder: (context, state) {
-                            final orderIdStr = state.pathParameters['orderId'];
+          StatefulShellBranch(
+            navigatorKey: _ordersNavigatorKey,
+            routes: [
+              OrdersListPage.route(
+                routes: [
+                  GoRoute(
+                    path: 'order-detail/:orderId',
+                    parentNavigatorKey: _rootNavigator,
+                    builder: (context, state) {
+                      final orderIdStr = state.pathParameters['orderId'];
 
-                            if (orderIdStr == null || orderIdStr.isEmpty) {
-                              return const Scaffold(
-                                body: Center(
-                                  child: Text('Ошибка: не указан ID заказа'),
-                                ),
-                              );
-                            }
+                      if (orderIdStr == null || orderIdStr.isEmpty) {
+                        return const Scaffold(
+                          body: Center(
+                            child: Text('Ошибка: не указан ID заказа'),
+                          ),
+                        );
+                      }
 
-                            return OrderDetailLoaderPage(orderId: orderIdStr);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                StatefulShellBranch(
-                  navigatorKey: _settingsNavigatorKey,
-                  routes: [
-                    SettingsPage.route(),
-                  ],
-                ),
+                      return OrderDetailLoaderPage(orderId: orderIdStr);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _settingsNavigatorKey,
+            routes: [
+              SettingsPage.route(),
+            ],
+          ),
         ],
       ),
 

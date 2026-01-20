@@ -13,9 +13,11 @@ class CreateOrderWeight extends StatefulWidget {
 
 class _CreateOrderWeightState extends State<CreateOrderWeight> {
   late final TextEditingController controller;
+  late FocusNode focusNode;
 
   @override
   void initState() {
+    focusNode = FocusNode();
     controller = TextEditingController();
 
     controller.addListener(() {
@@ -31,31 +33,39 @@ class _CreateOrderWeightState extends State<CreateOrderWeight> {
   }
 
   @override
+  void dispose() {
+    focusNode.dispose();
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocListener<CreateOrdersBloc, CreateOrdersState>(
-      listener: (BuildContext context, CreateOrdersState current) {
-        if (current is CreateOrdersCreateState) {
-          controller.text = current.data.weight.toString();
+    return BlocConsumer<CreateOrdersBloc, CreateOrdersState>(
+      listener: (BuildContext context, CreateOrdersState state) {
+        String value = state.data.weight.toString().replaceAll(
+          RegExp(r'\.?0+$'),
+          '',
+        );
+
+        if (state.data.weight == state.data.weight.toInt()) {
+          value = state.data.weight.toInt().toString();
         }
+
+        if (controller.text != value) controller.text = value;
       },
-      listenWhen: (CreateOrdersState previous, CreateOrdersState current) {
-        if (previous is CreateOrdersCreateState &&
-            current is CreateOrdersCreateState) {
-          return previous.data.weight != current.data.weight;
-        }
-        return false;
+      listenWhen: (CreateOrdersState previous, CreateOrdersState state) {
+        return previous.data.weight != state.data.weight;
       },
-      child: BeFormInput(
-        controller: controller,
-        keyboardType: .number,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Обязательное поле';
-          }
-          return null;
-        },
-        label: context.l10n.weightInKg,
-      ),
+      builder: (BuildContext context, CreateOrdersState state) {
+        return BeFormInput(
+          focusNode: focusNode,
+          controller: controller,
+          keyboardType: .number,
+          label: context.l10n.weightInKg,
+          errors: [state.errors['weight']],
+        );
+      },
     );
   }
 }

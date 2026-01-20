@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
@@ -27,6 +28,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       title: context.l10n.privacyPolicyTitle,
       automaticallyImplyLeading: true,
       centerTitle: true,
+      backgroundColor: BeColors.white,
       child: Markdown(
         data: _privacyPolicyContent,
         padding: const EdgeInsets.all(AppSpacing.lg),

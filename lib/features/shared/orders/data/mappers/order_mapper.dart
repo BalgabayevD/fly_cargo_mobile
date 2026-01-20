@@ -185,7 +185,6 @@ extension OrderModelMapper on OrderModel {
       qrs: qrs?.map((q) => q.toEntity()).toList(),
       identifications: identifications.map((i) => i.toEntity()).toList(),
       histories: histories.map((h) => h.toEntity()).toList(),
-      priceCalculations: priceCalculations?.toEntity(),
     );
   }
 }

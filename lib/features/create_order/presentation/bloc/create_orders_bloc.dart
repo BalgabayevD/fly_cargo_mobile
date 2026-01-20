@@ -4,6 +4,7 @@ import 'package:fly_cargo/features/create_order/data/models/pre_create_order_res
 import 'package:fly_cargo/features/create_order/domain/enitites/create_order_entity.dart';
 import 'package:fly_cargo/features/create_order/domain/enitites/order_photo_entity.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/create_orders_usecase.dart';
+import 'package:fly_cargo/features/create_order/presentation/bloc/create_orders_validators_impl.dart';
 import 'package:injectable/injectable.dart';
 
 part 'create_orders_event.dart';
@@ -11,145 +12,209 @@ part 'create_orders_state.dart';
 
 @injectable
 class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
+  final CreateOrderValidator _validator = CreateOrderValidator.standard();
+
   final CreateOrdersUseCase createOrders;
 
   CreateOrdersBloc(this.createOrders)
-    : super(const CreateOrdersCreateState.initial()) {
+    : super(const CreateOrdersState.initial()) {
     on<AddPhotoOrdersCreateEvent>(_onAddPhotoOrdersCreate);
     on<UpdateOrdersCreateEvent>(_updateFieldValue);
+    on<SubmitOrdersCreateEvent>(_submit);
   }
 
   Future<void> _onAddPhotoOrdersCreate(
     AddPhotoOrdersCreateEvent event,
     Emitter<CreateOrdersState> emit,
   ) async {
-    if (state is CreateOrdersCreateState) {
-      final currentState = state as CreateOrdersCreateState;
+    if (!event.isValid) {
+      Map<String, String> errors = {...state.errors};
+      errors.remove('photos');
 
-      if (!event.isValid) {
-        emit(
-          currentState.copyWith(
-            data: currentState.data.copyWith(
-              photos: event.fingerprints,
-            ),
-            photosValidationStatus: .idle,
-          ),
-        );
-        return;
-      }
-
-      emit(currentState.copyWith(photosValidationStatus: .pending));
-
-      final status = await createOrders.checkOrderByPhotos(
-        event.fingerprints,
-      );
-
-      CreateOrderEntity data = currentState.data;
-      PhotosValidationStatus photosValidationStatus =
-          currentState.photosValidationStatus;
-
-      if (status == null) {
-        photosValidationStatus = .idle;
-      } else {
-        if (status.status == AnalysisStatus.morePhotoInside) {
-          photosValidationStatus = .moreInside;
-        }
-        if (status.status == AnalysisStatus.morePhotoOutside) {
-          photosValidationStatus = .moreOutside;
-        }
-        if (status.status == AnalysisStatus.none) {
-          photosValidationStatus = .fulfilled;
-
-          data = data.copyWith(
-            photos: event.fingerprints,
-            tariffId: status.result.tariffId,
-            length: status.result.length,
-            width: status.result.width,
-            height: status.result.height,
-          );
-
-          if (data.description.isEmpty) {
-            data = data.copyWith(
-              description: status.result.description,
-            );
-          }
-          if (data.weight == 0) {
-            data = data.copyWith(
-              weight: status.result.weight,
-            );
-          }
-        }
-      }
       emit(
-        currentState.copyWith(
-          data: data,
-          photosValidationStatus: photosValidationStatus,
+        state.copyWith(
+          data: state.data.copyWith(
+            photos: event.fingerprints,
+          ),
+          photosValidationStatus: .idle,
+          errors: errors,
         ),
       );
+      return;
     }
+
+    emit(state.copyWith(photosValidationStatus: .pending));
+
+    final status = await createOrders.checkOrderByPhotos(
+      event.fingerprints,
+    );
+
+    CreateOrderEntity data = state.data;
+    PhotosValidationStatus photosValidationStatus =
+        state.photosValidationStatus;
+
+    int photosValidationAttempt = state.photosValidationAttempt;
+
+    if (status == null) {
+      photosValidationStatus = .idle;
+    } else {
+      if (status.status == AnalysisStatus.morePhotoInside) {
+        photosValidationStatus = .moreInside;
+        photosValidationAttempt = photosValidationAttempt + 1;
+      }
+      if (status.status == AnalysisStatus.morePhotoOutside) {
+        photosValidationStatus = .moreOutside;
+        photosValidationAttempt = photosValidationAttempt + 1;
+      }
+      if (status.status == AnalysisStatus.none) {
+        photosValidationStatus = .fulfilled;
+
+        data = data.copyWith(
+          photos: event.fingerprints,
+          tariffId: status.result.tariffId,
+          length: status.result.length,
+          width: status.result.width,
+          height: status.result.height,
+        );
+
+        if (data.description.isEmpty) {
+          data = data.copyWith(
+            description: status.result.description,
+          );
+        }
+        if (data.weight == 0) {
+          data = data.copyWith(
+            weight: status.result.weight,
+          );
+        }
+      }
+    }
+    emit(
+      state.copyWith(
+        data: data,
+        photosValidationStatus: photosValidationStatus,
+      ),
+    );
   }
 
   Future<void> _updateFieldValue(
     UpdateOrdersCreateEvent event,
     Emitter<CreateOrdersState> emit,
   ) async {
-    if (state is CreateOrdersCreateState) {
-      final current = state as CreateOrdersCreateState;
-      if (event.field is UpdateOrdersRecipientField) {
-        final field = event.field as UpdateOrdersRecipientField;
-        final data = current.data.copyWith(
-          toName: field.toName,
-          toPhone: field.toPhone,
-        );
-        emit(current.copyWith(data: data));
-      }
+    if (event.field is UpdateOrdersRecipientField) {
+      Map<String, String> errors = {...state.errors};
+      errors.remove('toName');
+      errors.remove('toPhone');
+      final field = event.field as UpdateOrdersRecipientField;
+      final data = state.data.copyWith(
+        toName: field.toName,
+        toPhone: field.toPhone,
+      );
+      emit(state.copyWith(data: data, errors: errors));
+    }
 
-      if (event.field is UpdateOrdersTariffField) {
-        final data = current.data.copyWith(
-          tariffId: (event.field as UpdateOrdersTariffField).tariffId,
-        );
-        emit(current.copyWith(data: data));
-      }
+    if (event.field is UpdateOrdersTariffField) {
+      Map<String, String> errors = {...state.errors};
+      errors.remove('tariffId');
+      final data = state.data.copyWith(
+        tariffId: (event.field as UpdateOrdersTariffField).tariffId,
+      );
+      emit(state.copyWith(data: data, errors: errors));
+    }
 
-      if (event.field is UpdateOrdersWeightField) {
-        final data = current.data.copyWith(
-          weight: (event.field as UpdateOrdersWeightField).weight,
-        );
-        emit(current.copyWith(data: data));
-      }
+    if (event.field is UpdateOrdersWeightField) {
+      Map<String, String> errors = {...state.errors};
+      errors.remove('weight');
+      final data = state.data.copyWith(
+        weight: (event.field as UpdateOrdersWeightField).weight,
+      );
+      emit(state.copyWith(data: data, errors: errors));
+    }
 
-      if (event.field is UpdateOrdersDescriptionField) {
-        final field = event.field as UpdateOrdersDescriptionField;
+    if (event.field is UpdateOrdersDescriptionField) {
+      Map<String, String> errors = {...state.errors};
+      errors.remove('description');
+      final field = event.field as UpdateOrdersDescriptionField;
 
-        final data = current.data.copyWith(
-          description: field.description,
-        );
+      final data = state.data.copyWith(
+        description: field.description,
+      );
 
-        emit(current.copyWith(data: data));
-      }
+      emit(state.copyWith(data: data, errors: errors));
+    }
 
-      if (event.field is UpdateOrdersLocationField) {
-        final field = event.field as UpdateOrdersLocationField;
+    if (event.field is UpdateOrdersLocationField) {
+      Map<String, String> errors = {...state.errors};
+      errors.remove('fromCityId');
+      errors.remove('fromAddress');
+      errors.remove('fromFloor');
+      errors.remove('fromEntrance');
+      errors.remove('fromApartment');
+      errors.remove('fromLatitude');
+      errors.remove('fromLongitude');
 
-        final data = current.data.copyWith(
-          fromCityId: field.fromCityId,
-          fromAddress: field.fromAddress,
-          fromFloor: field.fromFloor,
-          fromEntrance: field.fromEntrance,
-          fromApartment: field.fromApartment,
-          fromLatitude: field.fromLatitude,
-          fromLongitude: field.fromLongitude,
+      errors.remove('toCityId');
+      errors.remove('toAddress');
+      errors.remove('toFloor');
+      errors.remove('toEntrance');
+      errors.remove('toApartment');
+      errors.remove('toLatitude');
+      errors.remove('toLongitude');
 
-          toCityId: field.toCityId,
-          toAddress: field.toAddress,
-          toFloor: field.toFloor,
-          toEntrance: field.toEntrance,
-          toApartment: field.toApartment,
-          toLatitude: field.toLatitude,
-          toLongitude: field.toLongitude,
-        );
-        emit(current.copyWith(data: data));
-      }
+      final field = event.field as UpdateOrdersLocationField;
+
+      final data = state.data.copyWith(
+        fromCityId: field.fromCityId,
+        fromAddress: field.fromAddress,
+        fromFloor: field.fromFloor,
+        fromEntrance: field.fromEntrance,
+        fromApartment: field.fromApartment,
+        fromLatitude: field.fromLatitude,
+        fromLongitude: field.fromLongitude,
+
+        toCityId: field.toCityId,
+        toAddress: field.toAddress,
+        toFloor: field.toFloor,
+        toEntrance: field.toEntrance,
+        toApartment: field.toApartment,
+        toLatitude: field.toLatitude,
+        toLongitude: field.toLongitude,
+      );
+      emit(state.copyWith(data: data, errors: errors));
+    }
+
+    if (state.data.isCheckPrice) {
+      final price = await createOrders.getPrice(state.data);
+
+      emit(state.copyWith(price: price));
     }
   }
+
+  Future<void> _submit(
+    SubmitOrdersCreateEvent event,
+    Emitter<CreateOrdersState> emit,
+  ) async {
+    final errors = _validator.validate(state.data);
+
+    if (errors.isNotEmpty) {
+      emit(state.copyWith(errors: errors));
+      return;
+    }
+
+    final a = await createOrders.createOrder(state.data);
+    print(a);
+  }
+}
+
+abstract class CreateOrdersStateValidator {
+  final Object value;
+  final String? error;
+
+  CreateOrdersStateValidator({required this.value, this.error});
+}
+
+class CreateOrdersStateValidation {
+  final CreateOrderEntity data;
+
+  CreateOrdersStateValidation({required this.data});
 }

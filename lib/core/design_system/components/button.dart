@@ -373,7 +373,7 @@ class BeButton extends StatelessWidget {
                       strokeCap: .round,
                     ),
                   ),
-                Text(text!, style: _textStyle),
+                Flexible(child: Text(text!, style: _textStyle)),
                 if (endContent != null) endContent!,
               ],
             )

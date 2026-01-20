@@ -236,6 +236,7 @@ class _DialogApartmentSelectState extends State<_DialogApartmentSelect> {
       builder: (BuildContext context, Widget? child) {
         return BeFormInput(
           variant: .bordered,
+          keyboardType: .number,
           label: context.l10n.apartment,
           controller: textController,
         );

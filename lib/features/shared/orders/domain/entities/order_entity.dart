@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'order_entity.freezed.dart';
+part 'order_entity.g.dart';
 
 @freezed
 sealed class OrderCityEntity with _$OrderCityEntity {
@@ -12,6 +13,9 @@ sealed class OrderCityEntity with _$OrderCityEntity {
     int? id,
     String? deletedAt,
   }) = _OrderCityEntity;
+
+  factory OrderCityEntity.fromJson(Map<String, Object?> json) =>
+      _$OrderCityEntityFromJson(json);
 }
 
 @freezed
@@ -28,6 +32,9 @@ sealed class OrderHistoryEntity with _$OrderHistoryEntity {
     String? description,
     String? parameters,
   }) = _OrderHistoryEntity;
+
+  factory OrderHistoryEntity.fromJson(Map<String, Object?> json) =>
+      _$OrderHistoryEntityFromJson(json);
 }
 
 @freezed
@@ -40,6 +47,9 @@ sealed class OrderIdentificationEntity with _$OrderIdentificationEntity {
     String? target,
     String? uuid,
   }) = _OrderIdentificationEntity;
+
+  factory OrderIdentificationEntity.fromJson(Map<String, Object?> json) =>
+      _$OrderIdentificationEntityFromJson(json);
 }
 
 @freezed
@@ -52,6 +62,9 @@ sealed class QrEntity with _$QrEntity {
     String? target,
     String? uuid,
   }) = _QrEntity;
+
+  factory QrEntity.fromJson(Map<String, Object?> json) =>
+      _$QrEntityFromJson(json);
 }
 
 @freezed
@@ -113,6 +126,9 @@ sealed class OrderTariffEntity with _$OrderTariffEntity {
     int? packageId,
     double? additionalCostForFragileCargo,
   }) = _OrderTariffEntity;
+
+  factory OrderTariffEntity.fromJson(Map<String, Object?> json) =>
+      _$OrderTariffEntityFromJson(json);
 }
 
 @freezed
@@ -171,8 +187,10 @@ sealed class OrderEntity with _$OrderEntity {
     @Default([]) List<QrEntity>? qrs,
     @Default([]) List<OrderIdentificationEntity> identifications,
     @Default([]) List<OrderHistoryEntity> histories,
-    PriceCalculationEntity? priceCalculations,
   }) = _OrderEntity;
+
+  factory OrderEntity.fromJson(Map<String, Object?> json) =>
+      _$OrderEntityFromJson(json);
 }
 
 @freezed
@@ -182,4 +200,7 @@ sealed class OrderResultEntity with _$OrderResultEntity {
     required String status,
     required String message,
   }) = _OrderResultEntity;
+
+  factory OrderResultEntity.fromJson(Map<String, Object?> json) =>
+      _$OrderResultEntityFromJson(json);
 }

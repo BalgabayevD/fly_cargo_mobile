@@ -11,7 +11,7 @@ part 'tariffs_state.dart';
 class TariffsBloc extends Bloc<TariffsEvent, TariffsState> {
   final TariffsUseCase tariffs;
 
-  TariffsBloc(this.tariffs) : super(TariffsInitialState()) {
+  TariffsBloc(this.tariffs) : super(TariffsState.empty()) {
     on<TariffsLoadEvent>(_loadTariffs);
   }
 
@@ -31,7 +31,7 @@ class TariffsBloc extends Bloc<TariffsEvent, TariffsState> {
         );
       }
 
-      emit(TariffsLoadedState(tariff));
+      emit(TariffsState(tariff));
 
       final restResult = await tariffs.getTariffsRest();
 
@@ -42,10 +42,7 @@ class TariffsBloc extends Bloc<TariffsEvent, TariffsState> {
         );
       }
 
-      emit(TariffsLoadedState(tariff));
-    } catch (e) {
-      print("_loadTariffs");
-      print(e);
-    }
+      emit(TariffsState(tariff));
+    } catch (_) {}
   }
 }

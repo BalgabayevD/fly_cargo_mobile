@@ -13,15 +13,15 @@ class CreateOrderDescription extends StatefulWidget {
 
 class _CreateOrderDescriptionState extends State<CreateOrderDescription> {
   late final TextEditingController controller;
+  late final FocusNode focusNode;
 
   @override
   void initState() {
+    focusNode = FocusNode();
     controller = TextEditingController();
 
     final state = context.read<CreateOrdersBloc>().state;
-    if (state is CreateOrdersCreateState) {
-      controller.text = state.data.description;
-    }
+    controller.text = state.data.description;
 
     controller.addListener(_onTextChanged);
     super.initState();
@@ -29,33 +29,28 @@ class _CreateOrderDescriptionState extends State<CreateOrderDescription> {
 
   @override
   void dispose() {
+    focusNode.dispose();
     controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CreateOrdersBloc, CreateOrdersState>(
-      listener: (BuildContext context, CreateOrdersState current) {
-        if (current is CreateOrdersCreateState) {
-          controller.text = current.data.description;
-        }
+    return BlocConsumer<CreateOrdersBloc, CreateOrdersState>(
+      listener: (BuildContext context, CreateOrdersState state) {
+        controller.text = state.data.description;
       },
-      listenWhen: (previous, current) {
-        return previous is CreateOrdersCreateState &&
-            current is CreateOrdersCreateState &&
-            previous.data.description != current.data.description;
+      listenWhen: (previous, state) {
+        return previous.data.description != state.data.description;
       },
-      child: BeFormInput(
-        label: context.l10n.description,
-        controller: controller,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Обязательное поле';
-          }
-          return null;
-        },
-      ),
+      builder: (BuildContext context, CreateOrdersState state) {
+        return BeFormInput(
+          focusNode: focusNode,
+          label: context.l10n.description,
+          controller: controller,
+          errors: [state.errors['description']],
+        );
+      },
     );
   }
 

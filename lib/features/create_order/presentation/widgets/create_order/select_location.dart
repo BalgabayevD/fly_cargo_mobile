@@ -27,9 +27,7 @@ class SelectLocation extends StatelessWidget {
       builder: (BuildContext context, CreateOrdersState ordersState) {
         return BlocBuilder<CitiesBloc, CitiesState>(
           builder: (BuildContext context, CitiesState state) {
-            if (state is CitySelectedState &&
-                type == .from &&
-                ordersState is CreateOrdersCreateState) {
+            if (state is CitySelectedState && type == .from) {
               final fromValue = StateLocation(state.from.cities);
 
               return FieldListTile(
@@ -41,6 +39,10 @@ class SelectLocation extends StatelessWidget {
                       : ordersState.data.fromCityId,
                   ordersState.data.fromAddress,
                 ),
+                errors: [
+                  ordersState.errors['fromAddress'],
+                  ordersState.errors['fromCityId'],
+                ],
                 onTap: () async {
                   final location = await showDialog.toSelectAddress(
                     context,
@@ -91,9 +93,7 @@ class SelectLocation extends StatelessWidget {
               );
             }
 
-            if (state is CitySelectedState &&
-                type == .to &&
-                ordersState is CreateOrdersCreateState) {
+            if (state is CitySelectedState && type == .to) {
               final toValue = StateLocation(state.to.cities);
               return FieldListTile(
                 label: label,
@@ -104,6 +104,10 @@ class SelectLocation extends StatelessWidget {
                       : ordersState.data.toCityId,
                   ordersState.data.toAddress,
                 ),
+                errors: [
+                  ordersState.errors['toAddress'],
+                  ordersState.errors['toCityId'],
+                ],
                 onTap: () async {
                   final location = await showDialog.toSelectAddress(
                     context,
