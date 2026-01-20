@@ -203,6 +203,11 @@ enum FieldListTileVariant {
   bordered,
 }
 
+enum FieldListTileColor {
+  normal,
+  danger,
+}
+
 class FieldListTile extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isShowIcon;
@@ -210,15 +215,19 @@ class FieldListTile extends StatelessWidget {
   final String label;
   final String? value;
   final FieldListTileVariant variant;
+  final FieldListTileColor color;
+  final String? errorText;
   final bool disabled;
 
   const FieldListTile({
     required this.label,
     this.value,
     this.onTap,
+    this.errorText,
     this.isShowIcon = true,
     this.disabled = false,
     this.variant = .flat,
+    this.color = .normal,
     this.icon = .chevronRight,
     super.key,
   });

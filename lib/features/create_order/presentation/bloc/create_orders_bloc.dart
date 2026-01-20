@@ -62,13 +62,22 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
 
           data = data.copyWith(
             photos: event.fingerprints,
-            description: status.result.description,
             tariffId: status.result.tariffId,
-            weight: status.result.weight,
             length: status.result.length,
             width: status.result.width,
             height: status.result.height,
           );
+
+          if (data.description.isEmpty) {
+            data = data.copyWith(
+              description: status.result.description,
+            );
+          }
+          if (data.weight == 0) {
+            data = data.copyWith(
+              weight: status.result.weight,
+            );
+          }
         }
       }
       emit(

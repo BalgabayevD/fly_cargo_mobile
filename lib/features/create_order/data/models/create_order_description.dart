@@ -49,6 +49,12 @@ class _CreateOrderDescriptionState extends State<CreateOrderDescription> {
       child: BeFormInput(
         label: context.l10n.description,
         controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Обязательное поле';
+          }
+          return null;
+        },
       ),
     );
   }

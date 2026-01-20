@@ -106,13 +106,17 @@ class _DialogPhoneSelect extends StatefulWidget {
 
 class _DialogPhoneSelectState extends State<_DialogPhoneSelect> {
   late final FocusNode focusNode;
-  late final textController = TextEditingController(
-    text: widget.notifier.recipient.phone,
-  );
+  late final TextEditingController textController;
   @override
   void initState() {
     super.initState();
     focusNode = FocusNode();
+    textController = TextEditingController(
+      text: widget.notifier.recipient.phone,
+    );
+    if (widget.notifier.recipient.phone.isEmpty) {
+      textController.text = '+7';
+    }
     textController.addListener(() {
       widget.notifier.setPhone(textController.text);
     });

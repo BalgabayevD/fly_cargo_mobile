@@ -47,7 +47,13 @@ class _CreateOrderWeightState extends State<CreateOrderWeight> {
       },
       child: BeFormInput(
         controller: controller,
-        keyboardType: .numberWithOptions(decimal: false),
+        keyboardType: .number,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Обязательное поле';
+          }
+          return null;
+        },
         label: context.l10n.weightInKg,
       ),
     );
