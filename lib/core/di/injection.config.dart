@@ -95,8 +95,6 @@ import 'package:fly_cargo/features/payments/domain/repositories/payment_reposito
     as _i860;
 import 'package:fly_cargo/features/payments/domain/usecases/payment_usecase.dart'
     as _i863;
-import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_bloc.dart'
-    as _i191;
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart'
     as _i593;
 import 'package:get_it/get_it.dart' as _i174;
@@ -124,7 +122,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i596.LocaleCubit>(
       () => _i596.LocaleCubit(gh<_i51.Package>()),
     );
-    gh.factory<_i191.AddCardBloc>(() => _i191.AddCardBloc(gh<InvalidType>()));
     gh.factory<_i156.Configuration>(
       () => _i156.Configuration(
         package: gh<_i51.Package>(),

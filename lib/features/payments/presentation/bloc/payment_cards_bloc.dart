@@ -28,6 +28,6 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     Emitter<PaymentCardsState> emit,
   ) async {
     final url = await payment.addCard();
-    print(url);
+    emit(PaymentCardsAddState(cards: state.cards, url: url));
   }
 }

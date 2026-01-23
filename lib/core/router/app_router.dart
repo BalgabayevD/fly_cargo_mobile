@@ -10,6 +10,7 @@ import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.d
 import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
+import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
@@ -173,6 +174,7 @@ GoRouter createRouter(
       TermsOfServicePage.route(),
       LegalEntitiesPage.route(),
       TransportationRulesPage.route(),
+      AddCardPage.route(),
     ],
   );
 }

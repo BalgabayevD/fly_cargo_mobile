@@ -45,10 +45,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
   }
 
   @override
-  Future<bool> payOrder({
-    required int paymentCardId,
-    required int orderId,
-  }) async {
+  Future<bool> payOrder(int paymentCardId, int orderId) async {
     try {
       final response = await requestable.dio.post(
         '$_/orders/pay',

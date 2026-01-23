@@ -10,8 +10,11 @@ import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/client_order_bloc.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/client_order_pay_dialog.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
+import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
+import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,11 +34,11 @@ class ClientOrderPage extends StatelessWidget {
         final orderId = state.pathParameters['orderId'];
 
         if (orderId == null || orderId.isEmpty) {
-          return '/orders';
+          return ClientOrdersPage.location();
         }
 
         if (int.tryParse(orderId) == null) {
-          return '/orders';
+          return ClientOrdersPage.location();
         }
 
         return null;
@@ -179,9 +182,32 @@ class ClientOrderPayButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: isShowPay,
-      child: BeButton(
-        text: 'Оплатить $payAmount тг',
-        onPressed: () => dialog.selectCards(context, orderId, payAmount),
+      child: BlocConsumer<PaymentCardsBloc, PaymentCardsState>(
+        listener: (BuildContext context, PaymentCardsState state) {
+          if (state is PaymentCardsAddState) {
+            context.push(AddCardPage.location(state.url));
+          }
+        },
+        listenWhen: (PaymentCardsState previous, PaymentCardsState state) {
+          return (state is PaymentCardsAddState);
+        },
+        builder: (BuildContext context, PaymentCardsState state) {
+          return BeButton(
+            text: 'Оплатить $payAmount тг',
+            onPressed: () async {
+              final payload = await dialog.selectCards(
+                context,
+                state.cards,
+                orderId,
+                payAmount,
+              );
+
+              if (payload != null && payload.$1 == ClientOrderPayAction.pay) {
+                // to do call api
+              }
+            },
+          );
+        },
       ),
     );
   }

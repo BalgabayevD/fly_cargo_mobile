@@ -13,3 +13,20 @@ class PaymentCardsState {
     );
   }
 }
+
+class PaymentCardsAddState extends PaymentCardsState {
+  final String url;
+
+  const PaymentCardsAddState({required this.url, required super.cards});
+
+  @override
+  PaymentCardsAddState copyWith({
+    List<CardEntity>? cards,
+    String? url,
+  }) {
+    return PaymentCardsAddState(
+      cards: cards ?? this.cards,
+      url: url ?? this.url,
+    );
+  }
+}
