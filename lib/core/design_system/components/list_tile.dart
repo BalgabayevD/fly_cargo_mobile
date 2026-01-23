@@ -341,11 +341,13 @@ class FlatListTile extends StatelessWidget {
   final VoidCallback? onTap;
   final String label;
   final String value;
+  final bool isFluid;
 
   const FlatListTile({
     required this.label,
     required this.value,
     this.onTap,
+    this.isFluid = false,
     super.key,
   });
 
@@ -364,22 +366,27 @@ class FlatListTile extends StatelessWidget {
           mainAxisAlignment: .spaceBetween,
           crossAxisAlignment: .start,
           children: [
-            Text(
-              label,
-              style: GoogleFonts.montserrat(
-                fontSize: 13,
-                height: 1,
-                fontWeight: .w500,
-                color: BeColors.surface4,
+            Flexible(
+              child: Text(
+                label,
+                style: GoogleFonts.montserrat(
+                  fontSize: 13,
+                  height: 1,
+                  fontWeight: .w500,
+                  color: BeColors.surface4,
+                ),
               ),
             ),
 
-            Text(
-              value,
-              style: GoogleFonts.montserrat(
-                fontSize: 19,
-                fontWeight: .w500,
-                color: BeColors.surface5,
+            Flexible(
+              child: Text(
+                value,
+                overflow: .ellipsis,
+                style: GoogleFonts.montserrat(
+                  fontSize: 19,
+                  fontWeight: .w500,
+                  color: BeColors.surface5,
+                ),
               ),
             ),
           ],

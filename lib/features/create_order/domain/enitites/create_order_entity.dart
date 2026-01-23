@@ -44,6 +44,7 @@ abstract class CreateOrderEntity with _$CreateOrderEntity {
       _$CreateOrderEntityFromJson(json);
 
   bool get isCheckPrice {
+    print('$tariffId, $fromCityId, $toCityId, $weight');
     return tariffId != 0 && fromCityId != 0 && toCityId != 0 && weight != 0;
   }
 }

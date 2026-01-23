@@ -4,11 +4,6 @@ import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/payments/presentation/add_card/bloc/add_card_bloc.dart';
-import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_bloc.dart';
-import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_event.dart';
-import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_state.dart';
-import 'package:fly_cargo/features/payments/presentation/epayment_pay/bloc/epayment_pay_bloc.dart';
-import 'package:fly_cargo/features/payments/presentation/epayment_pay/bloc/epayment_pay_state.dart';
 import 'package:fly_cargo/features/payments/presentation/payment_flow_cubit.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/cards_list/cards_list_widget.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/empty_cards_widget.dart';
@@ -94,7 +89,9 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
           Expanded(
             child: BlocBuilder<PaymentFlowCubit, PaymentStep>(
               builder: (context, step) {
-                String title = context.l10n.paymentForOrder(widget.orderId.toString());
+                String title = context.l10n.paymentForOrder(
+                  widget.orderId.toString(),
+                );
                 if (step == PaymentStep.addCard) {
                   title = context.l10n.addingCardTitle;
                 } else {

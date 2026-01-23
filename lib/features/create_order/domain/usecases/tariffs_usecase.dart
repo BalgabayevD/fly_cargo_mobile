@@ -4,13 +4,13 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class TariffsUseCase {
-  final TariffsRestRepository restTariffs;
-  final TariffsPersistRepository persistTariffs;
+  final TariffsRestRepository tariffsRest;
+  final TariffsPersistRepository tariffsPersist;
 
-  TariffsUseCase(this.restTariffs, this.persistTariffs);
+  TariffsUseCase(this.tariffsRest, this.tariffsPersist);
 
   Future<List<TariffModel>> getTariffsRest() async {
-    final result = await restTariffs.getTariffCategories();
+    final result = await tariffsRest.getTariffCategories();
 
     List<TariffModel> list = [];
 
@@ -21,12 +21,12 @@ class TariffsUseCase {
       }
     }
 
-    await persistTariffs.saveTariffCategories(list);
+    await tariffsPersist.saveTariffCategories(list);
 
     return list;
   }
 
   Future<List<TariffModel>> getTariffsPersist() async {
-    return await persistTariffs.getTariffCategories();
+    return await tariffsPersist.getTariffCategories();
   }
 }

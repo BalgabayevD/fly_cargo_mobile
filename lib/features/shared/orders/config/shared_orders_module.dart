@@ -5,7 +5,6 @@ import 'package:fly_cargo/features/shared/orders/data/repositories/orders_reposi
 import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@module
 abstract class SharedOrdersModule {
   OrdersRemoteSource ordersRemoteSource(
     Requestable requestable,

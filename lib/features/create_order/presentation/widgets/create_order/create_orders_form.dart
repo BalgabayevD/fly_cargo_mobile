@@ -28,7 +28,6 @@ class CreateOrdersForm extends StatelessWidget {
         SelectRecipient(),
         BeSpace(size: .xxxl),
         SelectTariffs(),
-        BeSpace(size: .md),
         CreateOrderWeight(),
         BeSpace(size: .md),
         CreateOrderDescription(),

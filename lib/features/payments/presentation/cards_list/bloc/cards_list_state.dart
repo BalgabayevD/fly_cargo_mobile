@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:fly_cargo/features/payments/domain/entities/card.dart';
+import 'package:fly_cargo/features/payments/domain/entities/card_entity.dart';
 
 abstract class CardsListState extends Equatable {
   const CardsListState();
-  
+
   @override
   List<Object?> get props => [];
 }
@@ -19,15 +19,15 @@ class CardsListLoading extends CardsListState {
 class CardsListLoaded extends CardsListState {
   final List<Card> cards;
   final int? selectedCardId;
-  
+
   const CardsListLoaded({
     required this.cards,
     this.selectedCardId,
   });
-  
+
   @override
   List<Object?> get props => [cards, selectedCardId];
-  
+
   CardsListLoaded copyWith({
     List<Card>? cards,
     int? selectedCardId,
@@ -45,10 +45,9 @@ class CardsListEmpty extends CardsListState {
 
 class CardsListError extends CardsListState {
   final String message;
-  
+
   const CardsListError(this.message);
-  
+
   @override
   List<Object?> get props => [message];
 }
-

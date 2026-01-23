@@ -1,11 +1,10 @@
-import 'package:fly_cargo/features/payments/domain/entities/card.dart';
+import 'package:fly_cargo/features/payments/domain/entities/card_entity.dart';
 
 abstract class PaymentRepository {
   Future<String> addCard();
-  Future<List<Card>> fetchCards();
-  Future<bool> payOrder({
-    required int paymentCardId,
-    required int orderId,
-  });
+  Future<List<CardEntity>> getCardsList();
+  Future<bool> payOrder(
+    int paymentCardId,
+    int orderId,
+  );
 }
-

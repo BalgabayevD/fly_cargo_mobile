@@ -152,7 +152,7 @@ extension OrderModelMapper on OrderModel {
       length: length,
       height: height,
       calculationId: calculationId,
-      isPaid: isPaid,
+      isPaid: isPaid ?? false,
       deletedAt: deletedAt,
       status: status,
       fromApartment: fromApartment,

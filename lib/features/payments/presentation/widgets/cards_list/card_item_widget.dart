@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/payments/domain/entities/card.dart' as payment_card;
-import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_bloc.dart';
-import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_event.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/cards_list/payment_styles.dart';
 
 /// Виджет элемента списка карты
 class CardItemWidget extends StatelessWidget {
-  final payment_card.Card card;
+  // final payment_card.Card card;
   final bool isSelected;
-  
+
   const CardItemWidget({
-    required this.card,
+    // required this.card,
     required this.isSelected,
     super.key,
   });
@@ -39,7 +35,7 @@ class CardItemWidget extends StatelessWidget {
   }
 
   void _onCardTap(BuildContext context) {
-    context.read<CardsListBloc>().add(CardsListCardSelected(card.id));
+    // context.read<CardsListBloc>().add(CardsListCardSelected(card.id));
   }
 
   BoxDecoration _buildContainerDecoration(BuildContext context) {
@@ -93,15 +89,16 @@ class CardItemWidget extends StatelessWidget {
         ),
       ),
       alignment: Alignment.center,
-      child: card.image.isNotEmpty
-          ? _buildNetworkImage(context)
-          : _buildFallbackIcon(context),
+      child: Text('1'),
+      // child: card.image.isNotEmpty
+      //     ? _buildNetworkImage(context)
+      //     : _buildFallbackIcon(context),
     );
   }
 
   Widget _buildNetworkImage(BuildContext context) {
     return Image.network(
-      card.image,
+      '2',
       width: 56,
       height: 40,
       fit: BoxFit.contain,
@@ -123,21 +120,19 @@ class CardItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            card.mask,
+            '2',
             style: context.cardTitleStyle.copyWith(
               color: AppColors.surface5,
             ),
           ),
-          if (card.bank.isNotEmpty)
-            Text(
-              card.bank,
-              style: context.cardSubtitleStyle.copyWith(
-                color: AppColors.surface4,
-              ),
+          Text(
+            '2',
+            style: context.cardSubtitleStyle.copyWith(
+              color: AppColors.surface4,
             ),
+          ),
         ],
       ),
     );
   }
 }
-

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_event.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_state.dart';
 
 /// Страница-загрузчик деталей заказа по ID для курьера
 class CourierOrderDetailLoaderPage extends StatefulWidget {

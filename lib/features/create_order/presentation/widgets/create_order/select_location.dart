@@ -25,7 +25,42 @@ class SelectLocation extends StatelessWidget {
 
     return BlocBuilder<CreateOrdersBloc, CreateOrdersState>(
       builder: (BuildContext context, CreateOrdersState ordersState) {
-        return BlocBuilder<CitiesBloc, CitiesState>(
+        return BlocConsumer<CitiesBloc, CitiesState>(
+          listener: (BuildContext context, CitiesState state) {
+            if (state is CitySelectedState) {
+              if (state.from.selectedCityId != 0 &&
+                  state.to.selectedCityId != 0) {
+                final field = UpdateOrdersLocationField(
+                  fromCityId: state.from.selectedCityId ?? 0,
+                  fromAddress: state.from.address ?? '',
+                  fromFloor: state.from.floor ?? '',
+                  fromEntrance: state.from.entrance ?? '',
+                  fromApartment: state.from.apartment ?? '',
+                  fromLatitude: state.from.latitude ?? 0,
+                  fromLongitude: state.from.longitude ?? 0,
+
+                  toCityId: state.to.selectedCityId ?? 0,
+                  toAddress: state.to.address ?? '',
+                  toFloor: state.to.floor ?? '',
+                  toEntrance: state.to.entrance ?? '',
+                  toApartment: state.to.apartment ?? '',
+                  toLatitude: state.to.latitude ?? 0,
+                  toLongitude: state.to.longitude ?? 0,
+                );
+
+                context.read<CreateOrdersBloc>().add(
+                  UpdateOrdersCreateEvent(field),
+                );
+              }
+            }
+          },
+          listenWhen: (CitiesState previous, CitiesState state) {
+            if (state is CitySelectedState) {
+              return ordersState.data.fromCityId != state.from.selectedCityId ||
+                  ordersState.data.toCityId != state.to.selectedCityId;
+            }
+            return false;
+          },
           builder: (BuildContext context, CitiesState state) {
             if (state is CitySelectedState && type == .from) {
               final fromValue = StateLocation(state.from.cities);

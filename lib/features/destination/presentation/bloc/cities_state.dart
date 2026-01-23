@@ -4,8 +4,6 @@ sealed class CitiesState {
   const CitiesState();
 }
 
-class CitiesInitialState extends CitiesState {}
-
 class CitiesEmptyState extends CitiesState {}
 
 class CitySelectedState extends CitiesState with EquatableMixin {

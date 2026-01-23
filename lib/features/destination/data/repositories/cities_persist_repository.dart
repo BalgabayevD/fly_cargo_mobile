@@ -31,7 +31,7 @@ class CitiesPersistRepositoryImpl implements CitiesPersistRepository {
   }
 
   @override
-  Future<List<CityEntity>> getCitiesFrom() async {
+  List<CityEntity> getCitiesFrom() {
     final fromCities = sharedPreferences.getStringList('${key}_from');
 
     if (fromCities == null) {
@@ -45,7 +45,7 @@ class CitiesPersistRepositoryImpl implements CitiesPersistRepository {
   }
 
   @override
-  Future<List<CityEntity>> getCitiesTo(int fromCityId) async {
+  List<CityEntity> getCitiesTo(int fromCityId) {
     final toCities = sharedPreferences.getStringList('${key}_$fromCityId');
 
     if (toCities == null) {

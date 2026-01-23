@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/authorization_set_name_form.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthorizationNameScreen extends StatelessWidget {
@@ -23,7 +24,7 @@ class AuthorizationNameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BePage(
       isBorder: true,
-      title: 'Подтвердить',
+      title: 'Авторизация',
       child: BlocConsumer<AuthorizationBloc, AuthorizationState>(
         listener: (BuildContext context, AuthorizationState state) {},
         listenWhen: (previous, current) {
@@ -34,9 +35,12 @@ class AuthorizationNameScreen extends StatelessWidget {
           if (state is AuthorizedState) {
             return AuthorizationSetNameForm(
               isLoading: false,
-              onSubmit: (String code) => context.read<AuthorizationBloc>().add(
-                AuthorizationConfirmOtpEvent('', ''),
-              ),
+              onSubmit: (String name) {
+                context.read<AuthorizationBloc>().add(
+                  AuthorizationUpdateProfileEvent(name),
+                );
+                context.push(CreateOrderScreen.location());
+              },
             );
           }
 

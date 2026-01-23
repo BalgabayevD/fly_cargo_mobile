@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
@@ -31,6 +32,28 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     on<AuthorizationRequestOtpEvent>(_requestOtp);
     on<AuthorizationConfirmOtpEvent>(_confirmOtp);
     on<AuthorizationSignOutEvent>(_signOut);
+    on<AuthorizationUpdateProfileEvent>(_update);
+  }
+
+  FutureOr<void> _update(
+    AuthorizationUpdateProfileEvent event,
+    Emitter<AuthorizationState> emit,
+  ) async {
+    try {
+      final isSuccess = await authorizationRepository.updateProfile(
+        event.name,
+      );
+
+      if (!isSuccess) {
+        return;
+      }
+
+      final session = await authorizationRepository.getSession();
+
+      if (session != null) {
+        emit(AuthorizedState(session));
+      }
+    } catch (_) {}
   }
 
   FutureOr<void> _getSession(

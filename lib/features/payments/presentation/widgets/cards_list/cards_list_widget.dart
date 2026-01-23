@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/payments/domain/entities/card.dart'
+import 'package:fly_cargo/features/payments/domain/entities/card_entity.dart'
     as payment_card;
 import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/cards_list/bloc/cards_list_state.dart';

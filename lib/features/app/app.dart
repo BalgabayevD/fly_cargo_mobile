@@ -7,6 +7,7 @@ import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
+import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,47 +32,58 @@ class _SapsanoAppState extends State<SapsanoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocaleCubit, Locale>(
-      builder: (context, locale) {
-        return MaterialApp.router(
-          title: 'Sapsano',
-          theme: ThemeData(
-            useMaterial3: true,
-            buttonTheme: ButtonThemeData(buttonColor: BeColors.primary),
-            primaryColor: BeColors.primary,
-            colorScheme: ColorScheme.of(
-              context,
-            ).copyWith(primary: BeColors.primary),
-            scaffoldBackgroundColor: Colors.white,
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(color: BeColors.primary),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthorizationBloc, AuthorizationState>(
+          listener: (BuildContext context, AuthorizationState state) {
+            if (state is AuthorizedState) {
+              context.read<PaymentCardsBloc>().add(PaymentCardsLoadEvent());
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<LocaleCubit, Locale>(
+        builder: (context, locale) {
+          return MaterialApp.router(
+            title: 'Sapsano',
+            theme: ThemeData(
+              useMaterial3: true,
+              buttonTheme: ButtonThemeData(buttonColor: BeColors.primary),
+              primaryColor: BeColors.primary,
+              colorScheme: ColorScheme.of(
+                context,
+              ).copyWith(primary: BeColors.primary),
+              scaffoldBackgroundColor: Colors.white,
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  textStyle: TextStyle(color: BeColors.primary),
+                ),
+              ),
+              textTheme: GoogleFonts.montserratTextTheme(
+                TextTheme.of(context),
+              ),
+              appBarTheme: AppBarTheme(
+                centerTitle: true,
+                titleTextStyle: GoogleFonts.montserrat(
+                  fontWeight: .w600,
+                  fontSize: 17,
+                  color: BeColors.surface5,
+                ),
+                backgroundColor: BeColors.white,
               ),
             ),
-            textTheme: GoogleFonts.montserratTextTheme(
-              TextTheme.of(context),
-            ),
-            appBarTheme: AppBarTheme(
-              centerTitle: true,
-              titleTextStyle: GoogleFonts.montserrat(
-                fontWeight: .w600,
-                fontSize: 17,
-                color: BeColors.surface5,
-              ),
-              backgroundColor: BeColors.white,
-            ),
-          ),
-          routerConfig: _router,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: L10n.supportedLocales,
-          locale: locale,
-        );
-      },
+            routerConfig: _router,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: L10n.supportedLocales,
+            locale: locale,
+          );
+        },
+      ),
     );
   }
 }

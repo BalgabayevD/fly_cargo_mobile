@@ -50,10 +50,13 @@ class AuthorizationOtpConfirmFailureState extends AuthorizationState {
 
 class AuthorizationLoadingState extends AuthorizationState {}
 
-class AuthorizedState extends AuthorizationState {
+class AuthorizedState extends AuthorizationState with EquatableMixin {
   final UserSessionInfoModel sessionInfo;
 
   AuthorizedState(this.sessionInfo);
+
+  @override
+  List<Object?> get props => [sessionInfo];
 }
 
 class UnauthorizedState extends AuthorizationState {}

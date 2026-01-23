@@ -18,3 +18,9 @@ class AuthorizationConfirmOtpEvent extends AuthorizationEvent {
 }
 
 class AuthorizationSignOutEvent extends AuthorizationEvent {}
+
+class AuthorizationUpdateProfileEvent extends AuthorizationEvent {
+  final String name;
+
+  AuthorizationUpdateProfileEvent(this.name);
+}

@@ -1,4 +1,5 @@
 import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
+import 'package:fly_cargo/features/destination/domain/entities/locations_entity.dart';
 import 'package:fly_cargo/features/destination/domain/repositories/cities_persist_repository.dart';
 import 'package:fly_cargo/features/destination/domain/repositories/cities_rest_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -10,35 +11,52 @@ class CitiesUseCase {
 
   CitiesUseCase(this.citiesRestRepository, this.citiesPersistRepository);
 
-  Future<List<CityEntity>> getRestCitiesFrom() {
-    return citiesRestRepository.getCitiesFrom();
+  Future<List<CityEntity>> getRestCitiesFrom() async {
+    final cities = await citiesRestRepository.getCitiesFrom();
+    await citiesPersistRepository.saveCitiesFrom(cities);
+    return cities;
   }
 
-  Future<List<CityEntity>> getRestCitiesTo(int fromCityId) {
-    return citiesRestRepository.getCitiesTo(fromCityId);
+  Future<List<CityEntity>> getRestCitiesTo(int fromCityId) async {
+    final cities = await citiesRestRepository.getCitiesTo(fromCityId);
+    await citiesPersistRepository.saveCitiesTo(fromCityId, cities);
+    return cities;
   }
 
   Future<List<String>> getAddressesFromQuery(String city, String address) {
     return citiesRestRepository.getAddressesFromQuery(city, address);
   }
 
-  Future<List<CityEntity>> getPersistCitiesFrom() {
-    return citiesPersistRepository.getCitiesFrom();
-  }
-
-  Future<List<CityEntity>> getPersistCitiesTo(int fromCityId) {
+  List<CityEntity> getPersistCitiesTo(int fromCityId) {
     return citiesPersistRepository.getCitiesTo(fromCityId);
   }
 
-  Future<void> saveCitiesFrom(List<CityEntity> cities) {
-    return citiesPersistRepository.saveCitiesFrom(cities);
-  }
+  (LocationsEntity, LocationsEntity) getInitialCities() {
+    List<CityEntity> fromCities = [];
+    int? fromCityId;
+    List<CityEntity> toCities = [];
+    int? toCityId;
 
-  Future<void> saveCitiesTo(int fromCityId, List<CityEntity> cities) {
-    return citiesPersistRepository.saveCitiesTo(fromCityId, cities);
-  }
+    fromCities = citiesPersistRepository.getCitiesFrom();
 
-  Future<void> clearCities() async {
-    return citiesPersistRepository.clearCities();
+    if (fromCities.isNotEmpty) {
+      fromCityId = fromCities.first.id;
+
+      toCities = citiesPersistRepository.getCitiesTo(fromCities.first.id);
+      if (toCities.isNotEmpty) {
+        toCityId = toCities.first.id;
+      }
+    }
+
+    LocationsEntity from = LocationsEntity(
+      cities: fromCities,
+      selectedCityId: fromCityId,
+    );
+    LocationsEntity to = LocationsEntity(
+      cities: toCities,
+      selectedCityId: toCityId,
+    );
+
+    return (from, to);
   }
 }

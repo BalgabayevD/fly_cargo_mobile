@@ -8,8 +8,8 @@ import 'package:fly_cargo/features/auth/presentation/pages/authorization_request
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
 import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/client_order_detail_loader_page.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/orders_list_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
@@ -153,27 +153,7 @@ GoRouter createRouter(
           StatefulShellBranch(
             navigatorKey: _ordersNavigatorKey,
             routes: [
-              OrdersListPage.route(
-                routes: [
-                  GoRoute(
-                    path: 'order-detail/:orderId',
-                    parentNavigatorKey: _rootNavigator,
-                    builder: (context, state) {
-                      final orderIdStr = state.pathParameters['orderId'];
-
-                      if (orderIdStr == null || orderIdStr.isEmpty) {
-                        return const Scaffold(
-                          body: Center(
-                            child: Text('Ошибка: не указан ID заказа'),
-                          ),
-                        );
-                      }
-
-                      return OrderDetailLoaderPage(orderId: orderIdStr);
-                    },
-                  ),
-                ],
-              ),
+              ClientOrdersPage.route(routes: []),
             ],
           ),
           StatefulShellBranch(
@@ -185,7 +165,7 @@ GoRouter createRouter(
         ],
       ),
 
-      // Profile and Settings sub-pages (full screen, outside of shell)
+      ClientOrderPage.route(),
       ProfilePage.route(),
       ContactsPage.route(),
       NotificationsPage.route(),
@@ -195,4 +175,21 @@ GoRouter createRouter(
       TransportationRulesPage.route(),
     ],
   );
+}
+
+class HomeNavigatorBranch {
+  const HomeNavigatorBranch();
+
+  static StatefulShellBranch route({
+    List<RouteBase> routes = const <RouteBase>[],
+  }) {
+    return StatefulShellBranch(
+      navigatorKey: GlobalKey<NavigatorState>(),
+      routes: [
+        CreateOrderScreen.route(
+          routes: routes,
+        ),
+      ],
+    );
+  }
 }

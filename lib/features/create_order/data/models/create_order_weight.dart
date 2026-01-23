@@ -52,7 +52,9 @@ class _CreateOrderWeightState extends State<CreateOrderWeight> {
           value = state.data.weight.toInt().toString();
         }
 
-        if (controller.text != value) controller.text = value;
+        if (controller.text != value) {
+          controller.text = value == '0' ? '' : value;
+        }
       },
       listenWhen: (CreateOrdersState previous, CreateOrdersState state) {
         return previous.data.weight != state.data.weight;

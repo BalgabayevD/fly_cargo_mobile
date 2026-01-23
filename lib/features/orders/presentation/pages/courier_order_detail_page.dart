@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
-import 'package:fly_cargo/features/auth/domain/entities/user_type.dart';
 import 'package:fly_cargo/features/orders/presentation/models/order_status.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/courier_action_button.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/order_detail/courier_info_row.dart';
@@ -10,11 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class CourierOrderDetailPage extends StatelessWidget {
   final OrderEntity order;
-  final UserType userType;
 
   const CourierOrderDetailPage({
     required this.order,
-    required this.userType,
     super.key,
   });
 

@@ -5,7 +5,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/orders_list_bloc.dart';
+import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -27,7 +27,9 @@ class App {
                 getIt<AuthorizationBloc>()..add(AuthorizationGetSessionEvent()),
           ),
           BlocProvider<LocaleCubit>(create: (_) => getIt<LocaleCubit>()),
-          BlocProvider<OrdersListBloc>(create: (_) => getIt<OrdersListBloc>()),
+          BlocProvider<PaymentCardsBloc>(
+            create: (_) => getIt<PaymentCardsBloc>(),
+          ),
         ],
         child: child,
       ),

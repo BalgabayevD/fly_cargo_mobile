@@ -1,12 +1,28 @@
+import 'package:fly_cargo/features/orders/domain/repositories/client_orders_persist_repository.dart';
+import 'package:fly_cargo/features/orders/domain/repositories/client_orders_rest_repository.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
-import 'package:fly_cargo/features/shared/orders/domain/repositories/orders_repository.dart';
+import 'package:injectable/injectable.dart';
 
-class GetClientOrdersUseCase {
-  final OrdersRepository _ordersRepository;
+@injectable
+class ClientOrdersUseCase {
+  final ClientOrdersRestRepository clientOrdersRest;
+  final ClientOrdersPersistRepository clientOrdersPersist;
 
-  GetClientOrdersUseCase(this._ordersRepository);
+  ClientOrdersUseCase(this.clientOrdersRest, this.clientOrdersPersist);
 
-  Future<List<OrderEntity>> call() async {
-    return await _ordersRepository.getClientOrders();
+  List<OrderEntity> getClientPersistOrders() {
+    return clientOrdersPersist.getOrders();
+  }
+
+  Future<void> setClientPersistOrders(List<OrderEntity> orders) async {
+    return await clientOrdersPersist.setOrders(orders);
+  }
+
+  Future<List<OrderEntity>> getClientRestOrders() async {
+    return await clientOrdersRest.getOrders();
+  }
+
+  Future<OrderEntity?> getClientRestOrder(int orderId) async {
+    return await clientOrdersRest.getOrderById(orderId);
   }
 }

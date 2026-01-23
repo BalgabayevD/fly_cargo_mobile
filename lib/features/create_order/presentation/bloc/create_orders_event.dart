@@ -20,6 +20,10 @@ class SubmitOrdersCreateEvent extends CreateOrdersEvent {
   const SubmitOrdersCreateEvent();
 }
 
+class ResetOrdersCreateEvent extends CreateOrdersEvent {
+  const ResetOrdersCreateEvent();
+}
+
 class UpdateOrdersField {
   const UpdateOrdersField();
 }

@@ -42,6 +42,20 @@ class AuthorizationRepositoryImpl implements AuthorizationRepository {
   }
 
   @override
+  Future<bool> updateProfile(String name) async {
+    try {
+      final response = await requestable.dio.post<bool>(
+        '$_/user/profile/edit/username',
+        data: {'name': name},
+      );
+
+      return response.data ?? false;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<String?> confirmOTP(String phoneNumber, String code) async {
     return requestable.dio
         .post(

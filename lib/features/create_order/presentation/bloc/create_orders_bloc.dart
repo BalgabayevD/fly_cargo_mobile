@@ -5,6 +5,7 @@ import 'package:fly_cargo/features/create_order/domain/enitites/create_order_ent
 import 'package:fly_cargo/features/create_order/domain/enitites/order_photo_entity.dart';
 import 'package:fly_cargo/features/create_order/domain/usecases/create_orders_usecase.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/create_orders_validators_impl.dart';
+import 'package:fly_cargo/features/destination/domain/usecases/cities_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 part 'create_orders_event.dart';
@@ -15,12 +16,29 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
   final CreateOrderValidator _validator = CreateOrderValidator.standard();
 
   final CreateOrdersUseCase createOrders;
+  final CitiesUseCase cities;
 
-  CreateOrdersBloc(this.createOrders)
-    : super(const CreateOrdersState.initial()) {
+  CreateOrdersBloc(this.createOrders, this.cities)
+    : super(_getInitialState(cities)) {
     on<AddPhotoOrdersCreateEvent>(_onAddPhotoOrdersCreate);
     on<UpdateOrdersCreateEvent>(_updateFieldValue);
     on<SubmitOrdersCreateEvent>(_submit);
+    on<ResetOrdersCreateEvent>(_reset);
+  }
+
+  static CreateOrdersState _getInitialState(CitiesUseCase cities) {
+    final (fromCity, toCity) = cities.getInitialCities();
+
+    return CreateOrdersState(
+      data: const CreateOrderEntity().copyWith(
+        fromCityId: fromCity.selectedCityId ?? 0,
+        toCityId: toCity.selectedCityId ?? 0,
+      ),
+      photosValidationStatus: .idle,
+      price: 0,
+      photosValidationAttempt: 0,
+      errors: const <String, String>{},
+    );
   }
 
   Future<void> _onAddPhotoOrdersCreate(
@@ -201,20 +219,15 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
       return;
     }
 
-    final a = await createOrders.createOrder(state.data);
-    print(a);
+    emit(state.copyWith(isSubmitting: true));
+    final createdOrder = await createOrders.createOrder(state.data);
+    emit(state.copyWith(isSubmitting: false, createdOrderId: createdOrder?.id));
   }
-}
 
-abstract class CreateOrdersStateValidator {
-  final Object value;
-  final String? error;
-
-  CreateOrdersStateValidator({required this.value, this.error});
-}
-
-class CreateOrdersStateValidation {
-  final CreateOrderEntity data;
-
-  CreateOrdersStateValidation({required this.data});
+  Future<void> _reset(
+    ResetOrdersCreateEvent event,
+    Emitter<CreateOrdersState> emit,
+  ) async {
+    emit(_getInitialState(cities));
+  }
 }

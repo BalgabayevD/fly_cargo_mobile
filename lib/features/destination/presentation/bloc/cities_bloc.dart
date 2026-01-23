@@ -11,10 +11,15 @@ part 'cities_state.dart';
 class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
   final CitiesUseCase cities;
 
-  CitiesBloc(this.cities) : super(CitiesInitialState()) {
+  CitiesBloc(this.cities) : super(_getInitialState(cities)) {
     on<LoadInitialCitiesEvent>(_loadInitialCities);
     on<TouchFromCityEvent>(_touchFromCity);
     on<TouchToCityEvent>(_touchToCity);
+  }
+
+  static CitySelectedState _getInitialState(CitiesUseCase cities) {
+    final (fromCity, toCity) = cities.getInitialCities();
+    return CitySelectedState(fromCity, toCity);
   }
 
   Future<void> _loadInitialCities(
@@ -22,24 +27,11 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     Emitter<CitiesState> emit,
   ) async {
     try {
-      LocationsEntity from = LocationsEntity.empty();
-      LocationsEntity to = LocationsEntity.empty();
+      final initial = cities.getInitialCities();
+      emit(CitySelectedState(initial.$1, initial.$2));
 
-      final localFromCities = await cities.getPersistCitiesFrom();
-
-      if (localFromCities.isNotEmpty) {
-        from = from.copyWith(cities: localFromCities);
-
-        final localToCities = await cities.getPersistCitiesTo(
-          localFromCities.first.id,
-        );
-
-        if (localToCities.isNotEmpty) {
-          to = to.copyWith(cities: localToCities);
-        }
-      }
-
-      emit(CitySelectedState(from, to));
+      LocationsEntity from = initial.$1;
+      LocationsEntity to = initial.$2;
 
       final remoteFromCities = await cities.getRestCitiesFrom();
 
@@ -50,7 +42,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
         );
 
         final remoteToCities = await cities.getRestCitiesTo(
-          localFromCities.first.id,
+          remoteFromCities.first.id,
         );
 
         if (remoteToCities.isNotEmpty) {
@@ -78,7 +70,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
         if (event.location.selectedCityId != current.from.selectedCityId) {
           LocationsEntity to = current.to;
 
-          final localToCities = await cities.getPersistCitiesTo(
+          final localToCities = cities.getPersistCitiesTo(
             event.location.selectedCityId!,
           );
 

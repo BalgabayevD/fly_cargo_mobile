@@ -66,13 +66,13 @@ class BePage extends StatelessWidget {
                 right: 0,
                 child: SafeArea(
                   child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: BeColors.white,
-                      border: Border(
-                        top: BorderSide(width: 1, color: BeColors.border),
-                      ),
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                      top: 8,
                     ),
+                    decoration: BoxDecoration(color: BeColors.white),
                     child: actions,
                   ),
                 ),
