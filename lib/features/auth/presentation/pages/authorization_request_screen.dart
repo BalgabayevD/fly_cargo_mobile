@@ -6,7 +6,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/request_otp_form.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
-import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
+import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthorizationRequestScreen extends StatelessWidget {

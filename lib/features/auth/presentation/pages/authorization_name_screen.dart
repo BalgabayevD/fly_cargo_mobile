@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
+import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/authorization_set_name_form.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_screen.dart';
+import 'package:fly_cargo/features/home/presentation/screen/courier_home_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthorizationNameScreen extends StatelessWidget {
@@ -39,7 +41,14 @@ class AuthorizationNameScreen extends StatelessWidget {
                 context.read<AuthorizationBloc>().add(
                   AuthorizationUpdateProfileEvent(name),
                 );
-                context.push(CreateOrderScreen.location());
+
+                if (state.sessionInfo.user.role == UserRole.user) {
+                  context.push(CreateOrderScreen.location());
+                }
+
+                if (state.sessionInfo.user.role == UserRole.courier) {
+                  context.push(CourierHomeScreen.location());
+                }
               },
             );
           }

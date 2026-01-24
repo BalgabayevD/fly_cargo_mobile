@@ -3,9 +3,7 @@ import 'package:fly_cargo/features/destination/data/mappers/destination_mapper.d
 import 'package:fly_cargo/features/destination/domain/entities/address_entity.dart';
 import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
 import 'package:fly_cargo/features/destination/domain/repositories/destination_repository.dart';
-import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: DestinationRepository)
 class DestinationRepositoryImpl implements DestinationRepository {
   final DestinationRemoteSource _remoteSource;
 

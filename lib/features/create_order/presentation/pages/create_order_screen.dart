@@ -12,7 +12,7 @@ import 'package:fly_cargo/features/destination/presentation/bloc/cities_bloc.dar
 import 'package:go_router/go_router.dart';
 
 class CreateOrderScreen extends StatelessWidget {
-  static String path = '/order/create';
+  static String path = '/orders/create';
 
   const CreateOrderScreen({super.key});
 

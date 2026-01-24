@@ -23,10 +23,10 @@ import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class SettingsPage extends StatefulWidget {
-  static const String path = '/settings';
+class CourierSettingsPage extends StatefulWidget {
+  static const String path = '/courier/settings';
 
-  const SettingsPage({super.key});
+  const CourierSettingsPage({super.key});
 
   static GoRoute route({
     List<RouteBase>? routes,
@@ -34,16 +34,16 @@ class SettingsPage extends StatefulWidget {
   }) {
     return GoRoute(
       path: path,
-      builder: (context, state) => const SettingsPage(),
+      builder: (context, state) => const CourierSettingsPage(),
       routes: routes ?? const <RouteBase>[],
     );
   }
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<CourierSettingsPage> createState() => _CourierSettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _CourierSettingsPageState extends State<CourierSettingsPage> {
   String _appVersion = '1.0.1';
 
   @override
@@ -85,14 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const BeSpace(size: .sm),
                 LightListTile(
-                  title: 'Плажные карты',
-                  endContent: HeroIcon(
-                    HeroIcons.creditCard,
-                    color: BeColors.surface4,
-                  ),
-                ),
-                LightListTile(
-                  title: 'История платежей',
+                  title: 'История доставок',
                   endContent: HeroIcon(
                     HeroIcons.clock,
                     color: BeColors.surface4,
@@ -149,7 +142,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     color: AppColors.surface4,
                   ),
                 ),
-
                 if (kDebugMode)
                   LightListTile(
                     title: 'Ui-Kit',

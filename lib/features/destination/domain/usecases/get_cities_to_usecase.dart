@@ -1,8 +1,6 @@
 import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
 import 'package:fly_cargo/features/destination/domain/repositories/destination_repository.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class GetCitiesToUseCase {
   final DestinationRepository _destinationRepository;
 

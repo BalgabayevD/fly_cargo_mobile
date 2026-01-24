@@ -48,32 +48,16 @@ import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.da
     as _i298;
 import 'package:fly_cargo/features/create_order/presentation/bloc/tariffs_bloc.dart'
     as _i266;
-import 'package:fly_cargo/features/destination/config/destination_module.dart'
-    as _i1065;
-import 'package:fly_cargo/features/destination/data/destination_remote_source.dart'
-    as _i117;
 import 'package:fly_cargo/features/destination/data/repositories/cities_persist_repository.dart'
     as _i166;
 import 'package:fly_cargo/features/destination/data/repositories/cities_rest_repository.dart'
     as _i531;
-import 'package:fly_cargo/features/destination/data/repositories/destination_repository_impl.dart'
-    as _i624;
 import 'package:fly_cargo/features/destination/domain/repositories/cities_persist_repository.dart'
     as _i193;
 import 'package:fly_cargo/features/destination/domain/repositories/cities_rest_repository.dart'
     as _i1025;
-import 'package:fly_cargo/features/destination/domain/repositories/destination_repository.dart'
-    as _i933;
 import 'package:fly_cargo/features/destination/domain/usecases/cities_use_case.dart'
     as _i542;
-import 'package:fly_cargo/features/destination/domain/usecases/get_all_cities_usecase.dart'
-    as _i55;
-import 'package:fly_cargo/features/destination/domain/usecases/get_cities_from_usecase.dart'
-    as _i331;
-import 'package:fly_cargo/features/destination/domain/usecases/get_cities_to_usecase.dart'
-    as _i760;
-import 'package:fly_cargo/features/destination/domain/usecases/search_addresses_usecase.dart'
-    as _i801;
 import 'package:fly_cargo/features/destination/presentation/bloc/cities_bloc.dart'
     as _i435;
 import 'package:fly_cargo/features/orders/data/repositories/client_orders_persist_repository.dart'
@@ -111,7 +95,6 @@ extension GetItInjectableX on _i174.GetIt {
     final environmentVariablesModule = _$EnvironmentVariablesModule();
     final packageModule = _$PackageModule();
     final requestableModule = _$RequestableModule();
-    final destinationModule = _$DestinationModule();
     await gh.factoryAsync<_i941.EnvironmentVariables>(
       () => environmentVariablesModule.environmentVariables(),
       preResolve: true,
@@ -204,12 +187,6 @@ extension GetItInjectableX on _i174.GetIt {
         configuration: gh<_i156.Configuration>(),
       ),
     );
-    gh.factory<_i117.DestinationRemoteSource>(
-      () => destinationModule.provideDestinationRemoteSource(
-        gh<_i129.Requestable>(),
-        gh<_i156.Configuration>(),
-      ),
-    );
     gh.factory<_i542.CitiesUseCase>(
       () => _i542.CitiesUseCase(
         gh<_i1025.CitiesRestRepository>(),
@@ -243,10 +220,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i87.ClientOrdersPersistRepository>(),
       ),
     );
-    gh.lazySingleton<_i933.DestinationRepository>(
-      () =>
-          _i624.DestinationRepositoryImpl(gh<_i117.DestinationRemoteSource>()),
-    );
     gh.factory<_i298.PhotosBloc>(
       () => _i298.PhotosBloc(gh<_i103.OrderPhotosUseCase>()),
     );
@@ -266,18 +239,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i863.PaymentUseCase>(),
       ),
     );
-    gh.factory<_i55.GetAllCitiesUseCase>(
-      () => _i55.GetAllCitiesUseCase(gh<_i933.DestinationRepository>()),
-    );
-    gh.factory<_i331.GetCitiesFromUseCase>(
-      () => _i331.GetCitiesFromUseCase(gh<_i933.DestinationRepository>()),
-    );
-    gh.factory<_i760.GetCitiesToUseCase>(
-      () => _i760.GetCitiesToUseCase(gh<_i933.DestinationRepository>()),
-    );
-    gh.factory<_i801.SearchAddressesUseCase>(
-      () => _i801.SearchAddressesUseCase(gh<_i933.DestinationRepository>()),
-    );
     gh.factory<_i731.ClientOrdersBloc>(
       () => _i731.ClientOrdersBloc(gh<_i899.ClientOrdersUseCase>()),
     );
@@ -290,5 +251,3 @@ class _$EnvironmentVariablesModule extends _i941.EnvironmentVariablesModule {}
 class _$PackageModule extends _i51.PackageModule {}
 
 class _$RequestableModule extends _i129.RequestableModule {}
-
-class _$DestinationModule extends _i1065.DestinationModule {}

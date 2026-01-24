@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/router/courier_scaffold_shell.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
 import 'package:fly_cargo/core/router/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/ui_kit_page.dart';
-import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
+import 'package:fly_cargo/features/create_order/presentation/pages/create_order_screen.dart';
+import 'package:fly_cargo/features/home/presentation/screen/courier_home_screen.dart';
+import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/courier_settings_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/privacy_policy_page.dart';
@@ -19,7 +22,10 @@ import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart'
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/terms_of_service_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/transportation_rules_page.dart';
+import 'package:fly_cargo/features/ui_kit/presentation/screen/ui_kit_screen.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../features/orders/presentation/pages/courier_orders_screen.dart';
 
 class AppRoutes {
   static const onboarding = '/';
@@ -55,6 +61,15 @@ final GlobalKey<NavigatorState> _ordersNavigatorKey =
 final GlobalKey<NavigatorState> _settingsNavigatorKey =
     GlobalKey<NavigatorState>();
 
+final GlobalKey<NavigatorState> courierNavigatorKey =
+    GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> courierOrdersNavigatorKey =
+    GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> courierOpenOrdersNavigatorKey =
+    GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> courierSettingsNavigatorKey =
+    GlobalKey<NavigatorState>();
+
 GoRouter createRouter(
   AuthorizationBloc authorizationBloc,
   String initialLocation,
@@ -68,9 +83,9 @@ GoRouter createRouter(
 
       final isOnboarding = state.fullPath == OnboardingScreen.path;
 
-      // if (authorizationState is UnauthorizedState && !isOnboarding) {
-      //   return AuthorizationRequestScreen.location();
-      // }
+      if (authorizationState is UnauthorizedState && !isOnboarding) {
+        return AuthorizationRequestScreen.location();
+      }
 
       return null;
     },
@@ -79,7 +94,7 @@ GoRouter createRouter(
       AuthorizationRequestScreen.route(),
       AuthorizationConfirmScreen.route(),
       AuthorizationNameScreen.route(),
-      UiKitPage.route(),
+      UiKitScreen.route(),
 
       MainScaffoldShell.route(
         branches: [
@@ -113,6 +128,35 @@ GoRouter createRouter(
             navigatorKey: _settingsNavigatorKey,
             routes: [
               SettingsPage.route(),
+            ],
+          ),
+        ],
+      ),
+
+      ClientScaffoldShell.route(
+        branches: [
+          StatefulShellBranch(
+            navigatorKey: courierNavigatorKey,
+            routes: [
+              CourierHomeScreen.route(routes: []),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: courierOrdersNavigatorKey,
+            routes: [
+              CourierOrdersPage.route(),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: courierOpenOrdersNavigatorKey,
+            routes: [
+              CourierOpenOrdersScreen.route(),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: courierSettingsNavigatorKey,
+            routes: [
+              CourierSettingsPage.route(),
             ],
           ),
         ],

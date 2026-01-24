@@ -25,7 +25,7 @@ class BeChip extends StatelessWidget {
     this.text,
     this.variant = .solid,
     this.color = .primary,
-    this.size = .lg,
+    this.size = .md,
     this.isLoading = false,
     this.isDisabled = false,
     this.startContent,
