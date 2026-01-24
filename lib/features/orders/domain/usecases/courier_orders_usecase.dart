@@ -37,4 +37,16 @@ class CourierOrdersUseCase {
   Future<OrderEntity?> getOrderByIdentification(String identification) async {
     return await courierOrdersRest.getOrderByIdentification(identification);
   }
+
+  Future<OrderEntity?> acceptOrder(
+    int orderId,
+    int courierArriveTime,
+  ) async {
+    try {
+      await courierOrdersRest.acceptOrder(orderId, courierArriveTime);
+      return getOrderById(orderId);
+    } catch (_) {
+      return null;
+    }
+  }
 }

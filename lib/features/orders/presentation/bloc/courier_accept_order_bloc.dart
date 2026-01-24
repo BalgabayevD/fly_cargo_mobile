@@ -14,6 +14,7 @@ class CourierAcceptOrderBloc
   CourierAcceptOrderBloc(this.courierOrders)
     : super(CourierAcceptOrderInitialState()) {
     on<CourierAcceptOrderLoadEvent>(_loadOrder);
+    on<CourierAcceptOrderAcceptEvent>(_accept);
   }
 
   Future<void> _loadOrder(
@@ -22,6 +23,22 @@ class CourierAcceptOrderBloc
   ) async {
     emit(CourierAcceptOrderLoadingState(event.orderId));
     final order = await courierOrders.getOrderById(event.orderId);
+    if (order != null) {
+      emit(CourierAcceptOrderLoadedState(order: order));
+    } else {
+      emit(CourierAcceptOrderInitialState());
+    }
+  }
+
+  Future<void> _accept(
+    CourierAcceptOrderAcceptEvent event,
+    Emitter<CourierAcceptOrderState> emit,
+  ) async {
+    emit(CourierAcceptOrderLoadingState(event.orderId));
+    final order = await courierOrders.acceptOrder(
+      event.orderId,
+      event.courierArriveTime,
+    );
     if (order != null) {
       emit(CourierAcceptOrderLoadedState(order: order));
     } else {

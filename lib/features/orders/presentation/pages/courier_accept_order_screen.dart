@@ -9,6 +9,7 @@ import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_accept_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
+import 'package:fly_cargo/features/orders/presentation/widgets/courier_accept_order/accept_order_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -80,7 +81,7 @@ class CourierAcceptOrdersPage extends StatelessWidget {
             isBorder: true,
             actions: Column(
               children: [
-                BeButton(text: 'Еду за посылкой'),
+                AcceptOrderButton(orderId: state.order.id),
                 BeSpace(size: .xl),
                 BeButton(
                   text: 'Открыть в 2Gis',

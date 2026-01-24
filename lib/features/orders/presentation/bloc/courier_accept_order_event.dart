@@ -9,3 +9,10 @@ class CourierAcceptOrderLoadEvent extends CourierAcceptOrderEvent {
 
   const CourierAcceptOrderLoadEvent(this.orderId);
 }
+
+class CourierAcceptOrderAcceptEvent extends CourierAcceptOrderEvent {
+  final int orderId;
+  final int courierArriveTime;
+
+  const CourierAcceptOrderAcceptEvent(this.orderId, this.courierArriveTime);
+}

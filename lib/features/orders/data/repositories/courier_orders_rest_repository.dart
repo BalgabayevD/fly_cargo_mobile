@@ -68,4 +68,23 @@ class CourierOrdersRestRepositoryImpl implements CourierOrdersRestRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<bool> acceptOrder(
+    int orderId,
+    int courierArriveTime,
+  ) async {
+    try {
+      await requestable.dio.post(
+        '$_/orders/courier/accept',
+        data: {
+          'orderId': orderId,
+          'courierArriveTime': courierArriveTime,
+        },
+      );
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
