@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/confirm_otp_form.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
@@ -38,12 +39,28 @@ class AuthorizationConfirmScreen extends StatelessWidget {
           }
 
           if (state is AuthorizedState) {
-            getIt<Configuration>().setIsAuthenticated(true);
+            if (state.sessionInfo.user.role == UserRole.user) {
+              getIt<Configuration>().setInitialPath(
+                CreateOrderScreen.location(),
+              );
 
-            if (state.sessionInfo.user.name!.isNotEmpty) {
-              context.push(CreateOrderScreen.location());
-            } else {
-              context.push(AuthorizationNameScreen.location());
+              if (state.sessionInfo.user.name!.isNotEmpty) {
+                context.push(CreateOrderScreen.location());
+              } else {
+                context.push(AuthorizationNameScreen.location());
+              }
+            }
+
+            if (state.sessionInfo.user.role == UserRole.courier) {
+              getIt<Configuration>().setInitialPath(
+                CreateOrderScreen.location(),
+              );
+
+              if (state.sessionInfo.user.name!.isNotEmpty) {
+                context.push(CreateOrderScreen.location());
+              } else {
+                context.push(AuthorizationNameScreen.location());
+              }
             }
           }
 

@@ -49,9 +49,13 @@ class PaymentRepositoryImpl implements PaymentRepository {
     try {
       final response = await requestable.dio.post(
         '$_/orders/pay',
+        data: {
+          'paymentCardId': paymentCardId,
+          'orderId': orderId,
+        },
       );
 
-      return response.data['data'] as bool;
+      return response.data['data']['success'] as bool;
     } catch (e) {
       rethrow;
     }

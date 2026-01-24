@@ -66,61 +66,13 @@ GoRouter createRouter(
     redirect: (context, state) {
       final authorizationState = authorizationBloc.state;
 
-      if (authorizationState is InitialAuthorizationState) {
-        final isAuthorizationRequest =
-            state.fullPath == AuthorizationRequestScreen.path;
+      final isOnboarding = state.fullPath == OnboardingScreen.path;
 
-        final isAuthorizationConfirm =
-            state.fullPath == AuthorizationConfirmScreen.path;
+      // if (authorizationState is UnauthorizedState && !isOnboarding) {
+      //   return AuthorizationRequestScreen.location();
+      // }
 
-        if (authorizationState.isShowOnboarding) {
-          if (!isAuthorizationRequest && !isAuthorizationConfirm) {
-            return OnboardingScreen.location();
-          }
-        }
-
-        if (!authorizationState.isAuthenticated) {
-          if (!isAuthorizationConfirm) {
-            return AuthorizationRequestScreen.location();
-          }
-        }
-
-        return null;
-      }
-
-      if (authorizationState is AuthorizationOtpRequestingState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizationOtpRequestedState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizationOtpRequestFailureState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizationOtpConfirmingState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizationOtpConfirmedState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizationOtpConfirmFailureState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizationLoadingState) {
-        return null;
-      }
-
-      if (authorizationState is AuthorizedState) {
-        return null;
-      }
-
-      return AuthorizationRequestScreen.location();
+      return null;
     },
     routes: [
       OnboardingScreen.route(),

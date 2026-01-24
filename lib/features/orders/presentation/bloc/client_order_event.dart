@@ -9,3 +9,13 @@ class ClientOrderLoadEvent extends ClientOrderEvent {
 
   const ClientOrderLoadEvent(this.orderId);
 }
+
+class ClientOrderPayEvent extends ClientOrderEvent {
+  final int cardId;
+
+  const ClientOrderPayEvent(this.cardId);
+}
+
+class ClientOrderRePayEvent extends ClientOrderEvent {
+  const ClientOrderRePayEvent();
+}

@@ -31,7 +31,9 @@ class AuthorizationRequestScreen extends StatelessWidget {
       child: BlocConsumer<AuthorizationBloc, AuthorizationState>(
         listener: (BuildContext context, AuthorizationState state) {
           if (state is AuthorizationOtpRequestedState) {
-            getIt<Configuration>().setShowOnboarding(false);
+            getIt<Configuration>().setInitialPath(
+              AuthorizationRequestScreen.location(),
+            );
             context.push(AuthorizationConfirmScreen.location());
           }
 

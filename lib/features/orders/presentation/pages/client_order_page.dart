@@ -178,36 +178,85 @@ class ClientOrderPayButton extends StatelessWidget {
     super.key,
   }) : dialog = const ClientOrderPayDialog();
 
+  Future<void> payOrder(BuildContext context, PaymentCardsState state) async {
+    final payload = await dialog.selectCards(
+      context,
+      state.cards,
+      orderId,
+      payAmount,
+    );
+
+    if (payload != null &&
+        payload.$1 == ClientOrderPayAction.pay &&
+        context.mounted) {
+      context.read<ClientOrderBloc>().add(
+        ClientOrderPayEvent(payload.$2),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: isShowPay,
-      child: BlocConsumer<PaymentCardsBloc, PaymentCardsState>(
-        listener: (BuildContext context, PaymentCardsState state) {
-          if (state is PaymentCardsAddState) {
-            context.push(AddCardPage.location(state.url));
-          }
-        },
-        listenWhen: (PaymentCardsState previous, PaymentCardsState state) {
-          return (state is PaymentCardsAddState);
-        },
-        builder: (BuildContext context, PaymentCardsState state) {
-          return BeButton(
-            text: 'Оплатить $payAmount тг',
-            onPressed: () async {
-              final payload = await dialog.selectCards(
-                context,
-                state.cards,
-                orderId,
-                payAmount,
-              );
-
-              if (payload != null && payload.$1 == ClientOrderPayAction.pay) {
-                // to do call api
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<PaymentCardsBloc, PaymentCardsState>(
+            listener: (BuildContext context, PaymentCardsState state) {
+              if (state is PaymentCardsAddState) {
+                context.push(AddCardPage.location(state.url));
               }
             },
-          );
-        },
+            listenWhen: (PaymentCardsState previous, PaymentCardsState state) {
+              return (state is PaymentCardsAddState);
+            },
+          ),
+          BlocListener<ClientOrderBloc, ClientOrderState>(
+            listener: (BuildContext context, ClientOrderState state) async {
+              if (state is ClientOrderPayState && !state.isLoading) {
+                if (state.isSuccess) {
+                  await dialog.paySuccessStatus(context);
+
+                  if (context.mounted) {
+                    context.read<ClientOrderBloc>().add(
+                      ClientOrderLoadEvent(orderId),
+                    );
+                  }
+                } else {
+                  final isPay = await dialog.payFailureStatus(context);
+
+                  if (isPay != null && isPay && context.mounted) {
+                    context.read<ClientOrderBloc>().add(
+                      ClientOrderRePayEvent(),
+                    );
+                  }
+                }
+              }
+            },
+            listenWhen: (ClientOrderState previous, ClientOrderState state) {
+              return (state is ClientOrderPayState);
+            },
+          ),
+        ],
+        child: BlocBuilder<ClientOrderBloc, ClientOrderState>(
+          builder: (BuildContext context, ClientOrderState orderState) {
+            final isLoading = orderState is ClientOrderPayState
+                ? orderState.isLoading
+                : false;
+
+            return BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
+              builder: (BuildContext context, PaymentCardsState state) {
+                return BeButton(
+                  text: isLoading
+                      ? 'Проводим оплату'
+                      : 'Оплатить $payAmount тг',
+                  isLoading: isLoading,
+                  onPressed: () => payOrder(context, state),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

@@ -38,6 +38,7 @@ class OrderPhotoViewButton extends StatelessWidget {
             height: height,
             width: width,
             fit: .cover,
+            loadingBuilder: BeImagePlaceholder.loadingBuilder,
             errorBuilder: BeImagePlaceholder.errorBuilder,
           ),
         ),

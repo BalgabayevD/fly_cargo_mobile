@@ -12,6 +12,7 @@
 import 'package:fly_cargo/core/di/app.dart' as _i478;
 import 'package:fly_cargo/core/di/configuration.dart' as _i156;
 import 'package:fly_cargo/core/di/environment_variables.dart' as _i941;
+import 'package:fly_cargo/core/di/log_level.dart' as _i827;
 import 'package:fly_cargo/core/di/package.dart' as _i51;
 import 'package:fly_cargo/core/di/requestable.dart' as _i129;
 import 'package:fly_cargo/core/l10n/locale_cubit.dart' as _i596;
@@ -122,10 +123,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i596.LocaleCubit>(
       () => _i596.LocaleCubit(gh<_i51.Package>()),
     );
-    gh.factory<_i156.Configuration>(
-      () => _i156.Configuration(
+    gh.factoryParam<_i156.Configuration, _i827.LogLevel?, dynamic>(
+      (logLevel, _) => _i156.Configuration(
         package: gh<_i51.Package>(),
         environmentVariables: gh<_i941.EnvironmentVariables>(),
+        logLevel: logLevel,
       ),
     );
     gh.lazySingleton<_i193.CitiesPersistRepository>(
@@ -258,6 +260,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i593.PaymentCardsBloc>(
       () => _i593.PaymentCardsBloc(gh<_i863.PaymentUseCase>()),
     );
+    gh.factory<_i350.ClientOrderBloc>(
+      () => _i350.ClientOrderBloc(
+        gh<_i899.ClientOrdersUseCase>(),
+        gh<_i863.PaymentUseCase>(),
+      ),
+    );
     gh.factory<_i55.GetAllCitiesUseCase>(
       () => _i55.GetAllCitiesUseCase(gh<_i933.DestinationRepository>()),
     );
@@ -269,9 +277,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i801.SearchAddressesUseCase>(
       () => _i801.SearchAddressesUseCase(gh<_i933.DestinationRepository>()),
-    );
-    gh.factory<_i350.ClientOrderBloc>(
-      () => _i350.ClientOrderBloc(gh<_i899.ClientOrdersUseCase>()),
     );
     gh.factory<_i731.ClientOrdersBloc>(
       () => _i731.ClientOrdersBloc(gh<_i899.ClientOrdersUseCase>()),

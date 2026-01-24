@@ -3,10 +3,9 @@ part of 'authorization_bloc.dart';
 sealed class AuthorizationState {}
 
 class InitialAuthorizationState extends AuthorizationState {
-  final bool isShowOnboarding;
-  final bool isAuthenticated;
+  final String initialPath;
 
-  InitialAuthorizationState(this.isShowOnboarding, this.isAuthenticated);
+  InitialAuthorizationState(this.initialPath);
 }
 
 class AuthorizationOtpRequestingState extends AuthorizationState {

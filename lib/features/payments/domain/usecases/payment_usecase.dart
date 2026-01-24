@@ -17,6 +17,10 @@ class PaymentUseCase {
   }
 
   Future<bool> payOrder(int paymentCardId, int orderId) async {
-    return await paymentRepository.payOrder(paymentCardId, orderId);
+    try {
+      return await paymentRepository.payOrder(paymentCardId, orderId);
+    } catch (_) {
+      return false;
+    }
   }
 }

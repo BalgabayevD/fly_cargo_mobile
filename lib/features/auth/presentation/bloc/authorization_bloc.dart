@@ -6,6 +6,8 @@ import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
 import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
 import 'package:fly_cargo/features/auth/domain/repositories/authorization_repository.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
+import 'package:fly_cargo/features/onboarding/onboarding_screen.dart';
 import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,8 +26,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     required this.requestable,
   }) : super(
          InitialAuthorizationState(
-           configuration.isShowOnboarding,
-           configuration.isAuthenticated,
+           configuration.getInitialPath ?? OnboardingScreen.location(),
          ),
        ) {
     on<AuthorizationGetSessionEvent>(_getSession);
@@ -103,7 +104,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       );
 
       if (token != null) {
-        configuration.package.setAccessToken(token);
+        await configuration.package.setAccessToken(token);
         requestable.addAuthorizationHeader(token);
       }
 
@@ -122,6 +123,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       await configuration.package.removeAccessToken();
       requestable.removeAuthorizationHeader();
       emit(UnauthorizedState());
+      configuration.setInitialPath(AuthorizationRequestScreen.location());
     } catch (_) {
       emit(UnauthorizedState());
     }

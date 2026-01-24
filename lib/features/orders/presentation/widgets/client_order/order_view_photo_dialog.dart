@@ -38,7 +38,7 @@ class ViewPhotoDialog {
                   ),
                   BeSpace(size: .xxl),
                   BeButton(
-                    text: 'Назад',
+                    text: 'Закрыть',
                     color: .gray,
                     onPressed: () {
                       context.pop(ViewType.close);

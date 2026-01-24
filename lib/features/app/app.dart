@@ -6,7 +6,6 @@ import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
-import 'package:fly_cargo/features/create_order/presentation/pages/create_order_page.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,9 +23,11 @@ class _SapsanoAppState extends State<SapsanoApp> {
   @override
   void initState() {
     super.initState();
+    final authorization = context.read<AuthorizationBloc>();
+
     _router = createRouter(
-      context.read<AuthorizationBloc>(),
-      CreateOrderScreen.path,
+      authorization,
+      (authorization.state as InitialAuthorizationState).initialPath,
     );
   }
 

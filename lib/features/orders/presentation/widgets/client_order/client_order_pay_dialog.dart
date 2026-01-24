@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/features/payments/domain/entities/card_entity.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:heroicons/heroicons.dart';
 
 enum ClientOrderPayAction {
   pay,
@@ -85,6 +88,134 @@ class ClientOrderPayDialog {
                     ],
                   );
                 },
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future paySuccessStatus(
+    BuildContext context,
+  ) {
+    return BeBottomDialog.showBottomDialog(
+      context: context,
+      maxChildSize: 0.90,
+      initialChildSize: 0.90,
+      minChildSize: 0.85,
+      builder: (BuildContext context, ScrollController controller) {
+        return BeDialogBody.builder(
+          controller: controller,
+          text: '',
+          builder: (BuildContext context, ScrollController? controller) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  BeSpace(size: .xxl),
+                  HeroIcon(
+                    HeroIcons.checkBadge,
+                    color: BeColors.success,
+                    size: 120,
+                  ),
+                  BeSpace(size: .xxl),
+                  Text(
+                    'Успех',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 24,
+                      fontWeight: .w600,
+                      color: BeColors.surface5,
+                    ),
+                  ),
+                  BeSpace(size: .xxl),
+                  Text(
+                    'Оплатан успешно прошла',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      fontWeight: .w600,
+                      color: BeColors.surface5,
+                    ),
+                  ),
+                  Spacer(),
+                  BeButton(
+                    text: 'Закрыть',
+                    color: .gray,
+                    onPressed: () {
+                      context.pop();
+                    },
+                  ),
+                  BeSpace(size: .xxl),
+                  BeSpace(size: .xxl),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<bool?> payFailureStatus(
+    BuildContext context,
+  ) {
+    return BeBottomDialog.showBottomDialog<bool?>(
+      context: context,
+      maxChildSize: 0.90,
+      initialChildSize: 0.90,
+      minChildSize: 0.85,
+      builder: (BuildContext context, ScrollController controller) {
+        return BeDialogBody.builder(
+          controller: controller,
+          text: '',
+          builder: (BuildContext context, ScrollController? controller) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  BeSpace(size: .xxl),
+                  HeroIcon(
+                    HeroIcons.exclamationTriangle,
+                    color: BeColors.danger,
+                    size: 120,
+                  ),
+                  BeSpace(size: .xxl),
+                  Text(
+                    'Оплата не прошла',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 24,
+                      fontWeight: .w600,
+                      color: BeColors.surface5,
+                    ),
+                  ),
+                  BeSpace(size: .xxl),
+                  Text(
+                    'Попробуйте снова',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      fontWeight: .w600,
+                      color: BeColors.surface5,
+                    ),
+                  ),
+                  Spacer(),
+                  BeButton(
+                    text: 'Оплатить',
+                    color: .primary,
+                    onPressed: () {
+                      context.pop(true);
+                    },
+                  ),
+                  BeSpace(size: .xxl),
+                  BeButton(
+                    text: 'Закрыть',
+                    color: .gray,
+                    onPressed: () {
+                      context.pop(false);
+                    },
+                  ),
+                  BeSpace(size: .xxl),
+                  BeSpace(size: .xxl),
+                ],
               ),
             );
           },

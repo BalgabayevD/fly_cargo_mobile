@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
+import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
@@ -80,7 +81,21 @@ class _SettingsPageState extends State<SettingsPage> {
                     context.push(ProfilePage.location());
                   },
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const BeSpace(size: .sm),
+                LightListTile(
+                  title: 'Плажные карты',
+                  endContent: HeroIcon(
+                    HeroIcons.creditCard,
+                    color: BeColors.surface4,
+                  ),
+                ),
+                LightListTile(
+                  title: 'История платежей',
+                  endContent: HeroIcon(
+                    HeroIcons.clock,
+                    color: BeColors.surface4,
+                  ),
+                ),
                 LanguageSection(
                   onTap: () {
                     LanguageSelectionBottomSheet.show(context);

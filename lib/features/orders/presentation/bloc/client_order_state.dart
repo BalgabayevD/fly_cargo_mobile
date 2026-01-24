@@ -140,6 +140,36 @@ class ClientOrderLoadedState extends ClientOrderState with EquatableMixin {
   }
 }
 
+class ClientOrderPayState extends ClientOrderLoadedState {
+  final bool isLoading;
+  final bool isSuccess;
+  final int cardId;
+
+  const ClientOrderPayState({
+    required this.isLoading,
+    required this.cardId,
+    required super.order,
+    this.isSuccess = true,
+  });
+
+  @override
+  List<Object?> get props => [isLoading, cardId, order];
+
+  ClientOrderPayState copyWith({
+    bool? isLoading,
+    int? cardId,
+    OrderEntity? order,
+    bool? isSuccess,
+  }) {
+    return ClientOrderPayState(
+      isLoading: isLoading ?? this.isLoading,
+      cardId: cardId ?? this.cardId,
+      order: order ?? this.order,
+      isSuccess: isSuccess ?? this.isSuccess,
+    );
+  }
+}
+
 class TimelineData {
   final bool isFirst;
   final bool isLast;

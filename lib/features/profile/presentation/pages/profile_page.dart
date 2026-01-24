@@ -7,6 +7,7 @@ import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -40,8 +41,7 @@ class ProfilePage extends StatelessWidget {
               context.read<AuthorizationBloc>().add(
                 AuthorizationSignOutEvent(),
               );
-              Navigator.pop(dialogContext);
-              context.pop();
+              context.go(AuthorizationRequestScreen.location());
             },
             child: Text(
               context.l10n.logout,
