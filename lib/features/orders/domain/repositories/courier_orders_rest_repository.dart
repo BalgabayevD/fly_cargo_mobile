@@ -1,7 +1,8 @@
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 
-abstract class ClientOrdersRestRepository {
+abstract class CourierOrdersRestRepository {
   Future<List<OrderEntity>> getOrders();
+  Future<List<OrderEntity>> getOpenOrders();
   Future<OrderEntity?> getOrderById(int orderId);
-  // Future<bool> cancelOrder(int orderId);
+  Future<OrderEntity?> getOrderByIdentification(String identification);
 }

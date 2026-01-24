@@ -1,10 +1,12 @@
-abstract class DeepLink {}
+abstract class DeepLink {
+  const DeepLink();
+}
 
 class OrderPaymentLink extends DeepLink {
   final int orderId;
   final PaymentStatus status;
 
-  OrderPaymentLink({
+  const OrderPaymentLink({
     required this.orderId,
     required this.status,
   });
@@ -13,11 +15,23 @@ class OrderPaymentLink extends DeepLink {
   String toString() => 'OrderPaymentLink(orderId: $orderId, status: $status)';
 }
 
+class OrderIdentificationLink extends DeepLink {
+  final String identification;
+
+  const OrderIdentificationLink({
+    required this.identification,
+  });
+
+  @override
+  String toString() =>
+      'OrderIdentificationLink(identification: $identification)';
+}
+
 class OrderProcessingDirectionLink extends DeepLink {
   final int fromCityId;
   final int toCityId;
 
-  OrderProcessingDirectionLink({
+  const OrderProcessingDirectionLink({
     required this.fromCityId,
     required this.toCityId,
   });
@@ -30,7 +44,7 @@ class OrderProcessingDirectionLink extends DeepLink {
 class OrderAccumulatorIdentificationLink extends DeepLink {
   final int accumulatorId;
 
-  OrderAccumulatorIdentificationLink({
+  const OrderAccumulatorIdentificationLink({
     required this.accumulatorId,
   });
 
@@ -60,7 +74,7 @@ enum PaymentStatus {
 class UnknownDeepLink extends DeepLink {
   final String url;
 
-  UnknownDeepLink(this.url);
+  const UnknownDeepLink(this.url);
 
   @override
   String toString() => 'UnknownDeepLink(url: $url)';
@@ -69,7 +83,7 @@ class UnknownDeepLink extends DeepLink {
 class DeepLinkParser {
   final String domain;
 
-  DeepLinkParser({required this.domain});
+  const DeepLinkParser({required this.domain});
 
   DeepLink? parse(String url) {
     try {
@@ -84,25 +98,36 @@ class DeepLinkParser {
       }
 
       final segments = uri.pathSegments;
-      if (segments.length < 7) {
+
+      if (segments.length < 4) {
         return UnknownDeepLink(url);
       }
 
-      if (segments[1] == 'order' && segments[2] == 'payment') {
-        return _parseOrderPaymentLink(segments, url);
+      if (segments.length >= 4 &&
+          segments[1] == 'order' &&
+          segments[2] == 'identification') {
+        return _parseOrderIdentificationLink(segments, url);
       }
 
-      if (segments[1] == 'order' &&
+      if (segments.length >= 5 &&
+          segments[1] == 'order' &&
+          segments[2] == 'accumulator' &&
+          segments[3] == 'identification') {
+        return _parseOrderAccumulatorIdentificationLink(segments, url);
+      }
+
+      if (segments.length >= 7 &&
+          segments[1] == 'order' &&
           segments[2] == 'processing' &&
           segments[3] == 'direction' &&
           segments[4] == 'cities') {
         return _parseOrderProcessingDirectionLink(segments, url);
       }
 
-      if (segments[1] == 'order' &&
-          segments[2] == 'accumulator' &&
-          segments[3] == 'identification') {
-        return _parseOrderAccumulatorIdentificationLink(segments, url);
+      if (segments.length >= 7 &&
+          segments[1] == 'order' &&
+          segments[2] == 'payment') {
+        return _parseOrderPaymentLink(segments, url);
       }
 
       return UnknownDeepLink(url);
@@ -113,6 +138,7 @@ class DeepLinkParser {
 
   OrderPaymentLink? _parseOrderPaymentLink(List<String> segments, String url) {
     try {
+      // Ожидаем структуру: hooks/order/payment/{id}/action/back/{status}
       if (segments.length != 7) {
         return null;
       }
@@ -139,6 +165,7 @@ class DeepLinkParser {
     String url,
   ) {
     try {
+      // Ожидаем структуру: hooks/order/processing/direction/cities/{fromCityId}/{toCityId}
       if (segments.length != 7) {
         return null;
       }
@@ -164,6 +191,7 @@ class DeepLinkParser {
     String url,
   ) {
     try {
+      // Ожидаем структуру: hooks/order/accumulator/identification/{accumulatorId}
       if (segments.length != 5) {
         return null;
       }
@@ -176,6 +204,30 @@ class DeepLinkParser {
 
       return OrderAccumulatorIdentificationLink(
         accumulatorId: accumulatorId,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  OrderIdentificationLink? _parseOrderIdentificationLink(
+    List<String> segments,
+    String url,
+  ) {
+    try {
+      // Ожидаем структуру: hooks/order/identification/{identification}
+      if (segments.length != 4) {
+        return null;
+      }
+
+      final identification = segments[3];
+
+      if (identification.isEmpty) {
+        return null;
+      }
+
+      return OrderIdentificationLink(
+        identification: identification,
       );
     } catch (e) {
       return null;

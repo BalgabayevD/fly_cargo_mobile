@@ -11,7 +11,9 @@ import 'package:fly_cargo/features/home/presentation/screen/courier_home_screen.
 import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_accept_order_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan_screen.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/courier_settings_page.dart';
@@ -171,6 +173,8 @@ GoRouter createRouter(
       LegalEntitiesPage.route(),
       TransportationRulesPage.route(),
       AddCardPage.route(),
+      CourierOrdersScanScreen.route(),
+      CourierAcceptOrdersPage.route(),
     ],
   );
 }

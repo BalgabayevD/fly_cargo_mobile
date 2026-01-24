@@ -72,7 +72,7 @@ class BePage extends StatelessWidget {
                       bottom: 16,
                       top: 8,
                     ),
-                    decoration: BoxDecoration(color: BeColors.white),
+                    decoration: BoxDecoration(color: backgroundColor),
                     child: actions,
                   ),
                 ),

@@ -64,16 +64,34 @@ import 'package:fly_cargo/features/orders/data/repositories/client_orders_persis
     as _i630;
 import 'package:fly_cargo/features/orders/data/repositories/client_orders_rest_repository.dart'
     as _i861;
+import 'package:fly_cargo/features/orders/data/repositories/courier_orders_persist_repository.dart'
+    as _i178;
+import 'package:fly_cargo/features/orders/data/repositories/courier_orders_rest_repository.dart'
+    as _i885;
 import 'package:fly_cargo/features/orders/domain/repositories/client_orders_persist_repository.dart'
     as _i87;
 import 'package:fly_cargo/features/orders/domain/repositories/client_orders_rest_repository.dart'
     as _i653;
-import 'package:fly_cargo/features/orders/domain/usecases/get_client_orders_usecase.dart'
-    as _i899;
+import 'package:fly_cargo/features/orders/domain/repositories/courier_orders_persist_repository.dart'
+    as _i448;
+import 'package:fly_cargo/features/orders/domain/repositories/courier_orders_rest_repository.dart'
+    as _i697;
+import 'package:fly_cargo/features/orders/domain/usecases/client_orders_usecase.dart'
+    as _i560;
+import 'package:fly_cargo/features/orders/domain/usecases/courier_orders_usecase.dart'
+    as _i253;
 import 'package:fly_cargo/features/orders/presentation/bloc/client_order_bloc.dart'
     as _i350;
 import 'package:fly_cargo/features/orders/presentation/bloc/client_orders_bloc.dart'
     as _i731;
+import 'package:fly_cargo/features/orders/presentation/bloc/courier_accept_order_bloc.dart'
+    as _i306;
+import 'package:fly_cargo/features/orders/presentation/bloc/courier_open_orders_bloc.dart'
+    as _i110;
+import 'package:fly_cargo/features/orders/presentation/bloc/courier_order_bloc.dart'
+    as _i571;
+import 'package:fly_cargo/features/orders/presentation/bloc/courier_orders_bloc.dart'
+    as _i537;
 import 'package:fly_cargo/features/payments/data/repositories/payment_repository.dart'
     as _i759;
 import 'package:fly_cargo/features/payments/domain/repositories/payment_repository.dart'
@@ -113,30 +131,14 @@ extension GetItInjectableX on _i174.GetIt {
         logLevel: logLevel,
       ),
     );
-    gh.lazySingleton<_i193.CitiesPersistRepository>(
-      () => _i166.CitiesPersistRepositoryImpl(
-        configuration: gh<_i156.Configuration>(),
-      ),
-    );
-    gh.lazySingleton<_i672.TariffsPersistRepository>(
-      () => _i499.TariffsPersistRepositoryImpl(
-        configuration: gh<_i156.Configuration>(),
-      ),
-    );
     await gh.factoryAsync<_i129.Requestable>(
       () => requestableModule.requestable(gh<_i156.Configuration>()),
       preResolve: true,
     );
-    gh.factory<_i176.CreateOrdersRestRepository>(
-      () => _i203.CreateOrdersRestRepositoryImpl(
+    gh.factory<_i672.TariffsRestRepository>(
+      () => _i730.TariffsRestRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
-      ),
-    );
-    gh.factory<_i653.ClientOrdersRestRepository>(
-      () => _i861.ClientOrdersRestRepositoryImpl(
-        gh<_i129.Requestable>(),
-        gh<_i156.Configuration>(),
       ),
     );
     gh.lazySingleton<_i1025.CitiesRestRepository>(
@@ -145,14 +147,33 @@ extension GetItInjectableX on _i174.GetIt {
         configuration: gh<_i156.Configuration>(),
       ),
     );
-    gh.factory<_i672.TariffsRestRepository>(
-      () => _i730.TariffsRestRepositoryImpl(
+    gh.factory<_i176.CreateOrdersRestRepository>(
+      () => _i203.CreateOrdersRestRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
       ),
     );
-    gh.factory<_i406.OrderPhotosRepository>(
-      () => _i756.OrderPhotosRepositoryImpl(
+    gh.factory<_i396.CreateOrdersUseCase>(
+      () => _i396.CreateOrdersUseCase(gh<_i176.CreateOrdersRestRepository>()),
+    );
+    gh.lazySingleton<_i672.TariffsPersistRepository>(
+      () => _i499.TariffsPersistRepositoryImpl(
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i498.AuthorizationRepository>(
+      () => _i652.AuthorizationRepositoryImpl(
+        requestable: gh<_i129.Requestable>(),
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.lazySingleton<_i193.CitiesPersistRepository>(
+      () => _i166.CitiesPersistRepositoryImpl(
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i860.PaymentRepository>(
+      () => _i759.PaymentRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
       ),
@@ -163,10 +184,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i156.Configuration>(),
       ),
     );
-    gh.factory<_i860.PaymentRepository>(
-      () => _i759.PaymentRepositoryImpl(
-        requestable: gh<_i129.Requestable>(),
+    gh.factory<_i550.AuthorizationBloc>(
+      () => _i550.AuthorizationBloc(
+        authorizationRepository: gh<_i498.AuthorizationRepository>(),
         configuration: gh<_i156.Configuration>(),
+        requestable: gh<_i129.Requestable>(),
+      ),
+    );
+    gh.factory<_i653.ClientOrdersRestRepository>(
+      () => _i861.ClientOrdersRestRepositoryImpl(
+        gh<_i129.Requestable>(),
+        gh<_i156.Configuration>(),
       ),
     );
     gh.factory<_i478.App>(
@@ -175,17 +203,50 @@ extension GetItInjectableX on _i174.GetIt {
         requestable: gh<_i129.Requestable>(),
       ),
     );
+    gh.factory<_i560.ClientOrdersUseCase>(
+      () => _i560.ClientOrdersUseCase(
+        gh<_i653.ClientOrdersRestRepository>(),
+        gh<_i87.ClientOrdersPersistRepository>(),
+      ),
+    );
+    gh.factory<_i697.CourierOrdersRestRepository>(
+      () => _i885.CourierOrdersRestRepositoryImpl(
+        gh<_i129.Requestable>(),
+        gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i448.CourierOrdersPersistRepository>(
+      () => _i178.CourierOrdersPersistRepositoryImpl(
+        gh<_i129.Requestable>(),
+        gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i253.CourierOrdersUseCase>(
+      () => _i253.CourierOrdersUseCase(
+        gh<_i697.CourierOrdersRestRepository>(),
+        gh<_i448.CourierOrdersPersistRepository>(),
+      ),
+    );
     gh.factory<_i100.TariffsUseCase>(
       () => _i100.TariffsUseCase(
         gh<_i672.TariffsRestRepository>(),
         gh<_i672.TariffsPersistRepository>(),
       ),
     );
-    gh.factory<_i498.AuthorizationRepository>(
-      () => _i652.AuthorizationRepositoryImpl(
+    gh.factory<_i406.OrderPhotosRepository>(
+      () => _i756.OrderPhotosRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
       ),
+    );
+    gh.factory<_i103.OrderPhotosUseCase>(
+      () => _i103.OrderPhotosUseCase(gh<_i406.OrderPhotosRepository>()),
+    );
+    gh.factory<_i731.ClientOrdersBloc>(
+      () => _i731.ClientOrdersBloc(gh<_i560.ClientOrdersUseCase>()),
+    );
+    gh.factory<_i863.PaymentUseCase>(
+      () => _i863.PaymentUseCase(gh<_i860.PaymentRepository>()),
     );
     gh.factory<_i542.CitiesUseCase>(
       () => _i542.CitiesUseCase(
@@ -193,14 +254,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i193.CitiesPersistRepository>(),
       ),
     );
-    gh.factory<_i863.PaymentUseCase>(
-      () => _i863.PaymentUseCase(gh<_i860.PaymentRepository>()),
-    );
     gh.factory<_i266.TariffsBloc>(
       () => _i266.TariffsBloc(gh<_i100.TariffsUseCase>()),
     );
-    gh.factory<_i396.CreateOrdersUseCase>(
-      () => _i396.CreateOrdersUseCase(gh<_i176.CreateOrdersRestRepository>()),
+    gh.factory<_i593.PaymentCardsBloc>(
+      () => _i593.PaymentCardsBloc(gh<_i863.PaymentUseCase>()),
     );
     gh.factory<_i32.CreateOrdersBloc>(
       () => _i32.CreateOrdersBloc(
@@ -208,39 +266,29 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i542.CitiesUseCase>(),
       ),
     );
-    gh.factory<_i103.OrderPhotosUseCase>(
-      () => _i103.OrderPhotosUseCase(gh<_i406.OrderPhotosRepository>()),
+    gh.factory<_i306.CourierAcceptOrderBloc>(
+      () => _i306.CourierAcceptOrderBloc(gh<_i253.CourierOrdersUseCase>()),
+    );
+    gh.factory<_i110.CourierOpenOrdersBloc>(
+      () => _i110.CourierOpenOrdersBloc(gh<_i253.CourierOrdersUseCase>()),
+    );
+    gh.factory<_i571.CourierOrderBloc>(
+      () => _i571.CourierOrderBloc(gh<_i253.CourierOrdersUseCase>()),
+    );
+    gh.factory<_i537.CourierOrdersBloc>(
+      () => _i537.CourierOrdersBloc(gh<_i253.CourierOrdersUseCase>()),
     );
     gh.factory<_i435.CitiesBloc>(
       () => _i435.CitiesBloc(gh<_i542.CitiesUseCase>()),
     );
-    gh.factory<_i899.ClientOrdersUseCase>(
-      () => _i899.ClientOrdersUseCase(
-        gh<_i653.ClientOrdersRestRepository>(),
-        gh<_i87.ClientOrdersPersistRepository>(),
+    gh.factory<_i350.ClientOrderBloc>(
+      () => _i350.ClientOrderBloc(
+        gh<_i560.ClientOrdersUseCase>(),
+        gh<_i863.PaymentUseCase>(),
       ),
     );
     gh.factory<_i298.PhotosBloc>(
       () => _i298.PhotosBloc(gh<_i103.OrderPhotosUseCase>()),
-    );
-    gh.factory<_i550.AuthorizationBloc>(
-      () => _i550.AuthorizationBloc(
-        authorizationRepository: gh<_i498.AuthorizationRepository>(),
-        configuration: gh<_i156.Configuration>(),
-        requestable: gh<_i129.Requestable>(),
-      ),
-    );
-    gh.factory<_i593.PaymentCardsBloc>(
-      () => _i593.PaymentCardsBloc(gh<_i863.PaymentUseCase>()),
-    );
-    gh.factory<_i350.ClientOrderBloc>(
-      () => _i350.ClientOrderBloc(
-        gh<_i899.ClientOrdersUseCase>(),
-        gh<_i863.PaymentUseCase>(),
-      ),
-    );
-    gh.factory<_i731.ClientOrdersBloc>(
-      () => _i731.ClientOrdersBloc(gh<_i899.ClientOrdersUseCase>()),
     );
     return this;
   }

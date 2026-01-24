@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/chip.dart';
+import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/features/orders/presentation/bloc/client_orders_bloc.dart';
-import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
+import 'package:fly_cargo/features/orders/presentation/bloc/courier_orders_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -30,25 +30,19 @@ class CourierOrdersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<ClientOrdersBloc>(
-          create: (BuildContext context) =>
-              getIt<ClientOrdersBloc>()..add(LoadAllClientOrdersEvent()),
-        ),
-      ],
+    return BlocProvider<CourierOrdersBloc>(
+      create: (_) =>
+          getIt<CourierOrdersBloc>()..add(CourierOrdersLoadAllEvent()),
       child: BePage(
         title: 'Доставки',
+        backgroundColor: BeColors.white,
         automaticallyImplyLeading: false,
         centerTitle: true,
         isBorder: true,
-        child: BlocBuilder<ClientOrdersBloc, ClientOrdersState>(
-          builder: (context, state) {
+        child: BlocBuilder<CourierOrdersBloc, CourierOrdersState>(
+          builder: (BuildContext context, CourierOrdersState state) {
             return RefreshIndicator(
               onRefresh: () async {
-                context.read<ClientOrdersBloc>().add(
-                  LoadAllClientOrdersEvent(),
-                );
                 await Future.delayed(const Duration(seconds: 1));
               },
               child: ListView(
@@ -94,9 +88,7 @@ class CourierOrdersPage extends StatelessWidget {
                         }
 
                         return OrderListTile(
-                          onTap: () {
-                            context.push(ClientOrderPage.location(order.id));
-                          },
+                          onTap: () {},
                           title: 'Заказ ${order.id}',
                           trailing: DateFormat(
                             'dd MMM yyyy',

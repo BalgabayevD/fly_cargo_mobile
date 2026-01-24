@@ -5,6 +5,7 @@ import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
+import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +38,8 @@ class _SapsanoAppState extends State<SapsanoApp> {
       listeners: [
         BlocListener<AuthorizationBloc, AuthorizationState>(
           listener: (BuildContext context, AuthorizationState state) {
-            if (state is AuthorizedState) {
+            if (state is AuthorizedState &&
+                state.sessionInfo.user.role == UserRole.user) {
               context.read<PaymentCardsBloc>().add(PaymentCardsLoadEvent());
             }
           },

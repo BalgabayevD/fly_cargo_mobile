@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fly_cargo/features/orders/domain/usecases/get_client_orders_usecase.dart';
+import 'package:fly_cargo/features/orders/domain/usecases/client_orders_usecase.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:injectable/injectable.dart';
 

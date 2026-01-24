@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
@@ -61,114 +62,49 @@ class ProfilePage extends StatelessWidget {
       centerTitle: true,
       isBorder: true,
       appBarColor: BeColors.white,
+      actions: Column(
+        children: [
+          BeButton(
+            text: context.l10n.logoutFromProfile,
+            variant: .flat,
+            color: .warning,
+            onPressed: () => _showLogoutDialog(context),
+          ),
+          BeSpace(size: .xxl),
+          BeButton(
+            text: context.l10n.deleteProfileRequest,
+            variant: .light,
+            color: .danger,
+            size: .sm,
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    context.l10n.deleteProfileInDevelopment,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       child: BlocBuilder<AuthorizationBloc, AuthorizationState>(
         builder: (context, state) {
-          if (state is! AuthorizedState) {
-            return Center(
-              child: Text(
-                context.l10n.notAuthorized,
-                style: TextStyle(color: AppColors.danger),
-              ),
-            );
-          }
-
-          final user = state.sessionInfo.user;
+          final current = (state as AuthorizedState);
 
           return Column(
             children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    BeSpace(size: .xxl),
-                    FieldListTile(
-                      label: context.l10n.phoneNumber,
-                      value: user.phoneNumber ?? '',
-                      isShowIcon: false,
-                    ),
-                    BeSpace(size: .xxl),
-                    FieldListTile(
-                      label: context.l10n.firstName,
-                      value: user.name ?? '',
-                      isShowIcon: false,
-                    ),
-                    // BeSpace(size: .xxl),
-                    // FieldListTile(
-                    //   label: context.l10n.lastName,
-                    //   value: user.lastName ?? '',
-                    //   isShowIcon: false,
-                    // ),
-                    // BeSpace(size: .xxl),
-                    // FieldListTile(
-                    //   label: context.l10n.middleName,
-                    //   value: user.middleName ?? '',
-                    //   isShowIcon: false,
-                    // ),
-                    // BeSpace(size: .xxl),
-                    // FieldListTile(
-                    //   label: context.l10n.birthDate,
-                    //   value: user.birthDay ?? '',
-                    //   isShowIcon: false,
-                    // ),
-                  ],
-                ),
+              BeSpace(size: .xxl),
+              FieldListTile(
+                label: context.l10n.phoneNumber,
+                value: current.sessionInfo.user.phoneNumber,
+                isShowIcon: false,
               ),
-              Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: () => _showLogoutDialog(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.warningLight,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              AppSpacing.radiusMD,
-                            ),
-                          ),
-                          elevation: 0,
-                        ),
-                        child: Text(
-                          context.l10n.logoutFromProfile,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.warning,
-                          ),
-                        ),
-                      ),
-                    ),
-                    BeSpace(size: .xxl),
-                    InkWell(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              context.l10n.deleteProfileInDevelopment,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.sm,
-                        ),
-                        child: Text(
-                          context.l10n.deleteProfileRequest,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.danger,
-                            decorationColor: AppColors.danger,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
-                  ],
-                ),
+              BeSpace(size: .xxl),
+              FieldListTile(
+                label: context.l10n.firstName,
+                value: current.sessionInfo.user.name,
+                isShowIcon: false,
               ),
             ],
           );

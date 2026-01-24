@@ -3,6 +3,7 @@ import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class CourierHomeScreen extends StatelessWidget {
@@ -35,9 +36,10 @@ class CourierHomeScreen extends StatelessWidget {
         children: [
           BeSpace(size: .xl),
           BeButton(
-            text: 'Принять заказ клиента',
+            text: 'Найти заказ',
             color: .gray,
             variant: .solid,
+            onPressed: () => context.push(CourierOrdersScanScreen.location()),
           ),
           BeSpace(size: .xl),
           BeButton(
