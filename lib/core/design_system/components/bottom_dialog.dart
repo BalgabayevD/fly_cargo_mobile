@@ -198,7 +198,11 @@ class BeBottomTitle extends StatelessWidget {
             if (variant == .primary)
               IconButton(
                 onPressed: () => onClose(context),
-                icon: HeroIcon(HeroIcons.xMark, style: HeroIconStyle.outline),
+                icon: HeroIcon(
+                  HeroIcons.xMark,
+                  style: HeroIconStyle.outline,
+                  color: BeColors.surface4,
+                ),
               ),
           ],
         ),

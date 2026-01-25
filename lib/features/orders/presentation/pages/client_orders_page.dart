@@ -87,12 +87,12 @@ class ClientOrdersPage extends StatelessWidget {
                         }
                         if (['accepted'].contains(order.status)) {
                           color = .success;
-                          statusLabel = 'На скалде';
+                          statusLabel = 'На складе';
                         }
 
                         if (['checked'].contains(order.status)) {
                           color = .success;
-                          statusLabel = 'На скалде';
+                          statusLabel = 'На складе';
                         }
 
                         if (['completed'].contains(order.status)) {
@@ -102,7 +102,7 @@ class ClientOrdersPage extends StatelessWidget {
 
                         if (['canceled'].contains(order.status)) {
                           color = .danger;
-                          statusLabel = 'Оплочен';
+                          statusLabel = 'Оплачен';
                         }
 
                         return OrderListTile(
@@ -116,7 +116,7 @@ class ClientOrdersPage extends StatelessWidget {
                           ).format(created),
                           message: message,
                           statusLabel:
-                              '$statusLabel${order.isPaid ? '' : ', не оплочен'}',
+                              '$statusLabel${order.isPaid ? '' : ', не оплачен'}',
                           color: color,
                           varinant: order.isPaid ? .flat : .bordered,
                         );

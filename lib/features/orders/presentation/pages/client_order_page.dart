@@ -11,6 +11,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/client_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
+import 'package:fly_cargo/features/orders/presentation/widgets/client_order/client_order_cancel_dialog.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/client_order_pay_dialog.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
@@ -94,7 +95,7 @@ class ClientOrderPage extends StatelessWidget {
                   BeSpace(size: .md),
 
                   Text(
-                    'Посылка от ${state.formatDate(state.order.createdAt)}, ${state.isShowPay ? 'не оплочен' : 'оплочен'}',
+                    'Посылка от ${state.formatDate(state.order.createdAt)}, ${state.isShowPay ? 'не оплачен' : 'оплачен'}',
                     style: GoogleFonts.montserrat(
                       fontSize: 19,
                       fontWeight: FontWeight.w600,
@@ -142,10 +143,10 @@ class ClientOrderPage extends StatelessWidget {
                   if (state.order.isCanCancel) BeSpace(size: .xxxl),
 
                   if (state.order.isCanCancel)
-                    BeButton(
-                      text: 'Отменить',
-                      variant: .flat,
-                      color: .danger,
+                    ClientOrderCancelButton(
+                      orderId: state.order.id,
+                      cancelType: state.order.cancelType,
+                      cancelAmount: state.order.cancelAmount,
                     ),
 
                   BeSpace(size: .xxxl),
@@ -257,6 +258,78 @@ class ClientOrderPayButton extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class ClientOrderCancelButton extends StatelessWidget {
+  final ClientOrderCancelDialog dialog;
+  final int orderId;
+  final int cancelType;
+  final double cancelAmount;
+
+  const ClientOrderCancelButton({
+    required this.orderId,
+    required this.cancelType,
+    required this.cancelAmount,
+    super.key,
+  }) : dialog = const ClientOrderCancelDialog();
+
+  Future<void> cancelOrder(BuildContext context) async {
+    final action = await dialog.show(
+      context,
+      orderId: orderId,
+      cancelType: cancelType,
+      cancelAmount: cancelAmount,
+    );
+
+    if (action == ClientOrderCancelAction.cancel && context.mounted) {
+      context.read<ClientOrderBloc>().add(
+        ClientOrderCancelEvent(),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<ClientOrderBloc, ClientOrderState>(
+      listener: (BuildContext context, ClientOrderState state) async {
+        if (state is ClientOrderCancelState && !state.isLoading) {
+          if (state.isSuccess) {
+            await dialog.cancelSuccessStatus(context);
+
+            if (context.mounted) {
+              context.go(ClientOrdersPage.location());
+            }
+          } else {
+            final isRetry = await dialog.cancelFailureStatus(context);
+
+            if (isRetry != null && isRetry && context.mounted) {
+              context.read<ClientOrderBloc>().add(
+                ClientOrderReCancelEvent(),
+              );
+            }
+          }
+        }
+      },
+      listenWhen: (ClientOrderState previous, ClientOrderState state) {
+        return (state is ClientOrderCancelState);
+      },
+      child: BlocBuilder<ClientOrderBloc, ClientOrderState>(
+        builder: (BuildContext context, ClientOrderState state) {
+          final isLoading = state is ClientOrderCancelState
+              ? state.isLoading
+              : false;
+
+          return BeButton(
+            text: isLoading ? 'Отменяем заказ' : 'Отменить',
+            isLoading: isLoading,
+            variant: .flat,
+            color: .danger,
+            onPressed: () => cancelOrder(context),
+          );
+        },
       ),
     );
   }

@@ -170,6 +170,32 @@ class ClientOrderPayState extends ClientOrderLoadedState {
   }
 }
 
+class ClientOrderCancelState extends ClientOrderLoadedState {
+  final bool isLoading;
+  final bool isSuccess;
+
+  const ClientOrderCancelState({
+    required this.isLoading,
+    required super.order,
+    this.isSuccess = true,
+  });
+
+  @override
+  List<Object?> get props => [isLoading, order, isSuccess];
+
+  ClientOrderCancelState copyWith({
+    bool? isLoading,
+    OrderEntity? order,
+    bool? isSuccess,
+  }) {
+    return ClientOrderCancelState(
+      isLoading: isLoading ?? this.isLoading,
+      order: order ?? this.order,
+      isSuccess: isSuccess ?? this.isSuccess,
+    );
+  }
+}
+
 class TimelineData {
   final bool isFirst;
   final bool isLast;

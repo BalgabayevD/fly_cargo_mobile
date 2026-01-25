@@ -9,6 +9,7 @@ import 'package:fly_cargo/features/auth/presentation/pages/authorization_request
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_screen.dart';
 import 'package:fly_cargo/features/home/presentation/screen/courier_home_screen.dart';
 import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/cancel_reason_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_orders_page.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_accept_order_screen.dart';
@@ -165,6 +166,7 @@ GoRouter createRouter(
       ),
 
       ClientOrderPage.route(),
+      CancelReasonPage.route(),
       ProfilePage.route(),
       ContactsPage.route(),
       NotificationsPage.route(),

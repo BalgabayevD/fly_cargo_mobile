@@ -19,6 +19,8 @@ class ClientOrderBloc extends Bloc<ClientOrderEvent, ClientOrderState> {
     on<ClientOrderLoadEvent>(_load);
     on<ClientOrderPayEvent>(_pay);
     on<ClientOrderRePayEvent>(_repay);
+    on<ClientOrderCancelEvent>(_cancel);
+    on<ClientOrderReCancelEvent>(_recancel);
   }
 
   Future<void> _load(
@@ -65,6 +67,35 @@ class ClientOrderBloc extends Bloc<ClientOrderEvent, ClientOrderState> {
         current.cardId,
         current.order.id,
       );
+      emit(current.copyWith(isLoading: false, isSuccess: isSuccess));
+    }
+  }
+
+  Future<void> _cancel(
+    ClientOrderCancelEvent event,
+    Emitter<ClientOrderState> emit,
+  ) async {
+    if (state is ClientOrderLoadedState) {
+      final current = state as ClientOrderLoadedState;
+      final next = ClientOrderCancelState(
+        isLoading: true,
+        isSuccess: true,
+        order: current.order,
+      );
+      emit(next);
+      final isSuccess = await clientOrders.cancelOrder(current.order.id);
+      emit(next.copyWith(isLoading: false, isSuccess: isSuccess));
+    }
+  }
+
+  Future<void> _recancel(
+    ClientOrderReCancelEvent event,
+    Emitter<ClientOrderState> emit,
+  ) async {
+    if (state is ClientOrderCancelState) {
+      final current = state as ClientOrderCancelState;
+      emit(current.copyWith(isLoading: true, isSuccess: true));
+      final isSuccess = await clientOrders.cancelOrder(current.order.id);
       emit(current.copyWith(isLoading: false, isSuccess: isSuccess));
     }
   }
