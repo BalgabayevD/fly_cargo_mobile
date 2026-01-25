@@ -85,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const BeSpace(size: .sm),
                 LightListTile(
-                  title: 'Плажные карты',
+                  title: 'Платёжные карты',
                   endContent: HeroIcon(
                     HeroIcons.creditCard,
                     color: BeColors.surface4,

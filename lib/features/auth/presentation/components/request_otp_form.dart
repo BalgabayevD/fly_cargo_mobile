@@ -11,9 +11,9 @@ class RequestOtpForm extends StatefulWidget {
   final FutureOr<void> Function(String phone) onSubmit;
 
   const RequestOtpForm({
-    super.key,
     required this.isLoading,
     required this.onSubmit,
+    super.key,
   });
 
   @override
@@ -48,7 +48,7 @@ class _RequestOtpFormState extends State<RequestOtpForm> {
             ),
             SizedBox(height: 21),
             Text(
-              'Поможет создавать и отслеживать вашизаказы',
+              'Поможет создавать и отслеживать ваши заказы',
               style: GoogleFonts.montserrat(fontWeight: .w600, fontSize: 16),
             ),
             SizedBox(height: 48),
@@ -69,7 +69,7 @@ class _RequestOtpFormState extends State<RequestOtpForm> {
             ),
             SizedBox(height: 24),
             BeButton(
-              text: "Получить код",
+              text: 'Получить код',
               isLoading: widget.isLoading,
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {

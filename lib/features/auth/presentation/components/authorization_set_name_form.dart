@@ -67,7 +67,7 @@ class _AuthorizationSetNameFormState extends State<AuthorizationSetNameForm> {
           ),
           SizedBox(height: 24),
           BeButton(
-            text: "Сохранить",
+            text: 'Сохранить',
             isLoading: widget.isLoading,
             onPressed: () {
               if (codeController.text.length > 3) {

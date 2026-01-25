@@ -107,8 +107,8 @@ class BeDialogBody extends StatelessWidget {
   }) : builder = null;
 
   const BeDialogBody.builder({
-    this.text = '',
     required this.builder,
+    this.text = '',
     this.titleVariant = .primary,
     this.action,
     this.controller,

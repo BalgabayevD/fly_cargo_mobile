@@ -20,7 +20,7 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   Future<List<CityEntity>> getCitiesFrom() async {
     try {
       final response = await requestable.dio.get(
-        '${_order}/api/v1/directions/cities/from',
+        '$_order/api/v1/directions/cities/from',
       );
 
       return (response.data['data'] as List).map((data) {
@@ -35,7 +35,7 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   Future<List<CityEntity>> getCitiesTo(int fromCityId) async {
     try {
       final response = await requestable.dio.get(
-        '${_order}/api/v1/directions/cities/to',
+        '$_order/api/v1/directions/cities/to',
         queryParameters: {'fromCityId': fromCityId},
       );
       return (response.data['data'] as List).map((data) {
@@ -53,7 +53,7 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   ) async {
     try {
       final response = await requestable.dio.get<List<String>>(
-        '${_order}/api/v1/maps/cities/list',
+        '$_order/api/v1/maps/cities/list',
         queryParameters: {
           'city': city,
           'address': address,

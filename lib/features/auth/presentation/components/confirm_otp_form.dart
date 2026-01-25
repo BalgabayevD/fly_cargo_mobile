@@ -12,11 +12,11 @@ class ConfirmOtpForm extends StatefulWidget {
   final FutureOr<void> Function() resend;
 
   const ConfirmOtpForm({
-    super.key,
     required this.isLoading,
     required this.onSubmit,
     required this.phone,
     required this.resend,
+    super.key,
   });
 
   @override
@@ -103,7 +103,7 @@ class _ConfirmOtpFormState extends State<ConfirmOtpForm> {
             ),
             SizedBox(height: 24),
             BeButton(
-              text: "Отправить",
+              text: 'Отправить',
               isLoading: widget.isLoading,
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
