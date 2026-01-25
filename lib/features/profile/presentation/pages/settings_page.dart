@@ -15,6 +15,7 @@ import 'package:fly_cargo/features/profile/presentation/pages/privacy_policy_pag
 import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/terms_of_service_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/transportation_rules_page.dart';
+import 'package:fly_cargo/features/payments/presentation/pages/payment_cards_page.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_menu_items.dart';
 import 'package:fly_cargo/features/profile/presentation/widgets/settings_sections.dart';
@@ -86,6 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 const BeSpace(size: .sm),
                 LightListTile(
                   title: 'Платёжные карты',
+                  onTap: () => context.push(PaymentCardsPage.location()),
                   endContent: HeroIcon(
                     HeroIcons.creditCard,
                     color: BeColors.surface4,
