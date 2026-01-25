@@ -57,7 +57,9 @@ class AddCardPage extends StatelessWidget {
             }
           },
           onWebResourceError: (WebResourceError error) {
-            context.push(ClientOrdersPage.location());
+            if (context.canPop()) {
+              context.pop();
+            }
           },
         ),
       )
