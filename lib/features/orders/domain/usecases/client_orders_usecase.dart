@@ -25,4 +25,8 @@ class ClientOrdersUseCase {
   Future<OrderEntity?> getClientRestOrder(int orderId) async {
     return await clientOrdersRest.getOrderById(orderId);
   }
+
+  Future<bool> cancelOrder(int orderId) async {
+    return await clientOrdersRest.cancelOrder(orderId);
+  }
 }

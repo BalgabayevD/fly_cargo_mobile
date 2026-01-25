@@ -19,3 +19,11 @@ class ClientOrderPayEvent extends ClientOrderEvent {
 class ClientOrderRePayEvent extends ClientOrderEvent {
   const ClientOrderRePayEvent();
 }
+
+class ClientOrderCancelEvent extends ClientOrderEvent {
+  const ClientOrderCancelEvent();
+}
+
+class ClientOrderReCancelEvent extends ClientOrderEvent {
+  const ClientOrderReCancelEvent();
+}
