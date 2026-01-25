@@ -611,6 +611,8 @@ class OrderListTile extends StatelessWidget {
                 padding: EdgeInsets.only(top: 6),
                 child: Text(
                   message!,
+                  maxLines: 1,
+                  overflow: .ellipsis,
                   style: GoogleFonts.montserrat(
                     fontSize: 16,
                     height: 1,

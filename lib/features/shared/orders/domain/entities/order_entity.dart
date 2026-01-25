@@ -131,6 +131,29 @@ sealed class OrderTariffEntity with _$OrderTariffEntity {
       _$OrderTariffEntityFromJson(json);
 }
 
+@JsonEnum(valueField: 'value')
+enum OrderStatus {
+  created('created'),
+  cancelled('cancelled'),
+  accepted('accepted'),
+  decided('decided'),
+  submitted('submitted'),
+  accounted('accounted'),
+  checked('checked'),
+  revision('revision'),
+  dispatched('dispatched'),
+  transit('transit'),
+  arrived('arrived'),
+  @JsonValue('delivers_recipient')
+  deliversRecipient('delivers_recipient'),
+  completed('completed')
+  ;
+
+  final String value;
+
+  const OrderStatus(this.value);
+}
+
 @freezed
 sealed class OrderEntity with _$OrderEntity {
   const factory OrderEntity({
@@ -171,7 +194,7 @@ sealed class OrderEntity with _$OrderEntity {
     @Default(0.0) double paidAmount,
     @Default(0.0) double payAmount,
     @Default(false) bool isCanCancel,
-    @Default(0) int cancelType,
+    @Default(0) int cancelType, // 1 - бесплатно, 2 платно
     @Default(0.0) double cancelAmount,
     OrderTariffEntity? tariff,
     String? sendTime,

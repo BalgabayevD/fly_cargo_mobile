@@ -17,8 +17,6 @@ class AcceptOrderButton extends StatelessWidget {
       onPressed: () async {
         final time = await dialog.selectTime(context);
 
-        print('TTTIIIE');
-        print(time);
         if (time != null && context.mounted) {
           context.read<CourierAcceptOrderBloc>().add(
             CourierAcceptOrderAcceptEvent(orderId, time),

@@ -81,7 +81,8 @@ class CourierAcceptOrdersPage extends StatelessWidget {
             isBorder: true,
             actions: Column(
               children: [
-                AcceptOrderButton(orderId: state.order.id),
+                if (state.order.status == 'created')
+                  AcceptOrderButton(orderId: state.order.id),
                 BeSpace(size: .xl),
                 BeButton(
                   text: 'Открыть в 2Gis',

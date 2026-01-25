@@ -69,29 +69,6 @@ class CourierOpenOrdersScreen extends StatelessWidget {
 
                         OrderListTileColor color = .warning;
 
-                        String message = 'Ожидает оплаты';
-
-                        if (order.identifications.isNotEmpty) {
-                          final identification = order.identifications.first;
-                          if (identification.uuid != null) {
-                            message = 'Трековый номер ${identification.uuid}';
-                          }
-                        }
-
-                        if (order.isPaid) {
-                          if (['created'].contains(order.status)) {
-                            color = .warning;
-                          }
-
-                          if (['completed'].contains(order.status)) {
-                            color = .success;
-                          }
-
-                          if (['canceled'].contains(order.status)) {
-                            color = .danger;
-                          }
-                        }
-
                         return OrderListTile(
                           onTap: () {
                             context.push(
@@ -103,8 +80,10 @@ class CourierOpenOrdersScreen extends StatelessWidget {
                             'dd MMM yyyy',
                             'ru_RU',
                           ).format(created),
-                          message: message,
-                          statusLabel: 'Ожидает оплаты',
+                          message:
+                              '${order.fromCity?.name}, ${order.fromAddress}',
+                          statusLabel:
+                              'Свободный${order.isPaid ? '' : ', не оплочен'}',
                           color: color,
                           varinant: order.isPaid ? .flat : .bordered,
                         );

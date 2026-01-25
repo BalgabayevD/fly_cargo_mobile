@@ -71,7 +71,8 @@ class ClientOrdersPage extends StatelessWidget {
 
                         OrderListTileColor color = .warning;
 
-                        String message = 'Ожидает оплаты';
+                        String message = 'Без трекового номера';
+                        String statusLabel = '';
 
                         if (order.identifications.isNotEmpty) {
                           final identification = order.identifications.first;
@@ -80,18 +81,28 @@ class ClientOrdersPage extends StatelessWidget {
                           }
                         }
 
-                        if (order.isPaid) {
-                          if (['created'].contains(order.status)) {
-                            color = .warning;
-                          }
+                        if (['created'].contains(order.status)) {
+                          color = .warning;
+                          statusLabel = 'Ожидаем курьера';
+                        }
+                        if (['accepted'].contains(order.status)) {
+                          color = .success;
+                          statusLabel = 'На скалде';
+                        }
 
-                          if (['completed'].contains(order.status)) {
-                            color = .success;
-                          }
+                        if (['checked'].contains(order.status)) {
+                          color = .success;
+                          statusLabel = 'На скалде';
+                        }
 
-                          if (['canceled'].contains(order.status)) {
-                            color = .danger;
-                          }
+                        if (['completed'].contains(order.status)) {
+                          color = .success;
+                          statusLabel = 'Доставлен';
+                        }
+
+                        if (['canceled'].contains(order.status)) {
+                          color = .danger;
+                          statusLabel = 'Оплочен';
                         }
 
                         return OrderListTile(
@@ -104,7 +115,8 @@ class ClientOrdersPage extends StatelessWidget {
                             'ru_RU',
                           ).format(created),
                           message: message,
-                          statusLabel: 'Ожидает оплаты',
+                          statusLabel:
+                              '$statusLabel${order.isPaid ? '' : ', не оплочен'}',
                           color: color,
                           varinant: order.isPaid ? .flat : .bordered,
                         );
