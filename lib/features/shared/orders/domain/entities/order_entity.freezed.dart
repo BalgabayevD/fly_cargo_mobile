@@ -1772,7 +1772,8 @@ as double?,
 /// @nodoc
 mixin _$OrderEntity {
 
- int get id; String get createdAt; String get updatedAt; int get fromCityId; double get fromLatitude; double get fromLongitude; String get fromAddress; int get toCityId; double get toLatitude; double get toLongitude; String get toAddress; int get tariffId; bool get isFragile; bool get isDefect; double get volumetricWeight; double get weight; double get width; double get length; double get height; int get calculationId; bool get isPaid; String? get deletedAt; String? get status; String get fromApartment; String? get fromEntrance; String get fromFloor; String? get fromPhone; String? get fromName; String get toApartment; String? get toEntrance; String get toFloor; String? get toPhone; String? get toName; double get price; double get paidAmount; double get payAmount; bool get isCanCancel; int get cancelType; double get cancelAmount; OrderTariffEntity? get tariff; String? get sendTime; String? get courierArriveTime; int? get orderAccumulatorId; String get comment; String get description; String get category; List<String> get photos; List<String> get contentPhotos; List<String>? get defectPhotos; String get decideReason; String get decideDescription; OrderCityEntity? get fromCity; OrderCityEntity? get toCity; List<QrEntity>? get qrs; List<OrderIdentificationEntity> get identifications; List<OrderHistoryEntity> get histories;
+ int get id; String get createdAt; String get updatedAt; int get fromCityId; double get fromLatitude; double get fromLongitude; String get fromAddress; int get toCityId; double get toLatitude; double get toLongitude; String get toAddress; int get tariffId; bool get isFragile; bool get isDefect; double get volumetricWeight; double get weight; double get width; double get length; double get height; int get calculationId; bool get isPaid; String? get deletedAt; String? get status; String get fromApartment; String? get fromEntrance; String get fromFloor; String? get fromPhone; String? get fromName; String get toApartment; String? get toEntrance; String get toFloor; String? get toPhone; String? get toName; double get price; double get paidAmount; double get payAmount; bool get isCanCancel; int get cancelType;// 1 - бесплатно, 2 платно
+ double get cancelAmount; OrderTariffEntity? get tariff; String? get sendTime; String? get courierArriveTime; int? get orderAccumulatorId; String get comment; String get description; String get category; List<String> get photos; List<String> get contentPhotos; List<String>? get defectPhotos; String get decideReason; String get decideDescription; OrderCityEntity? get fromCity; OrderCityEntity? get toCity; List<QrEntity>? get qrs; List<OrderIdentificationEntity> get identifications; List<OrderHistoryEntity> get histories;
 /// Create a copy of OrderEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2092,6 +2093,7 @@ class _OrderEntity implements OrderEntity {
 @override@JsonKey() final  double payAmount;
 @override@JsonKey() final  bool isCanCancel;
 @override@JsonKey() final  int cancelType;
+// 1 - бесплатно, 2 платно
 @override@JsonKey() final  double cancelAmount;
 @override final  OrderTariffEntity? tariff;
 @override final  String? sendTime;

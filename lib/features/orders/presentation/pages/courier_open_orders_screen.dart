@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/chip.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/design_system/components/haptic.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
@@ -48,7 +49,7 @@ class CourierOpenOrdersScreen extends StatelessWidget {
                 context.read<CourierOpenOrdersBloc>().add(
                   CourierOpenOrdersLoadAllEvent(),
                 );
-                await Future.delayed(const Duration(seconds: 1));
+                await BeHaptic.onRefresh();
               },
               child: ListView(
                 children: [

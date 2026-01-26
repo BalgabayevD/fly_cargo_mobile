@@ -14,5 +14,5 @@ Future<void> main() async {
 
   await initializeDateFormatting('ru', null);
 
-  getIt<App>().start(SapsanoApp());
+  getIt<App>().startDynamic(SapsanoApp());
 }

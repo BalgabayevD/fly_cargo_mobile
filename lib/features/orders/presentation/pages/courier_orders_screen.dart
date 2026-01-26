@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/chip.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/design_system/components/haptic.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_orders_bloc.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_order_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -46,7 +48,7 @@ class CourierOrdersPage extends StatelessWidget {
                 context.read<CourierOrdersBloc>().add(
                   CourierOrdersLoadAllEvent(),
                 );
-                await Future.delayed(const Duration(seconds: 1));
+                await BeHaptic.onRefresh();
               },
               child: ListView(
                 children: [
@@ -102,7 +104,9 @@ class CourierOrdersPage extends StatelessWidget {
                         }
 
                         return OrderListTile(
-                          onTap: () {},
+                          onTap: () {
+                            context.push(CourierOrderScreen.location(order.id));
+                          },
                           title: 'Заказ ${order.id}',
                           trailing: DateFormat(
                             'dd MMM yyyy',
