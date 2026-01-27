@@ -1,4 +1,4 @@
-package kz.flycargo.app.fly_cargo
+package kz.sapsano.app
 
 import io.flutter.embedding.android.FlutterActivity
 

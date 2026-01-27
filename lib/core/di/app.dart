@@ -6,6 +6,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
+import 'package:fly_cargo/features/live/presentation/bloc/live_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -34,6 +35,12 @@ class App {
     runApp(
       MultiBlocProvider(
         providers: [
+          BlocProvider<LiveBloc>(
+            lazy: false,
+            create: (context) {
+              return getIt<LiveBloc>()..add(LiveStartEvent());
+            },
+          ),
           BlocProvider<AuthorizationBloc>(
             create: (_) =>
                 getIt<AuthorizationBloc>()..add(AuthorizationGetSessionEvent()),

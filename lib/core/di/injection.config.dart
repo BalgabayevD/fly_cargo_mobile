@@ -60,6 +60,14 @@ import 'package:fly_cargo/features/destination/domain/usecases/cities_use_case.d
     as _i542;
 import 'package:fly_cargo/features/destination/presentation/bloc/cities_bloc.dart'
     as _i435;
+import 'package:fly_cargo/features/live/data/repositories/live_repository.dart'
+    as _i381;
+import 'package:fly_cargo/features/live/domain/repositories/live_repository.dart'
+    as _i864;
+import 'package:fly_cargo/features/live/domain/usecase/live_use_case.dart'
+    as _i30;
+import 'package:fly_cargo/features/live/presentation/bloc/live_bloc.dart'
+    as _i128;
 import 'package:fly_cargo/features/orders/data/repositories/client_orders_persist_repository.dart'
     as _i630;
 import 'package:fly_cargo/features/orders/data/repositories/client_orders_rest_repository.dart'
@@ -172,6 +180,12 @@ extension GetItInjectableX on _i174.GetIt {
         configuration: gh<_i156.Configuration>(),
       ),
     );
+    gh.lazySingleton<_i864.LiveRepository>(
+      () => _i381.LiveRepositoryImpl(
+        requestable: gh<_i129.Requestable>(),
+        configuration: gh<_i156.Configuration>(),
+      ),
+    );
     gh.factory<_i860.PaymentRepository>(
       () => _i759.PaymentRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
@@ -227,6 +241,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i448.CourierOrdersPersistRepository>(),
       ),
     );
+    gh.factory<_i30.LiveUseCase>(
+      () => _i30.LiveUseCase(gh<_i864.LiveRepository>()),
+    );
     gh.factory<_i100.TariffsUseCase>(
       () => _i100.TariffsUseCase(
         gh<_i672.TariffsRestRepository>(),
@@ -257,6 +274,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i266.TariffsBloc>(
       () => _i266.TariffsBloc(gh<_i100.TariffsUseCase>()),
     );
+    gh.factory<_i128.LiveBloc>(() => _i128.LiveBloc(gh<_i30.LiveUseCase>()));
     gh.factory<_i593.PaymentCardsBloc>(
       () => _i593.PaymentCardsBloc(gh<_i863.PaymentUseCase>()),
     );
