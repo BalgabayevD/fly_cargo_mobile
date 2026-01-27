@@ -23,7 +23,7 @@ class ClientOrderPayDialog {
     int orderId,
     double payAmount,
   ) {
-    ValueNotifier<int> notifier = ValueNotifier(
+    ValueNotifier<int> notifier = ValueNotifier<int>(
       cards.isNotEmpty ? cards.first.id : 0,
     );
 
@@ -52,6 +52,7 @@ class ClientOrderPayDialog {
                             return CheckListTile(
                               image: Image.network(
                                 card.image,
+                                fit: .cover,
                               ),
                               title: card.mask,
                               description: '${card.type} ${card.bank}',
@@ -62,8 +63,11 @@ class ClientOrderPayDialog {
                             );
                           }).toList(),
                         ),
+
                       Spacer(),
+
                       BeSpace(size: .xxl),
+
                       if (cards.isNotEmpty)
                         BeButton(
                           text: 'Оплатить $payAmount тг',
