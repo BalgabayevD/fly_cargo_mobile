@@ -185,7 +185,10 @@ class CheckListTile extends StatelessWidget {
                   border: Border.all(width: 1, color: BeColors.border),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: image!,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: image!,
+                ),
               ),
 
             if (child == null)
