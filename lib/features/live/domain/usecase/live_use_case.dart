@@ -7,9 +7,9 @@ final class LiveUseCase {
 
   const LiveUseCase(this.live);
 
-  Future<bool> focus() async {
+  Future<bool> logLive() async {
     try {
-      return await live.focus();
+      return await live.logLive();
     } catch (e) {
       return false;
     }

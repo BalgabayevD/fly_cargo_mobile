@@ -26,7 +26,7 @@ class LiveBloc extends Bloc<LiveEvent, LiveState> {
       );
 
       _tickerSubscription = tick.listen((duration) {
-        live.focus();
+        live.logLive();
       });
     });
   }

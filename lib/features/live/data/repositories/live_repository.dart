@@ -16,9 +16,9 @@ class LiveRepositoryImpl implements LiveRepository {
   String get _ => configuration.environmentVariables.gatewayBaseUrl;
 
   @override
-  Future<bool> focus() async {
+  Future<bool> logLive() async {
     try {
-      final response = await requestable.dio.get('$_/focus');
+      final response = await requestable.dio.get('$_/live');
       return response.data['data']['success'] as bool;
     } catch (e) {
       rethrow;

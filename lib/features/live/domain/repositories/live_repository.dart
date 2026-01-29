@@ -1,3 +1,3 @@
 abstract interface class LiveRepository {
-  Future<bool> focus();
+  Future<bool> logLive();
 }
