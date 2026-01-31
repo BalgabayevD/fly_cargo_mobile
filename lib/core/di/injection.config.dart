@@ -16,6 +16,14 @@ import 'package:fly_cargo/core/di/log_level.dart' as _i827;
 import 'package:fly_cargo/core/di/package.dart' as _i51;
 import 'package:fly_cargo/core/di/requestable.dart' as _i129;
 import 'package:fly_cargo/core/l10n/locale_cubit.dart' as _i596;
+import 'package:fly_cargo/features/accumulator/data/repositories/accumulator_rest_repository.dart'
+    as _i539;
+import 'package:fly_cargo/features/accumulator/domain/repositories/accumulator_rest_repository.dart'
+    as _i401;
+import 'package:fly_cargo/features/accumulator/presentation/bloc/accumulator_list_bloc.dart'
+    as _i740;
+import 'package:fly_cargo/features/accumulator/presentation/bloc/accumulator_scan_bloc.dart'
+    as _i535;
 import 'package:fly_cargo/features/auth/data/repositories/authorization_repository.dart'
     as _i652;
 import 'package:fly_cargo/features/auth/domain/repositories/authorization_repository.dart'
@@ -221,6 +229,12 @@ extension GetItInjectableX on _i174.GetIt {
         requestable: gh<_i129.Requestable>(),
       ),
     );
+    gh.factory<_i401.AccumulatorRestRepository>(
+      () => _i539.AccumulatorRestRepositoryImpl(
+        gh<_i129.Requestable>(),
+        gh<_i156.Configuration>(),
+      ),
+    );
     gh.factory<_i560.ClientOrdersUseCase>(
       () => _i560.ClientOrdersUseCase(
         gh<_i653.ClientOrdersRestRepository>(),
@@ -238,6 +252,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i129.Requestable>(),
         gh<_i156.Configuration>(),
       ),
+    );
+    gh.factory<_i740.AccumulatorListBloc>(
+      () => _i740.AccumulatorListBloc(gh<_i401.AccumulatorRestRepository>()),
+    );
+    gh.factory<_i535.AccumulatorScanBloc>(
+      () => _i535.AccumulatorScanBloc(gh<_i401.AccumulatorRestRepository>()),
     );
     gh.factory<_i253.CourierOrdersUseCase>(
       () => _i253.CourierOrdersUseCase(
