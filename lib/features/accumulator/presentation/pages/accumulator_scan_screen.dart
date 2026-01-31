@@ -82,7 +82,7 @@ class AccumulatorScanScreen extends StatelessWidget {
       if (deeplink is OrderAccumulatorIdentificationLink) {
         context.read<AccumulatorScanBloc>().add(
               AccumulatorScanIdentificationEvent(
-                deeplink.accumulatorId,
+                deeplink.accumulatorId.toString(),
               ),
             );
       }

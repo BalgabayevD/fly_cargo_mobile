@@ -6,7 +6,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/accumulator/domain/entities/accumulator_entity.dart';
 import 'package:fly_cargo/features/accumulator/domain/repositories/accumulator_rest_repository.dart';
 import 'package:fly_cargo/features/accumulator/presentation/widgets/accumulator_order_card_widget.dart';
-import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_order_detail_screen.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_order_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AccumulatorOrdersScreen extends StatefulWidget {
@@ -19,8 +19,8 @@ class AccumulatorOrdersScreen extends StatefulWidget {
       Uri(path: '/courier/accumulators/$id').toString();
 
   const AccumulatorOrdersScreen({
-    required this.accumulatorId,
     super.key,
+    required this.accumulatorId,
     this.accumulator,
   });
 
@@ -32,8 +32,7 @@ class AccumulatorOrdersScreen extends StatefulWidget {
       path: path,
       builder: (context, state) {
         final accumulatorId = int.parse(state.pathParameters['id'] ?? '0');
-        final extra = state.extra;
-        final accumulator = extra is AccumulatorEntity ? extra : null;
+        final accumulator = state.extra as AccumulatorEntity?;
         return AccumulatorOrdersScreen(
           accumulatorId: accumulatorId,
           accumulator: accumulator,
@@ -153,19 +152,18 @@ class _AccumulatorOrdersScreenState extends State<AccumulatorOrdersScreen> {
     return RefreshIndicator(
       onRefresh: _loadAccumulator,
       child: ListView.separated(
-        itemCount: _accumulator!.orders.length + 1,
-        separatorBuilder: (context, index) {
+        itemCount: _accumulator!.orders.length,
+        separatorBuilder: (_, __) => const BeSpace(size: .md),
+        itemBuilder: (context, index) {
           final order = _accumulator!.orders[index];
           return AccumulatorOrderCardWidget(
             order: order,
             onTap: () => context.push(
-              AccumulatorOrderDetailScreen.location(order.id),
+              CourierOrderScreen.location(order.id),
               extra: order,
             ),
           );
         },
-
-        itemBuilder: (context, index) => const BeSpace(size: .md),
       ),
     );
   }
