@@ -12,8 +12,6 @@ sealed class CityModel with _$CityModel {
     required String updatedAt,
     int? id,
     String? deletedAt,
-    List<dynamic>? RoutesFrom,
-    List<dynamic>? RoutesTo,
   }) = _CityModel;
 
   factory CityModel.fromJson(Map<String, dynamic> json) =>

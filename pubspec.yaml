@@ -50,6 +50,7 @@ dependencies:
   bloc_test: ^10.0.0
   sentry_flutter: ^9.10.0
   sentry_dio: ^9.10.0
+  uuid: ^4.5.2
 
 dev_dependencies:
   flutter_test:

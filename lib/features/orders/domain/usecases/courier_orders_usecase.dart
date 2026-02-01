@@ -1,6 +1,8 @@
 import 'package:fly_cargo/features/orders/domain/repositories/courier_orders_persist_repository.dart';
 import 'package:fly_cargo/features/orders/domain/repositories/courier_orders_rest_repository.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
+import 'package:fly_cargo/features/submit_order/domain/entity/decline_order_entity.dart';
+import 'package:fly_cargo/features/submit_order/domain/entity/submit_order_entity.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -38,15 +40,42 @@ class CourierOrdersUseCase {
     return await courierOrdersRest.getOrderByIdentification(identification);
   }
 
-  Future<OrderEntity?> acceptOrder(
+  Future<OrderEntity?> accept(
     int orderId,
     int courierArriveTime,
   ) async {
     try {
-      await courierOrdersRest.acceptOrder(orderId, courierArriveTime);
+      await courierOrdersRest.accept(orderId, courierArriveTime);
       return getOrderById(orderId);
     } catch (_) {
       return null;
+    }
+  }
+
+  Future<OrderEntity?> submit(SubmitOrderEntity data) async {
+    try {
+      await courierOrdersRest.submit(data);
+      return getOrderById(data.orderId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<OrderEntity?> decline(DeclineOrderEntity data) async {
+    try {
+      await courierOrdersRest.decline(data);
+      return getOrderById(data.orderId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<bool> identify(int orderId, String identification) async {
+    try {
+      await courierOrdersRest.identify(orderId, identification);
+      return true;
+    } catch (_) {
+      return false;
     }
   }
 }

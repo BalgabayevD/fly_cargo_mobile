@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CookieJarStorage implements Storage {
   late final SharedPreferences sharedPreferences;
 
-  final _prefix = "cookie_jar_store_";
+  final _prefix = 'cookie_jar_store_';
 
   CookieJarStorage(this.sharedPreferences);
 

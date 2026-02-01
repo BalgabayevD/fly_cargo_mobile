@@ -22,6 +22,8 @@ import 'package:fly_cargo/features/auth/domain/repositories/authorization_reposi
     as _i498;
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart'
     as _i550;
+import 'package:fly_cargo/features/courier_identify_order/presentation/bloc/courier_identify_order_bloc.dart'
+    as _i264;
 import 'package:fly_cargo/features/create_order/data/repository/create_order_repository.dart'
     as _i203;
 import 'package:fly_cargo/features/create_order/data/repository/order_photos_repository.dart'
@@ -108,6 +110,8 @@ import 'package:fly_cargo/features/payments/domain/usecases/payment_usecase.dart
     as _i863;
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart'
     as _i593;
+import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit_order_bloc.dart'
+    as _i182;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -284,6 +288,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i542.CitiesUseCase>(),
       ),
     );
+    gh.factory<_i264.CourierIdentifyOrderBloc>(
+      () => _i264.CourierIdentifyOrderBloc(gh<_i253.CourierOrdersUseCase>()),
+    );
     gh.factory<_i306.CourierAcceptOrderBloc>(
       () => _i306.CourierAcceptOrderBloc(gh<_i253.CourierOrdersUseCase>()),
     );
@@ -295,6 +302,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i537.CourierOrdersBloc>(
       () => _i537.CourierOrdersBloc(gh<_i253.CourierOrdersUseCase>()),
+    );
+    gh.factory<_i182.CourierSubmitOrderBloc>(
+      () => _i182.CourierSubmitOrderBloc(gh<_i253.CourierOrdersUseCase>()),
     );
     gh.factory<_i435.CitiesBloc>(
       () => _i435.CitiesBloc(gh<_i542.CitiesUseCase>()),

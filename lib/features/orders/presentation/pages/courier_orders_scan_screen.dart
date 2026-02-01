@@ -42,8 +42,7 @@ class CourierOrdersScanScreen extends StatelessWidget {
                 final deeplink = parser.parse(result.barcodes.first.rawValue!);
 
                 if (deeplink is OrderIdentificationLink) {
-                  print('deeplink is OrderIdentificationLink');
-                  print(deeplink.identification);
+                  // print(deeplink.identification);
                 }
               }
             },

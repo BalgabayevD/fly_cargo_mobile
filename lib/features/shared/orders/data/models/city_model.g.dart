@@ -13,8 +13,6 @@ _CityModel _$CityModelFromJson(Map<String, dynamic> json) => _CityModel(
   updatedAt: json['updatedAt'] as String,
   id: (json['id'] as num?)?.toInt(),
   deletedAt: json['deletedAt'] as String?,
-  RoutesFrom: json['RoutesFrom'] as List<dynamic>?,
-  RoutesTo: json['RoutesTo'] as List<dynamic>?,
 );
 
 Map<String, dynamic> _$CityModelToJson(_CityModel instance) =>
@@ -25,6 +23,4 @@ Map<String, dynamic> _$CityModelToJson(_CityModel instance) =>
       'updatedAt': instance.updatedAt,
       'id': instance.id,
       'deletedAt': instance.deletedAt,
-      'RoutesFrom': instance.RoutesFrom,
-      'RoutesTo': instance.RoutesTo,
     };

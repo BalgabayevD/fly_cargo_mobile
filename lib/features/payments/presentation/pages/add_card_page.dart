@@ -53,7 +53,7 @@ class AddCardPage extends StatelessWidget {
 
             if (deeplink is OrderPaymentLink) {
               // Доделать вывод модалки и обноление bloc
-              print(deeplink.status == PaymentStatus.success);
+              // print(deeplink.status == PaymentStatus.success);
             }
           },
           onWebResourceError: (WebResourceError error) {
