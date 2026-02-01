@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/router/courier_scaffold_shell.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
 import 'package:fly_cargo/core/router/main_scaffold_shell.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_list_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_order_detail_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_orders_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
@@ -18,9 +22,6 @@ import 'package:fly_cargo/features/orders/presentation/pages/courier_accept_orde
 import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_order_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan_screen.dart';
-import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
-import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_list_screen.dart';
-import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_orders_screen.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/payment_cards_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
@@ -198,6 +199,7 @@ GoRouter createRouter(
       AccumulatorScanScreen.route(),
       AccumulatorListScreen.route(),
       AccumulatorOrdersScreen.route(),
+      AccumulatorOrderDetailScreen.route(),
       CourierAcceptOrdersPage.route(),
       CourierOrderScreen.route(),
       CourierSubmitOrdersScreen.route(),
