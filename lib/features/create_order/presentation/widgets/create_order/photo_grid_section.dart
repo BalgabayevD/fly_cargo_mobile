@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
-import 'package:fly_cargo/features/create_order/presentation/bloc/create_orders_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/add_photo.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/edit_photo.dart';
+import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit_order_bloc.dart';
 
 class PhotoGridSection extends StatelessWidget {
   const PhotoGridSection({super.key});
@@ -16,8 +16,10 @@ class PhotoGridSection extends StatelessWidget {
       child: BlocConsumer<PhotosBloc, PhotosState>(
         listener: (BuildContext context, PhotosState state) {
           if (state is PhotosPickerState) {
-            context.read<CreateOrdersBloc>().add(
-              AddPhotoOrdersCreateEvent(state.photos),
+            final field = UpdateOrdersDefectPhotosField(state.photos);
+
+            context.read<CourierSubmitOrderBloc>().add(
+              CourierSubmitOrderUpdateEvent(field),
             );
           }
         },
