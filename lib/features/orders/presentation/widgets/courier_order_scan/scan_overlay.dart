@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:heroicons/heroicons.dart';
+
+enum QRScannerOverlayVariant {
+  success,
+  failure,
+  idle,
+  loading,
+}
 
 class QRScannerOverlay extends StatelessWidget {
-  const QRScannerOverlay({super.key});
+  final Color finderColor;
+  final QRScannerOverlayVariant variant;
+
+  const QRScannerOverlay({
+    this.finderColor = BeColors.primary,
+    this.variant = .idle,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +50,41 @@ class QRScannerOverlay extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  width: 2,
-                  color: BeColors.danger,
+                  width: 5,
+                  color: finderColor,
                 ),
                 borderRadius: BorderRadius.circular(18),
               ),
             ),
           ),
         ),
+
+        if (variant == .success)
+          Center(
+            child: HeroIcon(
+              HeroIcons.checkCircle,
+              color: BeColors.success,
+              size: 56,
+              style: .solid,
+            ),
+          ),
+
+        if (variant == .failure)
+          Center(
+            child: HeroIcon(
+              HeroIcons.xCircle,
+              color: BeColors.danger,
+              size: 56,
+              style: .solid,
+            ),
+          ),
+
+        if (variant == .loading)
+          Center(
+            child: CircularProgressIndicator(
+              color: finderColor,
+            ),
+          ),
       ],
     );
   }

@@ -35,7 +35,7 @@ class CourierAcceptOrderBloc
     Emitter<CourierAcceptOrderState> emit,
   ) async {
     emit(CourierAcceptOrderLoadingState(event.orderId));
-    final order = await courierOrders.acceptOrder(
+    final order = await courierOrders.accept(
       event.orderId,
       event.courierArriveTime,
     );

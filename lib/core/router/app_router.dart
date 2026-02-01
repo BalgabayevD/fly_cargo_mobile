@@ -10,6 +10,7 @@ import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dar
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
+import 'package:fly_cargo/features/courier_identify_order/presentation/screen/courier_order_identify_screen.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_screen.dart';
 import 'package:fly_cargo/features/home/presentation/screen/courier_home_screen.dart';
 import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
@@ -30,6 +31,7 @@ import 'package:fly_cargo/features/profile/presentation/pages/profile_page.dart'
 import 'package:fly_cargo/features/profile/presentation/pages/settings_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/terms_of_service_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/transportation_rules_page.dart';
+import 'package:fly_cargo/features/submit_order/presentation/pages/courier_submit_order_screen.dart';
 import 'package:fly_cargo/features/ui_kit/presentation/screen/ui_kit_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -187,6 +189,8 @@ GoRouter createRouter(
       AccumulatorOrderDetailScreen.route(),
       CourierAcceptOrdersPage.route(),
       CourierOrderScreen.route(),
+      CourierSubmitOrdersScreen.route(),
+      CourierOrderIdentifyScreen.route(),
     ],
   );
 }

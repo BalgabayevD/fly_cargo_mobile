@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
-import 'package:fly_cargo/core/design_system/components/timeline-thumb.dart';
+import 'package:fly_cargo/core/design_system/components/timeline_thumb.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BeTimeline extends StatelessWidget {

@@ -9,10 +9,12 @@ import 'package:fly_cargo/core/design_system/components/timeline.dart';
 import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/features/courier_identify_order/presentation/screen/courier_order_identify_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/client_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
+import 'package:fly_cargo/features/submit_order/presentation/pages/courier_submit_order_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -80,6 +82,9 @@ class CourierOrderScreen extends StatelessWidget {
               text: 'Принять',
               variant: .solid,
               color: .primary,
+              onPressed: () => context.push(
+                CourierSubmitOrdersScreen.location(state.order.id),
+              ),
             ),
             child: RefreshIndicator(
               onRefresh: () async {
@@ -139,7 +144,9 @@ class CourierOrderScreen extends StatelessWidget {
                   BeSpace(size: .xl),
                   BeButton(
                     text: 'Привязать QR',
-                    onPressed: () {},
+                    onPressed: () => context.push(
+                      CourierOrderIdentifyScreen.location(state.order.id),
+                    ),
                     variant: .flat,
                     color: .primary,
                   ),
