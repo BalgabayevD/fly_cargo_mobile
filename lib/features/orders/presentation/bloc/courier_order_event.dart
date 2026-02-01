@@ -15,3 +15,16 @@ class CourierOrderLoadIdentificationEvent extends CourierOrderEvent {
 
   const CourierOrderLoadIdentificationEvent(this.identification);
 }
+
+class CourierOrderDeliverToReceiverEvent extends CourierOrderEvent {
+  final int orderId;
+
+  const CourierOrderDeliverToReceiverEvent(this.orderId);
+}
+
+class CourierOrderCompleteEvent extends CourierOrderEvent {
+  final int orderId;
+  final String code;
+
+  const CourierOrderCompleteEvent(this.orderId, this.code);
+}

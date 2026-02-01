@@ -14,6 +14,8 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
   CourierOrderBloc(this.courierOrders) : super(CourierOrderInitialState()) {
     on<CourierOrderLoadEvent>(_loadOrder);
     on<CourierOrderLoadIdentificationEvent>(_loadOrderIdentification);
+    on<CourierOrderDeliverToReceiverEvent>(_deliverToReceiver);
+    on<CourierOrderCompleteEvent>(_completeOrder);
   }
 
   Future<void> _loadOrder(
@@ -41,6 +43,48 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
       emit(CourierOrderLoadedState(order: order));
     } else {
       emit(CourierOrderInitialState());
+    }
+  }
+
+  Future<void> _deliverToReceiver(
+    CourierOrderDeliverToReceiverEvent event,
+    Emitter<CourierOrderState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is CourierOrderLoadedState) {
+      emit(CourierOrderActionLoadingState(order: currentState.order));
+    }
+    final order = await courierOrders.deliverToReceiver(event.orderId);
+    if (order != null) {
+      emit(CourierOrderLoadedState(order: order));
+    } else {
+      if (currentState is CourierOrderLoadedState) {
+        emit(CourierOrderActionErrorState(
+          order: currentState.order,
+          message: 'Ошибка при смене статуса',
+        ));
+      }
+    }
+  }
+
+  Future<void> _completeOrder(
+    CourierOrderCompleteEvent event,
+    Emitter<CourierOrderState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is CourierOrderLoadedState) {
+      emit(CourierOrderActionLoadingState(order: currentState.order));
+    }
+    final order = await courierOrders.completeOrder(event.orderId, event.code);
+    if (order != null) {
+      emit(CourierOrderLoadedState(order: order));
+    } else {
+      if (currentState is CourierOrderLoadedState) {
+        emit(CourierOrderActionErrorState(
+          order: currentState.order,
+          message: 'Неверный код получения',
+        ));
+      }
     }
   }
 }

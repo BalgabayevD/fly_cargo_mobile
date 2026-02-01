@@ -7,4 +7,8 @@ abstract class CourierOrdersRestRepository {
   Future<OrderEntity?> getOrderByIdentification(String identification);
 
   Future<bool?> acceptOrder(int orderId, int courierArriveTime);
+
+  Future<bool> deliverToReceiver(int orderId);
+
+  Future<bool> completeOrder(int orderId, String code);
 }
