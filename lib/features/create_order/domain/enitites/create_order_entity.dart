@@ -11,6 +11,7 @@ abstract class CreateOrderEntity with _$CreateOrderEntity {
     @Default('') String description,
     @Default(false) bool isDefect,
     @Default(false) bool isFragile,
+    @Default(false) bool isPayReceiver,
     @Default(<String>[]) List<String> photos,
     @Default(<String>[]) List<String> contentPhotos,
     @Default(0) int tariffId,

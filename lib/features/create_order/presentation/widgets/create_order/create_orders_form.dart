@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/features/create_order/data/models/create_order_description.dart';
+import 'package:fly_cargo/features/create_order/data/models/create_order_pay_side.dart';
 import 'package:fly_cargo/features/create_order/data/models/create_order_weight.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/create_orders_submit.dart';
 import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
@@ -31,6 +32,8 @@ class CreateOrdersForm extends StatelessWidget {
         CreateOrderWeight(),
         BeSpace(size: .md),
         CreateOrderDescription(),
+        BeSpace(size: .md),
+        CreateOrderPaySide(),
         BeSpace(size: .xxxl),
         CreateOrdersSubmitButton(),
         BeSpace(size: .xxxl),

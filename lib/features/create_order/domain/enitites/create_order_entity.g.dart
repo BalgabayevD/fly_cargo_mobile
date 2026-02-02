@@ -12,6 +12,7 @@ _CreateOrderEntity _$CreateOrderEntityFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String? ?? '',
       isDefect: json['isDefect'] as bool? ?? false,
       isFragile: json['isFragile'] as bool? ?? false,
+      isPayReceiver: json['isPayReceiver'] as bool? ?? false,
       photos:
           (json['photos'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -53,6 +54,7 @@ Map<String, dynamic> _$CreateOrderEntityToJson(_CreateOrderEntity instance) =>
       'description': instance.description,
       'isDefect': instance.isDefect,
       'isFragile': instance.isFragile,
+      'isPayReceiver': instance.isPayReceiver,
       'photos': instance.photos,
       'contentPhotos': instance.contentPhotos,
       'tariffId': instance.tariffId,

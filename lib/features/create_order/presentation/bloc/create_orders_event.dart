@@ -96,3 +96,9 @@ class UpdateOrdersCreateEvent extends CreateOrdersEvent {
 
   const UpdateOrdersCreateEvent(this.field);
 }
+
+class UpdateOrdersPayReceiverField extends UpdateOrdersField {
+  final bool isPayReceiver;
+
+  const UpdateOrdersPayReceiverField(this.isPayReceiver);
+}
