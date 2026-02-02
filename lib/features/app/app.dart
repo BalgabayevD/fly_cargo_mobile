@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/core/di/package.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
@@ -27,6 +29,7 @@ class _SapsanoAppState extends State<SapsanoApp> {
     final authorization = context.read<AuthorizationBloc>();
 
     _router = createRouter(
+      getIt<Package>().analyticsObserver,
       authorization,
       (authorization.state as InitialAuthorizationState).initialPath,
     );
