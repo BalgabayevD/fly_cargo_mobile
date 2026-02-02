@@ -1,4 +1,10 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/di/firebase_options.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -18,37 +24,59 @@ class Package {
   final String build;
   final String lanugage;
   final SharedPreferences sharedPreferences;
-  // final FirebaseApp firebaseApp;
-  // final FirebaseAppCheck firebaseAppCheck;
+  final FirebaseApp firebaseApp;
+  final FirebaseAppCheck firebaseAppCheck;
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver analyticsObserver;
 
   const Package({
     required this.build,
     required this.version,
     required this.lanugage,
     required this.sharedPreferences,
-    // required this.firebaseApp,
-    // required this.firebaseAppCheck,
+    required this.firebaseApp,
+    required this.firebaseAppCheck,
+    required this.analytics,
+    required this.analyticsObserver,
   });
 
   static Future<Package> fromEnvironment() async {
-    // final firebaseApp = await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
-    //
-    // final firebaseAppCheck = FirebaseAppCheck.instance;
+    final firebaseApp = await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-    // const debugToken = String.fromEnvironment('FirebaseAppCheck');
+    final firebaseAppCheck = FirebaseAppCheck.instance;
 
-    // await firebaseAppCheck.activate(
-    //   providerAndroid: debugToken.isEmpty
-    //       ? const AndroidPlayIntegrityProvider()
-    //       : const AndroidDebugProvider(debugToken: debugToken),
-    // );
+    const debugToken = String.fromEnvironment('FirebaseAppCheck');
 
-    // firebaseAppCheck.setTokenAutoRefreshEnabled(true);
+    if (debugToken.isEmpty) {
+      await firebaseAppCheck.activate(
+        providerAndroid: const AndroidPlayIntegrityProvider(),
+        providerApple: const AppleDeviceCheckProvider(),
+      );
+    } else {
+      await firebaseAppCheck.activate(
+        providerAndroid: const AndroidDebugProvider(debugToken: debugToken),
+        providerApple: const AppleDebugProvider(debugToken: debugToken),
+      );
+    }
+
+    await firebaseAppCheck.setTokenAutoRefreshEnabled(true);
+
+    final analytics = FirebaseAnalytics.instance;
+    final analyticsObserver = FirebaseAnalyticsObserver(analytics: analytics);
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    };
+
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
 
     final language = sharedPreferences.getString('app-language') ?? 'ru_KK';
 
@@ -60,8 +88,10 @@ class Package {
       version: packageInfo.version,
       build: packageInfo.buildNumber,
       sharedPreferences: sharedPreferences,
-      // firebaseApp: firebaseApp,
-      // firebaseAppCheck: firebaseAppCheck,
+      firebaseApp: firebaseApp,
+      firebaseAppCheck: firebaseAppCheck,
+      analytics: analytics,
+      analyticsObserver: analyticsObserver,
     );
   }
 

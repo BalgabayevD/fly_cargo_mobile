@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/router/courier_scaffold_shell.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
@@ -77,12 +78,14 @@ final GlobalKey<NavigatorState> courierSettingsNavigatorKey =
     GlobalKey<NavigatorState>();
 
 GoRouter createRouter(
+  FirebaseAnalyticsObserver analyticsObserver,
   AuthorizationBloc authorizationBloc,
   String initialLocation,
 ) {
   return GoRouter(
     navigatorKey: _rootNavigator,
     initialLocation: initialLocation,
+    observers: [analyticsObserver],
     refreshListenable: GoRouterRefreshStream(authorizationBloc.stream),
     redirect: (context, state) {
       final authorizationState = authorizationBloc.state;

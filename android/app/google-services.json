@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "192475246578",
+    "project_id": "sapsano-77a69",
+    "storage_bucket": "sapsano-77a69.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192475246578:android:3c110ab87f2d7d1630456b",
+        "android_client_info": {
+          "package_name": "kz.sapsano.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsD3eobAwLiTqbQwRzc9Ir5KuwkBFs6sw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192475246578:android:2440af64e576abb430456b",
+        "android_client_info": {
+          "package_name": "kz.sapsanp.tsd.sapsano_tsd_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsD3eobAwLiTqbQwRzc9Ir5KuwkBFs6sw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
