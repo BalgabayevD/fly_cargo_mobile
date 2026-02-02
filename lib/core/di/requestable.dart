@@ -83,22 +83,22 @@ class Requestable {
       ),
     );
 
-    // final appCheckToken = await configuration.package.firebaseAppCheck
-    //     .getToken()
-    //     .onError((_, __) {
-    //       return null;
-    //     });
+    final appCheckToken = await configuration.package.firebaseAppCheck
+        .getToken()
+        .onError((_, __) {
+          return null;
+        });
 
-    // if (appCheckToken != null) {
-    //   dio.options.headers['x-app-check'] = appCheckToken;
-    // }
-    // configuration.package.firebaseAppCheck.onTokenChange.listen((
-    //   String? appCheckToken,
-    // ) {
-    //   if (appCheckToken != null) {
-    //     dio.options.headers['x-app-check'] = appCheckToken;
-    //   }
-    // });
+    if (appCheckToken != null) {
+      dio.options.headers['x-app-check'] = appCheckToken;
+    }
+    configuration.package.firebaseAppCheck.onTokenChange.listen((
+      String? appCheckToken,
+    ) {
+      if (appCheckToken != null) {
+        dio.options.headers['x-app-check'] = appCheckToken;
+      }
+    });
 
     return Requestable(dio);
   }

@@ -1,0 +1,69 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@2.4.0
+  flutter: circleci/flutter@3.0.0
+
+jobs:
+  build:
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:latest
+    working_directory: ~/sapsano_tsd_app
+
+    #    environment:
+    #      FLAVOR: "prod"
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - pub-deps-{{ checksum "pubspec.yaml" }}
+            - pub-deps-
+
+      - run:
+          name: Prepare pub cache
+          command: mkdir -p ~/.pub-cache
+
+      - run:
+          name: Install dependencies
+          command: flutter pub get
+
+      - save_cache:
+          paths:
+            - ~/.pub-cache
+          key: pub-deps-{{ checksum "pubspec.yaml" }}
+
+      - restore_cache:
+          keys:
+            - gradle-cache-{{ checksum "android/build.gradle.kts" }}
+            - gradle-cache-
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-cache-{{ checksum "android/build.gradle.kts" }}
+
+      - run:
+          name: Build APK
+          command: |
+            flutter build apk \
+              --dart-define=AuthorizationBaseUrl=$AuthorizationBaseUrl \
+              --dart-define=OrderBaseUrl=$OrderBaseUrl \
+              --dart-define=GatewayBaseUrl=$GatewayBaseUrl \
+              --dart-define=FirebaseAppCheck=$FirebaseAppCheck \
+              --release
+
+      #      - persist_to_workspace:
+      #        root: .
+      #        paths:
+      #            - build/app/outputs/flutter-apk/app-release.apk
+
+      - store_artifacts:
+          path: build/app/outputs/flutter-apk/app-release.apk
+          destination: app-release.apk
+
+workflows:
+  build_and_store:
+    jobs:
+      - build
