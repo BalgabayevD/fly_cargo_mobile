@@ -643,3 +643,68 @@ class OrderListTile extends StatelessWidget {
     );
   }
 }
+
+class BeSwitchListTile extends StatelessWidget {
+  final void Function(bool value)? onTap;
+  final String? title;
+  final String? description;
+  final bool isSelected;
+
+  const BeSwitchListTile({
+    this.onTap,
+    this.title,
+    this.description,
+    this.isSelected = false,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseListTile(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      child: Row(
+        crossAxisAlignment: .center,
+        spacing: 16,
+        children: [
+          Expanded(
+            child: Column(
+              spacing: 3,
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .start,
+              children: [
+                if (title != null)
+                  Text(
+                    title!,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 17,
+                      height: 1,
+                      fontWeight: .w500,
+                      color: BeColors.surface5,
+                    ),
+                  ),
+                if (description != null)
+                  Text(
+                    description!,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 13,
+                      height: 1,
+                      color: BeColors.surface4,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+
+          Switch(
+            value: isSelected,
+            onChanged: (value) {
+              if (onTap != null) {
+                onTap!(value);
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}

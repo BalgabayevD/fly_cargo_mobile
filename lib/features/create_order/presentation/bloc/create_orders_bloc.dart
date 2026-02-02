@@ -161,6 +161,16 @@ class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
       emit(state.copyWith(data: data, errors: errors));
     }
 
+    if (event.field is UpdateOrdersPayReceiverField) {
+      final field = event.field as UpdateOrdersPayReceiverField;
+
+      final data = state.data.copyWith(
+        isPayReceiver: field.isPayReceiver,
+      );
+
+      emit(state.copyWith(data: data));
+    }
+
     if (event.field is UpdateOrdersLocationField) {
       Map<String, String> errors = {...state.errors};
       errors.remove('fromCityId');
