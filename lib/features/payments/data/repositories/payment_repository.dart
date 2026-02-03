@@ -45,6 +45,20 @@ class PaymentRepositoryImpl implements PaymentRepository {
   }
 
   @override
+  Future<bool> deleteCard(int cardId) async {
+    try {
+      final response = await requestable.dio.delete(
+        '$_/orders/payments/cards',
+        data: {'cardId': cardId},
+      );
+
+      return response.data['success'] as bool;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<bool> payOrder(int paymentCardId, int orderId) async {
     try {
       final response = await requestable.dio.post(

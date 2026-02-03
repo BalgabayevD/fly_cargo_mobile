@@ -7,6 +7,7 @@ import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
+import 'package:fly_cargo/features/payments/presentation/widgets/delete_card_bottom_sheet.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/payment_card_tile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,7 +55,7 @@ class PaymentCardsPage extends StatelessWidget {
               Expanded(
                 child: state.cards.isEmpty
                     ? _EmptyState(onAddCard: () => _onAddCard(context, bloc))
-                    : _CardsList(cards: state.cards),
+                    : _CardsList(cards: state.cards, bloc: bloc),
               ),
               if (state.cards.isNotEmpty)
                 _AddCardButton(onPressed: () => _onAddCard(context, bloc)),
@@ -68,8 +69,16 @@ class PaymentCardsPage extends StatelessWidget {
 
 class _CardsList extends StatelessWidget {
   final List cards;
+  final PaymentCardsBloc bloc;
 
-  const _CardsList({required this.cards});
+  const _CardsList({required this.cards, required this.bloc});
+
+  Future<void> _onCardTap(BuildContext context, card) async {
+    final shouldDelete = await DeleteCardBottomSheet.show(context, card);
+    if (shouldDelete == true) {
+      bloc.add(PaymentCardsDeleteEvent(card.id));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +87,11 @@ class _CardsList extends StatelessWidget {
       itemCount: cards.length,
       separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
       itemBuilder: (context, index) {
-        return PaymentCardTile(card: cards[index]);
+        final card = cards[index];
+        return PaymentCardTile(
+          card: card,
+          onTap: () => _onCardTap(context, card),
+        );
       },
     );
   }
