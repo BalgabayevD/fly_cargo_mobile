@@ -16,6 +16,14 @@ class PaymentUseCase {
     return await paymentRepository.getCardsList();
   }
 
+  Future<bool> deleteCard(int cardId) async {
+    try {
+      return await paymentRepository.deleteCard(cardId);
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<bool> payOrder(int paymentCardId, int orderId) async {
     try {
       return await paymentRepository.payOrder(paymentCardId, orderId);
