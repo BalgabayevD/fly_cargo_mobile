@@ -51,6 +51,7 @@ class BeBottomDialog {
     double minChildSize = 0.25,
     List<Widget> children = const <Widget>[],
     BeBottomTitleVariant titleVariant = .primary,
+    Color? backgroundColor,
   }) {
     if (titleVariant == .primary) {
       Haptics.canVibrate().then((can) {
@@ -79,6 +80,7 @@ class BeBottomDialog {
               titleVariant: titleVariant,
               action: action,
               controller: controller,
+              backgroundColor: backgroundColor,
               children: children,
             );
           },
@@ -94,6 +96,7 @@ class BeDialogBody extends StatelessWidget {
   final ScrollController? controller;
   final String text;
   final BeBottomTitleVariant titleVariant;
+  final Color? backgroundColor;
   final Widget Function(BuildContext context, ScrollController? controller)?
   builder;
 
@@ -103,6 +106,7 @@ class BeDialogBody extends StatelessWidget {
     this.children = const <Widget>[],
     this.action,
     this.controller,
+    this.backgroundColor,
     super.key,
   }) : builder = null;
 
@@ -112,6 +116,7 @@ class BeDialogBody extends StatelessWidget {
     this.titleVariant = .primary,
     this.action,
     this.controller,
+    this.backgroundColor,
     super.key,
   }) : children = const <Widget>[];
 
@@ -121,6 +126,7 @@ class BeDialogBody extends StatelessWidget {
       clipBehavior: .hardEdge,
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       child: Scaffold(
+        backgroundColor: backgroundColor,
         body: Column(
           children: [
             BeBottomTitle(text: text, variant: titleVariant),

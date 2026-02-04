@@ -11,7 +11,9 @@ class MainScaffoldShell extends StatelessWidget {
     super.key,
   });
 
-  static route({required List<StatefulShellBranch> branches}) {
+  static StatefulShellRoute route({
+    required List<StatefulShellBranch> branches,
+  }) {
     return StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return MainScaffoldShell(navigationShell: navigationShell);

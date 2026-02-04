@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/features/orders/domain/usecases/courier_orders_usecase.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
+import 'package:fly_cargo/features/submit_order/domain/entity/decline_order_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
@@ -12,11 +13,12 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
   final CourierOrdersUseCase courierOrders;
 
   CourierOrderBloc(this.courierOrders) : super(CourierOrderInitialState()) {
-    on<CourierOrderLoadEvent>(_loadOrder);
+    on<CourierOrderLoadEvent>(_load);
     on<CourierOrderLoadIdentificationEvent>(_loadOrderIdentification);
+    on<CourierOrderDeclineEvent>(_decline);
   }
 
-  Future<void> _loadOrder(
+  Future<void> _load(
     CourierOrderLoadEvent event,
     Emitter<CourierOrderState> emit,
   ) async {
@@ -41,6 +43,28 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
       emit(CourierOrderLoadedState(order: order));
     } else {
       emit(CourierOrderInitialState());
+    }
+  }
+
+  Future<void> _decline(
+    CourierOrderDeclineEvent event,
+    Emitter<CourierOrderState> emit,
+  ) async {
+    if (state is CourierOrderLoadedState) {
+      emit((state as CourierOrderLoadedState).copyWith(isDeclining: true));
+
+      final entity = DeclineOrderEntity(
+        orderId: event.orderId,
+        decideDescription: event.description,
+        decideReason: event.reason,
+      );
+
+      final order = await courierOrders.decline(entity);
+      if (order != null) {
+        emit(CourierOrderLoadedState(order: order));
+      } else {
+        emit((state as CourierOrderLoadedState).copyWith(isDeclining: false));
+      }
     }
   }
 }

@@ -14,6 +14,7 @@ import 'package:fly_cargo/features/orders/presentation/bloc/client_order_bloc.da
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
+import 'package:fly_cargo/features/orders/presentation/widgets/courier_decline_order/decline_order_button.dart';
 import 'package:fly_cargo/features/submit_order/presentation/pages/courier_submit_order_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -78,14 +79,16 @@ class CourierOrderScreen extends StatelessWidget {
             backgroundColor: BeColors.white,
             isBorder: true,
             title: 'Заказ ${state.order.id}',
-            actions: BeButton(
-              text: 'Принять',
-              variant: .solid,
-              color: .primary,
-              onPressed: () => context.push(
-                CourierSubmitOrdersScreen.location(state.order.id),
-              ),
-            ),
+            actions: state.order.status == 'created'
+                ? BeButton(
+                    text: 'Принять',
+                    variant: .solid,
+                    color: .primary,
+                    onPressed: () => context.push(
+                      CourierSubmitOrdersScreen.location(state.order.id),
+                    ),
+                  )
+                : null,
             child: RefreshIndicator(
               onRefresh: () async {
                 context.read<ClientOrderBloc>().add(
@@ -142,14 +145,16 @@ class CourierOrderScreen extends StatelessWidget {
                   }),
 
                   BeSpace(size: .xl),
-                  BeButton(
-                    text: 'Привязать QR',
-                    onPressed: () => context.push(
-                      CourierOrderIdentifyScreen.location(state.order.id),
+                  if (state.order.status == 'created' ||
+                      state.order.status == 'accepted')
+                    BeButton(
+                      text: 'Привязать QR',
+                      onPressed: () => context.push(
+                        CourierOrderIdentifyScreen.location(state.order.id),
+                      ),
+                      variant: .flat,
+                      color: .primary,
                     ),
-                    variant: .flat,
-                    color: .primary,
-                  ),
                   BeSpace(size: .xxxl),
 
                   FlatListTile(
@@ -204,11 +209,11 @@ class CourierOrderScreen extends StatelessWidget {
 
                   BeSpace(size: .xxl),
 
-                  BeButton(
-                    text: 'Отклонить',
-                    variant: .flat,
-                    color: .danger,
-                  ),
+                  if (state.order.status == 'created')
+                    CourierDeclineOrderButton(
+                      orderId: state.order.id,
+                      isLoading: state.isDeclining,
+                    ),
 
                   BeSpace(size: .xxxl),
                   BeSpace(size: .xxxl),

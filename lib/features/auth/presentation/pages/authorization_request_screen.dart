@@ -28,6 +28,7 @@ class AuthorizationRequestScreen extends StatelessWidget {
     return BePage(
       isBorder: true,
       title: 'Авторизация',
+      automaticallyImplyLeading: false,
       child: BlocConsumer<AuthorizationBloc, AuthorizationState>(
         listener: (BuildContext context, AuthorizationState state) {
           if (state is AuthorizationOtpRequestedState) {

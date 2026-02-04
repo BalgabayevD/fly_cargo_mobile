@@ -123,7 +123,7 @@ class AppCardWithTitle extends StatelessWidget {
                   style: titleStyle ?? AppTypography.cardTitle,
                 ),
               ),
-              if (titleAction != null) titleAction!,
+              ?titleAction,
             ],
           ),
           SizedBox(height: AppSpacing.md),

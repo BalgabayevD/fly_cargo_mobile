@@ -15,3 +15,11 @@ class CourierOrderLoadIdentificationEvent extends CourierOrderEvent {
 
   const CourierOrderLoadIdentificationEvent(this.identification);
 }
+
+class CourierOrderDeclineEvent extends CourierOrderEvent {
+  final int orderId;
+  final String reason;
+  final String description;
+
+  const CourierOrderDeclineEvent(this.orderId, this.reason, this.description);
+}

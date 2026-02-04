@@ -6,7 +6,6 @@ import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
 import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
 import 'package:fly_cargo/features/auth/domain/repositories/authorization_repository.dart';
-import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
 import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:injectable/injectable.dart';
@@ -123,7 +122,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       await configuration.package.removeAccessToken();
       requestable.removeAuthorizationHeader();
       emit(UnauthorizedState());
-      configuration.setInitialPath(AuthorizationRequestScreen.location());
+      configuration.setInitialPath(OnboardingScreen.location());
     } catch (_) {
       emit(UnauthorizedState());
     }

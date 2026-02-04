@@ -85,7 +85,7 @@ class Requestable {
 
     final appCheckToken = await configuration.package.firebaseAppCheck
         .getToken()
-        .onError((_, __) {
+        .onError((_, _) {
           return null;
         });
 

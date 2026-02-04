@@ -398,7 +398,7 @@ class BeChip extends StatelessWidget {
           mainAxisAlignment: .center,
           spacing: _spacing,
           children: [
-            if (startContent != null) startContent!,
+            ?startContent,
             if (isLoading)
               SizedBox.square(
                 dimension: _spinner,
@@ -412,7 +412,7 @@ class BeChip extends StatelessWidget {
             Flexible(
               child: Text(text!, style: _textStyle),
             ),
-            if (endContent != null) endContent!,
+            ?endContent,
           ],
         ),
       ),

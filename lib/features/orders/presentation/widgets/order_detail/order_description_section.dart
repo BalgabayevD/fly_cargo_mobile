@@ -74,7 +74,7 @@ class OrderDescriptionSection extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: photos.length,
-                separatorBuilder: (_, __) => SizedBox(width: 12),
+                separatorBuilder: (_, _) => SizedBox(width: 12),
                 itemBuilder: (context, index) => OrderPhotoItem(
                   photoUrl: photos[index],
                 ),
@@ -86,4 +86,3 @@ class OrderDescriptionSection extends StatelessWidget {
     );
   }
 }
-
