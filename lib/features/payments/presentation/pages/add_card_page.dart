@@ -8,7 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class AddCardPage extends StatefulWidget {
   final String url;
-  static const String path = '/cards/add';
+  static const String path = '/payments/cards/add';
 
   static String location(String url) => Uri(
         path: path,
