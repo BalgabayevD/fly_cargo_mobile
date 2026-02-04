@@ -4,7 +4,6 @@ import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
-import 'package:fly_cargo/core/design_system/design_system.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/payments/presentation/widgets/delete_card_bottom_sheet.dart';
@@ -14,7 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 
 class PaymentCardsPage extends StatelessWidget {
-  static const String path = '/payment-cards';
+  static const String path = '/payments/cards';
 
   static String location() => Uri(path: path).toString();
 
@@ -83,9 +82,9 @@ class _CardsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: AppSpacing.lg),
+      padding: EdgeInsets.symmetric(vertical: 16),
       itemCount: cards.length,
-      separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
+      separatorBuilder: (_, __) => BeSpace(size: .sm),
       itemBuilder: (context, index) {
         final card = cards[index];
         return PaymentCardTile(
@@ -108,7 +107,7 @@ class _AddCardButton extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: bottomPadding + AppSpacing.xxl,
+        bottom: bottomPadding + 24,
       ),
       child: BeButton(
         text: 'Добавить карту',
