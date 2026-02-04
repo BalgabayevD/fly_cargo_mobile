@@ -221,7 +221,7 @@ class CheckListTile extends StatelessWidget {
                 ),
               ),
 
-            if (child != null) child!,
+            ?child,
           ],
         ),
       ),
@@ -444,7 +444,7 @@ class LightListTile extends StatelessWidget {
                 ),
               ),
 
-            if (endContent != null) endContent!,
+            ?endContent,
           ],
         ),
       ),

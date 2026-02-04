@@ -40,7 +40,7 @@ class OrderPhotoButton extends StatelessWidget {
                 height: height,
                 width: width,
                 fit: .cover,
-                errorBuilder: (BuildContext context, _, __) {
+                errorBuilder: (BuildContext context, _, _) {
                   return const Icon(Icons.error);
                 },
               ),

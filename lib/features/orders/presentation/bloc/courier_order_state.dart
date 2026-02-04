@@ -20,8 +20,12 @@ class CourierOrderLoadingIdentificationState extends CourierOrderState {
 
 class CourierOrderLoadedState extends CourierOrderState {
   final OrderEntity order;
+  final bool isDeclining;
 
-  const CourierOrderLoadedState({required this.order});
+  const CourierOrderLoadedState({
+    required this.order,
+    this.isDeclining = false,
+  });
 
   String formatDate(String dateTime) {
     try {
@@ -137,6 +141,16 @@ class CourierOrderLoadedState extends CourierOrderState {
     }
 
     return values;
+  }
+
+  CourierOrderLoadedState copyWith({
+    OrderEntity? order,
+    bool? isDeclining,
+  }) {
+    return CourierOrderLoadedState(
+      order: order ?? this.order,
+      isDeclining: isDeclining ?? this.isDeclining,
+    );
   }
 }
 

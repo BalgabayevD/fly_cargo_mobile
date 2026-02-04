@@ -362,7 +362,7 @@ class BeButton extends StatelessWidget {
               mainAxisAlignment: .center,
               spacing: 12,
               children: [
-                if (startContent != null) startContent!,
+                ?startContent,
                 if (isLoading)
                   SizedBox.square(
                     dimension: 16,
@@ -374,7 +374,7 @@ class BeButton extends StatelessWidget {
                     ),
                   ),
                 Flexible(child: Text(text!, style: _textStyle)),
-                if (endContent != null) endContent!,
+                ?endContent,
               ],
             )
           : child,

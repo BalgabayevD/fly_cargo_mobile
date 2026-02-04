@@ -15,7 +15,7 @@ class BeImagePlaceholder extends StatelessWidget {
     super.key,
   });
 
-  static Widget errorBuilder(BuildContext context, _, __) {
+  static Widget errorBuilder(BuildContext context, _, _) {
     return BeImagePlaceholder(type: .error);
   }
 

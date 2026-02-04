@@ -45,7 +45,8 @@ class ClientOrdersRestRepositoryImpl implements ClientOrdersRestRepository {
   Future<bool> cancelOrder(int orderId) async {
     try {
       await requestable.dio.post(
-        '$_/orders/$orderId/cancel',
+        '$_/orders/client/cancel',
+        data: {'orderId': orderId},
       );
       return true;
     } catch (e) {

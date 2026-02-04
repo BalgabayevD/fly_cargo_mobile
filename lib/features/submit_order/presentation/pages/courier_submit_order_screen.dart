@@ -8,10 +8,10 @@ import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/tariffs_bloc.dart';
-import 'package:fly_cargo/features/create_order/presentation/widgets/create_order/photo_grid_section.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
 import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit_order_bloc.dart';
 import 'package:fly_cargo/features/submit_order/presentation/widgets/order_submit_is_defect.dart';
+import 'package:fly_cargo/features/submit_order/presentation/widgets/order_submit_photos.dart';
 import 'package:fly_cargo/features/submit_order/presentation/widgets/order_submit_select_tariffs.dart';
 import 'package:fly_cargo/features/submit_order/presentation/widgets/order_submit_weight.dart';
 import 'package:go_router/go_router.dart';
@@ -116,7 +116,7 @@ class CourierSubmitOrdersScreen extends StatelessWidget {
                   isDefect: state.isDefect,
                 ),
                 BeSpace(size: .md),
-                if (state.isDefect) PhotoGridSection(),
+                if (state.isDefect) OrderSubmitPhotosGridSection(),
               ],
             ),
           );
