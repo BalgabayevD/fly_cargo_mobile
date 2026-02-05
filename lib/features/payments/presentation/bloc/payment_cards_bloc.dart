@@ -13,6 +13,7 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
   PaymentCardsBloc(this.payment) : super(PaymentCardsState(cards: [])) {
     on<PaymentCardsLoadEvent>(_load);
     on<PaymentCardsAddEvent>(_add);
+    on<PaymentCardsDeleteEvent>(_delete);
   }
 
   Future<void> _load(
@@ -29,5 +30,17 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
   ) async {
     final url = await payment.addCard();
     emit(PaymentCardsAddState(cards: state.cards, url: url));
+  }
+
+  Future<void> _delete(
+    PaymentCardsDeleteEvent event,
+    Emitter<PaymentCardsState> emit,
+  ) async {
+    final success = await payment.deleteCard(event.cardId);
+    if (success) {
+      final updatedCards =
+          state.cards.where((card) => card.id != event.cardId).toList();
+      emit(state.copyWith(cards: updatedCards));
+    }
   }
 }

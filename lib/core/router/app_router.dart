@@ -19,6 +19,7 @@ import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders
 import 'package:fly_cargo/features/orders/presentation/pages/courier_order_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan_screen.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
+import 'package:fly_cargo/features/payments/presentation/pages/payment_cards_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/courier_settings_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
@@ -181,6 +182,7 @@ GoRouter createRouter(
       LegalEntitiesPage.route(),
       TransportationRulesPage.route(),
       AddCardPage.route(),
+      PaymentCardsPage.route(),
       CourierOrdersScanScreen.route(),
       CourierAcceptOrdersPage.route(),
       CourierOrderScreen.route(),
