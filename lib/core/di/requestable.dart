@@ -22,8 +22,13 @@ abstract class RequestableModule {
 
 class Requestable {
   late Dio dio;
+  final CookieJarStorage _cookieStorage;
 
-  Requestable(this.dio);
+  Requestable(this.dio, this._cookieStorage);
+
+  Future<void> clearCookies() async {
+    await _cookieStorage.clear();
+  }
 
   static Future<Requestable> fromEnvironment(
     Configuration configuration,
@@ -100,7 +105,7 @@ class Requestable {
       }
     });
 
-    return Requestable(dio);
+    return Requestable(dio, cookieJar.storage as CookieJarStorage);
   }
 
   void addAuthorizationHeader(String token) {
