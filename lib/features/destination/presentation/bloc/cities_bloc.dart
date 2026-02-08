@@ -15,6 +15,8 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     on<LoadInitialCitiesEvent>(_loadInitialCities);
     on<TouchFromCityEvent>(_touchFromCity);
     on<TouchToCityEvent>(_touchToCity);
+    on<TouchFromAddressEvent>(_touchFromAddress);
+    on<TouchToAddressEvent>(_touchToAddress);
   }
 
   static CitySelectedState _getInitialState(CitiesUseCase cities) {
@@ -109,73 +111,45 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     }
   }
 
-  // Future<void> _updateLocation(
-  //   UpdateLocationEvent event,
-  //   Emitter<CitiesState> emit,
-  // ) async {
-  //   switch (event.field) {
-  //     case .from:
-  //       await _updateFromLocation(event.location, emit);
-  //       break;
-  //     case .to:
-  //       await _updateToLocation(event.location, emit);
-  //       break;
-  //   }
-  // }
-  //
-  // Future<void> _updateFromLocation(
-  //   LocationsEntity event,
-  //   Emitter<CitiesState> emit,
-  // ) async {
-  //   try {
-  //     if (event.validQuery) {
-  //       final queries = await cities.getAddressesFromQuery(
-  //         event.city!.name,
-  //         event.address!,
-  //       );
-  //
-  //       event = event.copyWith(searchQueries: queries);
-  //     }
-  //
-  //     if (state is CitiesLoadedState) {
-  //       emit(CitiesLoadedState(event));
-  //     }
-  //
-  //     if (state is FromCityTouchedLoadedState) {
-  //       emit(
-  //         FromCityTouchedLoadedState(
-  //           from: event,
-  //           to: (state as FromCityTouchedLoadedState).to,
-  //         ),
-  //       );
-  //     }
-  //   } catch (e) {}
-  // }
-  //
-  // Future<void> _updateToLocation(
-  //   LocationsEntity event,
-  //   Emitter<CitiesState> emit,
-  // ) async {
-  //   try {
-  //     var location = event;
-  //
-  //     if (event.validQuery) {
-  //       final queries = await cities.getAddressesFromQuery(
-  //         event.city!.name,
-  //         event.address!,
-  //       );
-  //
-  //       location = location.copyWith(searchQueries: queries);
-  //     }
-  //
-  //     if (state is FromCityTouchedLoadedState) {
-  //       emit(
-  //         FromCityTouchedLoadedState(
-  //           from: (state as FromCityTouchedLoadedState).from,
-  //           to: location,
-  //         ),
-  //       );
-  //     }
-  //   } catch (e) {}
-  // }
+  Future<void> _touchFromAddress(
+    TouchFromAddressEvent event,
+    Emitter<CitiesState> emit,
+  ) async {
+    if (state is CitySelectedState) {
+      final current = state as CitySelectedState;
+      final searchQueries = await cities.getAddressesFromQuery(
+        event.cityName,
+        event.address,
+      );
+      emit(
+        CitySelectedState(
+          current.from.copyWith(
+            searchQueries: searchQueries,
+          ),
+          current.to,
+        ),
+      );
+    }
+  }
+
+  Future<void> _touchToAddress(
+    TouchToAddressEvent event,
+    Emitter<CitiesState> emit,
+  ) async {
+    if (state is CitySelectedState) {
+      final current = state as CitySelectedState;
+      final searchQueries = await cities.getAddressesFromQuery(
+        event.cityName,
+        event.address,
+      );
+      emit(
+        CitySelectedState(
+          current.from,
+          current.to.copyWith(
+            searchQueries: searchQueries,
+          ),
+        ),
+      );
+    }
+  }
 }

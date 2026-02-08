@@ -79,16 +79,11 @@ class CourierOrderScreen extends StatelessWidget {
             backgroundColor: BeColors.white,
             isBorder: true,
             title: 'Заказ ${state.order.id}',
-            actions: state.order.status == 'created'
-                ? BeButton(
-                    text: 'Принять',
-                    variant: .solid,
-                    color: .primary,
-                    onPressed: () => context.push(
-                      CourierSubmitOrdersScreen.location(state.order.id),
-                    ),
-                  )
-                : null,
+            actions: OrderSubmitButton(
+              orderId: state.order.id,
+              status: state.order.status,
+              isIdentification: state.isIdentification,
+            ),
             child: RefreshIndicator(
               onRefresh: () async {
                 context.read<ClientOrderBloc>().add(
@@ -145,17 +140,6 @@ class CourierOrderScreen extends StatelessWidget {
                   }),
 
                   BeSpace(size: .xl),
-                  if (state.order.status == 'created' ||
-                      state.order.status == 'accepted')
-                    BeButton(
-                      text: 'Привязать QR',
-                      onPressed: () => context.push(
-                        CourierOrderIdentifyScreen.location(state.order.id),
-                      ),
-                      variant: .flat,
-                      color: .primary,
-                    ),
-                  BeSpace(size: .xxxl),
 
                   FlatListTile(
                     label: 'Откуда',
@@ -209,7 +193,7 @@ class CourierOrderScreen extends StatelessWidget {
 
                   BeSpace(size: .xxl),
 
-                  if (state.order.status == 'created')
+                  if (state.order.status == 'accepted')
                     CourierDeclineOrderButton(
                       orderId: state.order.id,
                       isLoading: state.isDeclining,
@@ -228,5 +212,43 @@ class CourierOrderScreen extends StatelessWidget {
         return BeNothing();
       },
     );
+  }
+}
+
+class OrderSubmitButton extends StatelessWidget {
+  final int orderId;
+  final bool isIdentification;
+  final String status;
+
+  const OrderSubmitButton({
+    required this.orderId,
+    required this.isIdentification,
+    required this.status,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if ((status == 'created' || status == 'accepted') && !isIdentification) {
+      return BeButton(
+        text: 'Привязать QR',
+        variant: .solid,
+        onPressed: () => context.push(
+          CourierOrderIdentifyScreen.location(orderId),
+        ),
+        color: .primary,
+      );
+    }
+    if (status == 'accepted' && isIdentification) {
+      return BeButton(
+        text: 'Принять',
+        variant: .solid,
+        color: .primary,
+        onPressed: () => context.push(
+          CourierSubmitOrdersScreen.location(orderId),
+        ),
+      );
+    }
+    return BeNothing();
   }
 }

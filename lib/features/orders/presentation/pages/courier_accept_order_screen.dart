@@ -7,8 +7,10 @@ import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/core/di/injection.dart';
+import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_accept_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
+import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/courier_accept_order/accept_order_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -127,6 +129,17 @@ class CourierAcceptOrdersPage extends StatelessWidget {
                     label: 'Вес',
                     value: state.order.weight.toString(),
                   ),
+                  BeSpace(size: .xxl),
+                  FlatListTile(
+                    isFluid: true,
+                    label: context.l10n.description,
+                    value: state.order.description,
+                  ),
+                  BeSpace(size: .xxl),
+
+                  if (state.order.photos.isNotEmpty)
+                    PhotoGridView(photos: state.order.photos),
+
                   BeSpace(size: .xxl),
                   FlatListTile(
                     label: 'Тариф',

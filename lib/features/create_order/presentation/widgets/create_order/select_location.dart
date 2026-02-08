@@ -22,7 +22,6 @@ class SelectLocation extends StatelessWidget {
     final label = type == SelectLocationType.from
         ? context.l10n.from
         : context.l10n.to;
-
     return BlocBuilder<CreateOrdersBloc, CreateOrdersState>(
       builder: (BuildContext context, CreateOrdersState ordersState) {
         return BlocConsumer<CitiesBloc, CitiesState>(
@@ -81,6 +80,7 @@ class SelectLocation extends StatelessWidget {
                 onTap: () async {
                   final location = await showDialog.toSelectAddress(
                     context,
+                    context.read<CitiesBloc>(),
                     label,
                     state.from.copyWith(
                       selectedCityId:
@@ -94,7 +94,14 @@ class SelectLocation extends StatelessWidget {
                       apartment: ordersState.data.fromApartment,
                       latitude: ordersState.data.fromLatitude,
                       longitude: ordersState.data.fromLongitude,
+                      searchQueries: state.from.searchQueries,
                     ),
+                    .from,
+                    (cityName, address) {
+                      context.read<CitiesBloc>().add(
+                        TouchFromAddressEvent(cityName, address),
+                      );
+                    },
                   );
 
                   if (location != null && context.mounted) {
@@ -146,6 +153,7 @@ class SelectLocation extends StatelessWidget {
                 onTap: () async {
                   final location = await showDialog.toSelectAddress(
                     context,
+                    context.read<CitiesBloc>(),
                     label,
                     state.to.copyWith(
                       selectedCityId:
@@ -160,6 +168,12 @@ class SelectLocation extends StatelessWidget {
                       latitude: ordersState.data.toLatitude,
                       longitude: ordersState.data.toLongitude,
                     ),
+                    .to,
+                    (cityName, address) {
+                      context.read<CitiesBloc>().add(
+                        TouchToAddressEvent(cityName, address),
+                      );
+                    },
                   );
 
                   if (location != null && context.mounted) {

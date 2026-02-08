@@ -43,11 +43,11 @@ class AuthorizationNameScreen extends StatelessWidget {
                 );
 
                 if (state.sessionInfo.user.role == UserRole.user) {
-                  context.push(CreateOrderScreen.location());
+                  context.go(CreateOrderScreen.location());
                 }
 
                 if (state.sessionInfo.user.role == UserRole.courier) {
-                  context.push(CourierHomeScreen.location());
+                  context.go(CourierHomeScreen.location());
                 }
               },
             );

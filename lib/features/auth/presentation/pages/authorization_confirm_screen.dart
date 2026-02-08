@@ -46,7 +46,7 @@ class AuthorizationConfirmScreen extends StatelessWidget {
               );
 
               if (state.sessionInfo.user.name!.isNotEmpty) {
-                context.push(CreateOrderScreen.location());
+                context.go(CreateOrderScreen.location());
               } else {
                 context.push(AuthorizationNameScreen.location());
               }
@@ -58,7 +58,7 @@ class AuthorizationConfirmScreen extends StatelessWidget {
               );
 
               if (state.sessionInfo.user.name!.isNotEmpty) {
-                context.push(CourierHomeScreen.location());
+                context.go(CourierHomeScreen.location());
               } else {
                 context.push(AuthorizationNameScreen.location());
               }

@@ -1,5 +1,6 @@
 import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
+import 'package:fly_cargo/features/destination/domain/entities/address_query_entity.dart';
 import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
 import 'package:fly_cargo/features/destination/domain/repositories/cities_rest_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -14,13 +15,13 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
     required this.configuration,
   });
 
-  String get _order => configuration.environmentVariables.orderBaseUrl;
+  String get _ => configuration.environmentVariables.gatewayBaseUrl;
 
   @override
   Future<List<CityEntity>> getCitiesFrom() async {
     try {
       final response = await requestable.dio.get(
-        '$_order/api/v1/directions/cities/from',
+        '$_/cities/from',
       );
 
       return (response.data['data'] as List).map((data) {
@@ -35,7 +36,7 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   Future<List<CityEntity>> getCitiesTo(int fromCityId) async {
     try {
       final response = await requestable.dio.get(
-        '$_order/api/v1/directions/cities/to',
+        '$_/cities/to',
         queryParameters: {'fromCityId': fromCityId},
       );
       return (response.data['data'] as List).map((data) {
@@ -47,19 +48,24 @@ class CitiesRestRepositoryImpl implements CitiesRestRepository {
   }
 
   @override
-  Future<List<String>> getAddressesFromQuery(
+  Future<List<AddressQueryEntity>> getAddressesFromQuery(
     String city,
     String address,
   ) async {
     try {
-      final response = await requestable.dio.get<List<String>>(
-        '$_order/api/v1/maps/cities/list',
+      final response = await requestable.dio.get(
+        '$_/cities/address',
         queryParameters: {
           'city': city,
           'address': address,
         },
       );
-      return response.data ?? [];
+      if (response.data['data'] == null) {
+        return const <AddressQueryEntity>[];
+      }
+      return (response.data['data'] as List).map((data) {
+        return AddressQueryEntity.fromJson(data);
+      }).toList();
     } catch (e) {
       rethrow;
     }

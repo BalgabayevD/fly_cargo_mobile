@@ -179,7 +179,7 @@ sealed class OrderEntity with _$OrderEntity {
     required int calculationId,
     @Default(false) bool isPaid,
     String? deletedAt,
-    String? status,
+    required String status,
     @Default('') String fromApartment,
     String? fromEntrance,
     @Default('') String fromFloor,

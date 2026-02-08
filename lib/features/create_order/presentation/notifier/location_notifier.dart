@@ -9,6 +9,7 @@ class LocationNotifier extends ChangeNotifier {
 
   void selectCity(int cityId) {
     locations = locations.copyWith(selectedCityId: cityId);
+    locations.searchQueries.clear();
     notifyListeners();
   }
 

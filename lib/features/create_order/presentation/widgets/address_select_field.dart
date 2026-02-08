@@ -45,6 +45,14 @@ class _AddressSelectFieldState extends State<AddressSelectField> {
   }
 
   @override
+  void didUpdateWidget(AddressSelectField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.completions != widget.completions) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

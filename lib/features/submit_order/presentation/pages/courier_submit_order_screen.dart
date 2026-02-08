@@ -9,6 +9,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/tariffs_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_open_orders_screen.dart';
+import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_screen.dart';
 import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit_order_bloc.dart';
 import 'package:fly_cargo/features/submit_order/presentation/widgets/order_submit_is_defect.dart';
 import 'package:fly_cargo/features/submit_order/presentation/widgets/order_submit_photos.dart';
@@ -70,7 +71,13 @@ class CourierSubmitOrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourierSubmitOrderBloc, CourierSubmitOrderState>(
+    return BlocConsumer<CourierSubmitOrderBloc, CourierSubmitOrderState>(
+      listener: (BuildContext context, CourierSubmitOrderState state) {
+        context.go(CourierOrdersPage.location());
+      },
+      listenWhen: (previous, current) {
+        return current is CourierSubmitOrderLoadedState && current.isSubmitted;
+      },
       builder: (BuildContext context, CourierSubmitOrderState state) {
         if (state is CourierSubmitOrderLoadingState) {
           return BePage(

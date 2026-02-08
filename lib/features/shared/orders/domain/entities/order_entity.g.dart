@@ -169,7 +169,7 @@ _OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) => _OrderEntity(
   calculationId: (json['calculationId'] as num).toInt(),
   isPaid: json['isPaid'] as bool? ?? false,
   deletedAt: json['deletedAt'] as String?,
-  status: json['status'] as String?,
+  status: json['status'] as String,
   fromApartment: json['fromApartment'] as String? ?? '',
   fromEntrance: json['fromEntrance'] as String?,
   fromFloor: json['fromFloor'] as String? ?? '',

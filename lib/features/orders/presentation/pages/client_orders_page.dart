@@ -8,6 +8,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/client_orders_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/client_order_page.dart';
+import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -71,15 +72,7 @@ class ClientOrdersPage extends StatelessWidget {
 
                         OrderListTileColor color = .warning;
 
-                        String message = 'Без трекового номера';
                         String statusLabel = '';
-
-                        if (order.identifications.isNotEmpty) {
-                          final identification = order.identifications.first;
-                          if (identification.uuid != null) {
-                            message = 'Трековый номер ${identification.uuid}';
-                          }
-                        }
 
                         if (['created'].contains(order.status)) {
                           color = .warning;
@@ -87,7 +80,7 @@ class ClientOrdersPage extends StatelessWidget {
                         }
                         if (['accepted'].contains(order.status)) {
                           color = .success;
-                          statusLabel = 'На складе';
+                          statusLabel = 'Курьер в пути';
                         }
 
                         if (['checked'].contains(order.status)) {
@@ -114,7 +107,7 @@ class ClientOrdersPage extends StatelessWidget {
                             'dd MMM yyyy',
                             'ru_RU',
                           ).format(created),
-                          message: message,
+                          message: 'Номер ${formatOrderId(order.id)}',
                           statusLabel:
                               '$statusLabel${order.isPaid ? '' : ', не оплачен'}',
                           color: color,

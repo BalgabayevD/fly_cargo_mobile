@@ -37,6 +37,15 @@ class CourierOrderLoadedState extends CourierOrderState {
     }
   }
 
+  bool get isIdentification {
+    if (order.identifications.isNotEmpty) {
+      return order.identifications.any(
+        (e) => e.target == 'ORDER_QR_TARGET_COURIER',
+      );
+    }
+    return false;
+  }
+
   List<TimelineData> get timeline {
     List<TimelineData> values = [];
 

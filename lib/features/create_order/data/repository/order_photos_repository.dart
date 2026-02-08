@@ -14,13 +14,13 @@ class OrderPhotosRepositoryImpl implements OrderPhotosRepository {
     required this.configuration,
   });
 
-  String get _order => configuration.environmentVariables.orderBaseUrl;
+  String get _ => configuration.environmentVariables.gatewayBaseUrl;
 
   @override
   Future<String> uploadPhoto(FormData form) async {
     try {
       final response = await requestable.dio.post(
-        '$_order/api/v1/order/photo/upload',
+        '$_/Changes',
         data: form,
         options: Options(
           headers: {

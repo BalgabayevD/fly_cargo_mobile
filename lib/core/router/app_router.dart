@@ -91,10 +91,18 @@ GoRouter createRouter(
     redirect: (context, state) {
       final authorizationState = authorizationBloc.state;
 
-      final isOnboarding = state.fullPath == OnboardingScreen.path;
+      final isSkipPath = [
+        AuthorizationRequestScreen.path,
+        AuthorizationConfirmScreen.path,
+        AuthorizationNameScreen.path,
+      ].contains(state.fullPath);
 
-      if (authorizationState is UnauthorizedState && !isOnboarding) {
-        return AuthorizationRequestScreen.location();
+      if (isSkipPath) {
+        return null;
+      }
+
+      if (authorizationState is UnauthorizedState) {
+        return OnboardingScreen.location();
       }
 
       return null;

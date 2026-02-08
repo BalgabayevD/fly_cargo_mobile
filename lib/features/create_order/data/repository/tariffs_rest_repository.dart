@@ -14,13 +14,13 @@ class TariffsRestRepositoryImpl implements TariffsRestRepository {
     required this.configuration,
   });
 
-  String get _order => configuration.environmentVariables.orderBaseUrl;
+  String get _ => configuration.environmentVariables.gatewayBaseUrl;
 
   @override
   Future<List<TariffCategoryModel>> getTariffCategories() async {
     try {
       final response = await requestable.dio.get(
-        '$_order/api/v1/tariffs/categories',
+        '$_/tariffs/categories',
       );
 
       return (response.data['data'] as List).map((data) {

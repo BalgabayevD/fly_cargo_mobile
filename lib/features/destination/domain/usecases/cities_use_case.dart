@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fly_cargo/features/destination/domain/entities/city_entity.dart';
 import 'package:fly_cargo/features/destination/domain/entities/locations_entity.dart';
 import 'package:fly_cargo/features/destination/domain/repositories/cities_persist_repository.dart';
@@ -8,6 +10,7 @@ import 'package:injectable/injectable.dart';
 class CitiesUseCase {
   final CitiesRestRepository citiesRestRepository;
   final CitiesPersistRepository citiesPersistRepository;
+  Timer? _debounceTimer;
 
   CitiesUseCase(this.citiesRestRepository, this.citiesPersistRepository);
 
@@ -23,8 +26,31 @@ class CitiesUseCase {
     return cities;
   }
 
-  Future<List<String>> getAddressesFromQuery(String city, String address) {
-    return citiesRestRepository.getAddressesFromQuery(city, address);
+  Future<List<String>> getAddressesFromQuery(
+    String city,
+    String address,
+  ) async {
+    _debounceTimer?.cancel();
+
+    if (address.length <= 3) {
+      return <String>[];
+    }
+
+    final completer = Completer<List<String>>();
+
+    _debounceTimer = Timer(const Duration(milliseconds: 800), () async {
+      try {
+        final result = await citiesRestRepository.getAddressesFromQuery(
+          city,
+          address,
+        );
+        completer.complete(result.map((e) => e.title).toList());
+      } catch (e) {
+        completer.completeError(e);
+      }
+    });
+
+    return completer.future;
   }
 
   List<CityEntity> getPersistCitiesTo(int fromCityId) {

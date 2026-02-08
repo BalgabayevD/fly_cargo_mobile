@@ -9,6 +9,7 @@ import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_orders_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_order_screen.dart';
+import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -69,21 +70,18 @@ class CourierOrdersPage extends StatelessWidget {
 
                         OrderListTileColor color = .warning;
 
-                        String message = 'Без трекового номера';
                         String statusLabel = '';
-
-                        if (order.identifications.isNotEmpty) {
-                          final identification = order.identifications.first;
-                          if (identification.uuid != null) {
-                            message = 'Трековый номер ${identification.uuid}';
-                          }
-                        }
 
                         if (['created'].contains(order.status)) {
                           color = .warning;
                           statusLabel = 'Необходимо принять';
                         }
                         if (['accepted'].contains(order.status)) {
+                          color = .success;
+                          statusLabel = 'Увезти на склад';
+                        }
+
+                        if (['submitted'].contains(order.status)) {
                           color = .success;
                           statusLabel = 'Увезти на склад';
                         }
@@ -112,7 +110,7 @@ class CourierOrdersPage extends StatelessWidget {
                             'dd MMM yyyy',
                             'ru_RU',
                           ).format(created),
-                          message: message,
+                          message: 'Номер ${formatOrderId(order.id)}',
                           statusLabel:
                               '$statusLabel${order.isPaid ? '' : ', не оплочен'}',
                           color: color,
