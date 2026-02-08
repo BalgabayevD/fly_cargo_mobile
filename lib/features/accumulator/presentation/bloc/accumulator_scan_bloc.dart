@@ -18,20 +18,13 @@ class AccumulatorScanBloc
     AccumulatorScanIdentificationEvent event,
     Emitter<AccumulatorScanState> emit,
   ) async {
-    emit(AccumulatorScanLoadingState());
+    emit(AccumulatorScanScannedState());
 
     try {
-      final accumulator = await _repository.getByIdentification(
-        event.identification,
-      );
-
-      if (accumulator != null) {
-        emit(AccumulatorScanSuccessState(accumulator));
-      } else {
-        emit(AccumulatorScanErrorState('Накопитель не найден'));
-      }
+      await _repository.arrived(event.identification);
+      emit(AccumulatorScanSuccessState());
     } catch (e) {
-      emit(AccumulatorScanErrorState('Ошибка при получении накопителя'));
+      emit(AccumulatorScanErrorState('Ошибка при обработке накопителя'));
     }
   }
 

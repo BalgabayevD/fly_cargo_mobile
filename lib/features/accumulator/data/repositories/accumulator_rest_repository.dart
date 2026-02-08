@@ -103,4 +103,18 @@ class AccumulatorRestRepositoryImpl implements AccumulatorRestRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> arrived(String identification) async {
+    try {
+      await requestable.dio.post(
+        '$_/orders/accumulator/arrived',
+        data: {
+          'identification': identification,
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
