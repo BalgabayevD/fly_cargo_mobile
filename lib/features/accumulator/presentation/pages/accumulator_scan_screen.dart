@@ -8,6 +8,7 @@ import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/accumulator/presentation/bloc/accumulator_scan_bloc.dart';
 import 'package:fly_cargo/features/accumulator/presentation/bloc/accumulator_scan_event.dart';
 import 'package:fly_cargo/features/accumulator/presentation/bloc/accumulator_scan_state.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_orders_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/courier_order_scan/scan_overlay.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -20,7 +21,7 @@ class AccumulatorScanScreen extends StatelessWidget {
   static String location() => Uri(path: path).toString();
 
   const AccumulatorScanScreen({super.key})
-      : parser = const DeepLinkParser(domain: 'sapsano.kz');
+    : parser = const DeepLinkParser(domain: 'sapsano.kz');
 
   static GoRoute route({
     List<RouteBase> routes = const <RouteBase>[],
@@ -47,9 +48,14 @@ class AccumulatorScanScreen extends StatelessWidget {
         if (state is AccumulatorScanSuccessState) {
           Future.delayed(const Duration(seconds: 1), () {
             if (context.mounted) {
+              final accumulator = state.accumulator;
+              context.push(
+                AccumulatorOrdersScreen.location(accumulator.id),
+                extra: accumulator,
+              );
               context.read<AccumulatorScanBloc>().add(
-                    AccumulatorScanResetEvent(),
-                  );
+                AccumulatorScanResetEvent(),
+              );
             }
           });
         }
@@ -59,8 +65,8 @@ class AccumulatorScanScreen extends StatelessWidget {
           Future.delayed(const Duration(seconds: 1), () {
             if (context.mounted) {
               context.read<AccumulatorScanBloc>().add(
-                    AccumulatorScanResetEvent(),
-                  );
+                AccumulatorScanResetEvent(),
+              );
             }
           });
         }
@@ -75,6 +81,9 @@ class AccumulatorScanScreen extends StatelessWidget {
           child: Stack(
             children: [
               MobileScanner(
+                controller: MobileScannerController(
+                  detectionTimeoutMs: 5000,
+                ),
                 onDetect: (result) => _onDetect(context, result, state),
               ),
               QRScannerOverlay(
@@ -122,10 +131,10 @@ class AccumulatorScanScreen extends StatelessWidget {
 
       if (deeplink is OrderAccumulatorIdentificationLink) {
         context.read<AccumulatorScanBloc>().add(
-              AccumulatorScanIdentificationEvent(
-                deeplink.accumulatorId,
-              ),
-            );
+          AccumulatorScanIdentificationEvent(
+            deeplink.accumulatorId,
+          ),
+        );
       }
     }
   }
