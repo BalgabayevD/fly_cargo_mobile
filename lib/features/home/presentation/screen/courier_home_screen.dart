@@ -3,6 +3,8 @@ import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_list_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -46,6 +48,14 @@ class CourierHomeScreen extends StatelessWidget {
             text: 'Принять прибывшие заказы',
             color: .gray,
             variant: .solid,
+            onPressed: () => context.push(AccumulatorScanScreen.location()),
+          ),
+          BeSpace(size: .xl),
+          BeButton(
+            text: 'Прибывшие заказы',
+            color: .gray,
+            variant: .solid,
+            onPressed: () => context.push(AccumulatorListScreen.location()),
           ),
         ],
       ),

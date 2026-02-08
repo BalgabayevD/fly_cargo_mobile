@@ -120,6 +120,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     try {
       await authorizationRepository.signOut();
       await configuration.package.removeAccessToken();
+      await requestable.clearCookies();
       requestable.removeAuthorizationHeader();
       emit(UnauthorizedState());
       configuration.setInitialPath(OnboardingScreen.location());

@@ -163,6 +163,22 @@ class CourierOrderLoadedState extends CourierOrderState {
   }
 }
 
+class CourierOrderActionLoadingState extends CourierOrderState {
+  final OrderEntity order;
+
+  const CourierOrderActionLoadingState({required this.order});
+}
+
+class CourierOrderActionErrorState extends CourierOrderState {
+  final OrderEntity order;
+  final String message;
+
+  const CourierOrderActionErrorState({
+    required this.order,
+    required this.message,
+  });
+}
+
 class TimelineData {
   final bool isFirst;
   final bool isLast;

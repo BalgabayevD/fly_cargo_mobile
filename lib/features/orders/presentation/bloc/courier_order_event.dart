@@ -23,3 +23,16 @@ class CourierOrderDeclineEvent extends CourierOrderEvent {
 
   const CourierOrderDeclineEvent(this.orderId, this.reason, this.description);
 }
+
+class CourierOrderDeliverToReceiverEvent extends CourierOrderEvent {
+  final int orderId;
+
+  const CourierOrderDeliverToReceiverEvent(this.orderId);
+}
+
+class CourierOrderCompleteEvent extends CourierOrderEvent {
+  final int orderId;
+  final String code;
+
+  const CourierOrderCompleteEvent(this.orderId, this.code);
+}

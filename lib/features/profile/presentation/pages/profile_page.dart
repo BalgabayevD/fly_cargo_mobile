@@ -89,8 +89,12 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
       child: BlocBuilder<AuthorizationBloc, AuthorizationState>(
+        buildWhen: (previous, current) => current is AuthorizedState,
         builder: (context, state) {
-          final current = (state as AuthorizedState);
+          if (state is! AuthorizedState) {
+            return const SizedBox.shrink();
+          }
+          final current = state;
 
           return Column(
             children: [

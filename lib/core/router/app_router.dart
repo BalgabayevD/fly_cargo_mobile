@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/router/courier_scaffold_shell.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
 import 'package:fly_cargo/core/router/main_scaffold_shell.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_list_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_order_detail_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_orders_screen.dart';
+import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
@@ -192,6 +196,10 @@ GoRouter createRouter(
       AddCardPage.route(),
       PaymentCardsPage.route(),
       CourierOrdersScanScreen.route(),
+      AccumulatorScanScreen.route(),
+      AccumulatorListScreen.route(),
+      AccumulatorOrdersScreen.route(),
+      AccumulatorOrderDetailScreen.route(),
       CourierAcceptOrdersPage.route(),
       CourierOrderScreen.route(),
       CourierSubmitOrdersScreen.route(),

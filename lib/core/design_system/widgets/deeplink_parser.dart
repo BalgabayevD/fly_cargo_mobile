@@ -42,7 +42,7 @@ class OrderProcessingDirectionLink extends DeepLink {
 }
 
 class OrderAccumulatorIdentificationLink extends DeepLink {
-  final int accumulatorId;
+  final String accumulatorId;
 
   const OrderAccumulatorIdentificationLink({
     required this.accumulatorId,
@@ -196,9 +196,9 @@ class DeepLinkParser {
         return null;
       }
 
-      final accumulatorId = int.tryParse(segments[4]);
+      final accumulatorId = segments[4];
 
-      if (accumulatorId == null) {
+      if (accumulatorId.isEmpty) {
         return null;
       }
 

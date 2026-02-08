@@ -48,7 +48,7 @@ class AuthorizationConfirmScreen extends StatelessWidget {
               if (state.sessionInfo.user.name!.isNotEmpty) {
                 context.go(CreateOrderScreen.location());
               } else {
-                context.push(AuthorizationNameScreen.location());
+                context.go(AuthorizationNameScreen.location());
               }
             }
 
@@ -60,13 +60,13 @@ class AuthorizationConfirmScreen extends StatelessWidget {
               if (state.sessionInfo.user.name!.isNotEmpty) {
                 context.go(CourierHomeScreen.location());
               } else {
-                context.push(AuthorizationNameScreen.location());
+                context.go(AuthorizationNameScreen.location());
               }
             }
           }
 
           if (state is AuthorizationOtpConfirmFailureState) {
-            context.push(OnboardingScreen.location());
+            context.go(OnboardingScreen.location());
           }
         },
         listenWhen: (previous, current) {

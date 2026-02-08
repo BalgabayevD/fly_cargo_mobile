@@ -12,4 +12,8 @@ abstract class CourierOrdersRestRepository {
   Future<bool?> submit(SubmitOrderEntity data);
   Future<bool?> decline(DeclineOrderEntity data);
   Future<bool?> identify(int orderId, String identification);
+
+  Future<bool> deliverToReceiver(int orderId);
+
+  Future<bool> completeOrder(int orderId, String code);
 }

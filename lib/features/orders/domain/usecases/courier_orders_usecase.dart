@@ -78,4 +78,22 @@ class CourierOrdersUseCase {
       return false;
     }
   }
+
+  Future<OrderEntity?> deliverToReceiver(int orderId) async {
+    try {
+      await courierOrdersRest.deliverToReceiver(orderId);
+      return getOrderById(orderId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<OrderEntity?> completeOrder(int orderId, String code) async {
+    try {
+      await courierOrdersRest.completeOrder(orderId, code);
+      return getOrderById(orderId);
+    } catch (_) {
+      return null;
+    }
+  }
 }
