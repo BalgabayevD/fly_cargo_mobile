@@ -383,6 +383,7 @@ class FlatListTile extends StatelessWidget {
 
             Flexible(
               child: Text(
+                maxLines: 3,
                 value,
                 overflow: .ellipsis,
                 style: GoogleFonts.montserrat(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/design_system/components/haptic.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/widgets/deeplink_parser.dart';
 import 'package:fly_cargo/core/di/injection.dart';
@@ -39,10 +40,29 @@ class AccumulatorScanScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AccumulatorScanBloc, AccumulatorScanState>(
       listener: (context, state) {
+        if (state is AccumulatorScanScannedState) {
+          BeHaptic.onScan();
+        }
+
         if (state is AccumulatorScanSuccessState) {
-          _showSuccessDialog(context, state);
-        } else if (state is AccumulatorScanErrorState) {
+          Future.delayed(const Duration(seconds: 1), () {
+            if (context.mounted) {
+              context.read<AccumulatorScanBloc>().add(
+                    AccumulatorScanResetEvent(),
+                  );
+            }
+          });
+        }
+
+        if (state is AccumulatorScanErrorState) {
           _showErrorSnackBar(context, state.message);
+          Future.delayed(const Duration(seconds: 1), () {
+            if (context.mounted) {
+              context.read<AccumulatorScanBloc>().add(
+                    AccumulatorScanResetEvent(),
+                  );
+            }
+          });
         }
       },
       builder: (context, state) {
@@ -57,11 +77,10 @@ class AccumulatorScanScreen extends StatelessWidget {
               MobileScanner(
                 onDetect: (result) => _onDetect(context, result, state),
               ),
-              const QRScannerOverlay(),
-              if (state is AccumulatorScanLoadingState)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              QRScannerOverlay(
+                variant: _overlayVariant(state),
+                finderColor: _finderColor(state),
+              ),
             ],
           ),
         );
@@ -69,12 +88,34 @@ class AccumulatorScanScreen extends StatelessWidget {
     );
   }
 
+  QRScannerOverlayVariant _overlayVariant(AccumulatorScanState state) {
+    if (state is AccumulatorScanScannedState ||
+        state is AccumulatorScanSuccessState) {
+      return QRScannerOverlayVariant.success;
+    }
+    if (state is AccumulatorScanErrorState) {
+      return QRScannerOverlayVariant.failure;
+    }
+    return QRScannerOverlayVariant.idle;
+  }
+
+  Color _finderColor(AccumulatorScanState state) {
+    if (state is AccumulatorScanScannedState ||
+        state is AccumulatorScanSuccessState) {
+      return BeColors.success;
+    }
+    if (state is AccumulatorScanErrorState) {
+      return BeColors.danger;
+    }
+    return BeColors.primary;
+  }
+
   void _onDetect(
     BuildContext context,
     BarcodeCapture result,
     AccumulatorScanState state,
   ) {
-    if (state is AccumulatorScanLoadingState) return;
+    if (state is! AccumulatorScanInitialState) return;
 
     if (result.barcodes.first.rawValue != null) {
       final deeplink = parser.parse(result.barcodes.first.rawValue!);
@@ -89,63 +130,11 @@ class AccumulatorScanScreen extends StatelessWidget {
     }
   }
 
-  void _showSuccessDialog(
-    BuildContext context,
-    AccumulatorScanSuccessState state,
-  ) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Накопитель найден'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('ID: ${state.accumulator.id}'),
-            Text('Статус: ${state.accumulator.status}'),
-            Text('Заказов: ${state.accumulator.orders.length}'),
-            if (state.accumulator.fromCity != null)
-              Text('Откуда: ${state.accumulator.fromCity!.name}'),
-            if (state.accumulator.toCity != null)
-              Text('Куда: ${state.accumulator.toCity!.name}'),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              context.read<AccumulatorScanBloc>().add(
-                    AccumulatorScanResetEvent(),
-                  );
-            },
-            child: const Text('Сканировать еще'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              context.pop();
-            },
-            child: const Text('Закрыть'),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _showErrorSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         backgroundColor: BeColors.danger,
-        action: SnackBarAction(
-          label: 'OK',
-          textColor: BeColors.white,
-          onPressed: () {
-            context.read<AccumulatorScanBloc>().add(
-                  AccumulatorScanResetEvent(),
-                );
-          },
-        ),
       ),
     );
   }
