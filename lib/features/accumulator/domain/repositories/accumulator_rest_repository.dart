@@ -20,5 +20,5 @@ abstract class AccumulatorRestRepository {
 
   Future<AccumulatorEntity?> close(int accumulatorId);
 
-  Future<void> arrived(String identification);
+  Future<AccumulatorEntity?> arrived(String identification);
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fly_cargo/features/accumulator/domain/entities/accumulator_entity.dart';
 
 abstract class AccumulatorScanState extends Equatable {
   @override
@@ -9,7 +10,14 @@ class AccumulatorScanInitialState extends AccumulatorScanState {}
 
 class AccumulatorScanScannedState extends AccumulatorScanState {}
 
-class AccumulatorScanSuccessState extends AccumulatorScanState {}
+class AccumulatorScanSuccessState extends AccumulatorScanState {
+  final AccumulatorEntity accumulator;
+
+  AccumulatorScanSuccessState(this.accumulator);
+
+  @override
+  List<Object?> get props => [accumulator];
+}
 
 class AccumulatorScanErrorState extends AccumulatorScanState {
   final String message;
