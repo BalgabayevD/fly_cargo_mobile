@@ -20,7 +20,7 @@ class OrderPhotosRepositoryImpl implements OrderPhotosRepository {
   Future<String> uploadPhoto(FormData form) async {
     try {
       final response = await requestable.dio.post(
-        '$_/Changes',
+        '$_/photo/upload',
         data: form,
         options: Options(
           headers: {

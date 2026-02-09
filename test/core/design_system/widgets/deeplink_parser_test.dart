@@ -465,7 +465,7 @@ void main() {
     test(
       'OrderAccumulatorIdentificationLink.toString должен корректно форматироваться',
       () {
-        const link = OrderAccumulatorIdentificationLink(accumulatorId: 5);
+        const link = OrderAccumulatorIdentificationLink(accumulatorId: '5');
         expect(
           link.toString(),
           'OrderAccumulatorIdentificationLink(accumulatorId: 5)',
