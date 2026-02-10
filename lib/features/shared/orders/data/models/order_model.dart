@@ -10,6 +10,27 @@ import 'tariff_model.dart';
 part 'order_model.freezed.dart';
 part 'order_model.g.dart';
 
+enum StatusModel {
+  created('created'),
+  cancelled('cancelled'),
+  accepted('accepted'),
+  decided('decided'),
+  submitted('submitted'),
+  accounted('accounted'),
+  checked('checked'),
+  revision('revision'),
+  dispatched('dispatched'),
+  transit('transit'),
+  arrived('arrived'),
+  delivers_recipient('delivers_recipient'),
+  completed('completed')
+  ;
+
+  const StatusModel(this.value);
+
+  final String value;
+}
+
 @freezed
 sealed class OrderModel with _$OrderModel {
   const factory OrderModel({
@@ -39,8 +60,8 @@ sealed class OrderModel with _$OrderModel {
     @Default('') String fromApartment,
     String? fromEntrance,
     @Default('') String fromFloor,
-    String? fromPhone,
-    String? fromName,
+    @Default('') String fromPhone,
+    @Default('') String fromName,
     @Default('') String toApartment,
     String? toEntrance,
     @Default('') String toFloor,

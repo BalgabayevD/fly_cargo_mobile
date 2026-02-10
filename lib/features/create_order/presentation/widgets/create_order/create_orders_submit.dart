@@ -26,6 +26,7 @@ class CreateOrdersSubmitButton extends StatelessWidget {
           previous.isSubmitting != previous.isSubmitting,
       builder: (BuildContext context, CreateOrdersState state) {
         return BeButton(
+          isLoading: state.isSubmitting,
           text: state.price == 0
               ? 'Отправить'
               : 'Отправить за ${state.price.ceil()} тг',

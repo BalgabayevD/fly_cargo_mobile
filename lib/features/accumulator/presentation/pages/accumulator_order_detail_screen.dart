@@ -11,7 +11,6 @@ import 'package:fly_cargo/features/accumulator/presentation/widgets/delivery_con
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_order_bloc.dart';
 import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class AccumulatorOrderDetailScreen extends StatelessWidget {
@@ -153,7 +152,10 @@ class _OrderDetailBodyWidget extends StatelessWidget {
 
               if (order.status == 'delivers_recipient') ...[
                 const BeSpace(size: .lg),
-                _WeightInputWidget(weight: order.weight),
+                FlatListTile(
+                  label: 'Вес',
+                  value: order.weight.toString(),
+                ),
               ],
 
               const BeSpace(size: .xxxl),
@@ -168,44 +170,6 @@ class _OrderDetailBodyWidget extends StatelessWidget {
 
         const BeSpace(size: .xxl),
       ],
-    );
-  }
-}
-
-class _WeightInputWidget extends StatelessWidget {
-  final double weight;
-
-  const _WeightInputWidget({required this.weight});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      readOnly: true,
-      controller: TextEditingController(text: weight.toString()),
-      decoration: InputDecoration(
-        labelText: 'Вес, в кг',
-        labelStyle: GoogleFonts.montserrat(
-          fontSize: 13,
-          color: BeColors.surface4,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: BeColors.border),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: BeColors.border),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-      ),
-      style: GoogleFonts.montserrat(
-        fontSize: 17,
-        fontWeight: FontWeight.w500,
-        color: BeColors.surface5,
-      ),
     );
   }
 }

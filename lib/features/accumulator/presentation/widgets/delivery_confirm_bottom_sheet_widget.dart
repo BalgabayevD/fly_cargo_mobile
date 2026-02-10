@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
+import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +28,7 @@ class DeliveryConfirmBottomSheetWidget extends StatefulWidget {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: BeColors.white,
+      backgroundColor: BeColors.surface2,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -47,10 +48,12 @@ class DeliveryConfirmBottomSheetWidget extends StatefulWidget {
 class _DeliveryConfirmBottomSheetWidgetState
     extends State<DeliveryConfirmBottomSheetWidget> {
   final _codeController = TextEditingController();
+  final focusNode = FocusNode();
 
   @override
   void dispose() {
     _codeController.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -99,37 +102,11 @@ class _DeliveryConfirmBottomSheetWidgetState
 
           const BeSpace(size: .lg),
 
-          TextField(
+          BeFormInput(
+            label: 'Код получения',
+            variant: .flat,
+            focusNode: focusNode,
             controller: _codeController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: 'Код получения',
-              labelStyle: GoogleFonts.montserrat(
-                fontSize: 13,
-                color: BeColors.surface4,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: BeColors.border),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: BeColors.border),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: BeColors.primary),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 16,
-              ),
-            ),
-            style: GoogleFonts.montserrat(
-              fontSize: 17,
-              fontWeight: FontWeight.w500,
-              color: BeColors.surface5,
-            ),
           ),
 
           const BeSpace(size: .xxxl),
@@ -151,8 +128,7 @@ class _DeliveryConfirmBottomSheetWidgetState
 
           BeButton(
             text: 'Назад',
-            variant: BeButtonVariant.ghost,
-            color: BeButtonColor.primary,
+            color: BeButtonColor.gray,
             onPressed: () => Navigator.pop(context),
           ),
         ],
