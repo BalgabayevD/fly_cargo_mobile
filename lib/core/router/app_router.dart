@@ -7,6 +7,7 @@ import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_li
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_order_detail_screen.dart';
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_orders_screen.dart';
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_entity.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
@@ -107,6 +108,19 @@ GoRouter createRouter(
 
       if (authorizationState is UnauthorizedState) {
         return OnboardingScreen.location();
+      }
+
+      if (authorizationState is AuthorizedState) {
+        final isOnboardingPath = state.fullPath == OnboardingScreen.path;
+
+        if (isOnboardingPath) {
+          // Перенаправляем авторизованного пользователя с onboarding на домашний экран
+          if (authorizationState.sessionInfo.user.role == UserRole.user) {
+            return CreateOrderScreen.location();
+          } else if (authorizationState.sessionInfo.user.role == UserRole.courier) {
+            return CourierHomeScreen.location();
+          }
+        }
       }
 
       return null;

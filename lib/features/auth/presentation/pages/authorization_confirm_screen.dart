@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/injection.dart';
-import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_entity.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/confirm_otp_form.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';

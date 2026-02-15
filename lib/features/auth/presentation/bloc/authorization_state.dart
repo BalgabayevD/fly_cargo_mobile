@@ -50,7 +50,7 @@ class AuthorizationOtpConfirmFailureState extends AuthorizationState {
 class AuthorizationLoadingState extends AuthorizationState {}
 
 class AuthorizedState extends AuthorizationState with EquatableMixin {
-  final UserSessionInfoModel sessionInfo;
+  final UserSessionInfoEntity sessionInfo;
 
   AuthorizedState(this.sessionInfo);
 
