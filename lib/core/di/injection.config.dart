@@ -17,6 +17,7 @@ import 'package:fly_cargo/core/di/package.dart' as _i51;
 import 'package:fly_cargo/core/di/requestable.dart' as _i129;
 import 'package:fly_cargo/core/di/shared_preferences_module.dart' as _i218;
 import 'package:fly_cargo/core/l10n/locale_cubit.dart' as _i596;
+import 'package:fly_cargo/core/location/location_service.dart' as _i287;
 import 'package:fly_cargo/features/accumulator/data/repositories/accumulator_rest_repository.dart'
     as _i539;
 import 'package:fly_cargo/features/accumulator/domain/repositories/accumulator_rest_repository.dart'
@@ -162,6 +163,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPreferencesModule.prefs,
       preResolve: true,
     );
+    gh.lazySingleton<_i287.LocationService>(() => _i287.LocationService());
     gh.lazySingleton<_i1051.AuthLocalDataSource>(
       () => _i1051.AuthLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/package.dart';
+import 'package:fly_cargo/core/location/location_service.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
 import 'package:fly_cargo/core/l10n/locale_cubit.dart';
 import 'package:fly_cargo/core/router/app_router.dart';
@@ -47,6 +48,10 @@ class _SapsanoAppState extends State<SapsanoApp> {
             if (state is AuthorizedState &&
                 state.sessionInfo.user.role == UserRole.user) {
               context.read<PaymentCardsBloc>().add(PaymentCardsLoadEvent());
+            }
+            if (state is AuthorizedState &&
+                state.sessionInfo.user.role == UserRole.courier) {
+              getIt<LocationService>().requestPermissionAndFetch();
             }
           },
         ),
