@@ -15,7 +15,9 @@ import 'package:fly_cargo/core/di/environment_variables.dart' as _i941;
 import 'package:fly_cargo/core/di/log_level.dart' as _i827;
 import 'package:fly_cargo/core/di/package.dart' as _i51;
 import 'package:fly_cargo/core/di/requestable.dart' as _i129;
+import 'package:fly_cargo/core/di/shared_preferences_module.dart' as _i218;
 import 'package:fly_cargo/core/l10n/locale_cubit.dart' as _i596;
+import 'package:fly_cargo/core/location/location_service.dart' as _i287;
 import 'package:fly_cargo/features/accumulator/data/repositories/accumulator_rest_repository.dart'
     as _i539;
 import 'package:fly_cargo/features/accumulator/domain/repositories/accumulator_rest_repository.dart'
@@ -26,8 +28,22 @@ import 'package:fly_cargo/features/accumulator/presentation/bloc/accumulator_sca
     as _i535;
 import 'package:fly_cargo/features/auth/data/repositories/authorization_repository.dart'
     as _i652;
+import 'package:fly_cargo/features/auth/data/sources/local/auth_local_data_source.dart'
+    as _i1051;
+import 'package:fly_cargo/features/auth/data/sources/remote/auth_remote_data_source.dart'
+    as _i822;
 import 'package:fly_cargo/features/auth/domain/repositories/authorization_repository.dart'
     as _i498;
+import 'package:fly_cargo/features/auth/domain/usecases/confirm_otp_usecase.dart'
+    as _i58;
+import 'package:fly_cargo/features/auth/domain/usecases/get_session_usecase.dart'
+    as _i825;
+import 'package:fly_cargo/features/auth/domain/usecases/request_otp_usecase.dart'
+    as _i142;
+import 'package:fly_cargo/features/auth/domain/usecases/sign_out_usecase.dart'
+    as _i1002;
+import 'package:fly_cargo/features/auth/domain/usecases/update_profile_usecase.dart'
+    as _i302;
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart'
     as _i550;
 import 'package:fly_cargo/features/courier_identify_order/presentation/bloc/courier_identify_order_bloc.dart'
@@ -122,6 +138,7 @@ import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit
     as _i182;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -132,6 +149,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final environmentVariablesModule = _$EnvironmentVariablesModule();
     final packageModule = _$PackageModule();
+    final sharedPreferencesModule = _$SharedPreferencesModule();
     final requestableModule = _$RequestableModule();
     await gh.factoryAsync<_i941.EnvironmentVariables>(
       () => environmentVariablesModule.environmentVariables(),
@@ -140,6 +158,14 @@ extension GetItInjectableX on _i174.GetIt {
     await gh.factoryAsync<_i51.Package>(
       () => packageModule.appConfig,
       preResolve: true,
+    );
+    await gh.lazySingletonAsync<_i460.SharedPreferences>(
+      () => sharedPreferencesModule.prefs,
+      preResolve: true,
+    );
+    gh.lazySingleton<_i287.LocationService>(() => _i287.LocationService());
+    gh.lazySingleton<_i1051.AuthLocalDataSource>(
+      () => _i1051.AuthLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
     gh.singleton<_i596.LocaleCubit>(
       () => _i596.LocaleCubit(gh<_i51.Package>()),
@@ -167,6 +193,12 @@ extension GetItInjectableX on _i174.GetIt {
         configuration: gh<_i156.Configuration>(),
       ),
     );
+    gh.lazySingleton<_i822.AuthRemoteDataSource>(
+      () => _i822.AuthRemoteDataSourceImpl(
+        gh<_i129.Requestable>(),
+        gh<_i156.Configuration>(),
+      ),
+    );
     gh.factory<_i176.CreateOrdersRestRepository>(
       () => _i203.CreateOrdersRestRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
@@ -176,16 +208,31 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i396.CreateOrdersUseCase>(
       () => _i396.CreateOrdersUseCase(gh<_i176.CreateOrdersRestRepository>()),
     );
+    gh.factory<_i498.AuthorizationRepository>(
+      () => _i652.AuthorizationRepositoryImpl(
+        gh<_i1051.AuthLocalDataSource>(),
+        gh<_i822.AuthRemoteDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i672.TariffsPersistRepository>(
       () => _i499.TariffsPersistRepositoryImpl(
         configuration: gh<_i156.Configuration>(),
       ),
     );
-    gh.factory<_i498.AuthorizationRepository>(
-      () => _i652.AuthorizationRepositoryImpl(
-        requestable: gh<_i129.Requestable>(),
-        configuration: gh<_i156.Configuration>(),
-      ),
+    gh.factory<_i58.ConfirmOtpUseCase>(
+      () => _i58.ConfirmOtpUseCase(gh<_i498.AuthorizationRepository>()),
+    );
+    gh.factory<_i825.GetSessionUseCase>(
+      () => _i825.GetSessionUseCase(gh<_i498.AuthorizationRepository>()),
+    );
+    gh.factory<_i142.RequestOtpUseCase>(
+      () => _i142.RequestOtpUseCase(gh<_i498.AuthorizationRepository>()),
+    );
+    gh.factory<_i1002.SignOutUseCase>(
+      () => _i1002.SignOutUseCase(gh<_i498.AuthorizationRepository>()),
+    );
+    gh.factory<_i302.UpdateProfileUseCase>(
+      () => _i302.UpdateProfileUseCase(gh<_i498.AuthorizationRepository>()),
     );
     gh.lazySingleton<_i193.CitiesPersistRepository>(
       () => _i166.CitiesPersistRepositoryImpl(
@@ -208,13 +255,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i630.ClientOrdersPersistRepositoryImpl(
         gh<_i129.Requestable>(),
         gh<_i156.Configuration>(),
-      ),
-    );
-    gh.factory<_i550.AuthorizationBloc>(
-      () => _i550.AuthorizationBloc(
-        authorizationRepository: gh<_i498.AuthorizationRepository>(),
-        configuration: gh<_i156.Configuration>(),
-        requestable: gh<_i129.Requestable>(),
       ),
     );
     gh.factory<_i653.ClientOrdersRestRepository>(
@@ -278,6 +318,17 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i756.OrderPhotosRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i550.AuthorizationBloc>(
+      () => _i550.AuthorizationBloc(
+        getSessionUseCase: gh<_i825.GetSessionUseCase>(),
+        requestOtpUseCase: gh<_i142.RequestOtpUseCase>(),
+        confirmOtpUseCase: gh<_i58.ConfirmOtpUseCase>(),
+        updateProfileUseCase: gh<_i302.UpdateProfileUseCase>(),
+        signOutUseCase: gh<_i1002.SignOutUseCase>(),
+        configuration: gh<_i156.Configuration>(),
+        requestable: gh<_i129.Requestable>(),
       ),
     );
     gh.factory<_i103.OrderPhotosUseCase>(
@@ -345,5 +396,7 @@ extension GetItInjectableX on _i174.GetIt {
 class _$EnvironmentVariablesModule extends _i941.EnvironmentVariablesModule {}
 
 class _$PackageModule extends _i51.PackageModule {}
+
+class _$SharedPreferencesModule extends _i218.SharedPreferencesModule {}
 
 class _$RequestableModule extends _i129.RequestableModule {}

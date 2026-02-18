@@ -8,8 +8,8 @@ class AccumulatorOrderCardWidget extends StatelessWidget {
   final VoidCallback? onTap;
 
   const AccumulatorOrderCardWidget({
-    super.key,
     required this.order,
+    super.key,
     this.onTap,
   });
 

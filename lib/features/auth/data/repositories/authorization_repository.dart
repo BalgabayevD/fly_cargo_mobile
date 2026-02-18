@@ -1,78 +1,85 @@
-import 'package:fly_cargo/core/di/configuration.dart';
-import 'package:fly_cargo/core/di/requestable.dart';
-import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
+import 'package:fly_cargo/features/auth/data/mappers/user_session_mapper.dart';
+import 'package:fly_cargo/features/auth/data/sources/local/auth_local_data_source.dart';
+import 'package:fly_cargo/features/auth/data/sources/remote/auth_remote_data_source.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_session_entity.dart';
 import 'package:fly_cargo/features/auth/domain/repositories/authorization_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthorizationRepository)
 class AuthorizationRepositoryImpl implements AuthorizationRepository {
-  final Requestable requestable;
-  final Configuration configuration;
+  final AuthLocalDataSource _localDataSource;
+  final AuthRemoteDataSource _remoteDataSource;
 
-  const AuthorizationRepositoryImpl({
-    required this.requestable,
-    required this.configuration,
-  });
-
-  String get _ => configuration.environmentVariables.gatewayBaseUrl;
+  const AuthorizationRepositoryImpl(
+    this._localDataSource,
+    this._remoteDataSource,
+  );
 
   @override
-  Future<UserSessionInfoModel?> getSession() async {
-    return requestable.dio.get('$_/authorization/get-session').then((response) {
-      if (response.data == null) return null;
-
-      final model = UserSessionInfoModel.fromJson(response.data);
-
-      final accessToken = response.headers.value('set-auth-token');
-
-      if (accessToken != null) {
-        return model.copyWith(accessToken: accessToken);
-      } else {
-        return model;
-      }
-    });
-  }
-
-  @override
-  Future<dynamic> requestOTP(String phoneNumber) async {
-    return requestable.dio.post(
-      '$_/authorization/phone-number/send-otp',
-      data: {'phoneNumber': phoneNumber},
-    );
-  }
-
-  @override
-  Future<bool> updateProfile(String name) async {
+  Future<UserSessionInfoEntity?> getCachedSession() async {
     try {
-      final response = await requestable.dio.post<bool>(
-        '$_/user/profile/edit/username',
-        data: {'name': name},
-      );
+      final model = await _localDataSource.getCachedSession();
+      if (model == null) return null;
 
-      return response.data ?? false;
-    } catch (e) {
+      return UserSessionInfoMapper.toEntity(model);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Future<UserSessionInfoEntity?> getRemoteSession() async {
+    try {
+      final model = await _remoteDataSource.getSession();
+
+      if (model == null) {
+        return null;
+      }
+
+      final entity = UserSessionInfoMapper.toEntity(model);
+
+      return entity;
+    } catch (e, stackTrace) {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> saveSession(UserSessionInfoEntity session) async {
+    try {
+      final model = UserSessionInfoMapper.toModel(session);
+      await _localDataSource.cacheSession(model);
+    } catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<String?> confirmOTP(String phoneNumber, String code) async {
-    return requestable.dio
-        .post(
-          '$_/authorization/phone-number/verify',
-          data: {
-            'phoneNumber': phoneNumber,
-            'disableSession': false,
-            'code': code,
-          },
-        )
-        .then((response) {
-          return response.headers.value('set-auth-token');
-        });
+  Future<void> clearSession() async {
+    try {
+      await _localDataSource.clearSession();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
-  Future<dynamic> signOut() async {
-    return requestable.dio.post('$_/authorization/sign-out', data: {});
+  Future<void> requestOTP(String phoneNumber) async {
+    return _remoteDataSource.requestOTP(phoneNumber);
+  }
+
+  @override
+  Future<String?> confirmOTP(String phoneNumber, String code) async {
+    return _remoteDataSource.confirmOTP(phoneNumber, code);
+  }
+
+  @override
+  Future<bool> updateProfile(String name) async {
+    return _remoteDataSource.updateProfile(name);
+  }
+
+  @override
+  Future<void> signOut() async {
+    return _remoteDataSource.signOut();
   }
 }

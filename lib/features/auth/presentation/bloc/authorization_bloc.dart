@@ -4,8 +4,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
-import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
-import 'package:fly_cargo/features/auth/domain/repositories/authorization_repository.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_session_entity.dart';
+import 'package:fly_cargo/features/auth/domain/usecases/confirm_otp_usecase.dart';
+import 'package:fly_cargo/features/auth/domain/usecases/get_session_usecase.dart';
+import 'package:fly_cargo/features/auth/domain/usecases/request_otp_usecase.dart';
+import 'package:fly_cargo/features/auth/domain/usecases/sign_out_usecase.dart';
+import 'package:fly_cargo/features/auth/domain/usecases/update_profile_usecase.dart';
 import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:injectable/injectable.dart';
@@ -15,19 +19,34 @@ part 'authorization_state.dart';
 
 @injectable
 class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
-  final AuthorizationRepository authorizationRepository;
-  final Configuration configuration;
-  final Requestable requestable;
+  final GetSessionUseCase _getSessionUseCase;
+  final RequestOtpUseCase _requestOtpUseCase;
+  final ConfirmOtpUseCase _confirmOtpUseCase;
+  final UpdateProfileUseCase _updateProfileUseCase;
+  final SignOutUseCase _signOutUseCase;
+  final Configuration _configuration;
+  final Requestable _requestable;
 
   AuthorizationBloc({
-    required this.authorizationRepository,
-    required this.configuration,
-    required this.requestable,
-  }) : super(
-         InitialAuthorizationState(
-           configuration.getInitialPath ?? OnboardingScreen.location(),
-         ),
-       ) {
+    required GetSessionUseCase getSessionUseCase,
+    required RequestOtpUseCase requestOtpUseCase,
+    required ConfirmOtpUseCase confirmOtpUseCase,
+    required UpdateProfileUseCase updateProfileUseCase,
+    required SignOutUseCase signOutUseCase,
+    required Configuration configuration,
+    required Requestable requestable,
+  })  : _getSessionUseCase = getSessionUseCase,
+        _requestOtpUseCase = requestOtpUseCase,
+        _confirmOtpUseCase = confirmOtpUseCase,
+        _updateProfileUseCase = updateProfileUseCase,
+        _signOutUseCase = signOutUseCase,
+        _configuration = configuration,
+        _requestable = requestable,
+        super(
+          InitialAuthorizationState(
+            configuration.getInitialPath ?? OnboardingScreen.location(),
+          ),
+        ) {
     on<AuthorizationGetSessionEvent>(_getSession);
     on<AuthorizationRequestOtpEvent>(_requestOtp);
     on<AuthorizationConfirmOtpEvent>(_confirmOtp);
@@ -40,15 +59,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     Emitter<AuthorizationState> emit,
   ) async {
     try {
-      final isSuccess = await authorizationRepository.updateProfile(
-        event.name,
-      );
-
-      if (!isSuccess) {
-        return;
-      }
-
-      final session = await authorizationRepository.getSession();
+      final session = await _updateProfileUseCase(event.name);
 
       if (session != null) {
         emit(AuthorizedState(session));
@@ -61,9 +72,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     Emitter<AuthorizationState> emit,
   ) async {
     try {
-      emit(AuthorizationLoadingState());
-
-      final session = await authorizationRepository.getSession();
+      final session = await _getSessionUseCase();
 
       if (session != null) {
         emit(AuthorizedState(session));
@@ -82,7 +91,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     try {
       emit(AuthorizationOtpRequestingState(event.phoneNumber));
 
-      await authorizationRepository.requestOTP(unmaskPhone(event.phoneNumber));
+      await _requestOtpUseCase(unmaskPhone(event.phoneNumber));
 
       emit(AuthorizationOtpRequestedState(event.phoneNumber));
     } catch (_) {
@@ -97,14 +106,14 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     try {
       emit(AuthorizationOtpConfirmingState(event.phoneNumber, event.code));
 
-      final token = await authorizationRepository.confirmOTP(
+      final token = await _confirmOtpUseCase(
         unmaskPhone(event.phoneNumber),
         event.code,
       );
 
       if (token != null) {
-        await configuration.package.setAccessToken(token);
-        requestable.addAuthorizationHeader(token);
+        await _configuration.package.setAccessToken(token);
+        _requestable.addAuthorizationHeader(token);
       }
 
       emit(AuthorizationOtpConfirmedState(event.phoneNumber, event.code));
@@ -118,12 +127,12 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     Emitter<AuthorizationState> emit,
   ) async {
     try {
-      await authorizationRepository.signOut();
-      await configuration.package.removeAccessToken();
-      await requestable.clearCookies();
-      requestable.removeAuthorizationHeader();
+      await _signOutUseCase();
+      await _configuration.package.removeAccessToken();
+      await _requestable.clearCookies();
+      _requestable.removeAuthorizationHeader();
       emit(UnauthorizedState());
-      configuration.setInitialPath(OnboardingScreen.location());
+      _configuration.setInitialPath(OnboardingScreen.location());
     } catch (_) {
       emit(UnauthorizedState());
     }

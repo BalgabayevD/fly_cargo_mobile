@@ -53,5 +53,11 @@
 
     <key>NSPhotoLibraryUsageDescription</key>
     <string>This app needs photos access to get QR code from photo library</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Нам нужен доступ к вашему местоположению для определения ближайшего офиса и расчёта стоимости доставки</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Нам нужен доступ к вашему местоположению для определения ближайшего офиса и расчёта стоимости доставки</string>
 </dict>
 </plist>

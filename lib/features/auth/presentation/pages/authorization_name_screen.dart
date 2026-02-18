@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
-import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
+import 'package:fly_cargo/features/auth/domain/entities/user_entity.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/authorization_set_name_form.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_screen.dart';

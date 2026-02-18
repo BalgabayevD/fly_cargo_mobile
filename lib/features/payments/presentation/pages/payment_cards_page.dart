@@ -84,7 +84,7 @@ class _CardsList extends StatelessWidget {
     return ListView.separated(
       padding: EdgeInsets.symmetric(vertical: 16),
       itemCount: cards.length,
-      separatorBuilder: (_, __) => BeSpace(size: .sm),
+      separatorBuilder: (_, _) => BeSpace(size: .sm),
       itemBuilder: (context, index) {
         final card = cards[index];
         return PaymentCardTile(
