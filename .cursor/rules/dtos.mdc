@@ -1,6 +1,0 @@
----
-description: 
-globs: *_dto.dart
-alwaysApply: false
----
-- If there is a corresponding domain model, DTO should extend it

@@ -5,16 +5,29 @@ orbs:
   flutter: circleci/flutter@3.0.0
 
 jobs:
-  build:
+  build-android:
     docker:
       - image: ghcr.io/cirruslabs/flutter:latest
     working_directory: ~/sapsano_tsd_app
-
-    #    environment:
-    #      FLAVOR: "prod"
-
     steps:
       - checkout
+
+      - run:
+          name: Extract version from tag and patch pubspec.yaml
+          command: |
+            # Тег вида: test-android-1.2.3+45
+            VERSION=$(echo "$CIRCLE_TAG" | sed 's/test-android-//')
+            echo "Version from tag: $VERSION"
+
+            # Проверяем что версия не пустая
+            if [ -z "$VERSION" ]; then
+              echo "Could not extract version from tag: $CIRCLE_TAG"
+              exit 1
+            fi
+
+            # Патчим pubspec.yaml
+            sed -i "s/^version: .*/version: $VERSION/" pubspec.yaml
+            echo "pubspec.yaml version is now: $(grep '^version:' pubspec.yaml)"
 
       - restore_cache:
           keys:
@@ -54,16 +67,116 @@ jobs:
               --dart-define=FirebaseAppCheck=$FirebaseAppCheck \
               --release
 
-      #      - persist_to_workspace:
-      #        root: .
-      #        paths:
-      #            - build/app/outputs/flutter-apk/app-release.apk
+      - run:
+          name: Install Firebase CLI
+          command: curl -sL https://firebase.tools | bash
+
+      - run:
+          name: Upload to Firebase App Distribution
+          command: |
+            VERSION=$(echo "$CIRCLE_TAG" | sed 's/test-android-//')
+            firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+              --app $FIREBASE_ANDROID_APP_ID \
+              --token $FIREBASE_TOKEN \
+              --groups "testers" \
+              --release-notes "Android $VERSION"
 
       - store_artifacts:
           path: build/app/outputs/flutter-apk/app-release.apk
           destination: app-release.apk
 
+  build-ios:
+    macos:
+      xcode: "15.3.0"
+    working_directory: ~/sapsano_tsd_app
+    steps:
+      - checkout
+
+      - run:
+          name: Extract version from tag and patch pubspec.yaml
+          command: |
+            # Тег вида: test-ios-1.2.3+45
+            VERSION=$(echo "$CIRCLE_TAG" | sed 's/test-ios-//')
+            echo "Version from tag: $VERSION"
+
+            if [ -z "$VERSION" ]; then
+              echo "Could not extract version from tag: $CIRCLE_TAG"
+              exit 1
+            fi
+
+            sed -i "" "s/^version: .*/version: $VERSION/" pubspec.yaml
+            echo "pubspec.yaml version is now: $(grep '^version:' pubspec.yaml)"
+
+      - run:
+          name: Install Flutter
+          command: |
+            git clone https://github.com/flutter/flutter.git ~/flutter --depth 1 -b stable
+            echo 'export PATH="$PATH:$HOME/flutter/bin"' >> $BASH_ENV
+            source $BASH_ENV
+            flutter doctor
+
+      - restore_cache:
+          keys:
+            - pub-deps-ios-{{ checksum "pubspec.yaml" }}
+            - pub-deps-ios-
+
+      - run:
+          name: Install dependencies
+          command: flutter pub get
+
+      - save_cache:
+          paths:
+            - ~/.pub-cache
+          key: pub-deps-ios-{{ checksum "pubspec.yaml" }}
+
+      - run:
+          name: Install CocoaPods dependencies
+          command: |
+            cd ios
+            pod install
+
+      - run:
+          name: Build IPA
+          command: |
+            flutter build ipa \
+              --dart-define=AuthorizationBaseUrl=$AuthorizationBaseUrl \
+              --dart-define=OrderBaseUrl=$OrderBaseUrl \
+              --dart-define=GatewayBaseUrl=$GatewayBaseUrl \
+              --dart-define=FirebaseAppCheck=$FirebaseAppCheck \
+              --release \
+              --no-codesign
+
+      - run:
+          name: Install Firebase CLI
+          command: curl -sL https://firebase.tools | bash
+
+      - run:
+          name: Upload to Firebase App Distribution
+          command: |
+            VERSION=$(echo "$CIRCLE_TAG" | sed 's/test-ios-//')
+            firebase appdistribution:distribute build/ios/ipa/*.ipa \
+              --app $FIREBASE_IOS_APP_ID \
+              --token $FIREBASE_TOKEN \
+              --groups "testers" \
+              --release-notes "iOS $VERSION"
+
+      - store_artifacts:
+          path: build/ios/ipa
+          destination: ios-ipa
+
 workflows:
-  build_and_store:
+  build_on_tag:
     jobs:
-      - build
+      - build-android:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^test-android-\d+\.\d+\.\d+\+\d+$/
+
+      - build-ios:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^test-ios-\d+\.\d+\.\d+\+\d+$/
