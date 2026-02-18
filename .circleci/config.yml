@@ -61,8 +61,8 @@ jobs:
           name: Build APK
           command: |
             flutter build apk \
-              --dart-define=AuthorizationBaseUrl=$AuthorizationBaseUrl \
-              --dart-define=OrderBaseUrl=$OrderBaseUrl \
+              --dart-define=SentryDsn=$SentryDsn \
+              --dart-define=YandexMapKey=$YandexMapKey \
               --dart-define=GatewayBaseUrl=$GatewayBaseUrl \
               --dart-define=FirebaseAppCheck=$FirebaseAppCheck \
               --release
