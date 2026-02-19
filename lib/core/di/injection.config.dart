@@ -15,7 +15,6 @@ import 'package:fly_cargo/core/di/environment_variables.dart' as _i941;
 import 'package:fly_cargo/core/di/log_level.dart' as _i827;
 import 'package:fly_cargo/core/di/package.dart' as _i51;
 import 'package:fly_cargo/core/di/requestable.dart' as _i129;
-import 'package:fly_cargo/core/di/shared_preferences_module.dart' as _i218;
 import 'package:fly_cargo/core/l10n/locale_cubit.dart' as _i596;
 import 'package:fly_cargo/core/location/location_service.dart' as _i287;
 import 'package:fly_cargo/features/accumulator/data/repositories/accumulator_rest_repository.dart'
@@ -138,7 +137,6 @@ import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit
     as _i182;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -149,7 +147,6 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final environmentVariablesModule = _$EnvironmentVariablesModule();
     final packageModule = _$PackageModule();
-    final sharedPreferencesModule = _$SharedPreferencesModule();
     final requestableModule = _$RequestableModule();
     await gh.factoryAsync<_i941.EnvironmentVariables>(
       () => environmentVariablesModule.environmentVariables(),
@@ -159,16 +156,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => packageModule.appConfig,
       preResolve: true,
     );
-    await gh.lazySingletonAsync<_i460.SharedPreferences>(
-      () => sharedPreferencesModule.prefs,
-      preResolve: true,
-    );
     gh.lazySingleton<_i287.LocationService>(() => _i287.LocationService());
-    gh.lazySingleton<_i1051.AuthLocalDataSource>(
-      () => _i1051.AuthLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
-    );
     gh.singleton<_i596.LocaleCubit>(
       () => _i596.LocaleCubit(gh<_i51.Package>()),
+    );
+    gh.lazySingleton<_i1051.AuthLocalDataSource>(
+      () => _i1051.AuthLocalDataSourceImpl(gh<_i51.Package>()),
     );
     gh.factoryParam<_i156.Configuration, _i827.LogLevel?, dynamic>(
       (logLevel, _) => _i156.Configuration(
@@ -396,7 +389,5 @@ extension GetItInjectableX on _i174.GetIt {
 class _$EnvironmentVariablesModule extends _i941.EnvironmentVariablesModule {}
 
 class _$PackageModule extends _i51.PackageModule {}
-
-class _$SharedPreferencesModule extends _i218.SharedPreferencesModule {}
 
 class _$RequestableModule extends _i129.RequestableModule {}

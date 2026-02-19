@@ -43,7 +43,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
 
       return model;
-    } catch (e, stackTrace) {
+    } catch (_, _) {
       rethrow;
     }
   }

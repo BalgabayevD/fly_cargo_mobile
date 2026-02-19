@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:fly_cargo/core/di/package.dart';
 import 'package:fly_cargo/features/auth/data/models/user_session_model.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract interface class AuthLocalDataSource {
   Future<UserSessionInfoModel?> getCachedSession();
@@ -14,14 +14,14 @@ abstract interface class AuthLocalDataSource {
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   static const _sessionKey = 'user_session';
 
-  final SharedPreferences _prefs;
+  final Package package;
 
-  const AuthLocalDataSourceImpl(this._prefs);
+  const AuthLocalDataSourceImpl(this.package);
 
   @override
   Future<UserSessionInfoModel?> getCachedSession() async {
     try {
-      final sessionJson = _prefs.getString(_sessionKey);
+      final sessionJson = package.sharedPreferences.getString(_sessionKey);
       if (sessionJson == null) return null;
 
       final Map<String, dynamic> jsonMap = json.decode(sessionJson);
@@ -35,7 +35,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> cacheSession(UserSessionInfoModel session) async {
     try {
       final sessionJson = json.encode(session.toJson());
-      await _prefs.setString(_sessionKey, sessionJson);
+      await package.sharedPreferences.setString(_sessionKey, sessionJson);
     } catch (_) {
       rethrow;
     }
@@ -44,7 +44,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> clearSession() async {
     try {
-      await _prefs.remove(_sessionKey);
+      await package.sharedPreferences.remove(_sessionKey);
     } catch (_) {
       rethrow;
     }

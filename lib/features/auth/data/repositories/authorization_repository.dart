@@ -39,7 +39,7 @@ class AuthorizationRepositoryImpl implements AuthorizationRepository {
       final entity = UserSessionInfoMapper.toEntity(model);
 
       return entity;
-    } catch (e, stackTrace) {
+    } catch (_, _) {
       return null;
     }
   }
