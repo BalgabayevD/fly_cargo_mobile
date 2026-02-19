@@ -34,15 +34,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return null;
       }
 
-      final model = UserSessionInfoModel.fromJson(response.data);
-
-      final accessToken = response.headers.value('set-auth-token');
-
-      if (accessToken != null) {
-        return model.copyWith(accessToken: accessToken);
-      }
-
-      return model;
+      return UserSessionInfoModel.fromJson(response.data);
     } catch (_, _) {
       rethrow;
     }
