@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fly_cargo/core/connectivity/no_internet_banner_widget.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/package.dart';
@@ -86,6 +87,8 @@ class _SapsanoAppState extends State<SapsanoApp> {
                 backgroundColor: BeColors.white,
               ),
             ),
+            builder: (context, child) =>
+                NoInternetBannerWidget(child: child ?? const SizedBox.shrink()),
             routerConfig: _router,
             localizationsDelegates: const [
               AppLocalizations.delegate,

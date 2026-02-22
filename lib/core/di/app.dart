@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fly_cargo/core/connectivity/connectivity_cubit.dart';
 import 'package:fly_cargo/core/di/configuration.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/di/requestable.dart';
@@ -48,6 +49,10 @@ class App {
           BlocProvider<LocaleCubit>(create: (_) => getIt<LocaleCubit>()),
           BlocProvider<PaymentCardsBloc>(
             create: (_) => getIt<PaymentCardsBloc>(),
+          ),
+          BlocProvider<ConnectivityCubit>(
+            lazy: false,
+            create: (_) => ConnectivityCubit(),
           ),
         ],
         child: child,
