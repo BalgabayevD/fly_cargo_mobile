@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/page.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
+import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_list_screen.dart';
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan_screen.dart';
+import 'package:fly_cargo/features/shift/presentation/bloc/shift_bloc.dart';
+import 'package:fly_cargo/features/shift/presentation/bloc/shift_event.dart';
+import 'package:fly_cargo/features/shift/presentation/widgets/shift_status_widget.dart';
 import 'package:go_router/go_router.dart';
 
 class CourierHomeScreen extends StatelessWidget {
@@ -21,7 +26,10 @@ class CourierHomeScreen extends StatelessWidget {
   }) {
     return GoRoute(
       path: path,
-      builder: (context, state) => const CourierHomeScreen(),
+      builder: (context, state) => BlocProvider(
+        create: (_) => getIt<ShiftBloc>()..add(ShiftLoadStatusEvent()),
+        child: const CourierHomeScreen(),
+      ),
       routes: routes,
     );
   }
@@ -35,22 +43,24 @@ class CourierHomeScreen extends StatelessWidget {
       isBorder: true,
       backgroundColor: BeColors.white,
       child: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
-          BeSpace(size: .xl),
+          const ShiftStatusWidget(),
+          const BeSpace(size: .xl),
           BeButton(
             text: 'Найти заказ',
             color: .gray,
             variant: .solid,
             onPressed: () => context.push(CourierOrdersScanScreen.location()),
           ),
-          BeSpace(size: .xl),
+          const BeSpace(size: .xl),
           BeButton(
             text: 'Принять прибывшие заказы',
             color: .gray,
             variant: .solid,
             onPressed: () => context.push(AccumulatorScanScreen.location()),
           ),
-          BeSpace(size: .xl),
+          const BeSpace(size: .xl),
           BeButton(
             text: 'Прибывшие заказы',
             color: .gray,

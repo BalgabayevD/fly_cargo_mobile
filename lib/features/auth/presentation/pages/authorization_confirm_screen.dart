@@ -7,6 +7,7 @@ import 'package:fly_cargo/features/auth/domain/entities/user_entity.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
 import 'package:fly_cargo/features/auth/presentation/components/confirm_otp_form.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_access_denied_screen.dart';
 import 'package:fly_cargo/features/create_order/presentation/pages/create_order_screen.dart';
 import 'package:fly_cargo/features/home/presentation/screen/courier_home_screen.dart';
 import 'package:fly_cargo/features/onboarding/presentation/screen/onboarding_screen.dart';
@@ -62,6 +63,8 @@ class AuthorizationConfirmScreen extends StatelessWidget {
               } else {
                 context.go(AuthorizationNameScreen.location());
               }
+            } else if (state.sessionInfo.user.role != UserRole.user) {
+              context.go(AuthorizationAccessDeniedScreen.location());
             }
           }
 

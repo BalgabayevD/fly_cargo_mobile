@@ -133,6 +133,18 @@ import 'package:fly_cargo/features/payments/domain/usecases/payment_usecase.dart
     as _i863;
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart'
     as _i593;
+import 'package:fly_cargo/features/shift/data/repositories/shift_repository_impl.dart'
+    as _i161;
+import 'package:fly_cargo/features/shift/domain/repositories/shift_repository.dart'
+    as _i517;
+import 'package:fly_cargo/features/shift/domain/usecases/close_shift_use_case.dart'
+    as _i901;
+import 'package:fly_cargo/features/shift/domain/usecases/get_shift_status_use_case.dart'
+    as _i1061;
+import 'package:fly_cargo/features/shift/domain/usecases/open_shift_use_case.dart'
+    as _i685;
+import 'package:fly_cargo/features/shift/presentation/bloc/shift_bloc.dart'
+    as _i481;
 import 'package:fly_cargo/features/submit_order/presentation/bloc/courier_submit_order_bloc.dart'
     as _i182;
 import 'package:get_it/get_it.dart' as _i174;
@@ -196,6 +208,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i203.CreateOrdersRestRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
         configuration: gh<_i156.Configuration>(),
+      ),
+    );
+    gh.factory<_i517.ShiftRepository>(
+      () => _i161.ShiftRepositoryImpl(
+        gh<_i129.Requestable>(),
+        gh<_i156.Configuration>(),
       ),
     );
     gh.factory<_i396.CreateOrdersUseCase>(
@@ -307,6 +325,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i672.TariffsPersistRepository>(),
       ),
     );
+    gh.factory<_i901.CloseShiftUseCase>(
+      () => _i901.CloseShiftUseCase(gh<_i517.ShiftRepository>()),
+    );
+    gh.factory<_i1061.GetShiftStatusUseCase>(
+      () => _i1061.GetShiftStatusUseCase(gh<_i517.ShiftRepository>()),
+    );
+    gh.factory<_i685.OpenShiftUseCase>(
+      () => _i685.OpenShiftUseCase(gh<_i517.ShiftRepository>()),
+    );
     gh.factory<_i406.OrderPhotosRepository>(
       () => _i756.OrderPhotosRepositoryImpl(
         requestable: gh<_i129.Requestable>(),
@@ -369,6 +396,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i182.CourierSubmitOrderBloc>(
       () => _i182.CourierSubmitOrderBloc(gh<_i253.CourierOrdersUseCase>()),
+    );
+    gh.factory<_i481.ShiftBloc>(
+      () => _i481.ShiftBloc(
+        gh<_i1061.GetShiftStatusUseCase>(),
+        gh<_i685.OpenShiftUseCase>(),
+        gh<_i901.CloseShiftUseCase>(),
+      ),
     );
     gh.factory<_i435.CitiesBloc>(
       () => _i435.CitiesBloc(gh<_i542.CitiesUseCase>()),
