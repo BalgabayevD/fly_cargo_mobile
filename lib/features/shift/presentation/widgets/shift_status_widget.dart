@@ -14,26 +14,41 @@ class ShiftStatusWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ShiftBloc, ShiftState>(
       builder: (context, state) {
-        if (state is ShiftInitialState || state is ShiftLoadingState) {
-          return const _ShiftCardSkeleton();
-        }
+        final Widget child;
 
         if (state is ShiftErrorState) {
-          return _ShiftErrorCard(
+          child = _ShiftErrorCard(
+            key: const ValueKey('error'),
             message: state.message,
             onRetry: () => context.read<ShiftBloc>().add(ShiftLoadStatusEvent()),
           );
+        } else if (state is ShiftLoadedState) {
+          child = _ShiftCard(
+            key: const ValueKey('card'),
+            shift: state.shift,
+            isLoading: false,
+          );
+        } else if (state is ShiftActionInProgressState) {
+          child = _ShiftCard(
+            key: const ValueKey('card'),
+            shift: state.shift,
+            isLoading: true,
+          );
+        } else {
+          child = const SizedBox.shrink(key: ValueKey('empty'));
         }
 
-        if (state is ShiftLoadedState) {
-          return _ShiftCard(shift: state.shift, isLoading: false);
-        }
-
-        if (state is ShiftActionInProgressState) {
-          return _ShiftCard(shift: state.shift, isLoading: true);
-        }
-
-        return const SizedBox.shrink();
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 350),
+          transitionBuilder: (child, animation) => SizeTransition(
+            sizeFactor: CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOut,
+            ),
+            child: FadeTransition(opacity: animation, child: child),
+          ),
+          child: child,
+        );
       },
     );
   }
@@ -43,7 +58,7 @@ class _ShiftCard extends StatelessWidget {
   final ShiftEntity shift;
   final bool isLoading;
 
-  const _ShiftCard({required this.shift, required this.isLoading});
+  const _ShiftCard({required this.shift, required this.isLoading, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +103,30 @@ class _ShiftCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          BeButton(
-            text: isActive ? 'Закрыть' : 'Открыть',
-            color: isActive ? BeButtonColor.danger : BeButtonColor.primary,
-            variant: BeButtonVariant.solid,
-            size: BeButtonSize.sm,
-            isLoading: isLoading,
-            onPressed: isLoading
-                ? null
-                : () => context.read<ShiftBloc>().add(
-                      isActive ? ShiftCloseEvent() : ShiftOpenEvent(),
-                    ),
+          SizedBox(
+            width: 96,
+            child: BeButton(
+              text: isLoading ? null : (isActive ? 'Закрыть' : 'Открыть'),
+              color: isActive ? BeButtonColor.danger : BeButtonColor.primary,
+              variant: BeButtonVariant.solid,
+              size: BeButtonSize.sm,
+              onPressed: isLoading
+                  ? null
+                  : () => context.read<ShiftBloc>().add(
+                        isActive ? ShiftCloseEvent() : ShiftOpenEvent(),
+                      ),
+              child: isLoading
+                  ? SizedBox.square(
+                      dimension: 16,
+                      child: CircularProgressIndicator(
+                        color: BeColors.white,
+                        strokeWidth: 3,
+                        backgroundColor: BeColors.none,
+                        strokeCap: StrokeCap.round,
+                      ),
+                    )
+                  : null,
+            ),
           ),
         ],
       ),
@@ -124,35 +152,11 @@ class _ShiftStatusIndicator extends StatelessWidget {
   }
 }
 
-class _ShiftCardSkeleton extends StatelessWidget {
-  const _ShiftCardSkeleton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 68,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: BeColors.surface2,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: BeColors.border, width: 1),
-      ),
-      child: const Center(
-        child: SizedBox(
-          width: 20,
-          height: 20,
-          child: CircularProgressIndicator(strokeWidth: 2),
-        ),
-      ),
-    );
-  }
-}
-
 class _ShiftErrorCard extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
 
-  const _ShiftErrorCard({required this.message, required this.onRetry});
+  const _ShiftErrorCard({required this.message, required this.onRetry, super.key});
 
   @override
   Widget build(BuildContext context) {

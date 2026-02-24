@@ -13,27 +13,37 @@ class ShiftRepositoryImpl implements ShiftRepository {
 
   String get _baseUrl => _configuration.environmentVariables.gatewayBaseUrl;
 
+  ShiftEntity _mapShift(Map<String, Object?> data) {
+    return ShiftEntity(
+      isActive: data['close'] == null,
+      openedAt: data['open'] as String?,
+      closedAt: data['close'] as String?,
+    );
+  }
+
   @override
   Future<ShiftEntity> getStatus() async {
     final response = await _requestable.dio.get(
-      '$_baseUrl/api/v1/user/shift/status',
+      '$_baseUrl/shift/status',
     );
-    return ShiftEntity.fromJson(response.data['data'] as Map<String, Object?>);
+    final data = response.data['data'];
+    if (data == null) return const ShiftEntity(isActive: false);
+    return _mapShift(data as Map<String, Object?>);
   }
 
   @override
   Future<ShiftEntity> open() async {
     final response = await _requestable.dio.post(
-      '$_baseUrl/api/v1/user/shift/open',
+      '$_baseUrl/shift/open',
     );
-    return ShiftEntity.fromJson(response.data['data'] as Map<String, Object?>);
+    return _mapShift(response.data['data'] as Map<String, Object?>);
   }
 
   @override
   Future<ShiftEntity> close() async {
     final response = await _requestable.dio.post(
-      '$_baseUrl/api/v1/user/shift/close',
+      '$_baseUrl/shift/close',
     );
-    return ShiftEntity.fromJson(response.data['data'] as Map<String, Object?>);
+    return _mapShift(response.data['data'] as Map<String, Object?>);
   }
 }
