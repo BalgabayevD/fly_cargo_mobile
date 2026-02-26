@@ -9,6 +9,7 @@ import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_or
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_scan_screen.dart';
 import 'package:fly_cargo/features/auth/domain/entities/user_entity.dart';
 import 'package:fly_cargo/features/auth/presentation/bloc/authorization_bloc.dart';
+import 'package:fly_cargo/features/auth/presentation/pages/authorization_access_denied_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_confirm_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_name_screen.dart';
 import 'package:fly_cargo/features/auth/presentation/pages/authorization_request_screen.dart';
@@ -130,6 +131,7 @@ GoRouter createRouter(
       AuthorizationRequestScreen.route(),
       AuthorizationConfirmScreen.route(),
       AuthorizationNameScreen.route(),
+      AuthorizationAccessDeniedScreen.route(),
       UiKitScreen.route(),
 
       MainScaffoldShell.route(

@@ -3,6 +3,8 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
+  - connectivity_plus (0.0.1):
+    - Flutter
   - Firebase/CoreOnly (12.8.0):
     - FirebaseCore (~> 12.8.0)
   - Firebase/Crashlytics (12.8.0):
@@ -238,6 +240,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -289,6 +292,8 @@ SPEC REPOS:
     - Sentry
 
 EXTERNAL SOURCES:
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_app_check:
@@ -328,6 +333,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
+  connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   Firebase: 9a58fdbc9d8655ed7b79a19cf9690bb007d3d46d
   firebase_analytics: b5a19eaf3e4bf4187b0815ef4850b8916e2bc549
   firebase_app_check: 21e404a225ce29ae2ec6dbad503e83fd1c4ac1fb
