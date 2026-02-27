@@ -116,6 +116,14 @@ class ClientOrderPage extends StatelessWidget {
                   }),
 
                   FlatListTile(
+                    label: context.l10n.sender,
+                    value:
+                        '${state.order.fromName ?? ''}, ${state.order.fromPhone ?? ''}',
+                  ),
+
+                  BeSpace(size: .md),
+
+                  FlatListTile(
                     label: context.l10n.recipientLabel,
                     value:
                         '${state.order.toName ?? ''}, ${state.order.toPhone ?? ''}',

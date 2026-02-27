@@ -36,105 +36,60 @@ class ClientOrderLoadedState extends ClientOrderState with EquatableMixin {
   List<TimelineData> get timeline {
     List<TimelineData> values = [];
 
-    if (order.histories.any((e) => e.status == 'submitted')) {
-      final submitted = order.histories.firstWhere(
-        (e) => e.status == 'submitted',
-      );
-      values.add(
-        TimelineData(
-          isFirst: true,
-          isLast: false,
-          isSelected: true,
-          title: 'Посылка отправлена',
-          description: formatDate(submitted.createdAt!),
-        ),
-      );
-    } else {
-      values.add(
-        TimelineData(
-          isFirst: true,
-          isLast: false,
-          isSelected: false,
-          title: 'Посылка отправлена',
-          description: '',
-        ),
-      );
-    }
-
-    if (order.histories.any((e) => e.status == 'accounted')) {
-      final accounted = order.histories.firstWhere(
-        (e) => e.status == 'accounted',
-      );
-      values.add(
-        TimelineData(
-          isFirst: false,
-          isLast: false,
-          isSelected: true,
-          title: 'Обработан на складе',
-          description: formatDate(accounted.createdAt!),
-        ),
-      );
-    } else {
-      values.add(
-        TimelineData(
-          isFirst: false,
-          isLast: false,
-          isSelected: false,
-          title: 'Обработан на складе',
-          description: '',
-        ),
-      );
-    }
-
-    if (order.histories.any((e) => e.status == 'dispatched')) {
-      final dispatched = order.histories.firstWhere(
-        (e) => e.status == 'dispatched',
-      );
-      values.add(
-        TimelineData(
-          isFirst: false,
-          isLast: false,
-          isSelected: true,
-          title: 'Доставка в г. ${order.toCity?.name}',
-          description: formatDate(dispatched.createdAt!),
-        ),
-      );
-    } else {
-      values.add(
-        TimelineData(
-          isFirst: false,
-          isLast: false,
-          isSelected: false,
-          title: 'Доставка в г. ${order.toCity?.name}',
-          description: '',
-        ),
-      );
-    }
-
-    if (order.histories.any((e) => e.status == 'arrived')) {
-      final arrived = order.histories.firstWhere(
-        (e) => e.status == 'arrived',
-      );
-      values.add(
-        TimelineData(
-          isFirst: false,
-          isLast: true,
-          isSelected: true,
-          title: 'Передано курьеру',
-          description: formatDate(arrived.createdAt!),
-        ),
-      );
-    } else {
-      values.add(
-        TimelineData(
-          isFirst: false,
-          isLast: true,
-          isSelected: false,
-          title: 'Передано курьеру',
-          description: '',
-        ),
-      );
-    }
+    values.add(
+      TimelineData(
+        isFirst: true,
+        isLast: false,
+        isSelected: order.isAccounted,
+        title: 'Заказ получен в г. ${order.fromCity?.name}',
+        description: '',
+      ),
+    );
+    values.add(
+      TimelineData(
+        isFirst: false,
+        isLast: false,
+        isSelected: order.isChecked,
+        title: 'Заказ прошел обработку',
+        description: '',
+      ),
+    );
+    values.add(
+      TimelineData(
+        isFirst: false,
+        isLast: false,
+        isSelected: order.isTransit,
+        title: 'Заказ отгружен',
+        description: '',
+      ),
+    );
+    values.add(
+      TimelineData(
+        isFirst: false,
+        isLast: false,
+        isSelected: order.isArrived,
+        title: 'Заказ прибыл в г. ${order.toCity?.name}',
+        description: '',
+      ),
+    );
+    values.add(
+      TimelineData(
+        isFirst: false,
+        isLast: false,
+        isSelected: order.isAssigned,
+        title: 'Заказ выдан на доставку',
+        description: '',
+      ),
+    );
+    values.add(
+      TimelineData(
+        isFirst: false,
+        isLast: true,
+        isSelected: true,
+        title: 'Заказ завершен',
+        description: '',
+      ),
+    );
 
     return values;
   }

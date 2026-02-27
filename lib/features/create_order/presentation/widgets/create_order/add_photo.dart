@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fly_cargo/features/create_order/presentation/bloc/photos_bloc.dart';
@@ -17,7 +18,11 @@ class AddPhoto extends StatelessWidget {
 
   Future<void> onTap(BuildContext context) async {
     try {
-      final source = await dialog.open(context);
+      ImageSource? source = ImageSource.camera;
+
+      if (kDebugMode) {
+        source = await dialog.open(context);
+      }
 
       if (source != null) {
         final image = await imagePicker.pickImage(source: source);

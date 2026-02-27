@@ -156,6 +156,8 @@ enum OrderStatus {
 
 @freezed
 sealed class OrderEntity with _$OrderEntity {
+  const OrderEntity._();
+
   const factory OrderEntity({
     required int id,
     required String createdAt,
@@ -217,6 +219,38 @@ sealed class OrderEntity with _$OrderEntity {
 
   factory OrderEntity.fromJson(Map<String, Object?> json) =>
       _$OrderEntityFromJson(json);
+
+  bool get isAccounted => histories.any((e) => e.status == 'accounted');
+  bool get isChecked => histories.any((e) => e.status == 'checked');
+  bool get isTransit => histories.any((e) => e.status == 'transit');
+  bool get isArrived => histories.any((e) => e.status == 'arrived');
+  bool get isAssigned => histories.any((e) => e.status == 'assigned');
+  bool get isCompleted => histories.any((e) => e.status == 'completed');
+
+  String toStatus() {
+    String value = '';
+
+    if (isAccounted) {
+      value = 'Заказ получен в г. ${fromCity?.name}';
+    }
+    if (isChecked) {
+      value = 'Заказ прошел обработку';
+    }
+    if (isTransit) {
+      value = 'Заказ отгружен';
+    }
+    if (isArrived) {
+      value = 'Заказ прибыл в г. ${toCity?.name}';
+    }
+    if (isAssigned) {
+      value = 'Заказ выдан на доставку';
+    }
+    if (isCompleted) {
+      value = 'Заказ завершен';
+    }
+
+    return value;
+  }
 }
 
 @freezed

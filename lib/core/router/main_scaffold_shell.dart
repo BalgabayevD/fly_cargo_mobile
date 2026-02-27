@@ -78,11 +78,11 @@ class MainScaffoldShell extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: const HeroIcon(
-                  HeroIcons.queueList,
+                  HeroIcons.truck,
                   size: 24,
                 ),
                 activeIcon: const HeroIcon(
-                  HeroIcons.queueList,
+                  HeroIcons.truck,
                   style: .solid,
                   size: 24,
                 ),

@@ -15,28 +15,40 @@ class CreateOrdersForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      keyboardDismissBehavior: .onDrag,
+    return Stack(
       children: [
-        PhotoGridSection(),
-        BeSpace(size: .md),
-        PhotosStatusChip(),
-        BeSpace(size: .xxxl),
-        SelectLocation(type: .from),
-        BeSpace(size: .md),
-        SelectLocation(type: .to),
-        BeSpace(size: .md),
-        SelectRecipient(),
-        BeSpace(size: .xxxl),
-        SelectTariffs(),
-        CreateOrderWeight(),
-        BeSpace(size: .md),
-        CreateOrderDescription(),
-        BeSpace(size: .md),
-        CreateOrderPaySide(),
-        BeSpace(size: .xxxl),
-        CreateOrdersSubmitButton(),
-        BeSpace(size: .xxxl),
+        ListView(
+          keyboardDismissBehavior: .onDrag,
+          children: [
+            PhotoGridSection(),
+            BeSpace(size: .md),
+            PhotosStatusChip(),
+            BeSpace(size: .md),
+            SelectLocation(type: .from),
+            BeSpace(size: .md),
+            SelectLocation(type: .to),
+            BeSpace(size: .xxxl),
+            SelectRecipient(),
+            BeSpace(size: .md),
+            CreateOrderPaySide(),
+            BeSpace(size: .xxxl),
+            SelectTariffs(),
+            CreateOrderWeight(),
+            BeSpace(size: .md),
+            CreateOrderDescription(),
+            BeSpace(size: .xxxl),
+            BeSpace(size: .xxxl),
+            BeSpace(size: .xxxl),
+          ],
+        ),
+
+        Align(
+          alignment: .bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: CreateOrdersSubmitButton(),
+          ),
+        ),
       ],
     );
   }
