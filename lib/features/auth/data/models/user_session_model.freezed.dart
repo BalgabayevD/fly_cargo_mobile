@@ -601,7 +601,7 @@ as String,
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String? get name; String? get email; bool get emailVerified; String? get image; String get createdAt; String get updatedAt; String? get phoneNumber; bool get phoneNumberVerified; UserRole get role; bool get banned; String? get banReason; String? get banExpires; String? get lang; String? get firstName; String? get lastName; String? get middleName; String? get birthDay; String? get city; String? get type; String? get iin; String? get bin;
+ String get id; String? get name; String? get email; bool get emailVerified; String? get image; String get createdAt; String get updatedAt; String? get phoneNumber; bool get phoneNumberVerified; UserRole get role; bool get banned; String? get banReason; String? get banExpires; String? get lang; String? get firstName; String? get lastName; String? get middleName; String? get birthDay; int? get city; String? get type; String? get iin; String? get bin;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -634,7 +634,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String? name, String? email, bool emailVerified, String? image, String createdAt, String updatedAt, String? phoneNumber, bool phoneNumberVerified, UserRole role, bool banned, String? banReason, String? banExpires, String? lang, String? firstName, String? lastName, String? middleName, String? birthDay, String? city, String? type, String? iin, String? bin
+ String id, String? name, String? email, bool emailVerified, String? image, String createdAt, String updatedAt, String? phoneNumber, bool phoneNumberVerified, UserRole role, bool banned, String? banReason, String? banExpires, String? lang, String? firstName, String? lastName, String? middleName, String? birthDay, int? city, String? type, String? iin, String? bin
 });
 
 
@@ -672,7 +672,7 @@ as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: 
 as String?,middleName: freezed == middleName ? _self.middleName : middleName // ignore: cast_nullable_to_non_nullable
 as String?,birthDay: freezed == birthDay ? _self.birthDay : birthDay // ignore: cast_nullable_to_non_nullable
 as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
-as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as int?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String?,iin: freezed == iin ? _self.iin : iin // ignore: cast_nullable_to_non_nullable
 as String?,bin: freezed == bin ? _self.bin : bin // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -760,7 +760,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name,  String? email,  bool emailVerified,  String? image,  String createdAt,  String updatedAt,  String? phoneNumber,  bool phoneNumberVerified,  UserRole role,  bool banned,  String? banReason,  String? banExpires,  String? lang,  String? firstName,  String? lastName,  String? middleName,  String? birthDay,  String? city,  String? type,  String? iin,  String? bin)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name,  String? email,  bool emailVerified,  String? image,  String createdAt,  String updatedAt,  String? phoneNumber,  bool phoneNumberVerified,  UserRole role,  bool banned,  String? banReason,  String? banExpires,  String? lang,  String? firstName,  String? lastName,  String? middleName,  String? birthDay,  int? city,  String? type,  String? iin,  String? bin)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.name,_that.email,_that.emailVerified,_that.image,_that.createdAt,_that.updatedAt,_that.phoneNumber,_that.phoneNumberVerified,_that.role,_that.banned,_that.banReason,_that.banExpires,_that.lang,_that.firstName,_that.lastName,_that.middleName,_that.birthDay,_that.city,_that.type,_that.iin,_that.bin);case _:
@@ -781,7 +781,7 @@ return $default(_that.id,_that.name,_that.email,_that.emailVerified,_that.image,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name,  String? email,  bool emailVerified,  String? image,  String createdAt,  String updatedAt,  String? phoneNumber,  bool phoneNumberVerified,  UserRole role,  bool banned,  String? banReason,  String? banExpires,  String? lang,  String? firstName,  String? lastName,  String? middleName,  String? birthDay,  String? city,  String? type,  String? iin,  String? bin)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name,  String? email,  bool emailVerified,  String? image,  String createdAt,  String updatedAt,  String? phoneNumber,  bool phoneNumberVerified,  UserRole role,  bool banned,  String? banReason,  String? banExpires,  String? lang,  String? firstName,  String? lastName,  String? middleName,  String? birthDay,  int? city,  String? type,  String? iin,  String? bin)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
 return $default(_that.id,_that.name,_that.email,_that.emailVerified,_that.image,_that.createdAt,_that.updatedAt,_that.phoneNumber,_that.phoneNumberVerified,_that.role,_that.banned,_that.banReason,_that.banExpires,_that.lang,_that.firstName,_that.lastName,_that.middleName,_that.birthDay,_that.city,_that.type,_that.iin,_that.bin);case _:
@@ -801,7 +801,7 @@ return $default(_that.id,_that.name,_that.email,_that.emailVerified,_that.image,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name,  String? email,  bool emailVerified,  String? image,  String createdAt,  String updatedAt,  String? phoneNumber,  bool phoneNumberVerified,  UserRole role,  bool banned,  String? banReason,  String? banExpires,  String? lang,  String? firstName,  String? lastName,  String? middleName,  String? birthDay,  String? city,  String? type,  String? iin,  String? bin)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name,  String? email,  bool emailVerified,  String? image,  String createdAt,  String updatedAt,  String? phoneNumber,  bool phoneNumberVerified,  UserRole role,  bool banned,  String? banReason,  String? banExpires,  String? lang,  String? firstName,  String? lastName,  String? middleName,  String? birthDay,  int? city,  String? type,  String? iin,  String? bin)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.name,_that.email,_that.emailVerified,_that.image,_that.createdAt,_that.updatedAt,_that.phoneNumber,_that.phoneNumberVerified,_that.role,_that.banned,_that.banReason,_that.banExpires,_that.lang,_that.firstName,_that.lastName,_that.middleName,_that.birthDay,_that.city,_that.type,_that.iin,_that.bin);case _:
@@ -837,7 +837,7 @@ class _UserModel implements UserModel {
 @override final  String? lastName;
 @override final  String? middleName;
 @override final  String? birthDay;
-@override final  String? city;
+@override final  int? city;
 @override final  String? type;
 @override final  String? iin;
 @override final  String? bin;
@@ -875,7 +875,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? name, String? email, bool emailVerified, String? image, String createdAt, String updatedAt, String? phoneNumber, bool phoneNumberVerified, UserRole role, bool banned, String? banReason, String? banExpires, String? lang, String? firstName, String? lastName, String? middleName, String? birthDay, String? city, String? type, String? iin, String? bin
+ String id, String? name, String? email, bool emailVerified, String? image, String createdAt, String updatedAt, String? phoneNumber, bool phoneNumberVerified, UserRole role, bool banned, String? banReason, String? banExpires, String? lang, String? firstName, String? lastName, String? middleName, String? birthDay, int? city, String? type, String? iin, String? bin
 });
 
 
@@ -913,7 +913,7 @@ as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: 
 as String?,middleName: freezed == middleName ? _self.middleName : middleName // ignore: cast_nullable_to_non_nullable
 as String?,birthDay: freezed == birthDay ? _self.birthDay : birthDay // ignore: cast_nullable_to_non_nullable
 as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
-as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as int?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String?,iin: freezed == iin ? _self.iin : iin // ignore: cast_nullable_to_non_nullable
 as String?,bin: freezed == bin ? _self.bin : bin // ignore: cast_nullable_to_non_nullable
 as String?,

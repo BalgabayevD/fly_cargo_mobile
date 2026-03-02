@@ -39,7 +39,6 @@ class CourierOrdersPage extends StatelessWidget {
       child: BePage(
         title: 'Доставки',
         backgroundColor: BeColors.white,
-        automaticallyImplyLeading: false,
         centerTitle: true,
         isBorder: true,
         child: BlocBuilder<CourierOrdersBloc, CourierOrdersState>(

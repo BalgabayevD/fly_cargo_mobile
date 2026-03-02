@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
+import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/features/create_order/data/models/create_order_description.dart';
 import 'package:fly_cargo/features/create_order/data/models/create_order_pay_side.dart';
 import 'package:fly_cargo/features/create_order/data/models/create_order_weight.dart';
@@ -42,12 +44,20 @@ class CreateOrdersForm extends StatelessWidget {
           ],
         ),
 
-        Align(
-          alignment: .bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 16),
-            child: CreateOrdersSubmitButton(),
-          ),
+        KeyboardVisibilityBuilder(
+          builder: (context, isKeyboardVisible) {
+            if (isKeyboardVisible) {
+              return BeNothing();
+            }
+
+            return Align(
+              alignment: .bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: CreateOrdersSubmitButton(),
+              ),
+            );
+          },
         ),
       ],
     );

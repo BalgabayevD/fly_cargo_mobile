@@ -4,7 +4,8 @@ enum UserRole {
   admin,
   courier,
   operator,
-  user;
+  user
+  ;
 
   String get value => name;
 }
@@ -28,7 +29,7 @@ class UserEntity extends Equatable {
   final String? lastName;
   final String? middleName;
   final DateTime? birthDay;
-  final String? city;
+  final int? city;
   final String? type;
   final String? iin;
   final String? bin;
@@ -60,27 +61,27 @@ class UserEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        email,
-        emailVerified,
-        image,
-        createdAt,
-        updatedAt,
-        phoneNumber,
-        phoneNumberVerified,
-        role,
-        banned,
-        banReason,
-        banExpires,
-        lang,
-        firstName,
-        lastName,
-        middleName,
-        birthDay,
-        city,
-        type,
-        iin,
-        bin,
-      ];
+    id,
+    name,
+    email,
+    emailVerified,
+    image,
+    createdAt,
+    updatedAt,
+    phoneNumber,
+    phoneNumberVerified,
+    role,
+    banned,
+    banReason,
+    banExpires,
+    lang,
+    firstName,
+    lastName,
+    middleName,
+    birthDay,
+    city,
+    type,
+    iin,
+    bin,
+  ];
 }

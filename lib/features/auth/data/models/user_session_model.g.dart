@@ -63,7 +63,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   lastName: json['lastName'] as String?,
   middleName: json['middleName'] as String?,
   birthDay: json['birthDay'] as String?,
-  city: json['city'] as String?,
+  city: (json['city'] as num?)?.toInt(),
   type: json['type'] as String?,
   iin: json['iin'] as String?,
   bin: json['bin'] as String?,

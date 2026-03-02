@@ -4,7 +4,6 @@ String unmaskPhone(String? phone) {
 }
 
 String formatOrderId(int number) {
-  String numStr = number.toString().padLeft(11, '0');
-
-  return '${numStr[0]}-${numStr.substring(1, 4)}-${numStr.substring(4, 7)}-${numStr.substring(7, 11)}';
+  String numStr = number.toString().padLeft(9, '0');
+  return '${numStr.substring(0, 3)}-${numStr.substring(3, 6)}-${numStr.substring(6, 9)}';
 }

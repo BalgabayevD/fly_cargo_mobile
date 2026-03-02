@@ -64,7 +64,7 @@ abstract class UserModel with _$UserModel {
     required String? lastName,
     required String? middleName,
     required String? birthDay,
-    required String? city,
+    required int? city,
     required String? type,
     required String? iin,
     required String? bin,

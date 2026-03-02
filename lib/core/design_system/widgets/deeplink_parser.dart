@@ -6,10 +6,7 @@ class OrderPaymentLink extends DeepLink {
   final int orderId;
   final PaymentStatus status;
 
-  const OrderPaymentLink({
-    required this.orderId,
-    required this.status,
-  });
+  const OrderPaymentLink({required this.orderId, required this.status});
 
   @override
   String toString() => 'OrderPaymentLink(orderId: $orderId, status: $status)';
@@ -18,9 +15,7 @@ class OrderPaymentLink extends DeepLink {
 class OrderIdentificationLink extends DeepLink {
   final String identification;
 
-  const OrderIdentificationLink({
-    required this.identification,
-  });
+  const OrderIdentificationLink({required this.identification});
 
   @override
   String toString() =>
@@ -44,9 +39,7 @@ class OrderProcessingDirectionLink extends DeepLink {
 class OrderAccumulatorIdentificationLink extends DeepLink {
   final String accumulatorId;
 
-  const OrderAccumulatorIdentificationLink({
-    required this.accumulatorId,
-  });
+  const OrderAccumulatorIdentificationLink({required this.accumulatorId});
 
   @override
   String toString() =>
@@ -69,6 +62,26 @@ enum PaymentStatus {
         return PaymentStatus.unknown;
     }
   }
+}
+
+class UserIdentificationLink extends DeepLink {
+  final String userId;
+
+  const UserIdentificationLink({required this.userId});
+
+  @override
+  String toString() => 'UserIdentificationLink(userId: $userId)';
+}
+
+class UserRoleIdentificationLink extends DeepLink {
+  final String role;
+  final String userId;
+
+  const UserRoleIdentificationLink({required this.role, required this.userId});
+
+  @override
+  String toString() =>
+      'UserRoleIdentificationLink(role: $role, userId: $userId)';
 }
 
 class UnknownDeepLink extends DeepLink {
@@ -130,6 +143,21 @@ class DeepLinkParser {
         return _parseOrderPaymentLink(segments, url);
       }
 
+      // hooks/users/identification/role/{role}/{userId}
+      if (segments.length >= 6 &&
+          segments[1] == 'users' &&
+          segments[2] == 'identification' &&
+          segments[3] == 'role') {
+        return _parseUserRoleIdentificationLink(segments, url);
+      }
+
+      // hooks/users/identification/{userId}
+      if (segments.length >= 4 &&
+          segments[1] == 'users' &&
+          segments[2] == 'identification') {
+        return _parseUserIdentificationLink(segments, url);
+      }
+
       return UnknownDeepLink(url);
     } catch (e) {
       return null;
@@ -151,10 +179,7 @@ class DeepLinkParser {
       final statusString = segments[6];
       final status = PaymentStatus.fromString(statusString);
 
-      return OrderPaymentLink(
-        orderId: orderId,
-        status: status,
-      );
+      return OrderPaymentLink(orderId: orderId, status: status);
     } catch (e) {
       return null;
     }
@@ -202,9 +227,7 @@ class DeepLinkParser {
         return null;
       }
 
-      return OrderAccumulatorIdentificationLink(
-        accumulatorId: accumulatorId,
-      );
+      return OrderAccumulatorIdentificationLink(accumulatorId: accumulatorId);
     } catch (e) {
       return null;
     }
@@ -226,9 +249,43 @@ class DeepLinkParser {
         return null;
       }
 
-      return OrderIdentificationLink(
-        identification: identification,
-      );
+      return OrderIdentificationLink(identification: identification);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  UserIdentificationLink? _parseUserIdentificationLink(
+    List<String> segments,
+    String url,
+  ) {
+    try {
+      // hooks/users/identification/{userId}
+      if (segments.length != 4) return null;
+
+      final userId = segments[3];
+      if (userId.isEmpty) return null;
+
+      return UserIdentificationLink(userId: userId);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  UserRoleIdentificationLink? _parseUserRoleIdentificationLink(
+    List<String> segments,
+    String url,
+  ) {
+    try {
+      // hooks/users/identification/role/{role}/{userId}
+      if (segments.length != 6) return null;
+
+      final role = segments[4];
+      final userId = segments[5];
+
+      if (role.isEmpty || userId.isEmpty) return null;
+
+      return UserRoleIdentificationLink(role: role, userId: userId);
     } catch (e) {
       return null;
     }

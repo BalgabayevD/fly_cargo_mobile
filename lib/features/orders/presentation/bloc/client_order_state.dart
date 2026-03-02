@@ -85,7 +85,7 @@ class ClientOrderLoadedState extends ClientOrderState with EquatableMixin {
       TimelineData(
         isFirst: false,
         isLast: true,
-        isSelected: true,
+        isSelected: order.isCompleted,
         title: 'Заказ завершен',
         description: '',
       ),

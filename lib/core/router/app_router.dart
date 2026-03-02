@@ -1,6 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:fly_cargo/core/router/courier_scaffold_shell.dart';
 import 'package:fly_cargo/core/router/go_router_refresh_stream.dart';
 import 'package:fly_cargo/core/router/main_scaffold_shell.dart';
 import 'package:fly_cargo/features/accumulator/presentation/pages/accumulator_list_screen.dart';
@@ -27,6 +26,7 @@ import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_scan
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/payment_cards_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/contacts_page.dart';
+import 'package:fly_cargo/features/profile/presentation/pages/courier_qr_screen.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/courier_settings_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/legal_entities_page.dart';
 import 'package:fly_cargo/features/profile/presentation/pages/notifications_page.dart';
@@ -118,7 +118,8 @@ GoRouter createRouter(
           // Перенаправляем авторизованного пользователя с onboarding на домашний экран
           if (authorizationState.sessionInfo.user.role == UserRole.user) {
             return CreateOrderScreen.location();
-          } else if (authorizationState.sessionInfo.user.role == UserRole.courier) {
+          } else if (authorizationState.sessionInfo.user.role ==
+              UserRole.courier) {
             return CourierHomeScreen.location();
           }
         }
@@ -170,36 +171,11 @@ GoRouter createRouter(
           ),
         ],
       ),
-
-      ClientScaffoldShell.route(
-        branches: [
-          StatefulShellBranch(
-            navigatorKey: courierNavigatorKey,
-            routes: [
-              CourierHomeScreen.route(routes: []),
-            ],
-          ),
-          StatefulShellBranch(
-            navigatorKey: courierOrdersNavigatorKey,
-            routes: [
-              CourierOrdersPage.route(),
-            ],
-          ),
-          StatefulShellBranch(
-            navigatorKey: courierOpenOrdersNavigatorKey,
-            routes: [
-              CourierOpenOrdersScreen.route(),
-            ],
-          ),
-          StatefulShellBranch(
-            navigatorKey: courierSettingsNavigatorKey,
-            routes: [
-              CourierSettingsPage.route(),
-            ],
-          ),
-        ],
-      ),
-
+      CourierHomeScreen.route(routes: []),
+      CourierOrdersPage.route(),
+      CourierOpenOrdersScreen.route(),
+      CourierSettingsPage.route(),
+      CourierQrScreen.route(),
       ClientOrderPage.route(),
       CancelReasonPage.route(),
       ProfilePage.route(),

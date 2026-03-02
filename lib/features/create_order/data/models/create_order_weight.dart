@@ -63,7 +63,7 @@ class _CreateOrderWeightState extends State<CreateOrderWeight> {
         return BeFormInput(
           focusNode: focusNode,
           controller: controller,
-          keyboardType: .number,
+          keyboardType: .numberWithOptions(decimal: true),
           label: context.l10n.weightInKg,
           errors: [state.errors['weight']],
         );

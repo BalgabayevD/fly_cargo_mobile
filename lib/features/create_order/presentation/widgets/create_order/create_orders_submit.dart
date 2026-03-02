@@ -21,9 +21,6 @@ class CreateOrdersSubmitButton extends StatelessWidget {
         return previous.isSubmitting != state.isSubmitting &&
             previous.createdOrderId != state.createdOrderId;
       },
-      buildWhen: (previous, current) =>
-          previous.price != current.price ||
-          previous.isSubmitting != previous.isSubmitting,
       builder: (BuildContext context, CreateOrdersState state) {
         return BeButton(
           isLoading: state.isSubmitting,

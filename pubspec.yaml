@@ -2,7 +2,7 @@ name: fly_cargo
 description: "Sapsano"
 publish_to: "none"
 
-version: 1.0.0+10
+version: 1.0.0+11
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -55,6 +55,8 @@ dependencies:
   firebase_crashlytics: ^5.0.7
   firebase_performance: ^0.11.1+4
   firebase_remote_config: ^6.1.4
+  flutter_keyboard_visibility: ^6.0.0
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

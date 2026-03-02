@@ -228,7 +228,7 @@ sealed class OrderEntity with _$OrderEntity {
   bool get isCompleted => histories.any((e) => e.status == 'completed');
 
   String toStatus() {
-    String value = '';
+    String value = 'Заказ создан';
 
     if (isAccounted) {
       value = 'Заказ получен в г. ${fromCity?.name}';

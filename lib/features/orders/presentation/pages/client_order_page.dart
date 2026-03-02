@@ -16,6 +16,7 @@ import 'package:fly_cargo/features/orders/presentation/widgets/client_order/clie
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
 import 'package:fly_cargo/features/payments/presentation/bloc/payment_cards_bloc.dart';
 import 'package:fly_cargo/features/payments/presentation/pages/add_card_page.dart';
+import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -66,7 +67,7 @@ class ClientOrderPage extends StatelessWidget {
       builder: (BuildContext context, ClientOrderState state) {
         if (state is ClientOrderLoadingState) {
           return BePage(
-            title: 'Заказ №${state.orderId}',
+            title: formatOrderId(state.orderId),
             child: Center(
               child: CircularProgressIndicator(),
             ),
@@ -77,7 +78,7 @@ class ClientOrderPage extends StatelessWidget {
           return BePage(
             backgroundColor: BeColors.white,
             isBorder: true,
-            title: 'Заказ ${state.order.id}',
+            title: formatOrderId(state.order.id),
             actions: ClientOrderPayButton(
               isShowPay: state.isShowPay,
               orderId: state.order.id,

@@ -28,6 +28,8 @@ class CourierSettingsPage extends StatefulWidget {
 
   const CourierSettingsPage({super.key});
 
+  static String location() => Uri(path: path).toString();
+
   static GoRoute route({
     List<RouteBase>? routes,
     GlobalKey<NavigatorState>? parentNavigatorKey,
@@ -67,7 +69,6 @@ class _CourierSettingsPageState extends State<CourierSettingsPage> {
   Widget build(BuildContext context) {
     return BePage(
       title: context.l10n.settings,
-      automaticallyImplyLeading: false,
       centerTitle: true,
       isBorder: true,
       padding: EdgeInsets.zero,
