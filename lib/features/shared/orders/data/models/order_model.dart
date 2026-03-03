@@ -22,6 +22,7 @@ enum StatusModel {
   dispatched('dispatched'),
   transit('transit'),
   arrived('arrived'),
+  assigned('assigned'),
   delivers_recipient('delivers_recipient'),
   completed('completed')
   ;

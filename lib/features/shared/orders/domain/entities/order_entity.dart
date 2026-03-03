@@ -144,6 +144,7 @@ enum OrderStatus {
   dispatched('dispatched'),
   transit('transit'),
   arrived('arrived'),
+  assigned('assigned'),
   @JsonValue('delivers_recipient')
   deliversRecipient('delivers_recipient'),
   completed('completed')

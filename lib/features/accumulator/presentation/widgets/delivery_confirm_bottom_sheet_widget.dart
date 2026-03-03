@@ -106,6 +106,7 @@ class _DeliveryConfirmBottomSheetWidgetState
             label: 'Код получения',
             variant: .flat,
             focusNode: focusNode,
+            keyboardType: .number,
             controller: _codeController,
           ),
 

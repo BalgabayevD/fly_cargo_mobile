@@ -9,13 +9,16 @@ import 'package:fly_cargo/core/design_system/components/timeline.dart';
 import 'package:fly_cargo/core/design_system/nothing.dart';
 import 'package:fly_cargo/core/di/injection.dart';
 import 'package:fly_cargo/core/l10n/l10n.dart';
+import 'package:fly_cargo/features/accumulator/presentation/widgets/delivery_confirm_bottom_sheet_widget.dart';
 import 'package:fly_cargo/features/courier_identify_order/presentation/screen/courier_order_identify_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/client_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/bloc/courier_order_bloc.dart';
 import 'package:fly_cargo/features/orders/presentation/pages/courier_orders_screen.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/client_order/photo_grid_view.dart';
 import 'package:fly_cargo/features/orders/presentation/widgets/courier_decline_order/decline_order_button.dart';
+import 'package:fly_cargo/features/shared/orders/domain/entities/order_entity.dart';
 import 'package:fly_cargo/features/submit_order/presentation/pages/courier_submit_order_screen.dart';
+import 'package:fly_cargo/shared/utils/helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -78,10 +81,9 @@ class CourierOrderScreen extends StatelessWidget {
           return BePage(
             backgroundColor: BeColors.white,
             isBorder: true,
-            title: 'Заказ ${state.order.id}',
+            title: formatOrderId(state.order.id),
             actions: OrderSubmitButton(
-              orderId: state.order.id,
-              status: state.order.status,
+              order: state.order,
               isIdentification: state.isIdentification,
             ),
             child: RefreshIndicator(
@@ -216,39 +218,78 @@ class CourierOrderScreen extends StatelessWidget {
 }
 
 class OrderSubmitButton extends StatelessWidget {
-  final int orderId;
+  final OrderEntity order;
   final bool isIdentification;
-  final String status;
+  final bool isLoading;
 
   const OrderSubmitButton({
-    required this.orderId,
+    required this.order,
     required this.isIdentification,
-    required this.status,
+    this.isLoading = false,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    if ((status == 'created' || status == 'accepted') && !isIdentification) {
+    if ((order.status == 'created' || order.status == 'accepted') &&
+        !isIdentification) {
       return BeButton(
         text: 'Привязать QR',
         variant: .solid,
         onPressed: () => context.push(
-          CourierOrderIdentifyScreen.location(orderId),
+          CourierOrderIdentifyScreen.location(order.id),
         ),
         color: .primary,
       );
     }
-    if (status == 'accepted' && isIdentification) {
+    if (order.status == 'accepted' && isIdentification) {
       return BeButton(
         text: 'Принять',
         variant: .solid,
         color: .primary,
         onPressed: () => context.push(
-          CourierSubmitOrdersScreen.location(orderId),
+          CourierSubmitOrdersScreen.location(order.id),
         ),
       );
     }
+    if (order.status == 'assigned') {
+      return BeButton(
+        text: 'Везу посылку',
+        variant: BeButtonVariant.solid,
+        color: BeButtonColor.primary,
+        isLoading: isLoading,
+        onPressed: () {
+          context.read<CourierOrderBloc>().add(
+            CourierOrderDeliverToReceiverEvent(order.id),
+          );
+        },
+      );
+    }
+
+    if (order.status == 'delivers_recipient') {
+      return BeButton(
+        text: 'Доставлено',
+        variant: BeButtonVariant.solid,
+        color: BeButtonColor.primary,
+        isLoading: isLoading,
+        onPressed: () => _showDeliveryConfirm(context),
+      );
+    }
     return BeNothing();
+  }
+
+  void _showDeliveryConfirm(BuildContext context) {
+    final fromAddress =
+        'г. ${order.fromCity?.name ?? ''}, ${order.fromAddress}';
+
+    DeliveryConfirmBottomSheetWidget.show(
+      context: context,
+      fromAddress: fromAddress,
+      onConfirm: (code) {
+        context.read<CourierOrderBloc>().add(
+          CourierOrderCompleteEvent(order.id, code),
+        );
+      },
+    );
   }
 }
