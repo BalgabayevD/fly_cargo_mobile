@@ -37,6 +37,7 @@ class Requestable {
       BaseOptions(
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
+          // TODO change to app.sapsano.kz
           'Origin': 'https://cargo.maguya.kz',
           'x-skip-oauth-proxy': true,
           'x-app': 'sapsano',

@@ -83,10 +83,12 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
       emit(CourierOrderLoadedState(order: order));
     } else {
       if (currentState is CourierOrderLoadedState) {
-        emit(CourierOrderActionErrorState(
-          order: currentState.order,
-          message: 'Ошибка при смене статуса',
-        ));
+        emit(
+          CourierOrderActionErrorState(
+            order: currentState.order,
+            message: 'Ошибка при смене статуса',
+          ),
+        );
       }
     }
   }
@@ -95,6 +97,8 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
     CourierOrderCompleteEvent event,
     Emitter<CourierOrderState> emit,
   ) async {
+    print('2222');
+    print(state);
     final currentState = state;
     if (currentState is CourierOrderLoadedState) {
       emit(CourierOrderActionLoadingState(order: currentState.order));
@@ -104,10 +108,12 @@ class CourierOrderBloc extends Bloc<CourierOrderEvent, CourierOrderState> {
       emit(CourierOrderLoadedState(order: order));
     } else {
       if (currentState is CourierOrderLoadedState) {
-        emit(CourierOrderActionErrorState(
-          order: currentState.order,
-          message: 'Неверный код получения',
-        ));
+        emit(
+          CourierOrderActionErrorState(
+            order: currentState.order,
+            message: 'Неверный код получения',
+          ),
+        );
       }
     }
   }

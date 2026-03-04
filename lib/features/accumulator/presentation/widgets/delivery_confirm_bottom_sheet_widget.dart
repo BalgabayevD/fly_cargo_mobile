@@ -1,11 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:fly_cargo/core/design_system/components/bottom_dialog.dart';
 import 'package:fly_cargo/core/design_system/components/button.dart';
 import 'package:fly_cargo/core/design_system/components/colors.dart';
 import 'package:fly_cargo/core/design_system/components/form_input.dart';
 import 'package:fly_cargo/core/design_system/components/list_tile.dart';
 import 'package:fly_cargo/core/design_system/components/space.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
+
+class DeliveryConfirmDialog {
+  const DeliveryConfirmDialog();
+
+  Future<String?> confirmDelivery(
+    BuildContext context,
+  ) {
+    final codeNotifier = ValueNotifier<String?>(null);
+    return BeBottomDialog.showBottomDialog<String?>(
+      context: context,
+      maxChildSize: 0.90,
+      initialChildSize: 0.90,
+      minChildSize: 0.85,
+      text: 'Доставить заказ',
+      builder: (BuildContext context, ScrollController controller) {
+        return ValueListenableBuilder(
+          valueListenable: codeNotifier,
+          builder: (BuildContext context, value, Widget? child) {
+            return BeDialogBody(
+              controller: controller,
+              text: 'Доставить заказ',
+              action: Column(
+                children: [
+                  BeButton(
+                    text: 'Подвредить',
+                    onPressed: () => context.pop(codeNotifier.value),
+                  ),
+                  BeSpace(size: .xxl),
+                  BeButton(
+                    text: 'Отмена',
+                    color: .gray,
+                    onPressed: () => context.pop(),
+                  ),
+                ],
+              ),
+              children: [
+                _DialogCodeSelect(notifier: codeNotifier),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _DialogCodeSelect extends StatefulWidget {
+  final ValueNotifier<String?> notifier;
+
+  const _DialogCodeSelect({required this.notifier});
+
+  @override
+  State<_DialogCodeSelect> createState() => _DialogCodeSelectState();
+}
+
+class _DialogCodeSelectState extends State<_DialogCodeSelect> {
+  late final textController = TextEditingController(
+    text: widget.notifier.value,
+  );
+  late final FocusNode focusNode;
+  @override
+  void initState() {
+    super.initState();
+    focusNode = FocusNode();
+    textController.addListener(() {
+      widget.notifier.value = textController.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: widget.notifier,
+      builder: (BuildContext context, Widget? child) {
+        return BeFormInput(
+          focusNode: focusNode,
+          variant: .bordered,
+          label: 'Код получения',
+          controller: textController,
+          keyboardType: .number,
+        );
+      },
+    );
+  }
+}
 
 class DeliveryConfirmBottomSheetWidget extends StatefulWidget {
   final String fromAddress;

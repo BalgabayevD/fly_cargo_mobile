@@ -85,6 +85,11 @@ class CourierOrderScreen extends StatelessWidget {
             actions: OrderSubmitButton(
               order: state.order,
               isIdentification: state.isIdentification,
+              onConfirm: (code) {
+                context.read<CourierOrderBloc>().add(
+                  CourierOrderCompleteEvent(state.order.id, code),
+                );
+              },
             ),
             child: RefreshIndicator(
               onRefresh: () async {
@@ -221,13 +226,16 @@ class OrderSubmitButton extends StatelessWidget {
   final OrderEntity order;
   final bool isIdentification;
   final bool isLoading;
+  final void Function(String code) onConfirm;
+  final DeliveryConfirmDialog confirmDialog;
 
   const OrderSubmitButton({
     required this.order,
     required this.isIdentification,
+    required this.onConfirm,
     this.isLoading = false,
     super.key,
-  });
+  }) : confirmDialog = const DeliveryConfirmDialog();
 
   @override
   Widget build(BuildContext context) {
@@ -272,24 +280,15 @@ class OrderSubmitButton extends StatelessWidget {
         variant: BeButtonVariant.solid,
         color: BeButtonColor.primary,
         isLoading: isLoading,
-        onPressed: () => _showDeliveryConfirm(context),
+        onPressed: () async {
+          final code = await confirmDialog.confirmDelivery(context);
+
+          if (code != null) {
+            onConfirm(code);
+          }
+        },
       );
     }
     return BeNothing();
-  }
-
-  void _showDeliveryConfirm(BuildContext context) {
-    final fromAddress =
-        'г. ${order.fromCity?.name ?? ''}, ${order.fromAddress}';
-
-    DeliveryConfirmBottomSheetWidget.show(
-      context: context,
-      fromAddress: fromAddress,
-      onConfirm: (code) {
-        context.read<CourierOrderBloc>().add(
-          CourierOrderCompleteEvent(order.id, code),
-        );
-      },
-    );
   }
 }
